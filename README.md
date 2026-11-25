@@ -1,36 +1,96 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# ProspectHub
+
+CRM SaaS multi-tenant pour la prospection B2B en France.
+
+## Stack
+
+- **Frontend**: Next.js 15, React, TypeScript, TailwindCSS
+- **Backend**: Supabase (PostgreSQL + Auth + RLS)
+- **Deployment**: Vercel + Supabase Cloud
+
+## Features
+
+- Multi-tenant architecture avec isolation des donnees
+- RBAC (Role-Based Access Control) style HubSpot
+- 4 plans d'abonnement : Free, Starter (29 EUR), Pro (79 EUR), Enterprise (199 EUR)
+- Base partagee d'entreprises France (SIRET, NAF)
+- Leads, Companies, Deals, Tasks, Activities
+- Pipeline Kanban personnalisable
+- Import/Export CSV
+- Enrichissement automatique des donnees
 
 ## Getting Started
 
-First, run the development server:
+### Prerequisites
+
+- Node.js 18+
+- npm ou yarn
+- Compte Supabase
+
+### Installation
 
 ```bash
+# Clone
+git clone https://github.com/anrakotondrazah/prospecthub.git
+cd prospecthub
+
+# Install dependencies
+npm install
+
+# Configure environment
+cp .env.example .env.local
+# Edit .env.local with your Supabase credentials
+
+# Run migrations on Supabase
+# Go to Supabase SQL Editor and run supabase/migrations/001_initial_schema.sql
+
+# Start dev server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Project Structure
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+src/
+  app/              # Next.js App Router pages
+    auth/           # Authentication pages
+    dashboard/      # Dashboard
+    leads/          # Leads management
+    companies/      # Companies management
+    deals/          # Deals pipeline
+    tasks/          # Task management
+    settings/       # Settings
+  components/       # React components
+    ui/             # Base UI components
+    layout/         # Layout components
+    forms/          # Form components
+  lib/              # Utilities
+    supabase/       # Supabase client config
+    utils/          # Helper functions
+  types/            # TypeScript types
+  hooks/            # Custom React hooks
+supabase/
+  migrations/       # SQL migrations
+```
 
-## Learn More
+## Database Schema
 
-To learn more about Next.js, take a look at the following resources:
+20+ tables including:
+- `subscription_plans` - Subscription tiers
+- `organizations` - Tenant organizations
+- `profiles` - User profiles (extends auth.users)
+- `roles` / `permissions` / `role_permissions` - RBAC
+- `leads` / `companies` / `deals` - CRM entities
+- `pipeline_stages` - Custom pipeline per org
+- `tasks` / `activities` - Productivity
+- `shared_companies` - Shared French B2B database
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Contributing
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+This is a private project. Contact the maintainers for contribution guidelines.
 
-## Deploy on Vercel
+## License
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Proprietary - All rights reserved

@@ -8,85 +8,121 @@ export default async function SettingsPage() {
 
   if (!user) return null
 
-  const { data: profile } = await supabase
+  const { data: profile, error: profileError } = await supabase
     .from('profiles')
-    .select('*')
+    .select('first_name, last_name, organization_id')
     .eq('id', user.id)
     .single()
 
+  if (profileError) {
+    return (
+      <div className="flex items-center justify-center h-[60vh]">
+        <div className="text-center">
+          <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-[#FDE8E5] flex items-center justify-center">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#B42318" strokeWidth="2">
+              <circle cx="12" cy="12" r="10" />
+              <line x1="12" y1="8" x2="12" y2="12" />
+              <line x1="12" y1="16" x2="12.01" y2="16" />
+            </svg>
+          </div>
+          <h2 className="text-xl font-semibold text-[#0D0F14] mb-2">Erreur de chargement</h2>
+          <p className="text-[#4E525A] mb-4">Impossible de charger votre profil.</p>
+          <a href="/settings" className="text-[#17191F] font-medium hover:underline">Reessayer</a>
+        </div>
+      </div>
+    )
+  }
+
   // Get organization separately
   const orgId = profile?.organization_id as number | null
-  const { data: organization } = orgId
-    ? await supabase.from('organizations').select('*').eq('id', orgId).single()
-    : { data: null }
+  let organization = null
+  if (orgId) {
+    const { data, error } = await supabase
+      .from('organizations')
+      .select('name, industry')
+      .eq('id', orgId)
+      .single()
+    if (!error) organization = data
+  }
 
   const fullName = profile
     ? `${profile.first_name || ''} ${profile.last_name || ''}`.trim() || 'Non defini'
     : 'Non defini'
 
+  const initials = (profile?.first_name?.[0] || user.email?.[0])?.toUpperCase() || '?'
+
   return (
     <div>
       <div className="mb-6">
-        <h1 className="text-[23.5px] font-semibold text-[#0D0F14] mb-1">Parametres</h1>
+        <h1 className="text-xl lg:text-[23.5px] font-semibold text-[#0D0F14] mb-1">Parametres</h1>
         <p className="text-sm text-[#4E525A]">
           Gerez votre compte et vos preferences
         </p>
       </div>
 
-      <div className="grid grid-cols-3 gap-6">
-        {/* Profile */}
-        <div className="col-span-2 space-y-6">
-          <div className="bg-white rounded-[14px] border border-[#E2E4E6] p-6">
+      {/* Responsive: stack on mobile, grid on desktop */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Profile - full width on mobile, 2/3 on desktop */}
+        <div className="lg:col-span-2 space-y-6">
+          <div className="bg-white rounded-[14px] border border-[#E2E4E6] p-4 lg:p-6">
             <h2 className="text-lg font-semibold text-[#0D0F14] mb-4">Profil</h2>
             <div className="flex items-center gap-4 mb-6">
-              <div className="w-16 h-16 rounded-full bg-[#17191F] flex items-center justify-center text-white text-xl font-semibold">
-                {profile?.first_name?.[0] || user.email?.[0]?.toUpperCase()}
+              <div className="w-14 lg:w-16 h-14 lg:h-16 rounded-full bg-[#17191F] flex items-center justify-center text-white text-lg lg:text-xl font-semibold flex-shrink-0">
+                {initials}
               </div>
-              <div>
-                <p className="font-medium text-[#0D0F14]">{fullName}</p>
-                <p className="text-sm text-[#4E525A]">{user.email}</p>
+              <div className="min-w-0">
+                <p className="font-medium text-[#0D0F14] truncate">{fullName}</p>
+                <p className="text-sm text-[#4E525A] truncate">{user.email}</p>
               </div>
             </div>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-[#0D0F14] mb-2">Prenom</label>
+                <label htmlFor="firstName" className="block text-sm font-medium text-[#0D0F14] mb-2">Prenom</label>
                 <input
+                  id="firstName"
                   type="text"
                   defaultValue={profile?.first_name || ''}
-                  className="w-full h-10 px-3 border border-[#E2E4E6] rounded-[10px] text-sm"
+                  className="w-full h-10 px-3 border border-[#E2E4E6] rounded-[10px] text-sm bg-[#F5F7F9] text-[#9BA0A6] cursor-not-allowed"
                   disabled
+                  aria-describedby="firstName-hint"
                 />
+                <p id="firstName-hint" className="sr-only">Modification non disponible</p>
               </div>
               <div>
-                <label className="block text-sm font-medium text-[#0D0F14] mb-2">Nom</label>
+                <label htmlFor="lastName" className="block text-sm font-medium text-[#0D0F14] mb-2">Nom</label>
                 <input
+                  id="lastName"
                   type="text"
                   defaultValue={profile?.last_name || ''}
-                  className="w-full h-10 px-3 border border-[#E2E4E6] rounded-[10px] text-sm"
+                  className="w-full h-10 px-3 border border-[#E2E4E6] rounded-[10px] text-sm bg-[#F5F7F9] text-[#9BA0A6] cursor-not-allowed"
                   disabled
+                  aria-describedby="lastName-hint"
                 />
+                <p id="lastName-hint" className="sr-only">Modification non disponible</p>
               </div>
             </div>
           </div>
 
-          <div className="bg-white rounded-[14px] border border-[#E2E4E6] p-6">
+          <div className="bg-white rounded-[14px] border border-[#E2E4E6] p-4 lg:p-6">
             <h2 className="text-lg font-semibold text-[#0D0F14] mb-4">Organisation</h2>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-[#0D0F14] mb-2">Nom</label>
+                <label htmlFor="orgName" className="block text-sm font-medium text-[#0D0F14] mb-2">Nom</label>
                 <input
+                  id="orgName"
                   type="text"
                   defaultValue={organization?.name || ''}
-                  className="w-full h-10 px-3 border border-[#E2E4E6] rounded-[10px] text-sm"
+                  className="w-full h-10 px-3 border border-[#E2E4E6] rounded-[10px] text-sm bg-[#F5F7F9] text-[#9BA0A6] cursor-not-allowed"
                   disabled
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-[#0D0F14] mb-2">Secteur</label>
+                <label htmlFor="orgIndustry" className="block text-sm font-medium text-[#0D0F14] mb-2">Secteur</label>
                 <input
+                  id="orgIndustry"
                   type="text"
                   defaultValue={organization?.industry || ''}
-                  className="w-full h-10 px-3 border border-[#E2E4E6] rounded-[10px] text-sm"
+                  className="w-full h-10 px-3 border border-[#E2E4E6] rounded-[10px] text-sm bg-[#F5F7F9] text-[#9BA0A6] cursor-not-allowed"
                   disabled
                 />
               </div>
@@ -94,9 +130,9 @@ export default async function SettingsPage() {
           </div>
         </div>
 
-        {/* Sidebar */}
-        <div className="space-y-6">
-          <div className="bg-white rounded-[14px] border border-[#E2E4E6] p-6">
+        {/* Sidebar - reorder on mobile */}
+        <div className="space-y-6 order-first lg:order-last">
+          <div className="bg-white rounded-[14px] border border-[#E2E4E6] p-4 lg:p-6">
             <h2 className="text-lg font-semibold text-[#0D0F14] mb-4">Plan actuel</h2>
             <div className="flex items-center justify-between mb-4">
               <span className="text-2xl font-bold text-[#0D0F14]">Free</span>
@@ -106,32 +142,40 @@ export default async function SettingsPage() {
             </div>
             <ul className="space-y-2 text-sm text-[#4E525A] mb-4">
               <li className="flex items-center gap-2">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#147A3A" strokeWidth="2">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#147A3A" strokeWidth="2" aria-hidden="true">
                   <polyline points="20 6 9 17 4 12" />
                 </svg>
                 50 leads/mois
               </li>
               <li className="flex items-center gap-2">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#147A3A" strokeWidth="2">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#147A3A" strokeWidth="2" aria-hidden="true">
                   <polyline points="20 6 9 17 4 12" />
                 </svg>
                 1 utilisateur
               </li>
               <li className="flex items-center gap-2">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#147A3A" strokeWidth="2">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#147A3A" strokeWidth="2" aria-hidden="true">
                   <polyline points="20 6 9 17 4 12" />
                 </svg>
                 Export CSV
               </li>
             </ul>
-            <button className="w-full h-10 text-sm font-medium text-white bg-[#17191F] rounded-[10px] hover:bg-[#2D3039] transition-colors">
+            <button
+              className="w-full h-10 text-sm font-medium text-white/60 bg-[#17191F]/60 rounded-[10px] cursor-not-allowed"
+              disabled
+              title="Bientot disponible"
+            >
               Passer a Pro
             </button>
           </div>
 
-          <div className="bg-white rounded-[14px] border border-[#E2E4E6] p-6">
+          <div className="bg-white rounded-[14px] border border-[#E2E4E6] p-4 lg:p-6">
             <h2 className="text-lg font-semibold text-[#0D0F14] mb-4">Danger Zone</h2>
-            <button className="w-full h-10 text-sm font-medium text-[#B42318] border border-[#B42318] rounded-[10px] hover:bg-[#FDE8E5] transition-colors">
+            <button
+              className="w-full h-10 text-sm font-medium text-[#B42318]/60 border border-[#B42318]/60 rounded-[10px] cursor-not-allowed"
+              disabled
+              title="Bientot disponible"
+            >
               Supprimer le compte
             </button>
           </div>

@@ -61,15 +61,17 @@ export function Sidebar({ user, plan = 'Free' }: SidebarProps) {
 
   return (
     <aside
-      className={`fixed left-0 top-0 bottom-0 bg-white border-r border-[#E2E4E6] flex flex-col transition-all duration-200 z-50 ${
+      className={`fixed left-0 top-0 bottom-0 bg-white border-r border-[#E2E4E6] flex flex-col transition-all duration-200 z-50 hidden lg:flex ${
         isCollapsed ? 'w-[72px]' : 'w-[260px]'
       }`}
+      role="navigation"
+      aria-label="Navigation principale"
     >
       {/* Header */}
       <div className="p-5 border-b border-[#EFF1F3]">
-        <div className="flex items-center gap-3">
+        <Link href="/dashboard" className="flex items-center gap-3" aria-label="ProspectHub - Accueil">
           <div className="w-9 h-9 bg-[#17191F] rounded-[10px] flex items-center justify-center flex-shrink-0">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path d="M12 2L2 7l10 5 10-5-10-5z" fill="#fff" />
               <path d="M2 17l10 5 10-5" stroke="#fff" strokeWidth="2" />
               <path d="M2 12l10 5 10-5" stroke="#fff" strokeWidth="2" />
@@ -83,25 +85,30 @@ export function Sidebar({ user, plan = 'Free' }: SidebarProps) {
               </span>
             </>
           )}
-        </div>
+        </Link>
       </div>
 
       {/* Search */}
       {!isCollapsed && (
         <div className="px-4 py-3">
-          <div className="flex items-center gap-2 px-3 py-2 bg-[#F5F7F9] rounded-[10px] text-[#9BA0A6]">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <button
+            className="flex items-center gap-2 w-full px-3 py-2 bg-[#F5F7F9] rounded-[10px] text-[#9BA0A6] hover:bg-[#EFF1F3] transition-colors"
+            aria-label="Ouvrir la recherche"
+            disabled
+            title="Bientot disponible"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
               <circle cx="11" cy="11" r="8" />
               <path d="M21 21l-4.35-4.35" />
             </svg>
             <span className="text-sm">Rechercher...</span>
             <span className="ml-auto text-xs bg-white px-1.5 py-0.5 rounded border border-[#E2E4E6]">/</span>
-          </div>
+          </button>
         </div>
       )}
 
       {/* Navigation */}
-      <nav className="flex-1 px-3 py-2 overflow-y-auto">
+      <nav className="flex-1 px-3 py-2 overflow-y-auto" aria-label="Menu principal">
         <ul className="space-y-1">
           {navItems.map((item) => {
             const isActive = pathname === item.href || pathname.startsWith(item.href + '/')
@@ -114,6 +121,9 @@ export function Sidebar({ user, plan = 'Free' }: SidebarProps) {
                       ? 'bg-[#F5F7F9] text-[#0D0F14] font-medium'
                       : 'text-[#4E525A] hover:bg-[#F5F7F9] hover:text-[#0D0F14]'
                   }`}
+                  aria-label={isCollapsed ? item.label : undefined}
+                  aria-current={isActive ? 'page' : undefined}
+                  title={isCollapsed ? item.label : undefined}
                 >
                   <svg
                     width="20"
@@ -124,6 +134,7 @@ export function Sidebar({ user, plan = 'Free' }: SidebarProps) {
                     strokeWidth="2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
+                    aria-hidden="true"
                   >
                     <path d={item.icon} />
                   </svg>
@@ -149,6 +160,9 @@ export function Sidebar({ user, plan = 'Free' }: SidebarProps) {
                       ? 'bg-[#F5F7F9] text-[#0D0F14] font-medium'
                       : 'text-[#4E525A] hover:bg-[#F5F7F9] hover:text-[#0D0F14]'
                   }`}
+                  aria-label={isCollapsed ? item.label : undefined}
+                  aria-current={isActive ? 'page' : undefined}
+                  title={isCollapsed ? item.label : undefined}
                 >
                   <svg
                     width="20"
@@ -159,6 +173,7 @@ export function Sidebar({ user, plan = 'Free' }: SidebarProps) {
                     strokeWidth="2"
                     strokeLinecap="round"
                     strokeLinejoin="round"
+                    aria-hidden="true"
                   >
                     <path d={item.icon} />
                   </svg>
@@ -171,7 +186,12 @@ export function Sidebar({ user, plan = 'Free' }: SidebarProps) {
 
         {/* User */}
         {!isCollapsed && user && (
-          <div className="flex items-center gap-3 px-3 py-3 mt-2 rounded-[10px] hover:bg-[#F5F7F9] cursor-pointer">
+          <div
+            className="flex items-center gap-3 px-3 py-3 mt-2 rounded-[10px] hover:bg-[#F5F7F9] cursor-pointer"
+            role="button"
+            tabIndex={0}
+            aria-label={`Profil de ${user.full_name || user.email}`}
+          >
             <div className="w-8 h-8 rounded-full bg-[#17191F] flex items-center justify-center text-white text-sm font-medium">
               {user.full_name?.[0] || user.email?.[0]?.toUpperCase() || 'U'}
             </div>
@@ -189,6 +209,8 @@ export function Sidebar({ user, plan = 'Free' }: SidebarProps) {
       <button
         onClick={() => setIsCollapsed(!isCollapsed)}
         className="absolute -right-3 top-20 w-6 h-6 bg-white border border-[#E2E4E6] rounded-full flex items-center justify-center hover:bg-[#F5F7F9] transition-colors"
+        aria-label={isCollapsed ? 'Agrandir la sidebar' : 'Reduire la sidebar'}
+        aria-expanded={!isCollapsed}
       >
         <svg
           width="12"
@@ -198,6 +220,7 @@ export function Sidebar({ user, plan = 'Free' }: SidebarProps) {
           stroke="#4E525A"
           strokeWidth="2"
           className={`transition-transform ${isCollapsed ? 'rotate-180' : ''}`}
+          aria-hidden="true"
         >
           <polyline points="15 18 9 12 15 6" />
         </svg>

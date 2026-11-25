@@ -8,46 +8,56 @@ export default async function DashboardPage() {
 
   if (!user) return null
 
-  // Get user's profile and stats
-  const { data: profile } = await supabase
+  // Get user's profile
+  const { data: profile, error: profileError } = await supabase
     .from('profiles')
-    .select('*, organizations(*)')
+    .select('first_name, last_name, organization_id')
     .eq('id', user.id)
     .single()
 
+  // Handle profile error
+  if (profileError) {
+    return (
+      <div className="flex items-center justify-center h-[60vh]">
+        <div className="text-center">
+          <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-[#FDE8E5] flex items-center justify-center">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#B42318" strokeWidth="2">
+              <circle cx="12" cy="12" r="10" />
+              <line x1="12" y1="8" x2="12" y2="12" />
+              <line x1="12" y1="16" x2="12.01" y2="16" />
+            </svg>
+          </div>
+          <h2 className="text-xl font-semibold text-[#0D0F14] mb-2">Erreur de chargement</h2>
+          <p className="text-[#4E525A] mb-4">Impossible de charger votre profil.</p>
+          <a href="/dashboard" className="text-[#17191F] font-medium hover:underline">Reessayer</a>
+        </div>
+      </div>
+    )
+  }
+
   const orgId = profile?.organization_id as number | null
 
-  // Get lead counts (if org exists)
+  // Get lead counts (if org exists) - use is_hot for hot leads
   let leadStats = { total: 0, new: 0, qualified: 0, hot: 0 }
+  let statsError = false
+
   if (orgId) {
-    const { count: totalLeads } = await supabase
-      .from('leads')
-      .select('*', { count: 'exact', head: true })
-      .eq('organization_id', orgId)
+    const [totalRes, newRes, qualifiedRes, hotRes] = await Promise.all([
+      supabase.from('leads').select('*', { count: 'exact', head: true }).eq('organization_id', orgId),
+      supabase.from('leads').select('*', { count: 'exact', head: true }).eq('organization_id', orgId).eq('status', 'new'),
+      supabase.from('leads').select('*', { count: 'exact', head: true }).eq('organization_id', orgId).eq('status', 'qualified'),
+      supabase.from('leads').select('*', { count: 'exact', head: true }).eq('organization_id', orgId).eq('is_hot', true),
+    ])
 
-    const { count: newLeads } = await supabase
-      .from('leads')
-      .select('*', { count: 'exact', head: true })
-      .eq('organization_id', orgId)
-      .eq('status', 'new')
-
-    const { count: qualifiedLeads } = await supabase
-      .from('leads')
-      .select('*', { count: 'exact', head: true })
-      .eq('organization_id', orgId)
-      .eq('status', 'qualified')
-
-    const { count: hotLeads } = await supabase
-      .from('leads')
-      .select('*', { count: 'exact', head: true })
-      .eq('organization_id', orgId)
-      .eq('status', 'hot')
-
-    leadStats = {
-      total: totalLeads || 0,
-      new: newLeads || 0,
-      qualified: qualifiedLeads || 0,
-      hot: hotLeads || 0,
+    if (totalRes.error || newRes.error || qualifiedRes.error || hotRes.error) {
+      statsError = true
+    } else {
+      leadStats = {
+        total: totalRes.count || 0,
+        new: newRes.count || 0,
+        qualified: qualifiedRes.count || 0,
+        hot: hotRes.count || 0,
+      }
     }
   }
 
@@ -55,8 +65,8 @@ export default async function DashboardPage() {
 
   return (
     <div>
-      <div className="mb-8">
-        <h1 className="text-[23.5px] font-semibold text-[#0D0F14] mb-1">
+      <div className="mb-6 lg:mb-8">
+        <h1 className="text-xl lg:text-[23.5px] font-semibold text-[#0D0F14] mb-1">
           Bonjour, {firstName}
         </h1>
         <p className="text-sm text-[#4E525A]">
@@ -64,33 +74,37 @@ export default async function DashboardPage() {
         </p>
       </div>
 
-      {/* KPI Cards */}
-      <div className="grid grid-cols-4 gap-4 mb-8">
-        {[
-          { label: 'Total leads', value: leadStats.total.toString(), change: '+12%', up: true },
-          { label: 'Nouveaux leads', value: leadStats.new.toString(), change: '+8%', up: true },
-          { label: 'Leads qualifies', value: leadStats.qualified.toString(), change: '+5%', up: true },
-          { label: 'Leads chauds', value: leadStats.hot.toString(), change: '+15%', up: true },
-        ].map((kpi, i) => (
-          <div key={i} className="bg-white rounded-[14px] border border-[#E2E4E6] p-5">
-            <p className="text-sm text-[#4E525A] mb-2">{kpi.label}</p>
-            <div className="flex items-end justify-between">
-              <span className="text-[31.5px] font-semibold text-[#0D0F14] leading-[38px] tracking-[-0.4px]">
+      {/* KPI Cards - Responsive grid */}
+      {statsError ? (
+        <div className="bg-white rounded-[14px] border border-[#E2E4E6] p-6 mb-6 lg:mb-8">
+          <div className="text-center">
+            <p className="text-[#4E525A] mb-2">Impossible de charger les statistiques</p>
+            <a href="/dashboard" className="text-[#17191F] font-medium hover:underline">Reessayer</a>
+          </div>
+        </div>
+      ) : (
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4 mb-6 lg:mb-8">
+          {[
+            { label: 'Total leads', value: leadStats.total },
+            { label: 'Nouveaux', value: leadStats.new },
+            { label: 'Qualifies', value: leadStats.qualified },
+            { label: 'Chauds', value: leadStats.hot },
+          ].map((kpi, i) => (
+            <div key={i} className="bg-white rounded-[14px] border border-[#E2E4E6] p-4 lg:p-5">
+              <p className="text-xs lg:text-sm text-[#4E525A] mb-1 lg:mb-2">{kpi.label}</p>
+              <span className="text-2xl lg:text-[31.5px] font-semibold text-[#0D0F14] leading-tight">
                 {kpi.value}
               </span>
-              <span className={`text-sm font-medium ${kpi.up ? 'text-[#147A3A]' : 'text-[#B42318]'}`}>
-                {kpi.change}
-              </span>
             </div>
-          </div>
-        ))}
-      </div>
+          ))}
+        </div>
+      )}
 
-      {/* Quick Actions */}
-      <div className="grid grid-cols-3 gap-4 mb-8">
+      {/* Quick Actions - Responsive grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 lg:gap-4 mb-6 lg:mb-8">
         <a
           href="/leads"
-          className="bg-white rounded-[14px] border border-[#E2E4E6] p-5 hover:border-[#17191F] transition-colors group"
+          className="bg-white rounded-[14px] border border-[#E2E4E6] p-4 lg:p-5 hover:border-[#17191F] transition-colors group"
         >
           <div className="w-10 h-10 rounded-[10px] bg-[#F5F7F9] flex items-center justify-center mb-3 group-hover:bg-[#17191F] transition-colors">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-[#4E525A] group-hover:text-white transition-colors">
@@ -105,7 +119,7 @@ export default async function DashboardPage() {
 
         <a
           href="/companies"
-          className="bg-white rounded-[14px] border border-[#E2E4E6] p-5 hover:border-[#17191F] transition-colors group"
+          className="bg-white rounded-[14px] border border-[#E2E4E6] p-4 lg:p-5 hover:border-[#17191F] transition-colors group"
         >
           <div className="w-10 h-10 rounded-[10px] bg-[#F5F7F9] flex items-center justify-center mb-3 group-hover:bg-[#17191F] transition-colors">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-[#4E525A] group-hover:text-white transition-colors">
@@ -118,7 +132,7 @@ export default async function DashboardPage() {
 
         <a
           href="/tasks"
-          className="bg-white rounded-[14px] border border-[#E2E4E6] p-5 hover:border-[#17191F] transition-colors group"
+          className="bg-white rounded-[14px] border border-[#E2E4E6] p-4 lg:p-5 hover:border-[#17191F] transition-colors group"
         >
           <div className="w-10 h-10 rounded-[10px] bg-[#F5F7F9] flex items-center justify-center mb-3 group-hover:bg-[#17191F] transition-colors">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-[#4E525A] group-hover:text-white transition-colors">
@@ -131,10 +145,10 @@ export default async function DashboardPage() {
       </div>
 
       {/* Recent Activity */}
-      <div className="bg-white rounded-[14px] border border-[#E2E4E6] p-6">
+      <div className="bg-white rounded-[14px] border border-[#E2E4E6] p-4 lg:p-6">
         <h2 className="text-lg font-semibold text-[#0D0F14] mb-4">Activite recente</h2>
         {leadStats.total === 0 ? (
-          <div className="text-center py-8">
+          <div className="text-center py-6 lg:py-8">
             <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-[#F5F7F9] flex items-center justify-center">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#9BA0A6" strokeWidth="2">
                 <circle cx="12" cy="12" r="10" />

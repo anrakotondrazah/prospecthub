@@ -16,12 +16,17 @@ export default async function AppLayout({
     redirect('/auth/login')
   }
 
-  // Get user profile
+  // Check if onboarding is completed
   const { data: profile } = await supabase
     .from('profiles')
-    .select('*, organizations(*)')
+    .select('first_name, last_name, organization_id, onboarding_completed')
     .eq('id', user.id)
     .single()
+
+  // Redirect to onboarding if not completed
+  if (!profile?.organization_id || !profile?.onboarding_completed) {
+    redirect('/onboarding')
+  }
 
   const fullName = profile ? `${profile.first_name || ''} ${profile.last_name || ''}`.trim() : null
 
@@ -34,7 +39,8 @@ export default async function AppLayout({
         }}
         plan="Free"
       />
-      <main className="ml-[260px] p-6">
+      {/* Responsive: hidden sidebar on mobile, 260px offset on desktop */}
+      <main className="lg:ml-[260px] p-4 lg:p-6">
         {children}
       </main>
     </div>

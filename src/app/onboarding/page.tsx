@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
 import { Button } from '@/components/ui/button'
@@ -47,7 +47,9 @@ export default function OnboardingPage() {
   const [companySize, setCompanySize] = useState('')
   const [website, setWebsite] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
   const [setupProgress, setSetupProgress] = useState(0)
+  const isSubmittingRef = useRef(false)
   const router = useRouter()
   const supabase = createClient()
 
@@ -72,45 +74,75 @@ export default function OnboardingPage() {
   }, [step, router])
 
   const handleComplete = async () => {
+    if (isSubmittingRef.current || isLoading) return
+    isSubmittingRef.current = true
     setIsLoading(true)
+    setError(null)
 
-    const { data: { user } } = await supabase.auth.getUser()
-    if (!user) {
-      router.push('/auth/login')
-      return
-    }
+    try {
+      const { data: { user } } = await supabase.auth.getUser()
+      if (!user) {
+        router.push('/auth/login')
+        return
+      }
 
-    // Create organization
-    const { data: org, error: orgError } = await supabase
-      .from('organizations')
-      .insert({
-        uuid: crypto.randomUUID(),
-        name: companyName,
-        industry,
-        company_size: companySize as '1-10' | '11-50' | '51-200' | '201-500' | '501-1000' | '1000+',
-        website: website || null,
-      })
-      .select()
-      .single()
+      // Check if user already has an organization
+      const { data: existingProfile } = await supabase
+        .from('profiles')
+        .select('organization_id')
+        .eq('id', user.id)
+        .single()
 
-    if (orgError) {
-      console.error('Error creating organization:', orgError)
+      if (existingProfile?.organization_id) {
+        router.push('/dashboard')
+        return
+      }
+
+      // Create organization
+      const { data: org, error: orgError } = await supabase
+        .from('organizations')
+        .insert({
+          uuid: crypto.randomUUID(),
+          name: companyName,
+          industry,
+          company_size: companySize as '1-10' | '11-50' | '51-200' | '201-500' | '501-1000' | '1000+',
+          website: website || null,
+        })
+        .select()
+        .single()
+
+      if (orgError) {
+        setError('Erreur lors de la creation de l\'organisation. Veuillez reessayer.')
+        setIsLoading(false)
+        isSubmittingRef.current = false
+        return
+      }
+
+      // Update user profile with organization link
+      const { error: profileError } = await supabase
+        .from('profiles')
+        .update({
+          organization_id: org.id,
+          job_title: role,
+          onboarding_completed: true,
+        })
+        .eq('id', user.id)
+        .select()
+
+      if (profileError) {
+        setError('Erreur lors de la mise a jour du profil. Veuillez reessayer.')
+        setIsLoading(false)
+        isSubmittingRef.current = false
+        return
+      }
+
+      setStep('setup')
+    } catch {
+      setError('Une erreur inattendue s\'est produite. Veuillez reessayer.')
+    } finally {
       setIsLoading(false)
-      return
+      isSubmittingRef.current = false
     }
-
-    // Update user profile
-    await supabase
-      .from('profiles')
-      .update({
-        organization_id: org.id,
-        job_title: role,
-        onboarding_completed: true,
-      })
-      .eq('id', user.id)
-
-    setStep('setup')
-    setIsLoading(false)
   }
 
   const renderStep = () => {
@@ -185,7 +217,7 @@ export default function OnboardingPage() {
               Quel est votre role?
             </h1>
             <p className="text-[#4E525A] mb-8 text-center">
-              Pour adapter l'interface a vos besoins
+              Pour adapter l&apos;interface a vos besoins
             </p>
             <div className="grid grid-cols-2 gap-3 max-w-lg mx-auto">
               {ROLES.map((item) => (
@@ -223,24 +255,30 @@ export default function OnboardingPage() {
               Derniere etape avant de commencer
             </p>
 
+            {error && (
+              <div className="p-3 mb-6 rounded-[10px] bg-[#FDE8E5] text-[#B42318] text-sm">
+                {error}
+              </div>
+            )}
+
             <div className="space-y-5">
               <div>
-                <Label htmlFor="companyName">Nom de l'entreprise</Label>
+                <Label htmlFor="companyName">Nom de l&apos;entreprise</Label>
                 <Input
                   id="companyName"
                   placeholder="Ma Societe SAS"
                   value={companyName}
-                  onChange={(e) => setCompanyName(e.target.value)}
+                  onChange={(e) => { setCompanyName(e.target.value); setError(null) }}
                 />
               </div>
 
               <div>
-                <Label>Taille de l'equipe</Label>
+                <Label>Taille de l&apos;equipe</Label>
                 <div className="grid grid-cols-2 gap-2 mt-2">
                   {COMPANY_SIZES.map((item) => (
                     <button
                       key={item.id}
-                      onClick={() => setCompanySize(item.id)}
+                      onClick={() => { setCompanySize(item.id); setError(null) }}
                       className={`p-3 rounded-[10px] border text-sm transition-all ${
                         companySize === item.id
                           ? 'border-[#17191F] bg-[#F5F7F9] font-medium'
@@ -265,12 +303,12 @@ export default function OnboardingPage() {
             </div>
 
             <div className="flex justify-center gap-3 mt-8">
-              <Button variant="outline" onClick={() => setStep('role')}>
+              <Button variant="outline" onClick={() => setStep('role')} disabled={isLoading}>
                 Retour
               </Button>
               <Button
                 onClick={handleComplete}
-                disabled={!companyName || !companySize}
+                disabled={!companyName || !companySize || isLoading}
                 isLoading={isLoading}
                 className="px-8"
               >
@@ -311,7 +349,6 @@ export default function OnboardingPage() {
 
   return (
     <div className="min-h-screen bg-[#F5F7F9] flex flex-col">
-      {/* Progress Bar */}
       {step !== 'welcome' && step !== 'setup' && (
         <div className="h-1 bg-[#E2E4E6]">
           <div
@@ -321,7 +358,6 @@ export default function OnboardingPage() {
         </div>
       )}
 
-      {/* Logo */}
       <div className="flex items-center justify-center gap-3 pt-8 pb-4">
         <div className="w-10 h-10 bg-[#17191F] rounded-[10px] flex items-center justify-center">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
@@ -333,7 +369,6 @@ export default function OnboardingPage() {
         <span className="text-xl font-semibold text-[#0D0F14]">ProspectHub</span>
       </div>
 
-      {/* Content */}
       <div className="flex-1 flex items-center justify-center p-6">
         <div className="w-full max-w-2xl">
           {renderStep()}

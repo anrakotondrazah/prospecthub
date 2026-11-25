@@ -163,7 +163,7 @@ function VerifyEmailContent() {
           </Button>
 
           <p className="text-sm text-[#4E525A] text-center">
-            Vous n'avez pas recu le code ?{' '}
+            Vous n&apos;avez pas recu le code ?{' '}
             {resendCooldown > 0 ? (
               <span className="text-[#9BA0A6]">Renvoyer dans {resendCooldown}s</span>
             ) : (
@@ -179,7 +179,7 @@ function VerifyEmailContent() {
 
           <div className="text-center mt-6 pt-6 border-t border-[#E2E4E6]">
             <Link href="/auth/register" className="text-sm text-[#17191F] font-medium hover:underline">
-              Modifier l'email
+              Modifier l&apos;email
             </Link>
           </div>
         </div>

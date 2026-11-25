@@ -9,6 +9,61 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
+      profiles: {
+        Row: {
+          id: string
+          organization_id: number | null
+          role_id: number | null
+          first_name: string | null
+          last_name: string | null
+          phone: string | null
+          avatar_url: string | null
+          job_title: string | null
+          timezone: string
+          locale: string
+          two_factor_enabled: boolean
+          is_owner: boolean
+          is_active: boolean
+          settings: Json | null
+          onboarding_completed: boolean
+          created_at: string
+          updated_at: string
+        }
+        Insert: {
+          id: string
+          organization_id?: number | null
+          role_id?: number | null
+          first_name?: string | null
+          last_name?: string | null
+          phone?: string | null
+          avatar_url?: string | null
+          job_title?: string | null
+          timezone?: string
+          locale?: string
+          two_factor_enabled?: boolean
+          is_owner?: boolean
+          is_active?: boolean
+          settings?: Json | null
+          onboarding_completed?: boolean
+        }
+        Update: {
+          id?: string
+          organization_id?: number | null
+          role_id?: number | null
+          first_name?: string | null
+          last_name?: string | null
+          phone?: string | null
+          avatar_url?: string | null
+          job_title?: string | null
+          timezone?: string
+          locale?: string
+          two_factor_enabled?: boolean
+          is_owner?: boolean
+          is_active?: boolean
+          settings?: Json | null
+          onboarding_completed?: boolean
+        }
+      }
       subscription_plans: {
         Row: {
           id: number

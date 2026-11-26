@@ -100,3 +100,239 @@ body {
 .glass-border {
   border: 1px solid var(--border-glass);
 }
+
+/* ============================================
+   ANIMATIONS - Coherent slide/scale system
+   ============================================ */
+
+@keyframes slide-down {
+  0% {
+    transform: translateY(-10px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slide-up {
+  0% {
+    transform: translateY(10px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes icon-rotate {
+  0% {
+    opacity: 0;
+    transform: translateY(10px) scale(0.5);
+  }
+  10% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  30% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+  40% {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.5);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-10px) scale(0.5);
+  }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scale-in {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* Animation utility classes */
+.animate-slide-down {
+  animation: slide-down 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+.animate-slide-up {
+  animation: slide-up 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+.animate-icon-rotate {
+  animation: icon-rotate 2.5s infinite;
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out;
+}
+
+.animate-scale-in {
+  animation: scale-in 0.2s ease-out;
+}
+
+/* ============================================
+   SCROLLBAR - Modern minimal design
+   ============================================ */
+
+/* Webkit browsers (Chrome, Safari, Edge) */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--muted-foreground);
+  border-radius: 3px;
+  opacity: 0.5;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--foreground);
+  opacity: 0.8;
+}
+
+/* Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--muted-foreground) transparent;
+}
+
+/* Hide scrollbar but keep functionality */
+.scrollbar-hidden {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.scrollbar-hidden::-webkit-scrollbar {
+  display: none;
+}
+
+/* ============================================
+   TAB BAR - iOS-style pill navigation
+   ============================================ */
+
+.tab-bar {
+  position: relative;
+  display: grid;
+  padding: 4px;
+  background: var(--muted);
+  border-radius: 999px;
+  gap: 2px;
+}
+
+.tab-bar input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.tab-bar label {
+  position: relative;
+  z-index: 1;
+  padding: 8px 14px;
+  border-radius: 999px;
+  text-align: center;
+  cursor: pointer;
+  color: var(--muted-foreground);
+  font-size: 14px;
+  font-weight: 500;
+  transition: color 0.4s ease;
+  white-space: nowrap;
+}
+
+.tab-bar input:checked + label {
+  color: var(--foreground);
+}
+
+/* Active pill indicator */
+.tab-bar::after {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  border-radius: 999px;
+  background: var(--card);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transform: translateX(calc(100% * var(--tab-active, 0)));
+  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  pointer-events: none;
+}
+
+/* Dynamic tab positions */
+.tab-bar[data-tabs="2"]::after { width: calc((100% - 8px) / 2); }
+.tab-bar[data-tabs="3"]::after { width: calc((100% - 8px) / 3); }
+.tab-bar[data-tabs="4"]::after { width: calc((100% - 8px) / 4); }
+.tab-bar[data-tabs="5"]::after { width: calc((100% - 8px) / 5); }
+
+.tab-bar:has(input:nth-of-type(2):checked) { --tab-active: 1; }
+.tab-bar:has(input:nth-of-type(3):checked) { --tab-active: 2; }
+.tab-bar:has(input:nth-of-type(4):checked) { --tab-active: 3; }
+.tab-bar:has(input:nth-of-type(5):checked) { --tab-active: 4; }
+
+/* ============================================
+   HOVER EFFECTS - Consistent interactions
+   ============================================ */
+
+/* Subtle lift on hover */
+.hover-lift {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.hover-lift:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Scale on hover */
+.hover-scale {
+  transition: transform 0.2s ease;
+}
+
+.hover-scale:hover {
+  transform: scale(1.02);
+}
+
+/* Glow on hover */
+.hover-glow {
+  transition: box-shadow 0.2s ease;
+}
+
+.hover-glow:hover {
+  box-shadow: 0 0 20px var(--accent-primary);
+}
+
+/* Active press effect */
+.active-press:active {
+  transform: scale(0.98);
+}
+
+/* ============================================
+   FOCUS STATES - Accessibility
+   ============================================ */
+
+.focus-ring:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+/* ============================================
+   TRANSITION DEFAULTS
+   ============================================ */
+
+.transition-smooth {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}

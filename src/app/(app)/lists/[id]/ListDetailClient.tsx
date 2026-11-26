@@ -4,6 +4,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/client'
+import { EmptyState } from '@/components/ui/EmptyState'
 
 type List = {
   id: number
@@ -275,32 +276,21 @@ export function ListDetailClient({ list, initialMembers, availableLeads, organiz
         </div>
       </div>
 
-      {filteredMembers.length === 0 ? (
-        <div className="bg-white rounded-[14px] border border-[#E2E4E6] p-12">
+      {filteredMembers.length === 0 && !searchQuery ? (
+        <div className="bg-white dark:bg-[#0D1117] rounded-[14px] border border-[#E2E4E6] dark:border-[#30363D]">
+          <EmptyState type="lists" action={() => setIsAddModalOpen(true)} />
+        </div>
+      ) : filteredMembers.length === 0 ? (
+        <div className="bg-white dark:bg-[#0D1117] rounded-[14px] border border-[#E2E4E6] dark:border-[#30363D] p-12">
           <div className="text-center">
-            <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-[#F5F7F9] flex items-center justify-center">
+            <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-[#F5F7F9] dark:bg-[#161B22] flex items-center justify-center">
               <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#4E525A" strokeWidth="1.5">
-                <path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
+                <circle cx="11" cy="11" r="8" />
+                <path d="M21 21l-4.35-4.35" />
               </svg>
             </div>
-            <h3 className="text-lg font-semibold text-[#0D0F14] mb-2">
-              {searchQuery ? 'Aucun membre trouve' : 'Aucun membre'}
-            </h3>
-            <p className="text-sm text-[#4E525A] mb-6 max-w-md mx-auto">
-              {searchQuery ? 'Essayez avec dautres mots-cles' : 'Ajoutez des leads a cette liste pour commencer'}
-            </p>
-            {!searchQuery && (
-              <button
-                onClick={() => setIsAddModalOpen(true)}
-                className="px-4 py-2.5 bg-[#17191F] text-white rounded-[10px] font-medium hover:bg-[#2A2D35] transition-colors inline-flex items-center gap-2"
-              >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                  <line x1="12" y1="5" x2="12" y2="19" />
-                  <line x1="5" y1="12" x2="19" y2="12" />
-                </svg>
-                Ajouter des leads
-              </button>
-            )}
+            <h3 className="text-lg font-semibold text-[#0D0F14] dark:text-[#E6EDF3] mb-2">Aucun résultat</h3>
+            <p className="text-sm text-[#4E525A] dark:text-[#8B949E]">Essayez avec d'autres mots-clés</p>
           </div>
         </div>
       ) : (

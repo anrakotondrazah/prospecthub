@@ -142,40 +142,42 @@ export default function LandingPage() {
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
             </svg>
-            Nouveau: Enrichissement PME France integre
+            Nouveau: 500+ entreprises ajoutees cette semaine
           </div>
 
           <h1 className="text-[48px] md:text-[56px] font-bold text-[#0D0F14] leading-[1.1] tracking-[-0.02em] mb-6">
-            Le CRM concu pour les
-            <span className="text-[#1565C0]"> PME B2B France</span>
+            Des leads a jour.
+            <br />
+            <span className="text-[#0066FF]">Un CRM pour les travailler.</span>
           </h1>
 
           <p className="text-xl text-[#4E525A] mb-10 max-w-2xl mx-auto leading-relaxed">
-            Centralisez vos leads, enrichissez automatiquement vos donnees entreprises,
-            et convertissez plus avec un outil simple et puissant.
+            Acces a +50 000 entreprises francaises verifiees.
+            <br />
+            Revelez-les avec vos credits.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               href="/auth/register"
-              className="w-full sm:w-auto px-8 py-4 text-base font-semibold text-white bg-[#17191F] rounded-[12px] hover:bg-[#2D3039] transition-colors"
+              className="w-full sm:w-auto px-8 py-4 text-base font-semibold text-white bg-[#0066FF] rounded-[12px] hover:bg-[#0052CC] transition-all shadow-lg shadow-[#0066FF]/20"
             >
-              Demarrer gratuitement
+              Commencer gratuitement - 10 credits offerts
             </Link>
             <Link
               href="/demo"
-              className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-4 text-base font-semibold text-[#0D0F14] bg-white border-2 border-[#E2E4E6] rounded-[12px] hover:border-[#17191F] transition-colors"
+              className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-4 text-base font-semibold text-[#0D0F14] bg-white/80 backdrop-blur-sm border-2 border-[#E2E4E6] rounded-[12px] hover:border-[#0066FF] hover:bg-white transition-all"
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <circle cx="12" cy="12" r="10" />
                 <polygon points="10 8 16 12 10 16 10 8" fill="currentColor" />
               </svg>
-              Voir la demo
+              Voir en 2 min
             </Link>
           </div>
 
           <p className="mt-6 text-sm text-[#9BA0A6]">
-            Gratuit pour toujours. Pas de carte bancaire requise.
+            Rejoint par 150+ commerciaux ce mois
           </p>
         </div>
       </section>
@@ -192,6 +194,175 @@ export default function LandingPage() {
                 {company}
               </span>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Problem Section */}
+      <section className="py-24 px-6">
+        <div className="max-w-4xl mx-auto text-center">
+          <h2 className="text-[36px] md:text-[42px] font-bold text-[#0D0F14] mb-6 leading-tight">
+            Prospecter prend trop de temps
+            <br />
+            pour des resultats incertains
+          </h2>
+          <div className="grid md:grid-cols-3 gap-6 mt-12">
+            <div className="p-6 bg-white/80 backdrop-blur-sm border border-[#E2E4E6] rounded-[16px]">
+              <div className="w-12 h-12 mb-4 mx-auto rounded-[12px] bg-[#FEF2F2] flex items-center justify-center">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#DC2626" strokeWidth="2">
+                  <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+                </svg>
+              </div>
+              <h3 className="font-semibold text-[#0D0F14] mb-2">Fichiers perimes</h3>
+              <p className="text-sm text-[#4E525A]">Donnees obsoletes sans date de verification</p>
+            </div>
+            <div className="p-6 bg-white/80 backdrop-blur-sm border border-[#E2E4E6] rounded-[16px]">
+              <div className="w-12 h-12 mb-4 mx-auto rounded-[12px] bg-[#FEF2F2] flex items-center justify-center">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#DC2626" strokeWidth="2">
+                  <path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                  <line x1="23" y1="1" x2="1" y2="23" />
+                </svg>
+              </div>
+              <h3 className="font-semibold text-[#0D0F14] mb-2">Numeros qui ne repondent plus</h3>
+              <p className="text-sm text-[#4E525A]">Contacts non a jour, temps perdu</p>
+            </div>
+            <div className="p-6 bg-white/80 backdrop-blur-sm border border-[#E2E4E6] rounded-[16px]">
+              <div className="w-12 h-12 mb-4 mx-auto rounded-[12px] bg-[#FEF2F2] flex items-center justify-center">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#DC2626" strokeWidth="2">
+                  <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
+                  <line x1="9" y1="22" x2="15" y2="22" />
+                </svg>
+              </div>
+              <h3 className="font-semibold text-[#0D0F14] mb-2">Entreprises fermees</h3>
+              <p className="text-sm text-[#4E525A]">Aucune verification de statut</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Solution Section - 3 Pillars */}
+      <section className="py-24 px-6 bg-gradient-to-b from-[#F5F7F9] to-white">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-[36px] font-bold text-[#0D0F14] mb-4">
+              La solution ProspectHub
+            </h2>
+            <p className="text-lg text-[#4E525A] max-w-2xl mx-auto">
+              Trois piliers pour une prospection efficace
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="relative p-8 bg-white/90 backdrop-blur-sm border border-[#E2E4E6] rounded-[20px] hover:shadow-xl hover:border-[#0066FF] transition-all">
+              <div className="absolute top-6 right-6 w-10 h-10 rounded-full bg-[#0066FF]/10 flex items-center justify-center">
+                <span className="text-sm font-bold text-[#0066FF]">1</span>
+              </div>
+              <div className="w-14 h-14 mb-6 rounded-[14px] bg-gradient-to-br from-[#0066FF] to-[#0052CC] flex items-center justify-center">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2">
+                  <circle cx="12" cy="12" r="10" />
+                  <polyline points="12 6 12 12 16 14" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-bold text-[#0D0F14] mb-3">
+                Fraicheur
+              </h3>
+              <p className="text-[#4E525A] leading-relaxed">
+                Date de verification affichee sur chaque fiche. Vous savez toujours si votre lead est a jour.
+              </p>
+            </div>
+
+            <div className="relative p-8 bg-white/90 backdrop-blur-sm border border-[#E2E4E6] rounded-[20px] hover:shadow-xl hover:border-[#0066FF] transition-all">
+              <div className="absolute top-6 right-6 w-10 h-10 rounded-full bg-[#0066FF]/10 flex items-center justify-center">
+                <span className="text-sm font-bold text-[#0066FF]">2</span>
+              </div>
+              <div className="w-14 h-14 mb-6 rounded-[14px] bg-gradient-to-br from-[#0066FF] to-[#0052CC] flex items-center justify-center">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2">
+                  <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                  <circle cx="12" cy="12" r="3" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-bold text-[#0D0F14] mb-3">
+                Transparence
+              </h3>
+              <p className="text-[#4E525A] leading-relaxed">
+                Source documentee pour chaque donnee. Registre public, partenaire verifie, ou signalement.
+              </p>
+            </div>
+
+            <div className="relative p-8 bg-white/90 backdrop-blur-sm border border-[#E2E4E6] rounded-[20px] hover:shadow-xl hover:border-[#0066FF] transition-all">
+              <div className="absolute top-6 right-6 w-10 h-10 rounded-full bg-[#0066FF]/10 flex items-center justify-center">
+                <span className="text-sm font-bold text-[#0066FF]">3</span>
+              </div>
+              <div className="w-14 h-14 mb-6 rounded-[14px] bg-gradient-to-br from-[#0066FF] to-[#0052CC] flex items-center justify-center">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2">
+                  <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
+                </svg>
+              </div>
+              <h3 className="text-xl font-bold text-[#0D0F14] mb-3">
+                Simplicite
+              </h3>
+              <p className="text-[#4E525A] leading-relaxed">
+                De la recherche au premier email dans le meme outil. Pas de copier-coller entre plateformes.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* How it works - 3 Steps */}
+      <section className="py-24 px-6">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-[36px] font-bold text-[#0D0F14] mb-4">
+              Comment ca marche
+            </h2>
+            <p className="text-lg text-[#4E525A]">
+              De la recherche au contact en 3 etapes
+            </p>
+          </div>
+
+          <div className="space-y-12">
+            <div className="flex flex-col md:flex-row items-center gap-8">
+              <div className="flex-shrink-0 w-16 h-16 rounded-full bg-gradient-to-br from-[#0066FF] to-[#0052CC] flex items-center justify-center text-white text-2xl font-bold shadow-lg">
+                1
+              </div>
+              <div className="flex-1 p-6 bg-white/80 backdrop-blur-sm border border-[#E2E4E6] rounded-[16px]">
+                <h3 className="text-xl font-bold text-[#0D0F14] mb-2">
+                  Recherchez
+                </h3>
+                <p className="text-[#4E525A] leading-relaxed">
+                  Filtrez par secteur d'activite, taille d'entreprise, et localisation. Notre catalogue de +50 000 entreprises francaises verifiees.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex flex-col md:flex-row items-center gap-8">
+              <div className="flex-shrink-0 w-16 h-16 rounded-full bg-gradient-to-br from-[#0066FF] to-[#0052CC] flex items-center justify-center text-white text-2xl font-bold shadow-lg">
+                2
+              </div>
+              <div className="flex-1 p-6 bg-white/80 backdrop-blur-sm border border-[#E2E4E6] rounded-[16px]">
+                <h3 className="text-xl font-bold text-[#0D0F14] mb-2">
+                  Revelez
+                </h3>
+                <p className="text-[#4E525A] leading-relaxed">
+                  Debloquez les coordonnees completes avec vos credits. Email, telephone, dirigeants - toutes les infos pour contacter.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex flex-col md:flex-row items-center gap-8">
+              <div className="flex-shrink-0 w-16 h-16 rounded-full bg-gradient-to-br from-[#0066FF] to-[#0052CC] flex items-center justify-center text-white text-2xl font-bold shadow-lg">
+                3
+              </div>
+              <div className="flex-1 p-6 bg-white/80 backdrop-blur-sm border border-[#E2E4E6] rounded-[16px]">
+                <h3 className="text-xl font-bold text-[#0D0F14] mb-2">
+                  Contactez
+                </h3>
+                <p className="text-[#4E525A] leading-relaxed">
+                  Lancez vos sequences d'emails, suivez dans le pipeline, et convertissez. Tout se passe dans ProspectHub.
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -340,28 +511,34 @@ export default function LandingPage() {
       </section>
 
       {/* CTA */}
-      <section className="py-24 px-6 bg-[#17191F]">
-        <div className="max-w-3xl mx-auto text-center">
-          <h2 className="text-[36px] font-bold text-white mb-4">
-            Pret a booster vos ventes ?
+      <section className="py-24 px-6 bg-gradient-to-br from-[#0066FF] to-[#0052CC] relative overflow-hidden">
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PHBhdHRlcm4gaWQ9ImdyaWQiIHdpZHRoPSI2MCIgaGVpZ2h0PSI2MCIgcGF0dGVyblVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGggZD0iTSAxMCAwIEwgMCAwIDAgMTAiIGZpbGw9Im5vbmUiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMC41IiBvcGFjaXR5PSIwLjEiLz48L3BhdHRlcm4+PC9kZWZzPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JpZCkiLz48L3N2Zz4=')] opacity-30" />
+        <div className="max-w-3xl mx-auto text-center relative z-10">
+          <h2 className="text-[36px] md:text-[42px] font-bold text-white mb-4 leading-tight">
+            Votre prochain rendez-vous
+            <br />
+            commence par un lead
           </h2>
-          <p className="text-lg text-white/70 mb-10">
-            Rejoignez des centaines de PME qui utilisent ProspectHub pour convertir plus de prospects.
+          <p className="text-lg text-white/90 mb-10 max-w-xl mx-auto">
+            Rejoignez 150+ commerciaux qui prospectent avec des donnees a jour
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               href="/auth/register"
-              className="w-full sm:w-auto px-8 py-4 text-base font-semibold text-[#17191F] bg-white rounded-[12px] hover:bg-[#F5F7F9] transition-colors"
+              className="w-full sm:w-auto px-8 py-4 text-base font-semibold text-[#0066FF] bg-white rounded-[12px] hover:bg-[#F5F7F9] transition-all shadow-xl hover:shadow-2xl hover:scale-105"
             >
-              Commencer gratuitement
+              Creer mon compte gratuit
             </Link>
             <Link
               href="/demo"
-              className="w-full sm:w-auto px-8 py-4 text-base font-semibold text-white border-2 border-white/30 rounded-[12px] hover:border-white transition-colors"
+              className="w-full sm:w-auto px-8 py-4 text-base font-semibold text-white border-2 border-white/40 rounded-[12px] hover:border-white hover:bg-white/10 transition-all backdrop-blur-sm"
             >
-              Voir la demo
+              Voir en 2 min
             </Link>
           </div>
+          <p className="mt-6 text-sm text-white/80">
+            10 credits offerts. Aucune carte bancaire requise.
+          </p>
         </div>
       </section>
 

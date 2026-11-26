@@ -1,7 +1,10 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import Link from 'next/link'
+import { ImportCSVModal } from '@/components/modals/ImportCSVModal'
+import { VerificationBadge } from '@/components/ui/VerificationBadge'
+import { EmptyState } from '@/components/ui/EmptyState'
 
 interface Lead {
   id: number
@@ -183,9 +186,14 @@ function LeadDetailPanel({ lead, onClose }: { lead: Lead; onClose: () => void })
                     <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
                   </svg>
                 </div>
-                <div>
+                <div className="flex-1 min-w-0">
                   <p className="text-xs text-[#9BA0A6]">Telephone</p>
-                  <p className="text-sm text-[#0D0F14]">{lead.phone || '-'}</p>
+                  <p className="text-sm text-[#0D0F14] truncate">{lead.phone || '-'}</p>
+                  {lead.phone && (
+                    <div className="mt-1">
+                      <VerificationBadge type="bloctel" />
+                    </div>
+                  )}
                 </div>
               </div>
               <div className="flex items-center gap-3">
@@ -207,6 +215,13 @@ function LeadDetailPanel({ lead, onClose }: { lead: Lead; onClose: () => void })
             <h4 className="text-sm font-semibold text-[#0D0F14] uppercase tracking-wider mb-3">
               Informations lead
             </h4>
+
+            {/* Badges de verification */}
+            <div className="flex flex-wrap gap-2 mb-4">
+              <VerificationBadge type="verified" date={lead.created_at} />
+              <VerificationBadge type="source" source={lead.source || undefined} />
+            </div>
+
             <div className="grid grid-cols-2 gap-4">
               <div className="p-3 bg-[#F5F7F9] rounded-[10px]">
                 <p className="text-xs text-[#9BA0A6] mb-1">Score</p>
@@ -275,6 +290,7 @@ export function LeadsTable({ leads }: LeadsTableProps) {
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedLeads, setSelectedLeads] = useState<number[]>([])
   const [selectedLead, setSelectedLead] = useState<Lead | null>(null)
+  const [isImportModalOpen, setIsImportModalOpen] = useState(false)
 
   const tabCounts = {
     all: leads.length,
@@ -317,6 +333,36 @@ export function LeadsTable({ leads }: LeadsTableProps) {
       prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
     )
   }
+
+  const handleImport = useCallback(async (leadsData: Record<string, string>[]) => {
+    try {
+      const response = await fetch('/api/leads/import', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ leads: leadsData }),
+      })
+
+      const result = await response.json()
+
+      if (!response.ok) {
+        throw new Error(result.message || 'Erreur import')
+      }
+
+      // Reload page to show new leads
+      window.location.reload()
+
+      return {
+        success: result.imported || 0,
+        errors: result.errors || 0,
+      }
+    } catch (error) {
+      console.error('Import error:', error)
+      return {
+        success: 0,
+        errors: leadsData.length,
+      }
+    }
+  }, [])
 
   return (
     <>
@@ -385,6 +431,15 @@ export function LeadsTable({ leads }: LeadsTableProps) {
           </div>
           <div className="flex items-center gap-2">
             <button
+              onClick={() => setIsImportModalOpen(true)}
+              className="flex items-center gap-2 h-9 px-3 text-sm text-[#0D0F14] border border-[#E2E4E6] rounded-[8px] hover:bg-[#F5F7F9] transition-colors"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12" />
+              </svg>
+              Importer
+            </button>
+            <button
               className="flex items-center gap-2 h-9 px-3 text-sm text-[#9BA0A6] border border-[#E2E4E6] rounded-[8px] cursor-not-allowed"
               disabled
               title="Bientot disponible"
@@ -433,21 +488,24 @@ export function LeadsTable({ leads }: LeadsTableProps) {
               </tr>
             </thead>
             <tbody>
-              {filteredLeads.length === 0 ? (
+              {filteredLeads.length === 0 && !searchQuery ? (
                 <tr>
-                  <td colSpan={8} className="px-4 py-12 text-center text-[#4E525A]">
+                  <td colSpan={8}>
+                    <EmptyState type="leads" />
+                  </td>
+                </tr>
+              ) : filteredLeads.length === 0 ? (
+                <tr>
+                  <td colSpan={8} className="px-4 py-12 text-center text-[#4E525A] dark:text-[#8B949E]">
                     <div className="flex flex-col items-center">
-                      <div className="w-12 h-12 mb-4 rounded-full bg-[#F5F7F9] flex items-center justify-center">
+                      <div className="w-12 h-12 mb-4 rounded-full bg-[#F5F7F9] dark:bg-[#161B22] flex items-center justify-center">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#9BA0A6" strokeWidth="2">
-                          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-                          <circle cx="9" cy="7" r="4" />
-                          <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
+                          <circle cx="11" cy="11" r="8" />
+                          <path d="M21 21l-4.35-4.35" />
                         </svg>
                       </div>
-                      <p className="font-medium mb-1">Aucun lead trouve</p>
-                      <p className="text-sm">
-                        {searchQuery ? 'Essayez une autre recherche.' : 'Commencez par importer ou creer votre premier lead.'}
-                      </p>
+                      <p className="font-medium mb-1 text-[#0D0F14] dark:text-[#E6EDF3]">Aucun résultat</p>
+                      <p className="text-sm">Essayez une autre recherche.</p>
                     </div>
                   </td>
                 </tr>
@@ -542,7 +600,7 @@ export function LeadsTable({ leads }: LeadsTableProps) {
             <p className="text-sm text-[#4E525A]">
               {selectedLeads.length > 0
                 ? `${selectedLeads.length} selectionne(s) sur ${filteredLeads.length}`
-                : `${filteredLeads.length} lead${filteredLeads.length > 1 ? 's' : ''}`}
+                : `${filteredLeads.length} entreprise${filteredLeads.length > 1 ? 's correspondent' : ' correspond'} a votre recherche`}
             </p>
             <div className="flex items-center gap-2">
               <button
@@ -566,6 +624,13 @@ export function LeadsTable({ leads }: LeadsTableProps) {
       {selectedLead && (
         <LeadDetailPanel lead={selectedLead} onClose={() => setSelectedLead(null)} />
       )}
+
+      {/* Import CSV Modal */}
+      <ImportCSVModal
+        isOpen={isImportModalOpen}
+        onClose={() => setIsImportModalOpen(false)}
+        onImport={handleImport}
+      />
     </>
   )
 }

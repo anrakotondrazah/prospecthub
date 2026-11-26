@@ -41,7 +41,7 @@ export default async function AppLayout({
         plan="Free"
       />
       <main className="lg:ml-[260px] p-4 lg:p-6">
-        <AppShell organizationId={profile.organization_id}>
+        <AppShell userId={user.id} organizationId={profile.organization_id}>
           {children}
         </AppShell>
       </main>

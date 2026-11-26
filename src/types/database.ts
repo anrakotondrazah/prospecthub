@@ -452,6 +452,21 @@ export type Database = {
         Insert: Omit<Database['public']['Tables']['list_members']['Row'], 'id' | 'added_at'>
         Update: Partial<Database['public']['Tables']['list_members']['Insert']>
       }
+      notifications: {
+        Row: {
+          id: number
+          organization_id: number
+          user_id: string
+          type: 'lead_assigned' | 'task_due' | 'deal_won' | 'mention'
+          title: string
+          message: string | null
+          link: string | null
+          is_read: boolean
+          created_at: string
+        }
+        Insert: Omit<Database['public']['Tables']['notifications']['Row'], 'id' | 'created_at'>
+        Update: Partial<Database['public']['Tables']['notifications']['Insert']>
+      }
     }
     Views: {
       [_ in never]: never

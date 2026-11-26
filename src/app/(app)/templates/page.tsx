@@ -1,36 +1,59 @@
-import { FileText } from 'lucide-react'
+import { createClient } from '@/lib/supabase/server'
+import { redirect } from 'next/navigation'
+import { TemplatesPageClient } from './TemplatesPageClient'
 
-export const instant = false
+export default async function TemplatesPage() {
+  const supabase = await createClient()
 
-export default function TemplatesPage() {
+  // Auth check
+  const {
+    data: { user },
+    error: authError,
+  } = await supabase.auth.getUser()
+
+  if (authError || !user) {
+    redirect('/auth/login')
+  }
+
+  // Get profile with organization_id
+  const { data: profile, error: profileError } = await supabase
+    .from('profiles')
+    .select('organization_id')
+    .eq('id', user.id)
+    .single()
+
+  if (profileError || !profile?.organization_id) {
+    redirect('/onboarding')
+  }
+
+  // Fetch templates
+  const { data: templates, error: templatesError } = await supabase
+    .from('message_templates')
+    .select('*')
+    .eq('organization_id', profile.organization_id)
+    .order('created_at', { ascending: false })
+
+  if (templatesError) {
+    console.error('Error fetching templates:', templatesError)
+  }
+
+  // Fetch categories
+  const { data: categories, error: categoriesError } = await supabase
+    .from('template_categories')
+    .select('id, name, color')
+    .eq('organization_id', profile.organization_id)
+    .order('display_order', { ascending: true })
+
+  if (categoriesError) {
+    console.error('Error fetching categories:', categoriesError)
+  }
+
   return (
-    <div>
-      <div className="mb-6">
-        <h1 className="text-[23.5px] font-semibold text-[#0D0F14] mb-1">Templates</h1>
-        <p className="text-sm text-[#4E525A]">
-          Gerez vos modeles d'emails et de documents
-        </p>
-      </div>
-
-      <div className="bg-white rounded-[14px] border border-[#E2E4E6] p-12 text-center">
-        <div className="w-20 h-20 mx-auto mb-5 rounded-[14px] bg-[#F5F7F9] flex items-center justify-center">
-          <FileText className="w-12 h-12 text-[#9BA0A6]" strokeWidth={1.5} />
-        </div>
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FFF3E0] text-[#E65100] text-xs font-medium mb-4">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#E65100]"></span>
-          Bientot disponible
-        </div>
-        <h2 className="text-xl font-semibold text-[#0D0F14] mb-2">Templates email</h2>
-        <p className="text-[#4E525A] max-w-md mx-auto mb-6">
-          Creez et personnalisez des modeles d'emails reutilisables pour accelerer vos communications.
-        </p>
-        <button
-          className="px-5 py-2.5 rounded-[10px] bg-[#F5F7F9] text-[#9BA0A6] text-sm font-medium cursor-not-allowed"
-          disabled
-        >
-          Etre notifie
-        </button>
-      </div>
-    </div>
+    <TemplatesPageClient
+      initialTemplates={templates || []}
+      initialCategories={categories || []}
+      organizationId={profile.organization_id}
+      userId={user.id}
+    />
   )
 }

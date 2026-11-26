@@ -467,6 +467,136 @@ export type Database = {
         Insert: Omit<Database['public']['Tables']['notifications']['Row'], 'id' | 'created_at'>
         Update: Partial<Database['public']['Tables']['notifications']['Insert']>
       }
+      message_templates: {
+        Row: {
+          id: number
+          uuid: string
+          organization_id: number
+          name: string
+          subject: string | null
+          body: string
+          type: 'email' | 'sms' | 'whatsapp' | 'linkedin'
+          category: string | null
+          tokens: Json
+          is_active: boolean
+          usage_count: number
+          last_used_at: string | null
+          created_by: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: Omit<Database['public']['Tables']['message_templates']['Row'], 'id' | 'uuid' | 'usage_count' | 'created_at' | 'updated_at'>
+        Update: Partial<Database['public']['Tables']['message_templates']['Insert']>
+      }
+      template_categories: {
+        Row: {
+          id: number
+          organization_id: number
+          name: string
+          description: string | null
+          color: string
+          display_order: number
+          created_at: string
+        }
+        Insert: Omit<Database['public']['Tables']['template_categories']['Row'], 'id' | 'created_at'>
+        Update: Partial<Database['public']['Tables']['template_categories']['Insert']>
+      }
+      products: {
+        Row: {
+          id: number
+          uuid: string
+          organization_id: number
+          sku: string | null
+          name: string
+          description: string | null
+          unit_price: number
+          currency: string
+          unit: string
+          tax_rate: number
+          category: string | null
+          is_recurring: boolean
+          billing_frequency: string | null
+          is_active: boolean
+          image_url: string | null
+          metadata: Json | null
+          created_by: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: Omit<Database['public']['Tables']['products']['Row'], 'id' | 'uuid' | 'created_at' | 'updated_at'>
+        Update: Partial<Database['public']['Tables']['products']['Insert']>
+      }
+      quotes: {
+        Row: {
+          id: number
+          uuid: string
+          organization_id: number
+          quote_number: string
+          name: string
+          status: 'draft' | 'pending' | 'sent' | 'approved' | 'rejected' | 'expired'
+          deal_id: number | null
+          company_id: number | null
+          lead_id: number | null
+          owner_id: string | null
+          recipient_name: string | null
+          recipient_email: string | null
+          recipient_phone: string | null
+          recipient_company: string | null
+          recipient_address: string | null
+          quote_date: string
+          valid_until: string | null
+          sent_at: string | null
+          approved_at: string | null
+          rejected_at: string | null
+          subtotal: number
+          discount_type: 'percentage' | 'fixed'
+          discount_value: number
+          discount_amount: number
+          tax_amount: number
+          total: number
+          currency: string
+          introduction: string | null
+          terms: string | null
+          notes: string | null
+          signature_url: string | null
+          pdf_url: string | null
+          pdf_generated_at: string | null
+          metadata: Json | null
+          created_by: string | null
+          created_at: string
+          updated_at: string
+          deleted_at: string | null
+        }
+        Insert: Omit<Database['public']['Tables']['quotes']['Row'], 'id' | 'uuid' | 'subtotal' | 'discount_amount' | 'tax_amount' | 'total' | 'created_at' | 'updated_at'>
+        Update: Partial<Database['public']['Tables']['quotes']['Insert']>
+      }
+      quote_lines: {
+        Row: {
+          id: number
+          uuid: string
+          quote_id: number
+          product_id: number | null
+          name: string
+          description: string | null
+          sku: string | null
+          quantity: number
+          unit: string
+          unit_price: number
+          discount_type: 'percentage' | 'fixed'
+          discount_value: number
+          discount_amount: number
+          tax_rate: number
+          tax_amount: number
+          subtotal: number
+          total: number
+          display_order: number
+          metadata: Json | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: Omit<Database['public']['Tables']['quote_lines']['Row'], 'id' | 'uuid' | 'discount_amount' | 'tax_amount' | 'subtotal' | 'total' | 'created_at' | 'updated_at'>
+        Update: Partial<Database['public']['Tables']['quote_lines']['Insert']>
+      }
     }
     Views: {
       [_ in never]: never

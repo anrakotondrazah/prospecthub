@@ -9,11 +9,13 @@ import {
   PayButton,
   FillButton,
   AnimatedCheckbox,
+  FillCheckbox,
 } from '@/components/ui/buttons'
 import { TabBar } from '@/components/ui/TabBar'
 
 export default function UIDemoPage() {
-  const [checked, setChecked] = useState(false)
+  const [checked1, setChecked1] = useState(false)
+  const [checked2, setChecked2] = useState(false)
   const [activeTab, setActiveTab] = useState('tab1')
 
   const tabs = [
@@ -24,10 +26,10 @@ export default function UIDemoPage() {
   ]
 
   return (
-    <div className="p-6 space-y-12">
+    <div className="p-6 space-y-12 max-w-4xl">
       <div>
         <h1 className="text-2xl font-bold text-foreground mb-2">UI Components Demo</h1>
-        <p className="text-muted-foreground">Systeme de design coherent avec animations fluides</p>
+        <p className="text-muted-foreground">Systeme de design coherent - animations fluides 250ms</p>
       </div>
 
       {/* Action Buttons */}
@@ -47,7 +49,7 @@ export default function UIDemoPage() {
           </div>
 
           <div className="space-y-2">
-            <p className="text-sm text-muted-foreground">Pay (icon rotate)</p>
+            <p className="text-sm text-muted-foreground">Pay (icons rotation)</p>
             <PayButton onClick={() => alert('Pay clicked')}>Payer</PayButton>
           </div>
         </div>
@@ -56,7 +58,7 @@ export default function UIDemoPage() {
       {/* Icon Buttons */}
       <section className="space-y-4">
         <h2 className="text-lg font-semibold text-foreground border-b border-border pb-2">
-          Icon Buttons (avec tooltip)
+          Icon Buttons (tooltip + animation)
         </h2>
         <div className="flex flex-wrap items-center gap-8">
           <div className="space-y-2">
@@ -74,7 +76,7 @@ export default function UIDemoPage() {
       {/* Fill Buttons */}
       <section className="space-y-4">
         <h2 className="text-lg font-semibold text-foreground border-b border-border pb-2">
-          Fill Buttons (hover effect)
+          Fill Buttons (hover 250ms)
         </h2>
         <div className="flex flex-wrap items-center gap-4">
           <FillButton variant="default">Default</FillButton>
@@ -83,72 +85,102 @@ export default function UIDemoPage() {
         </div>
       </section>
 
-      {/* Checkbox */}
+      {/* Checkboxes */}
       <section className="space-y-4">
         <h2 className="text-lg font-semibold text-foreground border-b border-border pb-2">
-          Animated Checkbox
+          Animated Checkboxes
         </h2>
-        <div className="flex items-center gap-3">
-          <AnimatedCheckbox
-            id="demo-checkbox"
-            checked={checked}
-            onChange={setChecked}
-          />
-          <label htmlFor="demo-checkbox" className="text-foreground cursor-pointer">
-            {checked ? 'Selectionne' : 'Non selectionne'}
-          </label>
+        <div className="flex items-center gap-8">
+          <div className="flex items-center gap-3">
+            <AnimatedCheckbox
+              id="demo-checkbox-1"
+              checked={checked1}
+              onChange={setChecked1}
+            />
+            <label htmlFor="demo-checkbox-1" className="text-foreground cursor-pointer">
+              SVG Stroke
+            </label>
+          </div>
+
+          <div className="flex items-center gap-3">
+            <FillCheckbox
+              id="demo-checkbox-2"
+              checked={checked2}
+              onChange={setChecked2}
+            />
+            <label htmlFor="demo-checkbox-2" className="text-foreground cursor-pointer">
+              Fill Diagonal
+            </label>
+          </div>
         </div>
       </section>
 
-      {/* Tab Bar */}
-      <section className="space-y-4">
+      {/* Tab Bar Variants */}
+      <section className="space-y-6">
         <h2 className="text-lg font-semibold text-foreground border-b border-border pb-2">
-          Tab Bar (iOS-style pill)
+          Tab Bar (iOS spring animation)
         </h2>
-        <div className="max-w-md">
+
+        <div className="space-y-3">
+          <p className="text-sm text-muted-foreground">Pill variant (iOS-style)</p>
           <TabBar
             tabs={tabs}
             defaultTab="tab1"
+            variant="pill"
             onChange={setActiveTab}
           />
-          <p className="mt-4 text-sm text-muted-foreground">
-            Tab active: <span className="text-foreground font-medium">{activeTab}</span>
-          </p>
         </div>
+
+        <div className="space-y-3">
+          <p className="text-sm text-muted-foreground">Underline variant</p>
+          <TabBar
+            tabs={tabs}
+            defaultTab="tab2"
+            variant="underline"
+          />
+        </div>
+
+        <div className="space-y-3">
+          <p className="text-sm text-muted-foreground">Dot variant (Material)</p>
+          <TabBar
+            tabs={tabs}
+            defaultTab="tab3"
+            variant="dot"
+          />
+        </div>
+
+        <p className="text-sm text-muted-foreground">
+          Tab active: <span className="text-foreground font-medium">{activeTab}</span>
+        </p>
       </section>
 
-      {/* Hover Effects Demo */}
+      {/* Hover Effect */}
       <section className="space-y-4">
         <h2 className="text-lg font-semibold text-foreground border-b border-border pb-2">
-          Hover Effects
+          Hover Lift (subtle elevation)
         </h2>
         <div className="flex flex-wrap gap-4">
-          <div className="hover-lift p-4 bg-card border border-border rounded-xl cursor-pointer">
-            <p className="font-medium">Hover Lift</p>
-            <p className="text-sm text-muted-foreground">Subtle elevation</p>
+          <div className="hover-lift p-6 bg-card border border-border rounded-xl cursor-pointer">
+            <p className="font-medium text-foreground">Card avec Hover Lift</p>
+            <p className="text-sm text-muted-foreground mt-1">Elevation subtile au survol</p>
           </div>
 
-          <div className="hover-scale p-4 bg-card border border-border rounded-xl cursor-pointer">
-            <p className="font-medium">Hover Scale</p>
-            <p className="text-sm text-muted-foreground">Slight zoom</p>
-          </div>
-
-          <div className="hover-glow p-4 bg-card border border-border rounded-xl cursor-pointer">
-            <p className="font-medium">Hover Glow</p>
-            <p className="text-sm text-muted-foreground">Accent glow</p>
+          <div className="hover-lift p-6 bg-card border border-border rounded-xl cursor-pointer">
+            <p className="font-medium text-foreground">Autre Card</p>
+            <p className="text-sm text-muted-foreground mt-1">Meme effet coherent</p>
           </div>
         </div>
       </section>
 
-      {/* Scrollbar Demo */}
+      {/* Scrollbar Ghost */}
       <section className="space-y-4">
         <h2 className="text-lg font-semibold text-foreground border-b border-border pb-2">
-          Modern Scrollbar
+          Scrollbar Ghost (apparait au survol)
         </h2>
-        <div className="h-32 overflow-y-auto bg-card border border-border rounded-xl p-4">
+        <div className="h-40 overflow-y-auto bg-card border border-border rounded-xl p-4 scrollbar-ghost">
           {Array.from({ length: 20 }).map((_, i) => (
             <p key={i} className="text-muted-foreground py-1">
-              Ligne {i + 1} - Scrollbar minimaliste et discrete
+              Ligne {i + 1} - Scrollbar invisible, apparait au survol
             </p>
           ))}
         </div>

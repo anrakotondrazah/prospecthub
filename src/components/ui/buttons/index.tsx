@@ -56,7 +56,7 @@ export const SaveButton = forwardRef<HTMLButtonElement, {
 SaveButton.displayName = 'SaveButton'
 
 // ============================================
-// BOUTON DOWNLOAD - Rond avec tooltip
+// BOUTON DOWNLOAD - Meme timing que FillButton (0.25s)
 // ============================================
 export const DownloadButton = forwardRef<HTMLButtonElement, {
   onClick?: () => void
@@ -66,16 +66,16 @@ export const DownloadButton = forwardRef<HTMLButtonElement, {
     <button
       ref={ref}
       onClick={onClick}
-      className="group w-[50px] h-[50px] border-none rounded-full bg-foreground dark:bg-[#1b1b1b] flex flex-col items-center justify-center cursor-pointer relative transition-all duration-300 shadow-md hover:bg-[#965EFF] active:scale-95"
+      className="group w-[50px] h-[50px] border-none rounded-full bg-muted dark:bg-[#21262D] flex flex-col items-center justify-center cursor-pointer relative transition-all duration-[250ms] ease-out shadow-md hover:bg-[#58A6FF] dark:hover:bg-[#58A6FF] active:scale-95"
     >
       <svg
-        className="w-4 h-4 fill-[#d6b2ff] transition-all duration-300 group-hover:fill-white group-hover:animate-slide-down"
+        className="w-4 h-4 fill-[#58A6FF] transition-all duration-[250ms] ease-out group-hover:fill-white group-hover:-translate-y-0.5"
         viewBox="0 0 384 512"
       >
         <path d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8 224 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z" />
       </svg>
-      <div className="w-[18px] h-[5px] border-b-2 border-l-2 border-r-2 border-[#b68fff] transition-colors duration-300 group-hover:border-white" />
-      <span className="absolute right-[-105px] opacity-0 bg-foreground dark:bg-[#0c0c0c] text-background dark:text-white py-1.5 px-2.5 rounded-[5px] flex items-center justify-center transition-opacity duration-200 pointer-events-none tracking-wide group-hover:opacity-100 before:absolute before:content-[''] before:w-2.5 before:h-2.5 before:bg-foreground dark:before:bg-[#0c0c0c] before:rotate-45 before:-left-1">
+      <div className="w-[18px] h-[5px] border-b-2 border-l-2 border-r-2 border-[#58A6FF] transition-all duration-[250ms] ease-out group-hover:border-white" />
+      <span className="absolute left-full ml-3 opacity-0 bg-foreground dark:bg-[#161B22] text-background dark:text-white py-1.5 px-3 rounded-lg text-sm font-medium flex items-center justify-center transition-all duration-[250ms] ease-out pointer-events-none tracking-wide group-hover:opacity-100 shadow-lg whitespace-nowrap">
         {tooltip}
       </span>
     </button>
@@ -84,7 +84,7 @@ export const DownloadButton = forwardRef<HTMLButtonElement, {
 DownloadButton.displayName = 'DownloadButton'
 
 // ============================================
-// BOUTON UPLOAD - Rond avec tooltip (compatible download)
+// BOUTON UPLOAD - Meme timing que FillButton (0.25s)
 // ============================================
 export const UploadButton = forwardRef<HTMLButtonElement, {
   onClick?: () => void
@@ -94,16 +94,16 @@ export const UploadButton = forwardRef<HTMLButtonElement, {
     <button
       ref={ref}
       onClick={onClick}
-      className="group w-[50px] h-[50px] border-none rounded-full bg-foreground dark:bg-[#1b1b1b] flex flex-col items-center justify-center cursor-pointer relative transition-all duration-300 shadow-md hover:bg-[#22c55e] active:scale-95"
+      className="group w-[50px] h-[50px] border-none rounded-full bg-muted dark:bg-[#21262D] flex flex-col items-center justify-center cursor-pointer relative transition-all duration-[250ms] ease-out shadow-md hover:bg-[#22c55e] dark:hover:bg-[#22c55e] active:scale-95"
     >
-      <div className="w-[18px] h-[5px] border-t-2 border-l-2 border-r-2 border-[#86efac] transition-colors duration-300 group-hover:border-white" />
+      <div className="w-[18px] h-[5px] border-t-2 border-l-2 border-r-2 border-[#22c55e] transition-all duration-[250ms] ease-out group-hover:border-white" />
       <svg
-        className="w-4 h-4 fill-[#86efac] transition-all duration-300 group-hover:fill-white group-hover:animate-slide-up"
+        className="w-4 h-4 fill-[#22c55e] transition-all duration-[250ms] ease-out group-hover:fill-white group-hover:translate-y-0.5"
         viewBox="0 0 384 512"
       >
         <path d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2l105.4 105.4c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z" />
       </svg>
-      <span className="absolute right-[-90px] opacity-0 bg-foreground dark:bg-[#0c0c0c] text-background dark:text-white py-1.5 px-2.5 rounded-[5px] flex items-center justify-center transition-opacity duration-200 pointer-events-none tracking-wide group-hover:opacity-100 before:absolute before:content-[''] before:w-2.5 before:h-2.5 before:bg-foreground dark:before:bg-[#0c0c0c] before:rotate-45 before:-left-1">
+      <span className="absolute left-full ml-3 opacity-0 bg-foreground dark:bg-[#161B22] text-background dark:text-white py-1.5 px-3 rounded-lg text-sm font-medium flex items-center justify-center transition-all duration-[250ms] ease-out pointer-events-none tracking-wide group-hover:opacity-100 shadow-lg whitespace-nowrap">
         {tooltip}
       </span>
     </button>
@@ -112,7 +112,7 @@ export const UploadButton = forwardRef<HTMLButtonElement, {
 UploadButton.displayName = 'UploadButton'
 
 // ============================================
-// BOUTON PAY - Icons rotation
+// BOUTON PAY - Icons rotation (wallet, card, payment, dollar, check)
 // ============================================
 export const PayButton = forwardRef<HTMLButtonElement, {
   onClick?: () => void
@@ -122,17 +122,36 @@ export const PayButton = forwardRef<HTMLButtonElement, {
     <button
       ref={ref}
       onClick={onClick}
-      className="group relative py-3 px-6 text-base bg-foreground dark:bg-[#1a1a1a] text-background dark:text-white border-none rounded-lg cursor-pointer flex items-center gap-2.5 transition-all duration-300 hover:-translate-y-0.5 hover:shadow-lg active:scale-95"
+      className="pay-btn group"
     >
-      <div className="relative w-6 h-6">
-        <svg className="absolute inset-0 w-6 h-6 text-[#22c55e] opacity-100 group-hover:opacity-0 transition-opacity" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+      <div className="icon-container">
+        {/* Wallet - default */}
+        <svg className="icon default-icon wallet-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <path d="M21 12V7H5a2 2 0 0 1 0-4h14v4" />
+          <path d="M3 5v14a2 2 0 0 0 2 2h16v-5" />
+          <path d="M18 12a2 2 0 0 0 0 4h4v-4Z" />
         </svg>
-        <svg className="absolute inset-0 w-6 h-6 text-[#22c55e] opacity-0 group-hover:animate-icon-rotate" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+        {/* Card */}
+        <svg className="icon card-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <rect width="20" height="14" x="2" y="5" rx="2" />
+          <line x1="2" x2="22" y1="10" y2="10" />
+        </svg>
+        {/* Payment */}
+        <svg className="icon payment-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+        </svg>
+        {/* Dollar */}
+        <svg className="icon dollar-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <circle cx="12" cy="12" r="10" />
+          <path d="M12 6v12M15 9.5c0-1.38-1.34-2.5-3-2.5s-3 1.12-3 2.5 1.34 2.5 3 2.5 3 1.12 3 2.5-1.34 2.5-3 2.5" />
+        </svg>
+        {/* Check */}
+        <svg className="icon check-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+          <polyline points="22 4 12 14.01 9 11.01" />
         </svg>
       </div>
-      <span className="font-semibold">{children}</span>
+      <span className="btn-text">{children}</span>
     </button>
   )
 )
@@ -157,7 +176,7 @@ export const FillButton = forwardRef<HTMLButtonElement, {
       <button
         ref={ref}
         onClick={onClick}
-        className={`relative py-3.5 px-6 border-none rounded-[15px] z-[1] font-bold text-[17px] shadow-md transition-all duration-250 overflow-hidden before:content-[''] before:absolute before:top-0 before:left-0 before:h-full before:w-0 before:rounded-[15px] before:z-[-1] before:shadow-md before:transition-all before:duration-250 hover:before:w-full active:scale-95 ${variantClasses[variant]}`}
+        className={`relative py-3.5 px-6 border-none rounded-[15px] z-[1] font-bold text-[17px] shadow-md transition-all duration-[250ms] ease-out overflow-hidden before:content-[''] before:absolute before:top-0 before:left-0 before:h-full before:w-0 before:rounded-[15px] before:z-[-1] before:shadow-md before:transition-all before:duration-[250ms] before:ease-out hover:before:w-full active:scale-95 ${variantClasses[variant]}`}
       >
         {children}
       </button>
@@ -167,14 +186,14 @@ export const FillButton = forwardRef<HTMLButtonElement, {
 FillButton.displayName = 'FillButton'
 
 // ============================================
-// CHECKBOX ANIMEE
+// CHECKBOX ANIMEE - SVG stroke animation
 // ============================================
 export const AnimatedCheckbox = forwardRef<HTMLInputElement, {
   checked?: boolean
   onChange?: (checked: boolean) => void
   id?: string
 }>(
-  ({ checked, onChange, id = 'cbx' }, ref) => (
+  ({ checked = false, onChange, id = 'cbx' }, ref) => (
     <div className="inline-flex items-center">
       <input
         ref={ref}
@@ -186,15 +205,15 @@ export const AnimatedCheckbox = forwardRef<HTMLInputElement, {
       />
       <label
         htmlFor={id}
-        className="cursor-pointer relative w-[18px] h-[18px] before:content-[''] before:absolute before:-top-[15px] before:-left-[15px] before:w-12 before:h-12 before:rounded-full before:bg-foreground/5 before:opacity-0 before:transition-opacity before:duration-200 hover:before:opacity-100"
+        className="check cursor-pointer relative w-[18px] h-[18px]"
       >
-        <svg className="relative z-[1] w-[18px] h-[18px] fill-none stroke-muted-foreground stroke-[1.5] transition-all duration-200 peer-checked:stroke-blue-500 hover:stroke-blue-500" viewBox="0 0 18 18">
+        <svg viewBox="0 0 18 18" className="w-[18px] h-[18px]">
           <path
-            className="stroke-dasharray-[60] stroke-dashoffset-0 peer-checked:stroke-dashoffset-[60] transition-all duration-300"
+            className="check-path"
             d="M1 9a8 8 0 1 0 16 0A8 8 0 0 0 1 9z"
           />
           <polyline
-            className="stroke-dasharray-[22] stroke-dashoffset-[66] peer-checked:stroke-dashoffset-[42] transition-all duration-200 delay-150"
+            className="check-mark"
             points="5 9 8 12 13 6"
           />
         </svg>
@@ -203,3 +222,27 @@ export const AnimatedCheckbox = forwardRef<HTMLInputElement, {
   )
 )
 AnimatedCheckbox.displayName = 'AnimatedCheckbox'
+
+// ============================================
+// CHECKBOX FILL - Animation remplissage diagonal
+// ============================================
+export const FillCheckbox = forwardRef<HTMLInputElement, {
+  checked?: boolean
+  onChange?: (checked: boolean) => void
+  id?: string
+}>(
+  ({ checked = false, onChange, id = 'fill-cbx' }, ref) => (
+    <label className="checkBox block cursor-pointer w-[30px] h-[30px] rounded-[10px] relative overflow-hidden shadow-[0_0_0_2px_var(--foreground)]">
+      <input
+        ref={ref}
+        type="checkbox"
+        id={id}
+        checked={checked}
+        onChange={(e) => onChange?.(e.target.checked)}
+        className="absolute left-[50px] invisible peer"
+      />
+      <div className="w-[60px] h-[60px] bg-foreground absolute -top-[52px] -left-[52px] rotate-45 z-[100] transition-all duration-300 ease-out peer-checked:left-[-10px] peer-checked:top-[-10px]" />
+    </label>
+  )
+)
+FillCheckbox.displayName = 'FillCheckbox'

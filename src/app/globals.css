@@ -182,7 +182,7 @@ body {
 }
 
 /* ============================================
-   SCROLLBAR - Modern minimal design
+   SCROLLBAR - Ghost style (appears on hover/scroll)
    ============================================ */
 
 /* Webkit browsers (Chrome, Safari, Edge) */
@@ -196,23 +196,55 @@ body {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--muted-foreground);
+  background: transparent;
   border-radius: 3px;
-  opacity: 0.5;
+  transition: background 0.3s ease;
 }
 
-::-webkit-scrollbar-thumb:hover {
+::-webkit-scrollbar-button {
+  display: none;
+  width: 0;
+  height: 0;
+}
+
+/* Show scrollbar on hover */
+*:hover::-webkit-scrollbar-thumb {
+  background: var(--muted-foreground);
+}
+
+*:hover::-webkit-scrollbar-thumb:hover {
   background: var(--foreground);
-  opacity: 0.8;
 }
 
-/* Firefox */
+/* Firefox - thin scrollbar, auto-hide not supported natively */
 * {
   scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+*:hover {
   scrollbar-color: var(--muted-foreground) transparent;
 }
 
-/* Hide scrollbar but keep functionality */
+/* Container that shows scrollbar only on hover */
+.scrollbar-ghost {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+.scrollbar-ghost:hover {
+  scrollbar-color: var(--muted-foreground) transparent;
+}
+
+.scrollbar-ghost::-webkit-scrollbar-thumb {
+  background: transparent;
+}
+
+.scrollbar-ghost:hover::-webkit-scrollbar-thumb {
+  background: var(--muted-foreground);
+}
+
+/* Hide scrollbar completely */
 .scrollbar-hidden {
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -231,8 +263,9 @@ body {
   display: grid;
   padding: 4px;
   background: var(--muted);
-  border-radius: 999px;
+  border-radius: 12px;
   gap: 2px;
+  isolation: isolate;
 }
 
 .tab-bar input {
@@ -243,81 +276,299 @@ body {
 
 .tab-bar label {
   position: relative;
-  z-index: 1;
-  padding: 8px 14px;
-  border-radius: 999px;
+  z-index: 2;
+  padding: 10px 16px;
+  border-radius: 10px;
   text-align: center;
   cursor: pointer;
   color: var(--muted-foreground);
   font-size: 14px;
   font-weight: 500;
-  transition: color 0.4s ease;
+  transition: color 0.25s ease 0.1s;
   white-space: nowrap;
+  user-select: none;
 }
 
 .tab-bar input:checked + label {
   color: var(--foreground);
+  transition-delay: 0s;
 }
 
-/* Active pill indicator */
-.tab-bar::after {
-  content: '';
+/* Active pill indicator - iOS spring animation */
+.tab-bar-pill {
   position: absolute;
-  inset: 4px;
-  border-radius: 999px;
+  top: 4px;
+  bottom: 4px;
+  left: 4px;
+  border-radius: 10px;
   background: var(--card);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  transform: translateX(calc(100% * var(--tab-active, 0)));
-  transition: transform 0.4s cubic-bezier(0.2, 0.8, 0.2, 1);
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.12),
+    0 1px 2px rgba(0, 0, 0, 0.08);
+  z-index: 1;
+  transition:
+    transform 0.5s cubic-bezier(0.32, 0.72, 0, 1),
+    width 0.4s cubic-bezier(0.32, 0.72, 0, 1);
   pointer-events: none;
 }
 
-/* Dynamic tab positions */
-.tab-bar[data-tabs="2"]::after { width: calc((100% - 8px) / 2); }
-.tab-bar[data-tabs="3"]::after { width: calc((100% - 8px) / 3); }
-.tab-bar[data-tabs="4"]::after { width: calc((100% - 8px) / 4); }
-.tab-bar[data-tabs="5"]::after { width: calc((100% - 8px) / 5); }
+.dark .tab-bar-pill {
+  box-shadow:
+    0 1px 3px rgba(0, 0, 0, 0.3),
+    0 0 0 1px rgba(255, 255, 255, 0.05);
+}
 
-.tab-bar:has(input:nth-of-type(2):checked) { --tab-active: 1; }
-.tab-bar:has(input:nth-of-type(3):checked) { --tab-active: 2; }
-.tab-bar:has(input:nth-of-type(4):checked) { --tab-active: 3; }
-.tab-bar:has(input:nth-of-type(5):checked) { --tab-active: 4; }
+/* Underline variant */
+.tab-bar-underline {
+  position: relative;
+  display: grid;
+  gap: 0;
+  background: transparent;
+  border-bottom: 1px solid var(--border);
+}
+
+.tab-bar-underline label {
+  padding: 12px 20px;
+  border-radius: 0;
+  color: var(--muted-foreground);
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.tab-bar-underline input:checked + label {
+  color: var(--foreground);
+}
+
+.tab-bar-underline::after {
+  content: '';
+  position: absolute;
+  bottom: -1px;
+  left: 0;
+  height: 2px;
+  background: var(--accent-primary);
+  border-radius: 2px 2px 0 0;
+  transition:
+    transform 0.4s cubic-bezier(0.32, 0.72, 0, 1),
+    width 0.3s cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+/* Material dot variant */
+.tab-bar-dot label::after {
+  content: '';
+  position: absolute;
+  bottom: 4px;
+  left: 50%;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: var(--accent-primary);
+  transform: translateX(-50%) scale(0);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.tab-bar-dot input:checked + label::after {
+  transform: translateX(-50%) scale(1);
+}
 
 /* ============================================
-   HOVER EFFECTS - Consistent interactions
+   PAY BUTTON - Multiple icons rotation
    ============================================ */
 
-/* Subtle lift on hover */
+.pay-btn {
+  position: relative;
+  padding: 12px 24px;
+  font-size: 16px;
+  background: var(--foreground);
+  color: var(--background);
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  transition: all 0.25s ease-out;
+}
+
+.dark .pay-btn {
+  background: #1a1a1a;
+  color: white;
+}
+
+.pay-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.pay-btn:active {
+  transform: scale(0.98);
+}
+
+.pay-btn .icon-container {
+  position: relative;
+  width: 24px;
+  height: 24px;
+}
+
+.pay-btn .icon {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 24px;
+  height: 24px;
+  color: #22c55e;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.pay-btn .default-icon {
+  opacity: 1;
+  visibility: visible;
+}
+
+.pay-btn:hover .wallet-icon {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.pay-btn:hover .card-icon {
+  animation: iconRotate 2.5s infinite;
+  animation-delay: 0s;
+}
+
+.pay-btn:hover .payment-icon {
+  animation: iconRotate 2.5s infinite;
+  animation-delay: 0.5s;
+}
+
+.pay-btn:hover .dollar-icon {
+  animation: iconRotate 2.5s infinite;
+  animation-delay: 1s;
+}
+
+.pay-btn:hover .check-icon {
+  animation: iconRotate 2.5s infinite;
+  animation-delay: 1.5s;
+}
+
+.pay-btn:active .icon {
+  animation: none;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.pay-btn:active .check-icon {
+  animation: checkmarkAppear 0.6s ease forwards;
+  visibility: visible;
+}
+
+.pay-btn .btn-text {
+  font-weight: 600;
+  font-family: system-ui, -apple-system, sans-serif;
+}
+
+@keyframes checkmarkAppear {
+  0% {
+    opacity: 0;
+    transform: scale(0.5) rotate(-45deg);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(1.2) rotate(0deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+  }
+}
+
+/* ============================================
+   CHECKBOX - SVG stroke animation
+   ============================================ */
+
+.check {
+  -webkit-tap-highlight-color: transparent;
+  transform: translate3d(0, 0, 0);
+}
+
+.check::before {
+  content: "";
+  position: absolute;
+  top: -15px;
+  left: -15px;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--muted);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.check svg {
+  position: relative;
+  z-index: 1;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke: var(--muted-foreground);
+  stroke-width: 1.5;
+  transform: translate3d(0, 0, 0);
+  transition: all 0.2s ease;
+}
+
+.check .check-path {
+  stroke-dasharray: 60;
+  stroke-dashoffset: 0;
+  transition: stroke-dashoffset 0.3s linear;
+}
+
+.check .check-mark {
+  stroke-dasharray: 22;
+  stroke-dashoffset: 66;
+  transition: stroke-dashoffset 0.2s linear 0.15s;
+}
+
+.check:hover::before {
+  opacity: 1;
+}
+
+.check:hover svg {
+  stroke: var(--accent-primary);
+}
+
+.peer:checked + .check svg {
+  stroke: var(--accent-primary);
+}
+
+.peer:checked + .check .check-path {
+  stroke-dashoffset: 60;
+}
+
+.peer:checked + .check .check-mark {
+  stroke-dashoffset: 42;
+}
+
+/* ============================================
+   HOVER EFFECTS - Subtle elevation only
+   ============================================ */
+
+/* Subtle lift on hover - primary effect */
 .hover-lift {
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.25s ease-out, box-shadow 0.25s ease-out;
 }
 
 .hover-lift:hover {
   transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
 }
 
-/* Scale on hover */
-.hover-scale {
-  transition: transform 0.2s ease;
-}
-
-.hover-scale:hover {
-  transform: scale(1.02);
-}
-
-/* Glow on hover */
-.hover-glow {
-  transition: box-shadow 0.2s ease;
-}
-
-.hover-glow:hover {
-  box-shadow: 0 0 20px var(--accent-primary);
+.dark .hover-lift:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
 }
 
 /* Active press effect */
+.hover-lift:active,
 .active-press:active {
-  transform: scale(0.98);
+  transform: scale(0.98) translateY(0);
 }
 
 /* ============================================

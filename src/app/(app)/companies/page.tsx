@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
 
 export const instant = false
@@ -28,7 +29,7 @@ export default async function CompaniesPage() {
           </div>
           <h2 className="text-xl font-semibold text-[#0D0F14] mb-2">Erreur de chargement</h2>
           <p className="text-[#4E525A] mb-4">Impossible de charger votre profil.</p>
-          <a href="/companies" className="text-[#17191F] font-medium hover:underline">Reessayer</a>
+          <Link href="/companies" className="text-[#17191F] font-medium hover:underline">Reessayer</Link>
         </div>
       </div>
     )
@@ -74,7 +75,7 @@ export default async function CompaniesPage() {
             </div>
             <p className="font-medium text-[#0D0F14] mb-2">Erreur de chargement</p>
             <p className="text-sm text-[#4E525A] mb-4">Impossible de charger les entreprises.</p>
-            <a href="/companies" className="text-[#17191F] font-medium hover:underline">Reessayer</a>
+            <Link href="/companies" className="text-[#17191F] font-medium hover:underline">Reessayer</Link>
           </div>
         </div>
       </div>
@@ -190,21 +191,22 @@ export default async function CompaniesPage() {
                   const initial = companyName[0]?.toUpperCase() || '?'
 
                   return (
-                    <tr key={company.id} className="border-b border-[#E2E4E6] hover:bg-[#F5F7F9] transition-colors">
+                    <tr key={company.id} className="border-b border-[#E2E4E6] hover:bg-[#F5F7F9] transition-colors group">
                       <td className="px-4 py-3">
                         <input
                           type="checkbox"
                           className="w-4 h-4 rounded border-[#C9CCD0] accent-[#17191F]"
                           aria-label={`Selectionner ${companyName}`}
+                          onClick={(e) => e.stopPropagation()}
                         />
                       </td>
                       <td className="px-4 py-3">
-                        <div className="flex items-center gap-3">
+                        <Link href={`/companies/${company.id}`} className="flex items-center gap-3">
                           <div className="w-8 h-8 rounded bg-[#F5F7F9] flex items-center justify-center text-[#4E525A] text-xs font-medium flex-shrink-0">
                             {initial}
                           </div>
-                          <span className="font-medium text-[#0D0F14] truncate">{companyName}</span>
-                        </div>
+                          <span className="font-medium text-[#0D0F14] truncate group-hover:text-[#1565C0] transition-colors">{companyName}</span>
+                        </Link>
                       </td>
                       <td className="px-4 py-3 text-[#4E525A] truncate max-w-[150px] hidden sm:table-cell">
                         {company.domain || '-'}
@@ -216,16 +218,15 @@ export default async function CompaniesPage() {
                         {company.size || '-'}
                       </td>
                       <td className="px-4 py-3">
-                        <button
-                          className="p-1 rounded hover:bg-[#E2E4E6]"
-                          aria-label={`Actions pour ${companyName}`}
+                        <Link
+                          href={`/companies/${company.id}`}
+                          className="p-1 rounded hover:bg-[#E2E4E6] inline-flex"
+                          aria-label={`Voir ${companyName}`}
                         >
                           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4E525A" strokeWidth="2">
-                            <circle cx="12" cy="12" r="1" />
-                            <circle cx="12" cy="5" r="1" />
-                            <circle cx="12" cy="19" r="1" />
+                            <polyline points="9 18 15 12 9 6" />
                           </svg>
-                        </button>
+                        </Link>
                       </td>
                     </tr>
                   )

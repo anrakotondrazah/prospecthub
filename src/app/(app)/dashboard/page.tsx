@@ -1,6 +1,65 @@
 import { createClient } from '@/lib/supabase/server'
+import Link from 'next/link'
 
 export const instant = false
+
+const statusColors: Record<string, string> = {
+  new: 'bg-[#E8F5E9] text-[#147A3A]',
+  qualified: 'bg-[#E3F2FD] text-[#1565C0]',
+  hot: 'bg-[#FFF3E0] text-[#E65100]',
+  contacted: 'bg-[#F5F7F9] text-[#4E525A]',
+  converted: 'bg-[#E8F5E9] text-[#147A3A]',
+}
+
+const priorityColors: Record<string, string> = {
+  high: 'text-[#B42318]',
+  medium: 'text-[#A66A08]',
+  low: 'text-[#4E525A]',
+}
+
+const taskIcons: Record<string, string> = {
+  call: 'M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z',
+  email: 'M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z',
+  meeting: 'M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z',
+  note: 'M14.5 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V7.5L14.5 2z',
+  task: 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4',
+  other: 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z',
+}
+
+const DEFAULT_STAGES = [
+  { id: 1, name: 'Prospection', code: 'prospection', color: '#6B7280', probability: 10 },
+  { id: 2, name: 'Qualification', code: 'qualification', color: '#3B82F6', probability: 25 },
+  { id: 3, name: 'Proposition', code: 'proposition', color: '#8B5CF6', probability: 50 },
+  { id: 4, name: 'Negociation', code: 'negociation', color: '#F59E0B', probability: 75 },
+  { id: 5, name: 'Gagne', code: 'won', color: '#10B981', probability: 100 },
+]
+
+function getRelativeTime(date: string): string {
+  const now = new Date()
+  const past = new Date(date)
+  const diffMs = now.getTime() - past.getTime()
+  const diffMins = Math.floor(diffMs / 60000)
+  const diffHours = Math.floor(diffMs / 3600000)
+  const diffDays = Math.floor(diffMs / 86400000)
+
+  if (diffMins < 60) return `${diffMins}m`
+  if (diffHours < 24) return `${diffHours}h`
+  if (diffDays < 7) return `${diffDays}j`
+  return past.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' })
+}
+
+function getDueLabel(date: string): string {
+  const now = new Date()
+  now.setHours(0, 0, 0, 0)
+  const due = new Date(date)
+  due.setHours(0, 0, 0, 0)
+  const diffDays = Math.floor((due.getTime() - now.getTime()) / 86400000)
+
+  if (diffDays < 0) return 'En retard'
+  if (diffDays === 0) return "Aujourd'hui"
+  if (diffDays === 1) return 'Demain'
+  return due.toLocaleDateString('fr-FR', { weekday: 'short', day: 'numeric' })
+}
 
 export default async function DashboardPage() {
   const supabase = await createClient()
@@ -8,14 +67,12 @@ export default async function DashboardPage() {
 
   if (!user) return null
 
-  // Get user's profile
   const { data: profile, error: profileError } = await supabase
     .from('profiles')
     .select('first_name, last_name, organization_id')
     .eq('id', user.id)
     .single()
 
-  // Handle profile error
   if (profileError) {
     return (
       <div className="flex items-center justify-center h-[60vh]">
@@ -37,134 +94,392 @@ export default async function DashboardPage() {
 
   const orgId = profile?.organization_id as number | null
 
-  // Get lead counts (if org exists) - use is_hot for hot leads
   let leadStats = { total: 0, new: 0, qualified: 0, hot: 0 }
-  let statsError = false
+  let taskStats = { total: 0, overdue: 0, today: 0 }
+  let pipelineStats: { stage: string; count: number; value: number; color: string }[] = []
+  let totalPipelineValue = 0
+  let recentLeads: { id: number; name: string; company: string | null; status: string; score: number | null; createdAt: string }[] = []
+  let upcomingTasks: { id: number; title: string; dueDate: string; priority: string; type: string }[] = []
+  let creditsBalance = 0
 
   if (orgId) {
-    const [totalRes, newRes, qualifiedRes, hotRes] = await Promise.all([
+    const [
+      totalRes,
+      newRes,
+      qualifiedRes,
+      hotRes,
+      leadsRes,
+      tasksRes,
+      taskStatsRes,
+      dealsRes,
+      stagesRes,
+      orgRes,
+    ] = await Promise.all([
       supabase.from('leads').select('*', { count: 'exact', head: true }).eq('organization_id', orgId),
       supabase.from('leads').select('*', { count: 'exact', head: true }).eq('organization_id', orgId).eq('status', 'new'),
       supabase.from('leads').select('*', { count: 'exact', head: true }).eq('organization_id', orgId).eq('status', 'qualified'),
       supabase.from('leads').select('*', { count: 'exact', head: true }).eq('organization_id', orgId).eq('is_hot', true),
+      supabase.from('leads').select('id, first_name, last_name, company_name, status, score, is_hot, created_at').eq('organization_id', orgId).order('created_at', { ascending: false }).limit(4),
+      supabase.from('tasks').select('id, title, due_date, priority, task_type, status').eq('organization_id', orgId).in('status', ['pending', 'in_progress']).order('due_date', { ascending: true }).limit(4),
+      supabase.from('tasks').select('*', { count: 'exact', head: true }).eq('organization_id', orgId).in('status', ['pending', 'in_progress']),
+      supabase.from('deals').select('id, stage_id, value').eq('organization_id', orgId),
+      supabase.from('pipeline_stages').select('id, name, color, probability, is_won, is_lost').eq('organization_id', orgId).order('display_order'),
+      supabase.from('organizations').select('credits_balance').eq('id', orgId).single(),
     ])
 
-    if (totalRes.error || newRes.error || qualifiedRes.error || hotRes.error) {
-      statsError = true
-    } else {
-      leadStats = {
-        total: totalRes.count || 0,
-        new: newRes.count || 0,
-        qualified: qualifiedRes.count || 0,
-        hot: hotRes.count || 0,
-      }
+    leadStats = {
+      total: totalRes.count || 0,
+      new: newRes.count || 0,
+      qualified: qualifiedRes.count || 0,
+      hot: hotRes.count || 0,
     }
+
+    const now = new Date()
+    now.setHours(0, 0, 0, 0)
+    const todayStr = now.toISOString().split('T')[0]
+    const [overdueRes, todayRes] = await Promise.all([
+      supabase.from('tasks').select('*', { count: 'exact', head: true }).eq('organization_id', orgId).in('status', ['pending', 'in_progress']).lt('due_date', todayStr),
+      supabase.from('tasks').select('*', { count: 'exact', head: true }).eq('organization_id', orgId).in('status', ['pending', 'in_progress']).eq('due_date', todayStr),
+    ])
+
+    taskStats = {
+      total: taskStatsRes.count || 0,
+      overdue: overdueRes.count || 0,
+      today: todayRes.count || 0,
+    }
+
+    creditsBalance = orgRes.data?.credits_balance || 0
+
+    recentLeads = (leadsRes.data || []).map((lead) => ({
+      id: lead.id,
+      name: `${lead.first_name || ''} ${lead.last_name || ''}`.trim() || 'Sans nom',
+      company: lead.company_name,
+      status: lead.is_hot ? 'hot' : lead.status,
+      score: lead.score,
+      createdAt: getRelativeTime(lead.created_at),
+    }))
+
+    upcomingTasks = (tasksRes.data || []).map((task) => ({
+      id: task.id,
+      title: task.title,
+      dueDate: task.due_date ? getDueLabel(task.due_date) : '-',
+      priority: task.priority || 'medium',
+      type: task.task_type || 'task',
+    }))
+
+    const stages = stagesRes.data && stagesRes.data.length > 0 ? stagesRes.data : DEFAULT_STAGES
+    const deals = dealsRes.data || []
+
+    pipelineStats = stages
+      .filter((s) => !('is_lost' in s && s.is_lost))
+      .map((stage) => {
+        const stageDeals = deals.filter((d) => d.stage_id === stage.id)
+        const stageValue = stageDeals.reduce((sum, d) => sum + (d.value || 0), 0)
+        return {
+          stage: stage.name,
+          count: stageDeals.length,
+          value: stageValue,
+          color: stage.color,
+        }
+      })
+
+    totalPipelineValue = pipelineStats.reduce((sum, s) => sum + s.value, 0)
   }
 
   const firstName = profile?.first_name || user.email?.split('@')[0] || 'Utilisateur'
 
   return (
-    <div>
-      <div className="mb-6 lg:mb-8">
-        <h1 className="text-xl lg:text-[23.5px] font-semibold text-[#0D0F14] mb-1">
-          Bonjour, {firstName}
-        </h1>
-        <p className="text-sm text-[#4E525A]">
-          Voici un apercu de vos performances
-        </p>
+    <div className="space-y-6">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+        <div>
+          <h1 className="text-xl lg:text-2xl font-semibold text-[#0D0F14]">
+            Bonjour, {firstName}
+          </h1>
+          <p className="text-sm text-[#4E525A]">
+            Voici un apercu de vos performances
+          </p>
+        </div>
+        <div className="flex gap-2">
+          <div className="flex items-center gap-2 px-4 py-2 bg-[#F5F7F9] rounded-[10px]">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4E525A" strokeWidth="2">
+              <circle cx="12" cy="12" r="10" />
+              <path d="M12 6v6l4 2" />
+            </svg>
+            <span className="text-sm font-medium text-[#0D0F14]">{creditsBalance} credits</span>
+          </div>
+          <Link
+            href="/base-entreprises"
+            className="inline-flex items-center gap-2 px-4 py-2 bg-[#17191F] text-white rounded-[10px] text-sm font-medium hover:bg-[#2a2d35] transition-colors"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <line x1="12" y1="5" x2="12" y2="19" />
+              <line x1="5" y1="12" x2="19" y2="12" />
+            </svg>
+            Trouver leads
+          </Link>
+        </div>
       </div>
 
-      {/* KPI Cards - Responsive grid */}
-      {statsError ? (
-        <div className="bg-white rounded-[14px] border border-[#E2E4E6] p-6 mb-6 lg:mb-8">
-          <div className="text-center">
-            <p className="text-[#4E525A] mb-2">Impossible de charger les statistiques</p>
-            <a href="/dashboard" className="text-[#17191F] font-medium hover:underline">Reessayer</a>
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="bg-white rounded-[14px] border border-[#E2E4E6] p-5">
+          <div className="flex items-center justify-between mb-3">
+            <span className="text-sm text-[#4E525A]">Total leads</span>
+            <div className="w-8 h-8 rounded-lg bg-[#E3F2FD] flex items-center justify-center">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1565C0" strokeWidth="2">
+                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                <circle cx="9" cy="7" r="4" />
+              </svg>
+            </div>
+          </div>
+          <span className="text-3xl font-semibold text-[#0D0F14]">{leadStats.total}</span>
+          <p className="text-xs text-[#4E525A] mt-1">
+            {leadStats.new} nouveaux
+          </p>
+        </div>
+
+        <div className="bg-white rounded-[14px] border border-[#E2E4E6] p-5">
+          <div className="flex items-center justify-between mb-3">
+            <span className="text-sm text-[#4E525A]">Leads chauds</span>
+            <div className="w-8 h-8 rounded-lg bg-[#FFF3E0] flex items-center justify-center">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#E65100" strokeWidth="2">
+                <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
+              </svg>
+            </div>
+          </div>
+          <span className="text-3xl font-semibold text-[#0D0F14]">{leadStats.hot}</span>
+          <p className="text-xs text-[#E65100] mt-1">A traiter en priorite</p>
+        </div>
+
+        <div className="bg-white rounded-[14px] border border-[#E2E4E6] p-5">
+          <div className="flex items-center justify-between mb-3">
+            <span className="text-sm text-[#4E525A]">Pipeline</span>
+            <div className="w-8 h-8 rounded-lg bg-[#E8F5E9] flex items-center justify-center">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#147A3A" strokeWidth="2">
+                <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+              </svg>
+            </div>
+          </div>
+          <span className="text-3xl font-semibold text-[#0D0F14]">
+            {totalPipelineValue > 0 ? `${(totalPipelineValue / 1000).toFixed(0)}k` : '0'}
+          </span>
+          <p className="text-xs text-[#4E525A] mt-1">EUR en cours</p>
+        </div>
+
+        <div className="bg-white rounded-[14px] border border-[#E2E4E6] p-5">
+          <div className="flex items-center justify-between mb-3">
+            <span className="text-sm text-[#4E525A]">Taches</span>
+            <div className="w-8 h-8 rounded-lg bg-[#F3E8FF] flex items-center justify-center">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" strokeWidth="2">
+                <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2" />
+                <path d="M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2" />
+              </svg>
+            </div>
+          </div>
+          <span className="text-3xl font-semibold text-[#0D0F14]">{taskStats.total}</span>
+          {taskStats.overdue > 0 ? (
+            <p className="text-xs text-[#B42318] mt-1">{taskStats.overdue} en retard</p>
+          ) : taskStats.today > 0 ? (
+            <p className="text-xs text-[#E65100] mt-1">{taskStats.today} aujourd'hui</p>
+          ) : (
+            <p className="text-xs text-[#4E525A] mt-1">A jour</p>
+          )}
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="lg:col-span-2 bg-white rounded-[14px] border border-[#E2E4E6] p-6">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-lg font-semibold text-[#0D0F14]">Pipeline des affaires</h2>
+            <Link href="/deals" className="text-sm text-[#4E525A] hover:text-[#0D0F14]">
+              Voir tout
+            </Link>
+          </div>
+          {pipelineStats.length === 0 || totalPipelineValue === 0 ? (
+            <div className="text-center py-12 bg-[#F5F7F9] rounded-[10px]">
+              <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-white flex items-center justify-center">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#9BA0A6" strokeWidth="2">
+                  <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
+                </svg>
+              </div>
+              <p className="text-sm text-[#4E525A]">Aucune affaire en cours</p>
+              <Link href="/deals" className="text-xs text-[#1565C0] hover:underline mt-1 inline-block">
+                Creer une affaire
+              </Link>
+            </div>
+          ) : (
+            <div className="space-y-4">
+              {pipelineStats.map((stage) => (
+                <div key={stage.stage} className="flex items-center gap-4">
+                  <div className="w-24 text-sm text-[#4E525A] truncate">{stage.stage}</div>
+                  <div className="flex-1 h-8 bg-[#F5F7F9] rounded-lg overflow-hidden">
+                    <div
+                      className="h-full rounded-lg flex items-center px-3 transition-all"
+                      style={{
+                        width: `${Math.max((stage.value / totalPipelineValue) * 100, 15)}%`,
+                        backgroundColor: stage.color,
+                      }}
+                    >
+                      <span className="text-xs font-medium text-white">{stage.count}</span>
+                    </div>
+                  </div>
+                  <div className="w-20 text-right text-sm font-medium text-[#0D0F14]">
+                    {stage.value > 0 ? `${(stage.value / 1000).toFixed(0)}k` : '0'} EUR
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
+        <div className="bg-white rounded-[14px] border border-[#E2E4E6] p-6">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-lg font-semibold text-[#0D0F14]">Taches a venir</h2>
+            <Link href="/tasks" className="text-sm text-[#4E525A] hover:text-[#0D0F14]">
+              Voir tout
+            </Link>
+          </div>
+          {upcomingTasks.length === 0 ? (
+            <div className="text-center py-8 bg-[#F5F7F9] rounded-[10px]">
+              <p className="text-sm text-[#4E525A]">Aucune tache</p>
+            </div>
+          ) : (
+            <div className="space-y-3">
+              {upcomingTasks.map((task) => (
+                <div key={task.id} className="flex items-start gap-3 p-3 rounded-lg hover:bg-[#F5F7F9] transition-colors">
+                  <div className="w-8 h-8 rounded-lg bg-[#F5F7F9] flex items-center justify-center flex-shrink-0">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4E525A" strokeWidth="2">
+                      <path d={taskIcons[task.type] || taskIcons.task} />
+                    </svg>
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-medium text-[#0D0F14] truncate">{task.title}</p>
+                    <p className={`text-xs ${task.dueDate === 'En retard' ? 'text-[#B42318]' : priorityColors[task.priority]}`}>
+                      {task.dueDate}
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="bg-white rounded-[14px] border border-[#E2E4E6] p-6">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-lg font-semibold text-[#0D0F14]">Leads recents</h2>
+            <Link href="/leads" className="text-sm text-[#4E525A] hover:text-[#0D0F14]">
+              Voir tout
+            </Link>
+          </div>
+          {recentLeads.length === 0 ? (
+            <div className="text-center py-8 bg-[#F5F7F9] rounded-[10px]">
+              <p className="text-sm text-[#4E525A]">Aucun lead</p>
+              <Link href="/base-entreprises" className="text-xs text-[#1565C0] hover:underline mt-1 inline-block">
+                Trouver des leads
+              </Link>
+            </div>
+          ) : (
+            <div className="space-y-3">
+              {recentLeads.map((lead) => (
+                <Link
+                  key={lead.id}
+                  href={`/leads/${lead.id}`}
+                  className="flex items-center gap-3 p-3 rounded-lg hover:bg-[#F5F7F9] transition-colors"
+                >
+                  <div className="w-10 h-10 rounded-full bg-[#17191F] flex items-center justify-center text-white text-sm font-medium">
+                    {lead.name.split(' ').map(n => n[0]).join('').slice(0, 2)}
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <p className="text-sm font-medium text-[#0D0F14]">{lead.name}</p>
+                    <p className="text-xs text-[#4E525A] truncate">{lead.company || '-'}</p>
+                  </div>
+                  <span className={`px-2 py-0.5 text-[10px] font-semibold uppercase rounded ${statusColors[lead.status] || statusColors.new}`}>
+                    {lead.status === 'new' ? 'Nouveau' : lead.status === 'qualified' ? 'Qualifie' : lead.status === 'hot' ? 'Chaud' : lead.status}
+                  </span>
+                  <span className="text-xs text-[#9BA0A6]">{lead.createdAt}</span>
+                </Link>
+              ))}
+            </div>
+          )}
+        </div>
+
+        <div className="bg-white rounded-[14px] border border-[#E2E4E6] p-6">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-lg font-semibold text-[#0D0F14]">Statistiques</h2>
+          </div>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="p-4 bg-[#F5F7F9] rounded-[10px]">
+              <p className="text-xs text-[#9BA0A6] mb-1">Leads qualifies</p>
+              <p className="text-2xl font-semibold text-[#0D0F14]">{leadStats.qualified}</p>
+            </div>
+            <div className="p-4 bg-[#F5F7F9] rounded-[10px]">
+              <p className="text-xs text-[#9BA0A6] mb-1">Taux conversion</p>
+              <p className="text-2xl font-semibold text-[#0D0F14]">
+                {leadStats.total > 0 ? Math.round((leadStats.qualified / leadStats.total) * 100) : 0}%
+              </p>
+            </div>
+            <div className="p-4 bg-[#F5F7F9] rounded-[10px]">
+              <p className="text-xs text-[#9BA0A6] mb-1">Credits restants</p>
+              <p className="text-2xl font-semibold text-[#0D0F14]">{creditsBalance}</p>
+            </div>
+            <div className="p-4 bg-[#F5F7F9] rounded-[10px]">
+              <p className="text-xs text-[#9BA0A6] mb-1">Taches aujourd'hui</p>
+              <p className="text-2xl font-semibold text-[#0D0F14]">{taskStats.today}</p>
+            </div>
           </div>
         </div>
-      ) : (
-        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4 mb-6 lg:mb-8">
-          {[
-            { label: 'Total leads', value: leadStats.total },
-            { label: 'Nouveaux', value: leadStats.new },
-            { label: 'Qualifies', value: leadStats.qualified },
-            { label: 'Chauds', value: leadStats.hot },
-          ].map((kpi, i) => (
-            <div key={i} className="bg-white rounded-[14px] border border-[#E2E4E6] p-4 lg:p-5">
-              <p className="text-xs lg:text-sm text-[#4E525A] mb-1 lg:mb-2">{kpi.label}</p>
-              <span className="text-2xl lg:text-[31.5px] font-semibold text-[#0D0F14] leading-tight">
-                {kpi.value}
-              </span>
-            </div>
-          ))}
-        </div>
-      )}
+      </div>
 
-      {/* Quick Actions - Responsive grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 lg:gap-4 mb-6 lg:mb-8">
-        <a
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <Link
           href="/leads"
-          className="bg-white rounded-[14px] border border-[#E2E4E6] p-4 lg:p-5 hover:border-[#17191F] transition-colors group"
+          className="bg-white rounded-[14px] border border-[#E2E4E6] p-4 hover:border-[#17191F] transition-colors group"
         >
           <div className="w-10 h-10 rounded-[10px] bg-[#F5F7F9] flex items-center justify-center mb-3 group-hover:bg-[#17191F] transition-colors">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-[#4E525A] group-hover:text-white transition-colors">
               <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
               <circle cx="9" cy="7" r="4" />
-              <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
             </svg>
           </div>
-          <h3 className="font-semibold text-[#0D0F14] mb-1">Gerer les leads</h3>
-          <p className="text-sm text-[#4E525A]">Voir et gerer tous vos prospects</p>
-        </a>
+          <h3 className="font-medium text-[#0D0F14] text-sm">Leads</h3>
+        </Link>
 
-        <a
-          href="/companies"
-          className="bg-white rounded-[14px] border border-[#E2E4E6] p-4 lg:p-5 hover:border-[#17191F] transition-colors group"
+        <Link
+          href="/base-entreprises"
+          className="bg-white rounded-[14px] border border-[#E2E4E6] p-4 hover:border-[#17191F] transition-colors group"
         >
           <div className="w-10 h-10 rounded-[10px] bg-[#F5F7F9] flex items-center justify-center mb-3 group-hover:bg-[#17191F] transition-colors">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-[#4E525A] group-hover:text-white transition-colors">
-              <path d="M19 21V5a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v5m-4 0h4" />
+              <path d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4" />
             </svg>
           </div>
-          <h3 className="font-semibold text-[#0D0F14] mb-1">Entreprises</h3>
-          <p className="text-sm text-[#4E525A]">Consulter votre base entreprises</p>
-        </a>
+          <h3 className="font-medium text-[#0D0F14] text-sm">Base B2B</h3>
+        </Link>
 
-        <a
-          href="/tasks"
-          className="bg-white rounded-[14px] border border-[#E2E4E6] p-4 lg:p-5 hover:border-[#17191F] transition-colors group"
+        <Link
+          href="/deals"
+          className="bg-white rounded-[14px] border border-[#E2E4E6] p-4 hover:border-[#17191F] transition-colors group"
         >
           <div className="w-10 h-10 rounded-[10px] bg-[#F5F7F9] flex items-center justify-center mb-3 group-hover:bg-[#17191F] transition-colors">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-[#4E525A] group-hover:text-white transition-colors">
-              <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2M9 5a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2m-6 9l2 2 4-4" />
+              <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
             </svg>
           </div>
-          <h3 className="font-semibold text-[#0D0F14] mb-1">Taches</h3>
-          <p className="text-sm text-[#4E525A]">Voir vos taches a faire</p>
-        </a>
-      </div>
+          <h3 className="font-medium text-[#0D0F14] text-sm">Affaires</h3>
+        </Link>
 
-      {/* Recent Activity */}
-      <div className="bg-white rounded-[14px] border border-[#E2E4E6] p-4 lg:p-6">
-        <h2 className="text-lg font-semibold text-[#0D0F14] mb-4">Activite recente</h2>
-        {leadStats.total === 0 ? (
-          <div className="text-center py-6 lg:py-8">
-            <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-[#F5F7F9] flex items-center justify-center">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#9BA0A6" strokeWidth="2">
-                <circle cx="12" cy="12" r="10" />
-                <polyline points="12 6 12 12 16 14" />
-              </svg>
-            </div>
-            <p className="text-[#4E525A] mb-2">Aucune activite recente</p>
-            <p className="text-sm text-[#9BA0A6]">
-              Les activites apparaitront ici une fois que vous commencerez a utiliser ProspectHub.
-            </p>
+        <Link
+          href="/inbox"
+          className="bg-white rounded-[14px] border border-[#E2E4E6] p-4 hover:border-[#17191F] transition-colors group"
+        >
+          <div className="w-10 h-10 rounded-[10px] bg-[#F5F7F9] flex items-center justify-center mb-3 group-hover:bg-[#17191F] transition-colors">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-[#4E525A] group-hover:text-white transition-colors">
+              <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2v10z" />
+            </svg>
           </div>
-        ) : (
-          <p className="text-sm text-[#4E525A]">
-            Vous avez {leadStats.total} lead{leadStats.total > 1 ? 's' : ''} dans votre base.
-          </p>
-        )}
+          <h3 className="font-medium text-[#0D0F14] text-sm">Inbox</h3>
+        </Link>
       </div>
     </div>
   )

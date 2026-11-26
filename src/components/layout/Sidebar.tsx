@@ -11,14 +11,30 @@ const navItems = [
     icon: 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6',
   },
   {
+    label: 'Inbox',
+    href: '/inbox',
+    icon: 'M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2v10z',
+    badge: 3,
+  },
+  {
     label: 'Leads',
     href: '/leads',
     icon: 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z',
   },
   {
+    label: 'Base B2B',
+    href: '/base-entreprises',
+    icon: 'M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4m0 5c0 2.21-3.582 4-8 4s-8-1.79-8-4',
+  },
+  {
     label: 'Entreprises',
     href: '/companies',
     icon: 'M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4',
+  },
+  {
+    label: 'Affaires',
+    href: '/deals',
+    icon: 'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z',
   },
   {
     label: 'Taches',
@@ -93,16 +109,18 @@ export function Sidebar({ user, plan = 'Free' }: SidebarProps) {
         <div className="px-4 py-3">
           <button
             className="flex items-center gap-2 w-full px-3 py-2 bg-[#F5F7F9] rounded-[10px] text-[#9BA0A6] hover:bg-[#EFF1F3] transition-colors"
-            aria-label="Ouvrir la recherche"
-            disabled
-            title="Bientot disponible"
+            aria-label="Ouvrir la recherche (Ctrl+K)"
+            onClick={() => {
+              const event = new KeyboardEvent('keydown', { key: 'k', ctrlKey: true, bubbles: true })
+              document.dispatchEvent(event)
+            }}
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
               <circle cx="11" cy="11" r="8" />
               <path d="M21 21l-4.35-4.35" />
             </svg>
             <span className="text-sm">Rechercher...</span>
-            <span className="ml-auto text-xs bg-white px-1.5 py-0.5 rounded border border-[#E2E4E6]">/</span>
+            <span className="ml-auto text-xs bg-white px-1.5 py-0.5 rounded border border-[#E2E4E6]">Ctrl+K</span>
           </button>
         </div>
       )}
@@ -138,7 +156,16 @@ export function Sidebar({ user, plan = 'Free' }: SidebarProps) {
                   >
                     <path d={item.icon} />
                   </svg>
-                  {!isCollapsed && <span>{item.label}</span>}
+                  {!isCollapsed && (
+                    <>
+                      <span>{item.label}</span>
+                      {'badge' in item && item.badge && (
+                        <span className="ml-auto px-1.5 py-0.5 text-[10px] font-semibold bg-[#B42318] text-white rounded-full min-w-[18px] text-center">
+                          {item.badge}
+                        </span>
+                      )}
+                    </>
+                  )}
                 </Link>
               </li>
             )

@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import { Sidebar } from '@/components/layout/Sidebar'
+import { AppShell } from '@/components/layout/AppShell'
 
 export const instant = false
 
@@ -39,9 +40,10 @@ export default async function AppLayout({
         }}
         plan="Free"
       />
-      {/* Responsive: hidden sidebar on mobile, 260px offset on desktop */}
       <main className="lg:ml-[260px] p-4 lg:p-6">
-        {children}
+        <AppShell organizationId={profile.organization_id}>
+          {children}
+        </AppShell>
       </main>
     </div>
   )

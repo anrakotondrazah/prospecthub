@@ -1,5 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
-import { LeadsTable } from './LeadsTable'
+import Link from 'next/link'
+import { LeadsPageClient } from './LeadsPageClient'
 
 export const instant = false
 
@@ -34,9 +35,9 @@ export default async function LeadsPage() {
           <p className="text-[#4E525A] mb-4">
             Impossible de charger votre profil.
           </p>
-          <a href="/leads" className="text-[#17191F] font-medium hover:underline">
+          <Link href="/leads" className="text-[#17191F] font-medium hover:underline">
             Reessayer
-          </a>
+          </Link>
         </div>
       </div>
     )
@@ -87,51 +88,14 @@ export default async function LeadsPage() {
             </div>
             <p className="font-medium text-[#0D0F14] mb-2">Erreur de chargement</p>
             <p className="text-sm text-[#4E525A] mb-4">Impossible de charger les leads.</p>
-            <a href="/leads" className="text-[#17191F] font-medium hover:underline">
+            <Link href="/leads" className="text-[#17191F] font-medium hover:underline">
               Reessayer
-            </a>
+            </Link>
           </div>
         </div>
       </div>
     )
   }
 
-  return (
-    <div>
-      {/* Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
-        <div>
-          <h1 className="text-[23.5px] font-semibold text-[#0D0F14] mb-1">Leads</h1>
-          <p className="text-sm text-[#4E525A]">
-            Gerez et suivez vos prospects
-          </p>
-        </div>
-        <div className="flex items-center gap-3">
-          <button
-            className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-[#9BA0A6] bg-white border border-[#E2E4E6] rounded-[10px] cursor-not-allowed"
-            disabled
-            title="Bientot disponible"
-          >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12" />
-            </svg>
-            Importer
-          </button>
-          <button
-            className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white/60 bg-[#17191F]/60 rounded-[10px] cursor-not-allowed"
-            disabled
-            title="Bientot disponible"
-          >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <line x1="12" y1="5" x2="12" y2="19" />
-              <line x1="5" y1="12" x2="19" y2="12" />
-            </svg>
-            Nouveau lead
-          </button>
-        </div>
-      </div>
-
-      <LeadsTable leads={leads || []} />
-    </div>
-  )
+  return <LeadsPageClient initialLeads={leads || []} organizationId={orgId} />
 }

@@ -115,6 +115,7 @@ export type Database = {
           onboarding_completed: boolean
           trial_ends_at: string | null
           is_active: boolean
+          credits_balance: number
           created_at: string
           updated_at: string
           deleted_at: string | null
@@ -394,6 +395,34 @@ export type Database = {
         }
         Insert: Omit<Database['public']['Tables']['shared_companies']['Row'], 'id' | 'created_at' | 'updated_at'>
         Update: Partial<Database['public']['Tables']['shared_companies']['Insert']>
+      }
+      credit_transactions: {
+        Row: {
+          id: number
+          organization_id: number
+          type: 'purchase' | 'spend' | 'bonus' | 'refund' | 'monthly'
+          amount: number
+          balance_after: number
+          description: string | null
+          reference_type: string | null
+          reference_id: string | null
+          created_at: string
+        }
+        Insert: Omit<Database['public']['Tables']['credit_transactions']['Row'], 'id' | 'created_at'>
+        Update: Partial<Database['public']['Tables']['credit_transactions']['Insert']>
+      }
+      unlocked_leads: {
+        Row: {
+          id: number
+          organization_id: number
+          shared_company_id: number
+          lead_id: number | null
+          credits_spent: number
+          unlocked_at: string
+          unlocked_by: string | null
+        }
+        Insert: Omit<Database['public']['Tables']['unlocked_leads']['Row'], 'id' | 'unlocked_at'>
+        Update: Partial<Database['public']['Tables']['unlocked_leads']['Insert']>
       }
     }
     Views: {

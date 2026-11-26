@@ -5,16 +5,17 @@ import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '@/lib/utils/cn'
 
 const buttonVariants = cva(
-  'inline-flex items-center justify-center gap-2 rounded-[10px] font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
+  'inline-flex items-center justify-center gap-2 rounded-xl font-medium transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
   {
     variants: {
       variant: {
-        primary: 'bg-[#17191F] text-white hover:bg-[#262A32]',
-        secondary: 'bg-[#F5F7F9] text-[#4E525A] hover:bg-[#EFF1F3]',
-        outline: 'border border-[#E2E4E6] bg-transparent text-[#4E525A] hover:bg-[#F5F7F9]',
-        ghost: 'bg-transparent text-[#4E525A] hover:bg-[#EFF1F3]',
-        link: 'text-[#17191F] underline-offset-4 hover:underline',
-        destructive: 'bg-[#B42318] text-white hover:bg-[#991B1B]',
+        primary: 'bg-[#0066FF] text-white hover:bg-[#0052CC] shadow-sm hover:shadow-md active:scale-[0.98]',
+        secondary: 'bg-white/80 backdrop-blur-sm text-[#4E525A] hover:bg-white/90 border border-black/[0.08] shadow-sm hover:shadow',
+        outline: 'border border-black/[0.08] bg-transparent text-[#4E525A] hover:bg-white/50 backdrop-blur-sm shadow-sm',
+        ghost: 'bg-transparent text-[#4E525A] hover:bg-black/[0.04] active:bg-black/[0.08]',
+        link: 'text-[#0066FF] underline-offset-4 hover:underline',
+        destructive: 'bg-[#B42318] text-white hover:bg-[#991B1B] shadow-sm hover:shadow-md active:scale-[0.98]',
+        glass: 'glass-bg glass-border text-[#17191F] hover:bg-white/90 shadow-glass-sm hover:shadow-glass active:scale-[0.98]',
       },
       size: {
         sm: 'h-9 px-3 text-sm',

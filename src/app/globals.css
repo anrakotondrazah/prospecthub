@@ -3,6 +3,13 @@
 :root {
   --background: #ffffff;
   --foreground: #171717;
+  --background-glass: rgba(255, 255, 255, 0.72);
+  --background-glass-hover: rgba(255, 255, 255, 0.85);
+  --shadow-glass: 0 4px 16px rgba(0, 0, 0, 0.08);
+  --shadow-glass-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
+  --accent-primary: #0066FF;
+  --accent-primary-hover: #0052CC;
+  --border-glass: rgba(0, 0, 0, 0.08);
 }
 
 @theme inline {
@@ -10,17 +17,62 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+
+  /* Glass colors */
+  --color-glass-bg: var(--background-glass);
+  --color-glass-bg-hover: var(--background-glass-hover);
+  --color-accent-primary: var(--accent-primary);
+  --color-accent-primary-hover: var(--accent-primary-hover);
+
+  /* Glass shadows */
+  --shadow-glass: var(--shadow-glass);
+  --shadow-glass-sm: var(--shadow-glass-sm);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #0D1117;
+    --foreground: #E6EDF3;
+    --background-glass: rgba(13, 17, 23, 0.72);
+    --background-glass-hover: rgba(13, 17, 23, 0.85);
+    --shadow-glass: 0 4px 16px rgba(0, 0, 0, 0.4);
+    --shadow-glass-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+    --border-glass: rgba(255, 255, 255, 0.12);
+    --card: #161B22;
+    --border: #30363D;
+    --muted: #8B949E;
+    --accent: #58A6FF;
   }
+}
+
+/* Classe pour toggle manuel */
+.dark {
+  --background: #0D1117;
+  --foreground: #E6EDF3;
+  --background-glass: rgba(13, 17, 23, 0.72);
+  --background-glass-hover: rgba(13, 17, 23, 0.85);
+  --shadow-glass: 0 4px 16px rgba(0, 0, 0, 0.4);
+  --shadow-glass-sm: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --border-glass: rgba(255, 255, 255, 0.12);
+  --card: #161B22;
+  --border: #30363D;
+  --muted: #8B949E;
+  --accent: #58A6FF;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Glass utilities */
+.glass-bg {
+  background-color: var(--background-glass);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+}
+
+.glass-border {
+  border: 1px solid var(--border-glass);
 }

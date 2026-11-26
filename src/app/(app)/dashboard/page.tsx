@@ -94,37 +94,49 @@ export default async function DashboardPage() {
 
   const orgId = profile?.organization_id as number | null
 
-  let leadStats = { total: 0, new: 0, qualified: 0, hot: 0 }
+  let leadStats = { total: 0, new: 0, qualified: 0, hot: 0, totalLastMonth: 0 }
   let taskStats = { total: 0, overdue: 0, today: 0 }
   let pipelineStats: { stage: string; count: number; value: number; color: string }[] = []
   let totalPipelineValue = 0
   let recentLeads: { id: number; name: string; company: string | null; status: string; score: number | null; createdAt: string }[] = []
   let upcomingTasks: { id: number; title: string; dueDate: string; priority: string; type: string }[] = []
   let creditsBalance = 0
+  let activityStats: { day: string; emails: number; calls: number; meetings: number; notes: number }[] = []
+  let dealsCount = 0
 
   if (orgId) {
+    const now = new Date()
+    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1).toISOString()
+    const startOfLastMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1).toISOString()
+    const endOfLastMonth = new Date(now.getFullYear(), now.getMonth(), 0, 23, 59, 59).toISOString()
+    const sevenDaysAgo = new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000).toISOString()
+
     const [
       totalRes,
       newRes,
       qualifiedRes,
       hotRes,
+      totalLastMonthRes,
       leadsRes,
       tasksRes,
       taskStatsRes,
       dealsRes,
       stagesRes,
       orgRes,
+      activitiesRes,
     ] = await Promise.all([
       supabase.from('leads').select('*', { count: 'exact', head: true }).eq('organization_id', orgId),
       supabase.from('leads').select('*', { count: 'exact', head: true }).eq('organization_id', orgId).eq('status', 'new'),
       supabase.from('leads').select('*', { count: 'exact', head: true }).eq('organization_id', orgId).eq('status', 'qualified'),
       supabase.from('leads').select('*', { count: 'exact', head: true }).eq('organization_id', orgId).eq('is_hot', true),
+      supabase.from('leads').select('*', { count: 'exact', head: true }).eq('organization_id', orgId).gte('created_at', startOfLastMonth).lte('created_at', endOfLastMonth),
       supabase.from('leads').select('id, first_name, last_name, company_name, status, score, is_hot, created_at').eq('organization_id', orgId).order('created_at', { ascending: false }).limit(4),
       supabase.from('tasks').select('id, title, due_date, priority, task_type, status').eq('organization_id', orgId).in('status', ['pending', 'in_progress']).order('due_date', { ascending: true }).limit(4),
       supabase.from('tasks').select('*', { count: 'exact', head: true }).eq('organization_id', orgId).in('status', ['pending', 'in_progress']),
       supabase.from('deals').select('id, stage_id, value').eq('organization_id', orgId),
       supabase.from('pipeline_stages').select('id, name, color, probability, is_won, is_lost').eq('organization_id', orgId).order('display_order'),
       supabase.from('organizations').select('credits_balance').eq('id', orgId).single(),
+      supabase.from('activities').select('id, activity_type, created_at').eq('organization_id', orgId).gte('created_at', sevenDaysAgo).order('created_at', { ascending: false }),
     ])
 
     leadStats = {
@@ -132,11 +144,14 @@ export default async function DashboardPage() {
       new: newRes.count || 0,
       qualified: qualifiedRes.count || 0,
       hot: hotRes.count || 0,
+      totalLastMonth: totalLastMonthRes.count || 0,
     }
 
-    const now = new Date()
-    now.setHours(0, 0, 0, 0)
-    const todayStr = now.toISOString().split('T')[0]
+    dealsCount = dealsRes.data?.length || 0
+
+    const taskNow = new Date()
+    taskNow.setHours(0, 0, 0, 0)
+    const todayStr = taskNow.toISOString().split('T')[0]
     const [overdueRes, todayRes] = await Promise.all([
       supabase.from('tasks').select('*', { count: 'exact', head: true }).eq('organization_id', orgId).in('status', ['pending', 'in_progress']).lt('due_date', todayStr),
       supabase.from('tasks').select('*', { count: 'exact', head: true }).eq('organization_id', orgId).in('status', ['pending', 'in_progress']).eq('due_date', todayStr),
@@ -184,9 +199,31 @@ export default async function DashboardPage() {
       })
 
     totalPipelineValue = pipelineStats.reduce((sum, s) => sum + s.value, 0)
+
+    // Préparer les stats d'activité pour les 7 derniers jours
+    const activities = activitiesRes.data || []
+    const last7Days = Array.from({ length: 7 }, (_, i) => {
+      const d = new Date(now)
+      d.setDate(d.getDate() - (6 - i))
+      return d.toISOString().split('T')[0]
+    })
+
+    activityStats = last7Days.map((day) => {
+      const dayActivities = activities.filter((a) => a.created_at.startsWith(day))
+      return {
+        day: new Date(day).toLocaleDateString('fr-FR', { weekday: 'short' }),
+        emails: dayActivities.filter((a) => a.activity_type === 'email').length,
+        calls: dayActivities.filter((a) => a.activity_type === 'call').length,
+        meetings: dayActivities.filter((a) => a.activity_type === 'meeting').length,
+        notes: dayActivities.filter((a) => a.activity_type === 'note').length,
+      }
+    })
   }
 
   const firstName = profile?.first_name || user.email?.split('@')[0] || 'Utilisateur'
+  const leadsTrend = leadStats.totalLastMonth > 0
+    ? Math.round(((leadStats.total - leadStats.totalLastMonth) / leadStats.totalLastMonth) * 100)
+    : 0
 
   return (
     <div className="space-y-6">
@@ -231,9 +268,23 @@ export default async function DashboardPage() {
               </svg>
             </div>
           </div>
-          <span className="text-3xl font-semibold text-[#0D0F14]">{leadStats.total}</span>
+          <div className="flex items-baseline gap-2">
+            <span className="text-3xl font-semibold text-[#0D0F14]">{leadStats.total}</span>
+            {leadsTrend !== 0 && (
+              <span className={`text-xs font-medium flex items-center gap-0.5 ${leadsTrend > 0 ? 'text-[#147A3A]' : 'text-[#B42318]'}`}>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  {leadsTrend > 0 ? (
+                    <path d="M18 15l-6-6-6 6" />
+                  ) : (
+                    <path d="M6 9l6 6 6-6" />
+                  )}
+                </svg>
+                {Math.abs(leadsTrend)}%
+              </span>
+            )}
+          </div>
           <p className="text-xs text-[#4E525A] mt-1">
-            {leadStats.new} nouveaux
+            {leadStats.new} nouveaux ce mois
           </p>
         </div>
 
@@ -252,37 +303,152 @@ export default async function DashboardPage() {
 
         <div className="bg-white rounded-[14px] border border-[#E2E4E6] p-5">
           <div className="flex items-center justify-between mb-3">
-            <span className="text-sm text-[#4E525A]">Pipeline</span>
+            <span className="text-sm text-[#4E525A]">Affaires actives</span>
             <div className="w-8 h-8 rounded-lg bg-[#E8F5E9] flex items-center justify-center">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#147A3A" strokeWidth="2">
                 <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
               </svg>
             </div>
           </div>
-          <span className="text-3xl font-semibold text-[#0D0F14]">
-            {totalPipelineValue > 0 ? `${(totalPipelineValue / 1000).toFixed(0)}k` : '0'}
-          </span>
-          <p className="text-xs text-[#4E525A] mt-1">EUR en cours</p>
+          <span className="text-3xl font-semibold text-[#0D0F14]">{dealsCount}</span>
+          <p className="text-xs text-[#4E525A] mt-1">
+            {totalPipelineValue > 0 ? `${(totalPipelineValue / 1000).toFixed(0)}k EUR` : '0 EUR'} en pipeline
+          </p>
         </div>
 
         <div className="bg-white rounded-[14px] border border-[#E2E4E6] p-5">
           <div className="flex items-center justify-between mb-3">
             <span className="text-sm text-[#4E525A]">Taches</span>
-            <div className="w-8 h-8 rounded-lg bg-[#F3E8FF] flex items-center justify-center">
+            <div className="w-8 h-8 rounded-lg bg-[#F3E8FF] flex items-center justify-center relative">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" strokeWidth="2">
                 <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2" />
                 <path d="M9 5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2" />
               </svg>
+              {taskStats.overdue > 0 && (
+                <div className="absolute -top-1 -right-1 w-4 h-4 bg-[#B42318] rounded-full flex items-center justify-center">
+                  <span className="text-[9px] font-bold text-white">{taskStats.overdue > 9 ? '9+' : taskStats.overdue}</span>
+                </div>
+              )}
             </div>
           </div>
           <span className="text-3xl font-semibold text-[#0D0F14]">{taskStats.total}</span>
           {taskStats.overdue > 0 ? (
-            <p className="text-xs text-[#B42318] mt-1">{taskStats.overdue} en retard</p>
+            <p className="text-xs text-[#B42318] mt-1 font-medium">{taskStats.overdue} en retard</p>
           ) : taskStats.today > 0 ? (
             <p className="text-xs text-[#E65100] mt-1">{taskStats.today} aujourd'hui</p>
           ) : (
-            <p className="text-xs text-[#4E525A] mt-1">A jour</p>
+            <p className="text-xs text-[#147A3A] mt-1">A jour</p>
           )}
+        </div>
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="lg:col-span-2 bg-white rounded-[14px] border border-[#E2E4E6] p-6">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-lg font-semibold text-[#0D0F14]">Activite des 7 derniers jours</h2>
+            <Link href="/activities" className="text-sm text-[#4E525A] hover:text-[#0D0F14]">
+              Voir tout
+            </Link>
+          </div>
+          {activityStats.length === 0 || activityStats.every(d => d.emails + d.calls + d.meetings + d.notes === 0) ? (
+            <div className="text-center py-12 bg-[#F5F7F9] rounded-[10px]">
+              <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-white flex items-center justify-center">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#9BA0A6" strokeWidth="2">
+                  <path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
+                </svg>
+              </div>
+              <p className="text-sm text-[#4E525A]">Aucune activite recente</p>
+            </div>
+          ) : (
+            <div className="space-y-6">
+              <div className="flex items-end justify-between gap-2 h-48">
+                {activityStats.map((day, idx) => {
+                  const total = day.emails + day.calls + day.meetings + day.notes
+                  const maxTotal = Math.max(...activityStats.map(d => d.emails + d.calls + d.meetings + d.notes), 1)
+                  const heightPercent = (total / maxTotal) * 100
+
+                  return (
+                    <div key={idx} className="flex-1 flex flex-col items-center gap-2">
+                      <div className="w-full flex flex-col-reverse gap-0.5" style={{ height: '160px' }}>
+                        {day.emails > 0 && (
+                          <div
+                            className="w-full bg-[#3B82F6] rounded-t-md transition-all hover:opacity-80"
+                            style={{ height: `${(day.emails / total) * heightPercent}%` }}
+                            title={`${day.emails} emails`}
+                          />
+                        )}
+                        {day.calls > 0 && (
+                          <div
+                            className="w-full bg-[#10B981] transition-all hover:opacity-80"
+                            style={{ height: `${(day.calls / total) * heightPercent}%` }}
+                            title={`${day.calls} appels`}
+                          />
+                        )}
+                        {day.meetings > 0 && (
+                          <div
+                            className="w-full bg-[#8B5CF6] transition-all hover:opacity-80"
+                            style={{ height: `${(day.meetings / total) * heightPercent}%` }}
+                            title={`${day.meetings} reunions`}
+                          />
+                        )}
+                        {day.notes > 0 && (
+                          <div
+                            className="w-full bg-[#F59E0B] transition-all hover:opacity-80"
+                            style={{ height: `${(day.notes / total) * heightPercent}%` }}
+                            title={`${day.notes} notes`}
+                          />
+                        )}
+                      </div>
+                      <div className="text-xs text-[#9BA0A6] font-medium">{day.day}</div>
+                      {total > 0 && (
+                        <div className="text-xs font-semibold text-[#0D0F14]">{total}</div>
+                      )}
+                    </div>
+                  )
+                })}
+              </div>
+              <div className="flex items-center justify-center gap-4 pt-4 border-t border-[#E2E4E6]">
+                <div className="flex items-center gap-1.5">
+                  <div className="w-3 h-3 rounded bg-[#3B82F6]" />
+                  <span className="text-xs text-[#4E525A]">Emails</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <div className="w-3 h-3 rounded bg-[#10B981]" />
+                  <span className="text-xs text-[#4E525A]">Appels</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <div className="w-3 h-3 rounded bg-[#8B5CF6]" />
+                  <span className="text-xs text-[#4E525A]">Reunions</span>
+                </div>
+                <div className="flex items-center gap-1.5">
+                  <div className="w-3 h-3 rounded bg-[#F59E0B]" />
+                  <span className="text-xs text-[#4E525A]">Notes</span>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+
+        <div className="bg-white rounded-[14px] border border-[#E2E4E6] p-6">
+          <div className="flex items-center justify-between mb-6">
+            <h2 className="text-lg font-semibold text-[#0D0F14]">Credits restants</h2>
+            <Link href="/settings/credits" className="text-sm text-[#4E525A] hover:text-[#0D0F14]">
+              Recharger
+            </Link>
+          </div>
+          <div className="text-center py-8">
+            <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-gradient-to-br from-[#E3F2FD] to-[#E8F5E9] flex items-center justify-center">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#1565C0" strokeWidth="2">
+                <circle cx="12" cy="12" r="10" />
+                <path d="M12 6v6l4 2" />
+              </svg>
+            </div>
+            <div className="text-4xl font-bold text-[#0D0F14] mb-1">{creditsBalance}</div>
+            <p className="text-sm text-[#4E525A]">credits disponibles</p>
+          </div>
+          <div className="pt-4 border-t border-[#E2E4E6]">
+            <p className="text-xs text-[#9BA0A6] text-center">1 credit = 1 enrichissement entreprise</p>
+          </div>
         </div>
       </div>
 
@@ -344,21 +510,46 @@ export default async function DashboardPage() {
             </div>
           ) : (
             <div className="space-y-3">
-              {upcomingTasks.map((task) => (
-                <div key={task.id} className="flex items-start gap-3 p-3 rounded-lg hover:bg-[#F5F7F9] transition-colors">
-                  <div className="w-8 h-8 rounded-lg bg-[#F5F7F9] flex items-center justify-center flex-shrink-0">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4E525A" strokeWidth="2">
-                      <path d={taskIcons[task.type] || taskIcons.task} />
-                    </svg>
+              {upcomingTasks.map((task) => {
+                const priorityBadge = task.priority === 'high'
+                  ? { bg: 'bg-[#FDE8E5]', text: 'text-[#B42318]', label: 'Haute' }
+                  : task.priority === 'medium'
+                  ? { bg: 'bg-[#FFF3E0]', text: 'text-[#A66A08]', label: 'Moyenne' }
+                  : { bg: 'bg-[#F5F7F9]', text: 'text-[#4E525A]', label: 'Basse' }
+
+                const isOverdue = task.dueDate === 'En retard'
+                const isToday = task.dueDate === "Aujourd'hui"
+
+                return (
+                  <div key={task.id} className="flex items-start gap-3 p-3 rounded-lg hover:bg-[#F5F7F9] transition-colors group">
+                    <div className={`w-8 h-8 rounded-lg ${priorityBadge.bg} flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform`}>
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={priorityBadge.text.replace('text-', '#')} strokeWidth="2" className={priorityBadge.text}>
+                        <path d={taskIcons[task.type] || taskIcons.task} />
+                      </svg>
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2 mb-1">
+                        <p className="text-sm font-medium text-[#0D0F14] truncate">{task.title}</p>
+                        <span className={`px-1.5 py-0.5 text-[9px] font-bold uppercase rounded ${priorityBadge.bg} ${priorityBadge.text}`}>
+                          {priorityBadge.label}
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <p className={`text-xs font-medium ${isOverdue ? 'text-[#B42318]' : isToday ? 'text-[#E65100]' : 'text-[#4E525A]'}`}>
+                          {task.dueDate}
+                        </p>
+                        {isOverdue && (
+                          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#B42318" strokeWidth="2">
+                            <circle cx="12" cy="12" r="10" />
+                            <line x1="12" y1="8" x2="12" y2="12" />
+                            <line x1="12" y1="16" x2="12.01" y2="16" />
+                          </svg>
+                        )}
+                      </div>
+                    </div>
                   </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-[#0D0F14] truncate">{task.title}</p>
-                    <p className={`text-xs ${task.dueDate === 'En retard' ? 'text-[#B42318]' : priorityColors[task.priority]}`}>
-                      {task.dueDate}
-                    </p>
-                  </div>
-                </div>
-              ))}
+                )
+              })}
             </div>
           )}
         </div>
@@ -381,25 +572,37 @@ export default async function DashboardPage() {
             </div>
           ) : (
             <div className="space-y-3">
-              {recentLeads.map((lead) => (
-                <Link
-                  key={lead.id}
-                  href={`/leads/${lead.id}`}
-                  className="flex items-center gap-3 p-3 rounded-lg hover:bg-[#F5F7F9] transition-colors"
-                >
-                  <div className="w-10 h-10 rounded-full bg-[#17191F] flex items-center justify-center text-white text-sm font-medium">
-                    {lead.name.split(' ').map(n => n[0]).join('').slice(0, 2)}
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-[#0D0F14]">{lead.name}</p>
-                    <p className="text-xs text-[#4E525A] truncate">{lead.company || '-'}</p>
-                  </div>
-                  <span className={`px-2 py-0.5 text-[10px] font-semibold uppercase rounded ${statusColors[lead.status] || statusColors.new}`}>
-                    {lead.status === 'new' ? 'Nouveau' : lead.status === 'qualified' ? 'Qualifie' : lead.status === 'hot' ? 'Chaud' : lead.status}
-                  </span>
-                  <span className="text-xs text-[#9BA0A6]">{lead.createdAt}</span>
-                </Link>
-              ))}
+              {recentLeads.map((lead) => {
+                const score = lead.score || 0
+                const scoreColor = score >= 70 ? 'text-[#147A3A] bg-[#E8F5E9]' : score >= 40 ? 'text-[#A66A08] bg-[#FFF3E0]' : 'text-[#B42318] bg-[#FDE8E5]'
+                const scoreIcon = score >= 70 ? '↗' : score >= 40 ? '→' : '↘'
+
+                return (
+                  <Link
+                    key={lead.id}
+                    href={`/leads/${lead.id}`}
+                    className="flex items-center gap-3 p-3 rounded-lg hover:bg-[#F5F7F9] transition-colors"
+                  >
+                    <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#17191F] to-[#2a2d35] flex items-center justify-center text-white text-sm font-medium shadow-sm">
+                      {lead.name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase()}
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-2">
+                        <p className="text-sm font-medium text-[#0D0F14]">{lead.name}</p>
+                        {lead.status === 'hot' && (
+                          <div className="w-1.5 h-1.5 rounded-full bg-[#E65100] animate-pulse" />
+                        )}
+                      </div>
+                      <p className="text-xs text-[#4E525A] truncate">{lead.company || 'Entreprise inconnue'}</p>
+                    </div>
+                    <div className={`px-2 py-1 rounded-md flex items-center gap-1 ${scoreColor}`}>
+                      <span className="text-xs font-semibold">{score}</span>
+                      <span className="text-[10px]">{scoreIcon}</span>
+                    </div>
+                    <span className="text-xs text-[#9BA0A6] min-w-[48px] text-right">{lead.createdAt}</span>
+                  </Link>
+                )
+              })}
             </div>
           )}
         </div>

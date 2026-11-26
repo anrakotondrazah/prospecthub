@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { useTheme } from '@/components/providers/ThemeProvider'
 
 const navItems = [
   {
@@ -20,6 +21,11 @@ const navItems = [
     label: 'Leads',
     href: '/leads',
     icon: 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z',
+  },
+  {
+    label: 'Listes',
+    href: '/lists',
+    icon: 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01',
   },
   {
     label: 'Base B2B',
@@ -48,6 +54,54 @@ const navItems = [
   },
 ]
 
+const comingSoonItems = [
+  {
+    label: 'Sequences',
+    href: '/sequences',
+    icon: 'M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z',
+  },
+  {
+    label: 'Templates',
+    href: '/templates',
+    icon: 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z',
+  },
+  {
+    label: 'Campagnes',
+    href: '/campaigns',
+    icon: 'M11 5.882V19.24a1.76 1.76 0 01-3.417.592l-2.147-6.15M18 13a3 3 0 100-6M5.436 13.683A4.001 4.001 0 017 6h1.832c4.1 0 7.625-1.234 9.168-3v14c-1.543-1.766-5.067-3-9.168-3H7a3.988 3.988 0 01-1.564-.317z',
+  },
+  {
+    label: 'Formulaires',
+    href: '/forms',
+    icon: 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01',
+  },
+  {
+    label: 'Automations',
+    href: '/automations',
+    icon: 'M13 10V3L4 14h7v7l9-11h-7z',
+  },
+  {
+    label: 'Produits',
+    href: '/products',
+    icon: 'M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4',
+  },
+  {
+    label: 'Devis',
+    href: '/quotes',
+    icon: 'M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z',
+  },
+  {
+    label: 'Tickets',
+    href: '/tickets',
+    icon: 'M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192l-3.536 3.536M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-5 0a4 4 0 11-8 0 4 4 0 018 0z',
+  },
+  {
+    label: 'Base connaissances',
+    href: '/knowledge-base',
+    icon: 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253',
+  },
+]
+
 const bottomItems = [
   {
     label: 'Parametres',
@@ -67,6 +121,7 @@ interface SidebarProps {
 export function Sidebar({ user, plan = 'Free' }: SidebarProps) {
   const pathname = usePathname()
   const [isCollapsed, setIsCollapsed] = useState(false)
+  const { theme, setTheme, resolvedTheme } = useTheme()
 
   const planColors: Record<string, string> = {
     Free: 'bg-[#F5F7F9] text-[#4E525A]',
@@ -77,16 +132,16 @@ export function Sidebar({ user, plan = 'Free' }: SidebarProps) {
 
   return (
     <aside
-      className={`fixed left-0 top-0 bottom-0 bg-white border-r border-[#E2E4E6] flex flex-col transition-all duration-200 z-50 hidden lg:flex ${
+      className={`fixed left-0 top-0 bottom-0 bg-white/95 dark:bg-[#0D1117]/95 backdrop-blur-xl border-r border-black/[0.08] dark:border-[#30363D] flex flex-col transition-all duration-200 z-50 hidden lg:flex shadow-sm ${
         isCollapsed ? 'w-[72px]' : 'w-[260px]'
       }`}
       role="navigation"
       aria-label="Navigation principale"
     >
       {/* Header */}
-      <div className="p-5 border-b border-[#EFF1F3]">
-        <Link href="/dashboard" className="flex items-center gap-3" aria-label="ProspectHub - Accueil">
-          <div className="w-9 h-9 bg-[#17191F] rounded-[10px] flex items-center justify-center flex-shrink-0">
+      <div className="p-5 border-b border-black/[0.06] dark:border-[#30363D]">
+        <Link href="/dashboard" className="flex items-center gap-3 group" aria-label="ProspectHub - Accueil">
+          <div className="w-9 h-9 bg-gradient-to-br from-[#0066FF] to-[#0052CC] rounded-xl flex items-center justify-center flex-shrink-0 shadow-sm group-hover:shadow-md transition-shadow duration-200">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true">
               <path d="M12 2L2 7l10 5 10-5-10-5z" fill="#fff" />
               <path d="M2 17l10 5 10-5" stroke="#fff" strokeWidth="2" />
@@ -95,8 +150,8 @@ export function Sidebar({ user, plan = 'Free' }: SidebarProps) {
           </div>
           {!isCollapsed && (
             <>
-              <span className="text-lg font-semibold text-[#0D0F14]">ProspectHub</span>
-              <span className={`ml-auto text-[10px] font-semibold uppercase px-1.5 py-0.5 rounded ${planColors[plan]}`}>
+              <span className="text-lg font-semibold text-[#0D0F14] dark:text-[#E6EDF3]">ProspectHub</span>
+              <span className={`ml-auto text-[10px] font-semibold uppercase px-1.5 py-0.5 rounded-md ${planColors[plan]}`}>
                 {plan}
               </span>
             </>
@@ -108,7 +163,7 @@ export function Sidebar({ user, plan = 'Free' }: SidebarProps) {
       {!isCollapsed && (
         <div className="px-4 py-3">
           <button
-            className="flex items-center gap-2 w-full px-3 py-2 bg-[#F5F7F9] rounded-[10px] text-[#9BA0A6] hover:bg-[#EFF1F3] transition-colors"
+            className="flex items-center gap-2 w-full px-3 py-2 bg-black/[0.03] dark:bg-white/[0.05] hover:bg-black/[0.05] dark:hover:bg-white/[0.08] rounded-xl text-[#9BA0A6] dark:text-[#8B949E] transition-all duration-200 border border-black/[0.06] dark:border-[#30363D]"
             aria-label="Ouvrir la recherche (Ctrl+K)"
             onClick={() => {
               const event = new KeyboardEvent('keydown', { key: 'k', ctrlKey: true, bubbles: true })
@@ -120,7 +175,7 @@ export function Sidebar({ user, plan = 'Free' }: SidebarProps) {
               <path d="M21 21l-4.35-4.35" />
             </svg>
             <span className="text-sm">Rechercher...</span>
-            <span className="ml-auto text-xs bg-white px-1.5 py-0.5 rounded border border-[#E2E4E6]">Ctrl+K</span>
+            <span className="ml-auto text-xs bg-white/80 dark:bg-[#161B22] px-1.5 py-0.5 rounded-md border border-black/[0.08] dark:border-[#30363D] shadow-sm">Ctrl+K</span>
           </button>
         </div>
       )}
@@ -134,10 +189,10 @@ export function Sidebar({ user, plan = 'Free' }: SidebarProps) {
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className={`flex items-center gap-3 px-3 py-2.5 rounded-[10px] transition-colors ${
+                  className={`flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 ${
                     isActive
-                      ? 'bg-[#F5F7F9] text-[#0D0F14] font-medium'
-                      : 'text-[#4E525A] hover:bg-[#F5F7F9] hover:text-[#0D0F14]'
+                      ? 'bg-black/[0.06] dark:bg-white/[0.1] text-[#0D0F14] dark:text-[#E6EDF3] font-medium shadow-sm'
+                      : 'text-[#4E525A] dark:text-[#8B949E] hover:bg-black/[0.03] dark:hover:bg-white/[0.05] hover:text-[#0D0F14] dark:hover:text-[#E6EDF3] active:scale-[0.98]'
                   }`}
                   aria-label={isCollapsed ? item.label : undefined}
                   aria-current={isActive ? 'page' : undefined}
@@ -171,10 +226,48 @@ export function Sidebar({ user, plan = 'Free' }: SidebarProps) {
             )
           })}
         </ul>
+
+        {!isCollapsed && (
+          <>
+            <div className="px-3 pt-4 pb-2">
+              <p className="text-xs font-medium text-[#9BA0A6] dark:text-[#8B949E] uppercase tracking-wider">Bientot disponible</p>
+            </div>
+            <ul className="space-y-1">
+              {comingSoonItems.map((item) => (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    className="flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 text-[#9BA0A6] dark:text-[#8B949E] hover:bg-black/[0.03] dark:hover:bg-white/[0.05] opacity-60 cursor-default pointer-events-none"
+                    aria-label={item.label}
+                    title={`${item.label} - Bientot disponible`}
+                  >
+                    <svg
+                      width="20"
+                      height="20"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      aria-hidden="true"
+                    >
+                      <path d={item.icon} />
+                    </svg>
+                    <span>{item.label}</span>
+                    <span className="ml-auto px-1.5 py-0.5 text-[9px] font-medium bg-[#FFF3E0] text-[#E65100] rounded-md">
+                      Soon
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
       </nav>
 
       {/* Bottom */}
-      <div className="px-3 py-2 border-t border-[#EFF1F3]">
+      <div className="px-3 py-2 border-t border-black/[0.06] dark:border-[#30363D]">
         <ul className="space-y-1">
           {bottomItems.map((item) => {
             const isActive = pathname === item.href
@@ -182,10 +275,10 @@ export function Sidebar({ user, plan = 'Free' }: SidebarProps) {
               <li key={item.href}>
                 <Link
                   href={item.href}
-                  className={`flex items-center gap-3 px-3 py-2.5 rounded-[10px] transition-colors ${
+                  className={`flex items-center gap-3 px-3 py-2.5 rounded-[10px] transition-colors duration-200 ${
                     isActive
-                      ? 'bg-[#F5F7F9] text-[#0D0F14] font-medium'
-                      : 'text-[#4E525A] hover:bg-[#F5F7F9] hover:text-[#0D0F14]'
+                      ? 'bg-[#F5F7F9] dark:bg-white/[0.1] text-[#0D0F14] dark:text-[#E6EDF3] font-medium'
+                      : 'text-[#4E525A] dark:text-[#8B949E] hover:bg-[#F5F7F9] dark:hover:bg-white/[0.05] hover:text-[#0D0F14] dark:hover:text-[#E6EDF3]'
                   }`}
                   aria-label={isCollapsed ? item.label : undefined}
                   aria-current={isActive ? 'page' : undefined}
@@ -211,22 +304,50 @@ export function Sidebar({ user, plan = 'Free' }: SidebarProps) {
           })}
         </ul>
 
+        {/* Dark Mode Toggle */}
+        {!isCollapsed && (
+          <button
+            onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
+            className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-black/[0.03] dark:hover:bg-white/[0.05] transition-all duration-200 active:scale-[0.98] text-[#4E525A] dark:text-[#8B949E] hover:text-[#0D0F14] dark:hover:text-[#E6EDF3]"
+            aria-label={`Basculer en mode ${resolvedTheme === 'dark' ? 'clair' : 'sombre'}`}
+          >
+            {resolvedTheme === 'dark' ? (
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="5" />
+                <line x1="12" y1="1" x2="12" y2="3" />
+                <line x1="12" y1="21" x2="12" y2="23" />
+                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                <line x1="1" y1="12" x2="3" y2="12" />
+                <line x1="21" y1="12" x2="23" y2="12" />
+                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+              </svg>
+            ) : (
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+              </svg>
+            )}
+            <span>{resolvedTheme === 'dark' ? 'Mode clair' : 'Mode sombre'}</span>
+          </button>
+        )}
+
         {/* User */}
         {!isCollapsed && user && (
           <div
-            className="flex items-center gap-3 px-3 py-3 mt-2 rounded-[10px] hover:bg-[#F5F7F9] cursor-pointer"
+            className="flex items-center gap-3 px-3 py-3 mt-2 rounded-xl hover:bg-black/[0.03] dark:hover:bg-white/[0.05] cursor-pointer transition-all duration-200 active:scale-[0.98]"
             role="button"
             tabIndex={0}
             aria-label={`Profil de ${user.full_name || user.email}`}
           >
-            <div className="w-8 h-8 rounded-full bg-[#17191F] flex items-center justify-center text-white text-sm font-medium">
+            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#0066FF] to-[#0052CC] dark:from-[#58A6FF] dark:to-[#1F6FEB] flex items-center justify-center text-white text-sm font-medium shadow-sm">
               {user.full_name?.[0] || user.email?.[0]?.toUpperCase() || 'U'}
             </div>
             <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-[#0D0F14] truncate">
+              <p className="text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3] truncate">
                 {user.full_name || user.email?.split('@')[0]}
               </p>
-              <p className="text-xs text-[#9BA0A6] truncate">{user.email}</p>
+              <p className="text-xs text-[#9BA0A6] dark:text-[#8B949E] truncate">{user.email}</p>
             </div>
           </div>
         )}
@@ -235,7 +356,7 @@ export function Sidebar({ user, plan = 'Free' }: SidebarProps) {
       {/* Collapse Toggle */}
       <button
         onClick={() => setIsCollapsed(!isCollapsed)}
-        className="absolute -right-3 top-20 w-6 h-6 bg-white border border-[#E2E4E6] rounded-full flex items-center justify-center hover:bg-[#F5F7F9] transition-colors"
+        className="absolute -right-3 top-20 w-6 h-6 bg-white/95 dark:bg-[#161B22]/95 backdrop-blur-sm border border-black/[0.08] dark:border-[#30363D] rounded-full flex items-center justify-center hover:bg-white dark:hover:bg-[#161B22] hover:shadow-md transition-all duration-200 shadow-sm active:scale-95"
         aria-label={isCollapsed ? 'Agrandir la sidebar' : 'Reduire la sidebar'}
         aria-expanded={!isCollapsed}
       >
@@ -244,9 +365,9 @@ export function Sidebar({ user, plan = 'Free' }: SidebarProps) {
           height="12"
           viewBox="0 0 24 24"
           fill="none"
-          stroke="#4E525A"
+          stroke="currentColor"
           strokeWidth="2"
-          className={`transition-transform ${isCollapsed ? 'rotate-180' : ''}`}
+          className={`transition-transform duration-200 text-[#4E525A] dark:text-[#8B949E] ${isCollapsed ? 'rotate-180' : ''}`}
           aria-hidden="true"
         >
           <polyline points="15 18 9 12 15 6" />

@@ -1,4 +1,5 @@
 import { createClient } from '@/lib/supabase/server'
+import { ThemeSettings } from './ThemeSettings'
 
 export const instant = false
 
@@ -64,37 +65,37 @@ export default async function SettingsPage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Profile - full width on mobile, 2/3 on desktop */}
         <div className="lg:col-span-2 space-y-6">
-          <div className="bg-white rounded-[14px] border border-[#E2E4E6] p-4 lg:p-6">
-            <h2 className="text-lg font-semibold text-[#0D0F14] mb-4">Profil</h2>
+          <div className="bg-white dark:bg-[#161B22] rounded-[14px] border border-[#E2E4E6] dark:border-[#30363D] p-4 lg:p-6 transition-colors duration-200">
+            <h2 className="text-lg font-semibold text-[#0D0F14] dark:text-[#E6EDF3] mb-4">Profil</h2>
             <div className="flex items-center gap-4 mb-6">
-              <div className="w-14 lg:w-16 h-14 lg:h-16 rounded-full bg-[#17191F] flex items-center justify-center text-white text-lg lg:text-xl font-semibold flex-shrink-0">
+              <div className="w-14 lg:w-16 h-14 lg:h-16 rounded-full bg-[#17191F] dark:bg-[#58A6FF] flex items-center justify-center text-white text-lg lg:text-xl font-semibold flex-shrink-0">
                 {initials}
               </div>
               <div className="min-w-0">
-                <p className="font-medium text-[#0D0F14] truncate">{fullName}</p>
-                <p className="text-sm text-[#4E525A] truncate">{user.email}</p>
+                <p className="font-medium text-[#0D0F14] dark:text-[#E6EDF3] truncate">{fullName}</p>
+                <p className="text-sm text-[#4E525A] dark:text-[#8B949E] truncate">{user.email}</p>
               </div>
             </div>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label htmlFor="firstName" className="block text-sm font-medium text-[#0D0F14] mb-2">Prenom</label>
+                <label htmlFor="firstName" className="block text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3] mb-2">Prenom</label>
                 <input
                   id="firstName"
                   type="text"
                   defaultValue={profile?.first_name || ''}
-                  className="w-full h-10 px-3 border border-[#E2E4E6] rounded-[10px] text-sm bg-[#F5F7F9] text-[#9BA0A6] cursor-not-allowed"
+                  className="w-full h-10 px-3 border border-[#E2E4E6] dark:border-[#30363D] rounded-[10px] text-sm bg-[#F5F7F9] dark:bg-[#0D1117] text-[#9BA0A6] dark:text-[#8B949E] cursor-not-allowed"
                   disabled
                   aria-describedby="firstName-hint"
                 />
                 <p id="firstName-hint" className="sr-only">Modification non disponible</p>
               </div>
               <div>
-                <label htmlFor="lastName" className="block text-sm font-medium text-[#0D0F14] mb-2">Nom</label>
+                <label htmlFor="lastName" className="block text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3] mb-2">Nom</label>
                 <input
                   id="lastName"
                   type="text"
                   defaultValue={profile?.last_name || ''}
-                  className="w-full h-10 px-3 border border-[#E2E4E6] rounded-[10px] text-sm bg-[#F5F7F9] text-[#9BA0A6] cursor-not-allowed"
+                  className="w-full h-10 px-3 border border-[#E2E4E6] dark:border-[#30363D] rounded-[10px] text-sm bg-[#F5F7F9] dark:bg-[#0D1117] text-[#9BA0A6] dark:text-[#8B949E] cursor-not-allowed"
                   disabled
                   aria-describedby="lastName-hint"
                 />
@@ -103,44 +104,46 @@ export default async function SettingsPage() {
             </div>
           </div>
 
-          <div className="bg-white rounded-[14px] border border-[#E2E4E6] p-4 lg:p-6">
-            <h2 className="text-lg font-semibold text-[#0D0F14] mb-4">Organisation</h2>
+          <div className="bg-white dark:bg-[#161B22] rounded-[14px] border border-[#E2E4E6] dark:border-[#30363D] p-4 lg:p-6 transition-colors duration-200">
+            <h2 className="text-lg font-semibold text-[#0D0F14] dark:text-[#E6EDF3] mb-4">Organisation</h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label htmlFor="orgName" className="block text-sm font-medium text-[#0D0F14] mb-2">Nom</label>
+                <label htmlFor="orgName" className="block text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3] mb-2">Nom</label>
                 <input
                   id="orgName"
                   type="text"
                   defaultValue={organization?.name || ''}
-                  className="w-full h-10 px-3 border border-[#E2E4E6] rounded-[10px] text-sm bg-[#F5F7F9] text-[#9BA0A6] cursor-not-allowed"
+                  className="w-full h-10 px-3 border border-[#E2E4E6] dark:border-[#30363D] rounded-[10px] text-sm bg-[#F5F7F9] dark:bg-[#0D1117] text-[#9BA0A6] dark:text-[#8B949E] cursor-not-allowed"
                   disabled
                 />
               </div>
               <div>
-                <label htmlFor="orgIndustry" className="block text-sm font-medium text-[#0D0F14] mb-2">Secteur</label>
+                <label htmlFor="orgIndustry" className="block text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3] mb-2">Secteur</label>
                 <input
                   id="orgIndustry"
                   type="text"
                   defaultValue={organization?.industry || ''}
-                  className="w-full h-10 px-3 border border-[#E2E4E6] rounded-[10px] text-sm bg-[#F5F7F9] text-[#9BA0A6] cursor-not-allowed"
+                  className="w-full h-10 px-3 border border-[#E2E4E6] dark:border-[#30363D] rounded-[10px] text-sm bg-[#F5F7F9] dark:bg-[#0D1117] text-[#9BA0A6] dark:text-[#8B949E] cursor-not-allowed"
                   disabled
                 />
               </div>
             </div>
           </div>
+
+          <ThemeSettings />
         </div>
 
         {/* Sidebar - reorder on mobile */}
         <div className="space-y-6 order-first lg:order-last">
-          <div className="bg-white rounded-[14px] border border-[#E2E4E6] p-4 lg:p-6">
-            <h2 className="text-lg font-semibold text-[#0D0F14] mb-4">Plan actuel</h2>
+          <div className="bg-white dark:bg-[#161B22] rounded-[14px] border border-[#E2E4E6] dark:border-[#30363D] p-4 lg:p-6 transition-colors duration-200">
+            <h2 className="text-lg font-semibold text-[#0D0F14] dark:text-[#E6EDF3] mb-4">Plan actuel</h2>
             <div className="flex items-center justify-between mb-4">
-              <span className="text-2xl font-bold text-[#0D0F14]">Free</span>
-              <span className="px-2 py-1 text-xs font-semibold uppercase rounded bg-[#F5F7F9] text-[#4E525A]">
+              <span className="text-2xl font-bold text-[#0D0F14] dark:text-[#E6EDF3]">Free</span>
+              <span className="px-2 py-1 text-xs font-semibold uppercase rounded bg-[#F5F7F9] dark:bg-[#0D1117] text-[#4E525A] dark:text-[#8B949E]">
                 Actuel
               </span>
             </div>
-            <ul className="space-y-2 text-sm text-[#4E525A] mb-4">
+            <ul className="space-y-2 text-sm text-[#4E525A] dark:text-[#8B949E] mb-4">
               <li className="flex items-center gap-2">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#147A3A" strokeWidth="2" aria-hidden="true">
                   <polyline points="20 6 9 17 4 12" />
@@ -169,8 +172,8 @@ export default async function SettingsPage() {
             </button>
           </div>
 
-          <div className="bg-white rounded-[14px] border border-[#E2E4E6] p-4 lg:p-6">
-            <h2 className="text-lg font-semibold text-[#0D0F14] mb-4">Danger Zone</h2>
+          <div className="bg-white dark:bg-[#161B22] rounded-[14px] border border-[#E2E4E6] dark:border-[#30363D] p-4 lg:p-6 transition-colors duration-200">
+            <h2 className="text-lg font-semibold text-[#0D0F14] dark:text-[#E6EDF3] mb-4">Danger Zone</h2>
             <button
               className="w-full h-10 text-sm font-medium text-[#B42318]/60 border border-[#B42318]/60 rounded-[10px] cursor-not-allowed"
               disabled

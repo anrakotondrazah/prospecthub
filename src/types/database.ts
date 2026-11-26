@@ -424,6 +424,34 @@ export type Database = {
         Insert: Omit<Database['public']['Tables']['unlocked_leads']['Row'], 'id' | 'unlocked_at'>
         Update: Partial<Database['public']['Tables']['unlocked_leads']['Insert']>
       }
+      lists: {
+        Row: {
+          id: number
+          uuid: string
+          organization_id: number
+          name: string
+          description: string | null
+          type: 'static' | 'dynamic'
+          filters: Json | null
+          member_count: number
+          created_by: string | null
+          created_at: string
+          updated_at: string
+        }
+        Insert: Omit<Database['public']['Tables']['lists']['Row'], 'id' | 'uuid' | 'member_count' | 'created_at' | 'updated_at'>
+        Update: Partial<Database['public']['Tables']['lists']['Insert']>
+      }
+      list_members: {
+        Row: {
+          id: number
+          list_id: number
+          lead_id: number
+          added_at: string
+          added_by: string | null
+        }
+        Insert: Omit<Database['public']['Tables']['list_members']['Row'], 'id' | 'added_at'>
+        Update: Partial<Database['public']['Tables']['list_members']['Insert']>
+      }
     }
     Views: {
       [_ in never]: never

@@ -17,7 +17,6 @@ const navItems = [
     label: 'Inbox',
     href: '/inbox',
     icon: 'M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2v10z',
-    badge: 3,
   },
   {
     label: 'Leads',
@@ -193,6 +192,7 @@ export function Sidebar({ user, organizationId, plan = 'Free' }: SidebarProps) {
               <li key={item.href}>
                 <Link
                   href={item.href}
+                  prefetch={['/dashboard', '/leads', '/deals', '/inbox'].includes(item.href) ? undefined : false}
                   className={`flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 ${
                     isActive
                       ? 'bg-black/[0.06] dark:bg-white/[0.1] text-[#0D0F14] dark:text-[#E6EDF3] font-medium shadow-sm'
@@ -216,14 +216,7 @@ export function Sidebar({ user, organizationId, plan = 'Free' }: SidebarProps) {
                     <path d={item.icon} />
                   </svg>
                   {!isCollapsed && (
-                    <>
-                      <span>{item.label}</span>
-                      {'badge' in item && item.badge && (
-                        <span className="ml-auto px-1.5 py-0.5 text-[10px] font-semibold bg-[#B42318] text-white rounded-full min-w-[18px] text-center">
-                          {item.badge}
-                        </span>
-                      )}
-                    </>
+                    <span>{item.label}</span>
                   )}
                 </Link>
               </li>
@@ -241,6 +234,7 @@ export function Sidebar({ user, organizationId, plan = 'Free' }: SidebarProps) {
                 <li key={item.href}>
                   <Link
                     href={item.href}
+                    prefetch={false}
                     className="flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all duration-200 text-[#9BA0A6] dark:text-[#8B949E] hover:bg-black/[0.03] dark:hover:bg-white/[0.05] opacity-60 cursor-default pointer-events-none"
                     aria-label={item.label}
                     title={`${item.label} - Bientot disponible`}
@@ -279,6 +273,7 @@ export function Sidebar({ user, organizationId, plan = 'Free' }: SidebarProps) {
               <li key={item.href}>
                 <Link
                   href={item.href}
+                  prefetch={false}
                   className={`flex items-center gap-3 px-3 py-2.5 rounded-[10px] transition-colors duration-200 ${
                     isActive
                       ? 'bg-[#F5F7F9] dark:bg-white/[0.1] text-[#0D0F14] dark:text-[#E6EDF3] font-medium'

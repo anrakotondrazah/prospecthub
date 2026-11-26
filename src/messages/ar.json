@@ -1,0 +1,272 @@
+{
+  "meta": {
+    "title": "ProspectHub - CRM B2B",
+    "description": "تنقيب اذكى مع بيانات موثقة حديثا"
+  },
+  "nav": {
+    "features": "المميزات",
+    "testimonials": "اراء العملاء",
+    "pricing": "الاسعار",
+    "demo": "عرض توضيحي",
+    "login": "تسجيل الدخول",
+    "signup": "ابدا الان",
+    "logout": "تسجيل الخروج"
+  },
+  "sidebar": {
+    "dashboard": "لوحة التحكم",
+    "inbox": "البريد الوارد",
+    "leads": "العملاء المحتملين",
+    "lists": "القوائم",
+    "baseB2B": "قاعدة B2B",
+    "companies": "الشركات",
+    "deals": "الصفقات",
+    "tasks": "المهام",
+    "reports": "التقارير",
+    "settings": "الاعدادات",
+    "sequences": "التسلسلات",
+    "campaigns": "الحملات",
+    "quotes": "عروض الاسعار",
+    "templates": "القوالب",
+    "automations": "الاتمتة",
+    "products": "المنتجات",
+    "tickets": "التذاكر",
+    "forms": "النماذج",
+    "knowledgeBase": "قاعدة المعرفة",
+    "comingSoon": "قريبا",
+    "collapse": "طي الشريط الجانبي",
+    "expand": "توسيع الشريط الجانبي"
+  },
+  "common": {
+    "search": "بحث",
+    "save": "حفظ",
+    "cancel": "الغاء",
+    "delete": "حذف",
+    "edit": "تعديل",
+    "create": "انشاء",
+    "add": "اضافة",
+    "remove": "ازالة",
+    "close": "اغلاق",
+    "open": "فتح",
+    "loading": "جاري التحميل...",
+    "error": "خطا",
+    "success": "نجاح",
+    "confirm": "تاكيد",
+    "back": "رجوع",
+    "next": "التالي",
+    "previous": "السابق",
+    "submit": "ارسال",
+    "reset": "اعادة تعيين",
+    "filter": "تصفية",
+    "sort": "ترتيب",
+    "export": "تصدير",
+    "import": "استيراد",
+    "download": "تحميل",
+    "upload": "رفع",
+    "view": "عرض",
+    "viewAll": "عرض الكل",
+    "showMore": "عرض المزيد",
+    "showLess": "عرض اقل",
+    "noResults": "لا توجد نتائج",
+    "allRightsReserved": "جميع الحقوق محفوظة"
+  },
+  "auth": {
+    "email": "البريد الالكتروني",
+    "password": "كلمة المرور",
+    "confirmPassword": "تاكيد كلمة المرور",
+    "forgotPassword": "نسيت كلمة المرور؟",
+    "resetPassword": "اعادة تعيين كلمة المرور",
+    "signInWith": "تسجيل الدخول بـ {provider}",
+    "signUpWith": "التسجيل بـ {provider}",
+    "orContinueWith": "او المتابعة بـ",
+    "alreadyHaveAccount": "لديك حساب بالفعل؟",
+    "dontHaveAccount": "ليس لديك حساب؟",
+    "signIn": "تسجيل الدخول",
+    "signUp": "التسجيل",
+    "signOut": "تسجيل الخروج"
+  },
+  "landing": {
+    "hero": {
+      "title": "نظام CRM B2B من الجيل الجديد",
+      "subtitle": "تنقيب اذكى مع بيانات موثقة حديثا",
+      "cta": "ابدا مجانا"
+    },
+    "features": {
+      "title": "لماذا تختار ProspectHub؟",
+      "personalizedTracking": "تتبع مخصص",
+      "automatedEnrichment": "اثراء تلقائي",
+      "verifiedCompanies": "شركات موثقة",
+      "freshData": "بيانات حديثة",
+      "transparency": "شفافية كاملة",
+      "simplicity": "سهولة الاستخدام"
+    },
+    "howItWorks": {
+      "title": "كيف يعمل",
+      "step1": "ابحث",
+      "step1Desc": "ابحث عن شركات حسب القطاع او الحجم او الموقع",
+      "step2": "اكشف",
+      "step2Desc": "افتح بيانات الاتصال الكاملة",
+      "step3": "تواصل",
+      "step3Desc": "اطلق تسلسلات البريد الالكتروني"
+    },
+    "pricing": {
+      "title": "اسعار بسيطة وشفافة",
+      "starter": "البداية",
+      "pro": "احترافي",
+      "enterprise": "مؤسسات",
+      "perMonth": "/شهر",
+      "perYear": "/سنة",
+      "mostPopular": "الاكثر شعبية",
+      "getStarted": "ابدا الان",
+      "contactSales": "تواصل مع المبيعات"
+    },
+    "testimonials": {
+      "title": "ماذا يقول عملاؤنا"
+    }
+  },
+  "dashboard": {
+    "welcome": "مرحبا، {name}",
+    "recentActivity": "النشاط الاخير",
+    "stats": {
+      "leads": "العملاء المحتملين",
+      "companies": "الشركات",
+      "deals": "الصفقات",
+      "tasks": "المهام",
+      "credits": "الرصيد"
+    }
+  },
+  "leads": {
+    "title": "العملاء المحتملين",
+    "newLead": "عميل محتمل جديد",
+    "importLeads": "استيراد العملاء",
+    "exportLeads": "تصدير العملاء",
+    "columns": {
+      "name": "الاسم",
+      "company": "الشركة",
+      "email": "البريد الالكتروني",
+      "phone": "الهاتف",
+      "status": "الحالة",
+      "source": "المصدر",
+      "createdAt": "تاريخ الانشاء",
+      "updatedAt": "تاريخ التحديث"
+    },
+    "status": {
+      "new": "جديد",
+      "contacted": "تم التواصل",
+      "qualified": "مؤهل",
+      "converted": "محول",
+      "lost": "مفقود"
+    }
+  },
+  "companies": {
+    "title": "الشركات",
+    "newCompany": "شركة جديدة",
+    "columns": {
+      "name": "الاسم",
+      "industry": "القطاع",
+      "size": "الحجم",
+      "location": "الموقع",
+      "website": "الموقع الالكتروني",
+      "createdAt": "تاريخ الانشاء"
+    }
+  },
+  "deals": {
+    "title": "الصفقات",
+    "newDeal": "صفقة جديدة",
+    "columns": {
+      "name": "الاسم",
+      "company": "الشركة",
+      "value": "القيمة",
+      "stage": "المرحلة",
+      "probability": "الاحتمالية",
+      "closeDate": "تاريخ الاغلاق",
+      "owner": "المسؤول"
+    },
+    "stages": {
+      "qualification": "التاهيل",
+      "proposal": "العرض",
+      "negotiation": "التفاوض",
+      "closed_won": "فاز",
+      "closed_lost": "خسر"
+    }
+  },
+  "tasks": {
+    "title": "المهام",
+    "newTask": "مهمة جديدة",
+    "columns": {
+      "title": "العنوان",
+      "description": "الوصف",
+      "dueDate": "تاريخ الاستحقاق",
+      "priority": "الاولوية",
+      "status": "الحالة",
+      "assignee": "المكلف"
+    },
+    "priority": {
+      "low": "منخفضة",
+      "medium": "متوسطة",
+      "high": "عالية",
+      "urgent": "عاجلة"
+    },
+    "status": {
+      "todo": "للعمل",
+      "inProgress": "قيد التنفيذ",
+      "done": "مكتمل",
+      "cancelled": "ملغي"
+    }
+  },
+  "quotes": {
+    "title": "عروض الاسعار",
+    "newQuote": "عرض اسعار جديد",
+    "columns": {
+      "number": "الرقم",
+      "client": "العميل",
+      "total": "المجموع",
+      "status": "الحالة",
+      "validUntil": "صالح حتى",
+      "createdAt": "تاريخ الانشاء"
+    },
+    "status": {
+      "draft": "مسودة",
+      "sent": "مرسل",
+      "accepted": "مقبول",
+      "rejected": "مرفوض",
+      "expired": "منتهي"
+    }
+  },
+  "settings": {
+    "title": "الاعدادات",
+    "profile": "الملف الشخصي",
+    "account": "الحساب",
+    "billing": "الفوترة",
+    "team": "الفريق",
+    "integrations": "التكاملات",
+    "notifications": "الاشعارات",
+    "security": "الامان",
+    "appearance": "المظهر",
+    "language": "اللغة",
+    "timezone": "المنطقة الزمنية",
+    "deleteAccount": "حذف الحساب"
+  },
+  "legal": {
+    "terms": "شروط الخدمة",
+    "privacy": "سياسة الخصوصية",
+    "contact": "اتصل بنا"
+  },
+  "errors": {
+    "generic": "حدث خطا",
+    "notFound": "الصفحة غير موجودة",
+    "unauthorized": "غير مصرح",
+    "forbidden": "محظور",
+    "serverError": "خطا في الخادم",
+    "networkError": "خطا في الشبكة",
+    "validationError": "خطا في التحقق"
+  },
+  "dates": {
+    "today": "اليوم",
+    "yesterday": "امس",
+    "tomorrow": "غدا",
+    "thisWeek": "هذا الاسبوع",
+    "lastWeek": "الاسبوع الماضي",
+    "thisMonth": "هذا الشهر",
+    "lastMonth": "الشهر الماضي"
+  }
+}

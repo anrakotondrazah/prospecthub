@@ -1,0 +1,272 @@
+{
+  "meta": {
+    "title": "ProspectHub - B2B CRM",
+    "description": "使用新鲜验证的数据更智能地进行潜在客户开发"
+  },
+  "nav": {
+    "features": "功能",
+    "testimonials": "客户评价",
+    "pricing": "定价",
+    "demo": "演示",
+    "login": "登录",
+    "signup": "开始使用",
+    "logout": "登出"
+  },
+  "sidebar": {
+    "dashboard": "仪表板",
+    "inbox": "收件箱",
+    "leads": "潜在客户",
+    "lists": "列表",
+    "baseB2B": "B2B数据库",
+    "companies": "企业",
+    "deals": "交易",
+    "tasks": "任务",
+    "reports": "报告",
+    "settings": "设置",
+    "sequences": "序列",
+    "campaigns": "营销活动",
+    "quotes": "报价",
+    "templates": "模板",
+    "automations": "自动化",
+    "products": "产品",
+    "tickets": "工单",
+    "forms": "表单",
+    "knowledgeBase": "知识库",
+    "comingSoon": "即将推出",
+    "collapse": "收起侧边栏",
+    "expand": "展开侧边栏"
+  },
+  "common": {
+    "search": "搜索",
+    "save": "保存",
+    "cancel": "取消",
+    "delete": "删除",
+    "edit": "编辑",
+    "create": "创建",
+    "add": "添加",
+    "remove": "移除",
+    "close": "关闭",
+    "open": "打开",
+    "loading": "加载中...",
+    "error": "错误",
+    "success": "成功",
+    "confirm": "确认",
+    "back": "返回",
+    "next": "下一步",
+    "previous": "上一步",
+    "submit": "提交",
+    "reset": "重置",
+    "filter": "筛选",
+    "sort": "排序",
+    "export": "导出",
+    "import": "导入",
+    "download": "下载",
+    "upload": "上传",
+    "view": "查看",
+    "viewAll": "查看全部",
+    "showMore": "显示更多",
+    "showLess": "显示更少",
+    "noResults": "无结果",
+    "allRightsReserved": "版权所有"
+  },
+  "auth": {
+    "email": "邮箱",
+    "password": "密码",
+    "confirmPassword": "确认密码",
+    "forgotPassword": "忘记密码？",
+    "resetPassword": "重置密码",
+    "signInWith": "使用 {provider} 登录",
+    "signUpWith": "使用 {provider} 注册",
+    "orContinueWith": "或继续使用",
+    "alreadyHaveAccount": "已有账户？",
+    "dontHaveAccount": "没有账户？",
+    "signIn": "登录",
+    "signUp": "注册",
+    "signOut": "登出"
+  },
+  "landing": {
+    "hero": {
+      "title": "新一代B2B CRM",
+      "subtitle": "使用新鲜验证的数据更智能地进行潜在客户开发",
+      "cta": "免费开始"
+    },
+    "features": {
+      "title": "为什么选择ProspectHub？",
+      "personalizedTracking": "个性化跟踪",
+      "automatedEnrichment": "自动数据丰富",
+      "verifiedCompanies": "已验证企业",
+      "freshData": "新鲜数据",
+      "transparency": "完全透明",
+      "simplicity": "简单易用"
+    },
+    "howItWorks": {
+      "title": "工作原理",
+      "step1": "搜索",
+      "step1Desc": "按行业、规模或位置查找企业",
+      "step2": "解锁",
+      "step2Desc": "获取完整的联系方式",
+      "step3": "联系",
+      "step3Desc": "启动您的邮件序列"
+    },
+    "pricing": {
+      "title": "简单透明的定价",
+      "starter": "入门版",
+      "pro": "专业版",
+      "enterprise": "企业版",
+      "perMonth": "/月",
+      "perYear": "/年",
+      "mostPopular": "最受欢迎",
+      "getStarted": "开始使用",
+      "contactSales": "联系销售"
+    },
+    "testimonials": {
+      "title": "客户怎么说"
+    }
+  },
+  "dashboard": {
+    "welcome": "欢迎，{name}",
+    "recentActivity": "最近活动",
+    "stats": {
+      "leads": "潜在客户",
+      "companies": "企业",
+      "deals": "交易",
+      "tasks": "任务",
+      "credits": "积分"
+    }
+  },
+  "leads": {
+    "title": "潜在客户",
+    "newLead": "新建潜在客户",
+    "importLeads": "导入潜在客户",
+    "exportLeads": "导出潜在客户",
+    "columns": {
+      "name": "姓名",
+      "company": "企业",
+      "email": "邮箱",
+      "phone": "电话",
+      "status": "状态",
+      "source": "来源",
+      "createdAt": "创建时间",
+      "updatedAt": "更新时间"
+    },
+    "status": {
+      "new": "新建",
+      "contacted": "已联系",
+      "qualified": "已筛选",
+      "converted": "已转化",
+      "lost": "已流失"
+    }
+  },
+  "companies": {
+    "title": "企业",
+    "newCompany": "新建企业",
+    "columns": {
+      "name": "名称",
+      "industry": "行业",
+      "size": "规模",
+      "location": "位置",
+      "website": "网站",
+      "createdAt": "创建时间"
+    }
+  },
+  "deals": {
+    "title": "交易",
+    "newDeal": "新建交易",
+    "columns": {
+      "name": "名称",
+      "company": "企业",
+      "value": "金额",
+      "stage": "阶段",
+      "probability": "概率",
+      "closeDate": "预计成交日期",
+      "owner": "负责人"
+    },
+    "stages": {
+      "qualification": "资质确认",
+      "proposal": "方案提交",
+      "negotiation": "谈判",
+      "closed_won": "赢单",
+      "closed_lost": "输单"
+    }
+  },
+  "tasks": {
+    "title": "任务",
+    "newTask": "新建任务",
+    "columns": {
+      "title": "标题",
+      "description": "描述",
+      "dueDate": "截止日期",
+      "priority": "优先级",
+      "status": "状态",
+      "assignee": "负责人"
+    },
+    "priority": {
+      "low": "低",
+      "medium": "中",
+      "high": "高",
+      "urgent": "紧急"
+    },
+    "status": {
+      "todo": "待办",
+      "inProgress": "进行中",
+      "done": "已完成",
+      "cancelled": "已取消"
+    }
+  },
+  "quotes": {
+    "title": "报价",
+    "newQuote": "新建报价",
+    "columns": {
+      "number": "编号",
+      "client": "客户",
+      "total": "总计",
+      "status": "状态",
+      "validUntil": "有效期至",
+      "createdAt": "创建时间"
+    },
+    "status": {
+      "draft": "草稿",
+      "sent": "已发送",
+      "accepted": "已接受",
+      "rejected": "已拒绝",
+      "expired": "已过期"
+    }
+  },
+  "settings": {
+    "title": "设置",
+    "profile": "个人资料",
+    "account": "账户",
+    "billing": "账单",
+    "team": "团队",
+    "integrations": "集成",
+    "notifications": "通知",
+    "security": "安全",
+    "appearance": "外观",
+    "language": "语言",
+    "timezone": "时区",
+    "deleteAccount": "删除账户"
+  },
+  "legal": {
+    "terms": "服务条款",
+    "privacy": "隐私政策",
+    "contact": "联系我们"
+  },
+  "errors": {
+    "generic": "发生错误",
+    "notFound": "页面未找到",
+    "unauthorized": "未授权",
+    "forbidden": "禁止访问",
+    "serverError": "服务器错误",
+    "networkError": "网络错误",
+    "validationError": "验证错误"
+  },
+  "dates": {
+    "today": "今天",
+    "yesterday": "昨天",
+    "tomorrow": "明天",
+    "thisWeek": "本周",
+    "lastWeek": "上周",
+    "thisMonth": "本月",
+    "lastMonth": "上月"
+  }
+}

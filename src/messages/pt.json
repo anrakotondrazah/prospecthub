@@ -1,0 +1,272 @@
+{
+  "meta": {
+    "title": "ProspectHub - CRM B2B",
+    "description": "Prospecte de forma mais inteligente com dados verificados"
+  },
+  "nav": {
+    "features": "Funcionalidades",
+    "testimonials": "Depoimentos",
+    "pricing": "Precos",
+    "demo": "Demo",
+    "login": "Entrar",
+    "signup": "Comecar",
+    "logout": "Sair"
+  },
+  "sidebar": {
+    "dashboard": "Painel",
+    "inbox": "Caixa de entrada",
+    "leads": "Leads",
+    "lists": "Listas",
+    "baseB2B": "Base B2B",
+    "companies": "Empresas",
+    "deals": "Negocios",
+    "tasks": "Tarefas",
+    "reports": "Relatorios",
+    "settings": "Configuracoes",
+    "sequences": "Sequencias",
+    "campaigns": "Campanhas",
+    "quotes": "Orcamentos",
+    "templates": "Modelos",
+    "automations": "Automacoes",
+    "products": "Produtos",
+    "tickets": "Tickets",
+    "forms": "Formularios",
+    "knowledgeBase": "Base de conhecimento",
+    "comingSoon": "Em breve",
+    "collapse": "Recolher barra lateral",
+    "expand": "Expandir barra lateral"
+  },
+  "common": {
+    "search": "Pesquisar",
+    "save": "Salvar",
+    "cancel": "Cancelar",
+    "delete": "Excluir",
+    "edit": "Editar",
+    "create": "Criar",
+    "add": "Adicionar",
+    "remove": "Remover",
+    "close": "Fechar",
+    "open": "Abrir",
+    "loading": "Carregando...",
+    "error": "Erro",
+    "success": "Sucesso",
+    "confirm": "Confirmar",
+    "back": "Voltar",
+    "next": "Proximo",
+    "previous": "Anterior",
+    "submit": "Enviar",
+    "reset": "Redefinir",
+    "filter": "Filtrar",
+    "sort": "Ordenar",
+    "export": "Exportar",
+    "import": "Importar",
+    "download": "Baixar",
+    "upload": "Enviar",
+    "view": "Ver",
+    "viewAll": "Ver tudo",
+    "showMore": "Ver mais",
+    "showLess": "Ver menos",
+    "noResults": "Sem resultados",
+    "allRightsReserved": "Todos os direitos reservados"
+  },
+  "auth": {
+    "email": "E-mail",
+    "password": "Senha",
+    "confirmPassword": "Confirmar senha",
+    "forgotPassword": "Esqueceu a senha?",
+    "resetPassword": "Redefinir senha",
+    "signInWith": "Entrar com {provider}",
+    "signUpWith": "Cadastrar com {provider}",
+    "orContinueWith": "Ou continuar com",
+    "alreadyHaveAccount": "Ja tem uma conta?",
+    "dontHaveAccount": "Nao tem uma conta?",
+    "signIn": "Entrar",
+    "signUp": "Cadastrar",
+    "signOut": "Sair"
+  },
+  "landing": {
+    "hero": {
+      "title": "O CRM B2B de nova geracao",
+      "subtitle": "Prospecte de forma mais inteligente com dados verificados",
+      "cta": "Comecar gratis"
+    },
+    "features": {
+      "title": "Por que escolher o ProspectHub?",
+      "personalizedTracking": "Rastreamento personalizado",
+      "automatedEnrichment": "Enriquecimento automatico",
+      "verifiedCompanies": "Empresas verificadas",
+      "freshData": "Dados atualizados",
+      "transparency": "Transparencia total",
+      "simplicity": "Facilidade de uso"
+    },
+    "howItWorks": {
+      "title": "Como funciona",
+      "step1": "Pesquise",
+      "step1Desc": "Encontre empresas por setor, tamanho ou localizacao",
+      "step2": "Revele",
+      "step2Desc": "Desbloqueie os dados de contato completos",
+      "step3": "Contate",
+      "step3Desc": "Lance suas sequencias de e-mails"
+    },
+    "pricing": {
+      "title": "Precos simples e transparentes",
+      "starter": "Inicial",
+      "pro": "Pro",
+      "enterprise": "Empresa",
+      "perMonth": "/mes",
+      "perYear": "/ano",
+      "mostPopular": "Mais popular",
+      "getStarted": "Comecar",
+      "contactSales": "Contatar vendas"
+    },
+    "testimonials": {
+      "title": "O que nossos clientes dizem"
+    }
+  },
+  "dashboard": {
+    "welcome": "Bem-vindo, {name}",
+    "recentActivity": "Atividade recente",
+    "stats": {
+      "leads": "Leads",
+      "companies": "Empresas",
+      "deals": "Negocios",
+      "tasks": "Tarefas",
+      "credits": "Creditos"
+    }
+  },
+  "leads": {
+    "title": "Leads",
+    "newLead": "Novo lead",
+    "importLeads": "Importar leads",
+    "exportLeads": "Exportar leads",
+    "columns": {
+      "name": "Nome",
+      "company": "Empresa",
+      "email": "E-mail",
+      "phone": "Telefone",
+      "status": "Status",
+      "source": "Origem",
+      "createdAt": "Criado em",
+      "updatedAt": "Atualizado em"
+    },
+    "status": {
+      "new": "Novo",
+      "contacted": "Contatado",
+      "qualified": "Qualificado",
+      "converted": "Convertido",
+      "lost": "Perdido"
+    }
+  },
+  "companies": {
+    "title": "Empresas",
+    "newCompany": "Nova empresa",
+    "columns": {
+      "name": "Nome",
+      "industry": "Setor",
+      "size": "Tamanho",
+      "location": "Localizacao",
+      "website": "Site",
+      "createdAt": "Criado em"
+    }
+  },
+  "deals": {
+    "title": "Negocios",
+    "newDeal": "Novo negocio",
+    "columns": {
+      "name": "Nome",
+      "company": "Empresa",
+      "value": "Valor",
+      "stage": "Etapa",
+      "probability": "Probabilidade",
+      "closeDate": "Data de fechamento",
+      "owner": "Responsavel"
+    },
+    "stages": {
+      "qualification": "Qualificacao",
+      "proposal": "Proposta",
+      "negotiation": "Negociacao",
+      "closed_won": "Ganho",
+      "closed_lost": "Perdido"
+    }
+  },
+  "tasks": {
+    "title": "Tarefas",
+    "newTask": "Nova tarefa",
+    "columns": {
+      "title": "Titulo",
+      "description": "Descricao",
+      "dueDate": "Data limite",
+      "priority": "Prioridade",
+      "status": "Status",
+      "assignee": "Atribuido a"
+    },
+    "priority": {
+      "low": "Baixa",
+      "medium": "Media",
+      "high": "Alta",
+      "urgent": "Urgente"
+    },
+    "status": {
+      "todo": "A fazer",
+      "inProgress": "Em andamento",
+      "done": "Concluido",
+      "cancelled": "Cancelado"
+    }
+  },
+  "quotes": {
+    "title": "Orcamentos",
+    "newQuote": "Novo orcamento",
+    "columns": {
+      "number": "Numero",
+      "client": "Cliente",
+      "total": "Total",
+      "status": "Status",
+      "validUntil": "Valido ate",
+      "createdAt": "Criado em"
+    },
+    "status": {
+      "draft": "Rascunho",
+      "sent": "Enviado",
+      "accepted": "Aceito",
+      "rejected": "Rejeitado",
+      "expired": "Expirado"
+    }
+  },
+  "settings": {
+    "title": "Configuracoes",
+    "profile": "Perfil",
+    "account": "Conta",
+    "billing": "Faturamento",
+    "team": "Equipe",
+    "integrations": "Integracoes",
+    "notifications": "Notificacoes",
+    "security": "Seguranca",
+    "appearance": "Aparencia",
+    "language": "Idioma",
+    "timezone": "Fuso horario",
+    "deleteAccount": "Excluir conta"
+  },
+  "legal": {
+    "terms": "Termos de servico",
+    "privacy": "Politica de privacidade",
+    "contact": "Contato"
+  },
+  "errors": {
+    "generic": "Ocorreu um erro",
+    "notFound": "Pagina nao encontrada",
+    "unauthorized": "Nao autorizado",
+    "forbidden": "Proibido",
+    "serverError": "Erro no servidor",
+    "networkError": "Erro de rede",
+    "validationError": "Erro de validacao"
+  },
+  "dates": {
+    "today": "Hoje",
+    "yesterday": "Ontem",
+    "tomorrow": "Amanha",
+    "thisWeek": "Esta semana",
+    "lastWeek": "Semana passada",
+    "thisMonth": "Este mes",
+    "lastMonth": "Mes passado"
+  }
+}

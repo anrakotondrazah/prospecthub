@@ -199,7 +199,8 @@ export default function OnboardingPage() {
 
       saveOnboardingData()
       router.push('/dashboard')
-    } catch {
+    } catch (err) {
+      console.error('Erreur onboarding completion:', err)
       setError('Une erreur inattendue s\'est produite. Veuillez reessayer.')
     } finally {
       setIsLoading(false)

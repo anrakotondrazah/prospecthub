@@ -1,0 +1,272 @@
+{
+  "meta": {
+    "title": "ProspectHub - B2B CRM",
+    "description": "Prospecteer slimmer met vers geverifieerde data"
+  },
+  "nav": {
+    "features": "Functies",
+    "testimonials": "Getuigenissen",
+    "pricing": "Prijzen",
+    "demo": "Demo",
+    "login": "Inloggen",
+    "signup": "Beginnen",
+    "logout": "Uitloggen"
+  },
+  "sidebar": {
+    "dashboard": "Dashboard",
+    "inbox": "Inbox",
+    "leads": "Leads",
+    "lists": "Lijsten",
+    "baseB2B": "B2B Database",
+    "companies": "Bedrijven",
+    "deals": "Deals",
+    "tasks": "Taken",
+    "reports": "Rapporten",
+    "settings": "Instellingen",
+    "sequences": "Sequenties",
+    "campaigns": "Campagnes",
+    "quotes": "Offertes",
+    "templates": "Sjablonen",
+    "automations": "Automatiseringen",
+    "products": "Producten",
+    "tickets": "Tickets",
+    "forms": "Formulieren",
+    "knowledgeBase": "Kennisbank",
+    "comingSoon": "Binnenkort",
+    "collapse": "Zijbalk inklappen",
+    "expand": "Zijbalk uitvouwen"
+  },
+  "common": {
+    "search": "Zoeken",
+    "save": "Opslaan",
+    "cancel": "Annuleren",
+    "delete": "Verwijderen",
+    "edit": "Bewerken",
+    "create": "Maken",
+    "add": "Toevoegen",
+    "remove": "Verwijderen",
+    "close": "Sluiten",
+    "open": "Openen",
+    "loading": "Laden...",
+    "error": "Fout",
+    "success": "Succes",
+    "confirm": "Bevestigen",
+    "back": "Terug",
+    "next": "Volgende",
+    "previous": "Vorige",
+    "submit": "Verzenden",
+    "reset": "Resetten",
+    "filter": "Filteren",
+    "sort": "Sorteren",
+    "export": "Exporteren",
+    "import": "Importeren",
+    "download": "Downloaden",
+    "upload": "Uploaden",
+    "view": "Bekijken",
+    "viewAll": "Alles bekijken",
+    "showMore": "Meer tonen",
+    "showLess": "Minder tonen",
+    "noResults": "Geen resultaten",
+    "allRightsReserved": "Alle rechten voorbehouden"
+  },
+  "auth": {
+    "email": "E-mail",
+    "password": "Wachtwoord",
+    "confirmPassword": "Wachtwoord bevestigen",
+    "forgotPassword": "Wachtwoord vergeten?",
+    "resetPassword": "Wachtwoord resetten",
+    "signInWith": "Inloggen met {provider}",
+    "signUpWith": "Registreren met {provider}",
+    "orContinueWith": "Of doorgaan met",
+    "alreadyHaveAccount": "Al een account?",
+    "dontHaveAccount": "Nog geen account?",
+    "signIn": "Inloggen",
+    "signUp": "Registreren",
+    "signOut": "Uitloggen"
+  },
+  "landing": {
+    "hero": {
+      "title": "De B2B CRM van de volgende generatie",
+      "subtitle": "Prospecteer slimmer met vers geverifieerde data",
+      "cta": "Gratis beginnen"
+    },
+    "features": {
+      "title": "Waarom kiezen voor ProspectHub?",
+      "personalizedTracking": "Gepersonaliseerde tracking",
+      "automatedEnrichment": "Automatische verrijking",
+      "verifiedCompanies": "Geverifieerde bedrijven",
+      "freshData": "Verse data",
+      "transparency": "Volledige transparantie",
+      "simplicity": "Eenvoudig te gebruiken"
+    },
+    "howItWorks": {
+      "title": "Hoe het werkt",
+      "step1": "Zoeken",
+      "step1Desc": "Vind bedrijven op sector, grootte of locatie",
+      "step2": "Onthullen",
+      "step2Desc": "Ontgrendel volledige contactgegevens",
+      "step3": "Contacteren",
+      "step3Desc": "Start je e-mailsequenties"
+    },
+    "pricing": {
+      "title": "Eenvoudige en transparante prijzen",
+      "starter": "Starter",
+      "pro": "Pro",
+      "enterprise": "Enterprise",
+      "perMonth": "/maand",
+      "perYear": "/jaar",
+      "mostPopular": "Meest populair",
+      "getStarted": "Beginnen",
+      "contactSales": "Contact verkoop"
+    },
+    "testimonials": {
+      "title": "Wat onze klanten zeggen"
+    }
+  },
+  "dashboard": {
+    "welcome": "Welkom, {name}",
+    "recentActivity": "Recente activiteit",
+    "stats": {
+      "leads": "Leads",
+      "companies": "Bedrijven",
+      "deals": "Deals",
+      "tasks": "Taken",
+      "credits": "Tegoed"
+    }
+  },
+  "leads": {
+    "title": "Leads",
+    "newLead": "Nieuwe lead",
+    "importLeads": "Leads importeren",
+    "exportLeads": "Leads exporteren",
+    "columns": {
+      "name": "Naam",
+      "company": "Bedrijf",
+      "email": "E-mail",
+      "phone": "Telefoon",
+      "status": "Status",
+      "source": "Bron",
+      "createdAt": "Aangemaakt op",
+      "updatedAt": "Bijgewerkt op"
+    },
+    "status": {
+      "new": "Nieuw",
+      "contacted": "Gecontacteerd",
+      "qualified": "Gekwalificeerd",
+      "converted": "Geconverteerd",
+      "lost": "Verloren"
+    }
+  },
+  "companies": {
+    "title": "Bedrijven",
+    "newCompany": "Nieuw bedrijf",
+    "columns": {
+      "name": "Naam",
+      "industry": "Sector",
+      "size": "Grootte",
+      "location": "Locatie",
+      "website": "Website",
+      "createdAt": "Aangemaakt op"
+    }
+  },
+  "deals": {
+    "title": "Deals",
+    "newDeal": "Nieuwe deal",
+    "columns": {
+      "name": "Naam",
+      "company": "Bedrijf",
+      "value": "Waarde",
+      "stage": "Fase",
+      "probability": "Kans",
+      "closeDate": "Sluitingsdatum",
+      "owner": "Eigenaar"
+    },
+    "stages": {
+      "qualification": "Kwalificatie",
+      "proposal": "Voorstel",
+      "negotiation": "Onderhandeling",
+      "closed_won": "Gewonnen",
+      "closed_lost": "Verloren"
+    }
+  },
+  "tasks": {
+    "title": "Taken",
+    "newTask": "Nieuwe taak",
+    "columns": {
+      "title": "Titel",
+      "description": "Beschrijving",
+      "dueDate": "Deadline",
+      "priority": "Prioriteit",
+      "status": "Status",
+      "assignee": "Toegewezen aan"
+    },
+    "priority": {
+      "low": "Laag",
+      "medium": "Gemiddeld",
+      "high": "Hoog",
+      "urgent": "Dringend"
+    },
+    "status": {
+      "todo": "Te doen",
+      "inProgress": "In uitvoering",
+      "done": "Voltooid",
+      "cancelled": "Geannuleerd"
+    }
+  },
+  "quotes": {
+    "title": "Offertes",
+    "newQuote": "Nieuwe offerte",
+    "columns": {
+      "number": "Nummer",
+      "client": "Klant",
+      "total": "Totaal",
+      "status": "Status",
+      "validUntil": "Geldig tot",
+      "createdAt": "Aangemaakt op"
+    },
+    "status": {
+      "draft": "Concept",
+      "sent": "Verzonden",
+      "accepted": "Geaccepteerd",
+      "rejected": "Afgewezen",
+      "expired": "Verlopen"
+    }
+  },
+  "settings": {
+    "title": "Instellingen",
+    "profile": "Profiel",
+    "account": "Account",
+    "billing": "Facturering",
+    "team": "Team",
+    "integrations": "Integraties",
+    "notifications": "Meldingen",
+    "security": "Beveiliging",
+    "appearance": "Uiterlijk",
+    "language": "Taal",
+    "timezone": "Tijdzone",
+    "deleteAccount": "Account verwijderen"
+  },
+  "legal": {
+    "terms": "Gebruiksvoorwaarden",
+    "privacy": "Privacybeleid",
+    "contact": "Contact"
+  },
+  "errors": {
+    "generic": "Er is een fout opgetreden",
+    "notFound": "Pagina niet gevonden",
+    "unauthorized": "Niet geautoriseerd",
+    "forbidden": "Verboden",
+    "serverError": "Serverfout",
+    "networkError": "Netwerkfout",
+    "validationError": "Validatiefout"
+  },
+  "dates": {
+    "today": "Vandaag",
+    "yesterday": "Gisteren",
+    "tomorrow": "Morgen",
+    "thisWeek": "Deze week",
+    "lastWeek": "Vorige week",
+    "thisMonth": "Deze maand",
+    "lastMonth": "Vorige maand"
+  }
+}

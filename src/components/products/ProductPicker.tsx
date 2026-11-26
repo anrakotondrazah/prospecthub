@@ -67,7 +67,8 @@ export function ProductPicker({
         currency: validCurrency,
         minimumFractionDigits: 2,
       }).format(value)
-    } catch {
+    } catch (err) {
+      console.error('Erreur format currency:', err)
       // Fallback if currency is still invalid
       return `${value.toFixed(2)} EUR`
     }

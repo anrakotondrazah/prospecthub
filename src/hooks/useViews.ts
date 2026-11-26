@@ -46,9 +46,9 @@ export function useViews({ entityType, autoFetch = true }: UseViewsOptions): Use
       if (defaultView && !currentView) {
         setCurrentView(defaultView)
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Error fetching views:', err)
-      setError(err.message || 'Erreur lors du chargement des vues')
+      setError(err instanceof Error ? err.message : 'Erreur lors du chargement des vues')
     } finally {
       setIsLoading(false)
     }
@@ -73,9 +73,9 @@ export function useViews({ entityType, autoFetch = true }: UseViewsOptions): Use
 
       setViews(prev => [data.view, ...prev])
       return data.view
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Error creating view:', err)
-      setError(err.message || 'Erreur lors de la creation de la vue')
+      setError(err instanceof Error ? err.message : 'Erreur lors de la creation de la vue')
       return null
     }
   }, [entityType])
@@ -100,17 +100,21 @@ export function useViews({ entityType, autoFetch = true }: UseViewsOptions): Use
       }
 
       return true
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Error deleting view:', err)
-      setError(err.message || 'Erreur lors de la suppression de la vue')
+      setError(err instanceof Error ? err.message : 'Erreur lors de la suppression de la vue')
       return false
     }
   }, [currentView])
 
   useEffect(() => {
-    if (autoFetch) {
-      fetchViews()
+    let mounted = true
+    const load = async () => {
+      if (!mounted || !autoFetch) return
+      await fetchViews()
     }
+    load()
+    return () => { mounted = false }
   }, [autoFetch, fetchViews])
 
   return {

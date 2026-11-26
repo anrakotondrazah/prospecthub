@@ -1,0 +1,272 @@
+{
+  "meta": {
+    "title": "ProspectHub - B2B CRM",
+    "description": "Prospect smarter with freshly verified data"
+  },
+  "nav": {
+    "features": "Features",
+    "testimonials": "Testimonials",
+    "pricing": "Pricing",
+    "demo": "Demo",
+    "login": "Login",
+    "signup": "Get Started",
+    "logout": "Logout"
+  },
+  "sidebar": {
+    "dashboard": "Dashboard",
+    "inbox": "Inbox",
+    "leads": "Leads",
+    "lists": "Lists",
+    "baseB2B": "B2B Database",
+    "companies": "Companies",
+    "deals": "Deals",
+    "tasks": "Tasks",
+    "reports": "Reports",
+    "settings": "Settings",
+    "sequences": "Sequences",
+    "campaigns": "Campaigns",
+    "quotes": "Quotes",
+    "templates": "Templates",
+    "automations": "Automations",
+    "products": "Products",
+    "tickets": "Tickets",
+    "forms": "Forms",
+    "knowledgeBase": "Knowledge Base",
+    "comingSoon": "Coming Soon",
+    "collapse": "Collapse sidebar",
+    "expand": "Expand sidebar"
+  },
+  "common": {
+    "search": "Search",
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "create": "Create",
+    "add": "Add",
+    "remove": "Remove",
+    "close": "Close",
+    "open": "Open",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "confirm": "Confirm",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "submit": "Submit",
+    "reset": "Reset",
+    "filter": "Filter",
+    "sort": "Sort",
+    "export": "Export",
+    "import": "Import",
+    "download": "Download",
+    "upload": "Upload",
+    "view": "View",
+    "viewAll": "View all",
+    "showMore": "Show more",
+    "showLess": "Show less",
+    "noResults": "No results",
+    "allRightsReserved": "All rights reserved"
+  },
+  "auth": {
+    "email": "Email",
+    "password": "Password",
+    "confirmPassword": "Confirm password",
+    "forgotPassword": "Forgot password?",
+    "resetPassword": "Reset password",
+    "signInWith": "Sign in with {provider}",
+    "signUpWith": "Sign up with {provider}",
+    "orContinueWith": "Or continue with",
+    "alreadyHaveAccount": "Already have an account?",
+    "dontHaveAccount": "Don't have an account?",
+    "signIn": "Sign in",
+    "signUp": "Sign up",
+    "signOut": "Sign out"
+  },
+  "landing": {
+    "hero": {
+      "title": "The next-gen B2B CRM",
+      "subtitle": "Prospect smarter with freshly verified data",
+      "cta": "Get started for free"
+    },
+    "features": {
+      "title": "Why choose ProspectHub?",
+      "personalizedTracking": "Personalized tracking",
+      "automatedEnrichment": "Automated enrichment",
+      "verifiedCompanies": "Verified companies",
+      "freshData": "Fresh data",
+      "transparency": "Full transparency",
+      "simplicity": "Easy to use"
+    },
+    "howItWorks": {
+      "title": "How it works",
+      "step1": "Search",
+      "step1Desc": "Find companies by industry, size or location",
+      "step2": "Reveal",
+      "step2Desc": "Unlock complete contact details",
+      "step3": "Contact",
+      "step3Desc": "Launch your email sequences"
+    },
+    "pricing": {
+      "title": "Simple and transparent pricing",
+      "starter": "Starter",
+      "pro": "Pro",
+      "enterprise": "Enterprise",
+      "perMonth": "/month",
+      "perYear": "/year",
+      "mostPopular": "Most popular",
+      "getStarted": "Get started",
+      "contactSales": "Contact sales"
+    },
+    "testimonials": {
+      "title": "What our customers say"
+    }
+  },
+  "dashboard": {
+    "welcome": "Welcome, {name}",
+    "recentActivity": "Recent activity",
+    "stats": {
+      "leads": "Leads",
+      "companies": "Companies",
+      "deals": "Deals",
+      "tasks": "Tasks",
+      "credits": "Credits"
+    }
+  },
+  "leads": {
+    "title": "Leads",
+    "newLead": "New lead",
+    "importLeads": "Import leads",
+    "exportLeads": "Export leads",
+    "columns": {
+      "name": "Name",
+      "company": "Company",
+      "email": "Email",
+      "phone": "Phone",
+      "status": "Status",
+      "source": "Source",
+      "createdAt": "Created at",
+      "updatedAt": "Updated at"
+    },
+    "status": {
+      "new": "New",
+      "contacted": "Contacted",
+      "qualified": "Qualified",
+      "converted": "Converted",
+      "lost": "Lost"
+    }
+  },
+  "companies": {
+    "title": "Companies",
+    "newCompany": "New company",
+    "columns": {
+      "name": "Name",
+      "industry": "Industry",
+      "size": "Size",
+      "location": "Location",
+      "website": "Website",
+      "createdAt": "Created at"
+    }
+  },
+  "deals": {
+    "title": "Deals",
+    "newDeal": "New deal",
+    "columns": {
+      "name": "Name",
+      "company": "Company",
+      "value": "Value",
+      "stage": "Stage",
+      "probability": "Probability",
+      "closeDate": "Close date",
+      "owner": "Owner"
+    },
+    "stages": {
+      "qualification": "Qualification",
+      "proposal": "Proposal",
+      "negotiation": "Negotiation",
+      "closed_won": "Closed Won",
+      "closed_lost": "Closed Lost"
+    }
+  },
+  "tasks": {
+    "title": "Tasks",
+    "newTask": "New task",
+    "columns": {
+      "title": "Title",
+      "description": "Description",
+      "dueDate": "Due date",
+      "priority": "Priority",
+      "status": "Status",
+      "assignee": "Assignee"
+    },
+    "priority": {
+      "low": "Low",
+      "medium": "Medium",
+      "high": "High",
+      "urgent": "Urgent"
+    },
+    "status": {
+      "todo": "To do",
+      "inProgress": "In progress",
+      "done": "Done",
+      "cancelled": "Cancelled"
+    }
+  },
+  "quotes": {
+    "title": "Quotes",
+    "newQuote": "New quote",
+    "columns": {
+      "number": "Number",
+      "client": "Client",
+      "total": "Total",
+      "status": "Status",
+      "validUntil": "Valid until",
+      "createdAt": "Created at"
+    },
+    "status": {
+      "draft": "Draft",
+      "sent": "Sent",
+      "accepted": "Accepted",
+      "rejected": "Rejected",
+      "expired": "Expired"
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "profile": "Profile",
+    "account": "Account",
+    "billing": "Billing",
+    "team": "Team",
+    "integrations": "Integrations",
+    "notifications": "Notifications",
+    "security": "Security",
+    "appearance": "Appearance",
+    "language": "Language",
+    "timezone": "Timezone",
+    "deleteAccount": "Delete account"
+  },
+  "legal": {
+    "terms": "Terms of Service",
+    "privacy": "Privacy Policy",
+    "contact": "Contact"
+  },
+  "errors": {
+    "generic": "An error occurred",
+    "notFound": "Page not found",
+    "unauthorized": "Unauthorized",
+    "forbidden": "Forbidden",
+    "serverError": "Server error",
+    "networkError": "Network error",
+    "validationError": "Validation error"
+  },
+  "dates": {
+    "today": "Today",
+    "yesterday": "Yesterday",
+    "tomorrow": "Tomorrow",
+    "thisWeek": "This week",
+    "lastWeek": "Last week",
+    "thisMonth": "This month",
+    "lastMonth": "Last month"
+  }
+}

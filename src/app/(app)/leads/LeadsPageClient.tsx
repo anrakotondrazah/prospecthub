@@ -93,7 +93,8 @@ export function LeadsPageClient({ initialLeads, organizationId }: LeadsPageClien
         const filename = `leads_export_${new Date().toISOString().split('T')[0]}.csv`
         downloadCSV(filename, csv)
       }
-    } catch {
+    } catch (err) {
+      console.error('Erreur export leads:', err)
       alert('Erreur lors de l\'export')
     }
 

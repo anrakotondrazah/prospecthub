@@ -22,20 +22,20 @@ export default async function LeadsPage() {
     return (
       <div className="flex items-center justify-center h-[60vh]">
         <div className="text-center">
-          <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-[#FDE8E5] flex items-center justify-center">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#B42318" strokeWidth="2">
+          <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-red-600 dark:text-red-400">
               <circle cx="12" cy="12" r="10" />
               <line x1="12" y1="8" x2="12" y2="12" />
               <line x1="12" y1="16" x2="12.01" y2="16" />
             </svg>
           </div>
-          <h2 className="text-xl font-semibold text-[#0D0F14] mb-2">
+          <h2 className="text-xl font-semibold text-foreground mb-2">
             Erreur de chargement
           </h2>
-          <p className="text-[#4E525A] mb-4">
+          <p className="text-muted-foreground mb-4">
             Impossible de charger votre profil.
           </p>
-          <Link href="/leads" className="text-[#17191F] font-medium hover:underline">
+          <Link href="/leads" className="text-foreground font-medium hover:underline">
             Reessayer
           </Link>
         </div>
@@ -48,10 +48,10 @@ export default async function LeadsPage() {
     return (
       <div className="flex items-center justify-center h-[60vh]">
         <div className="text-center">
-          <h2 className="text-xl font-semibold text-[#0D0F14] mb-2">
+          <h2 className="text-xl font-semibold text-foreground mb-2">
             Organisation non configuree
           </h2>
-          <p className="text-[#4E525A]">
+          <p className="text-muted-foreground">
             Completez votre onboarding pour acceder aux leads.
           </p>
         </div>
@@ -73,22 +73,22 @@ export default async function LeadsPage() {
       <div>
         <div className="flex items-center justify-between mb-6">
           <div>
-            <h1 className="text-[23.5px] font-semibold text-[#0D0F14] mb-1">Leads</h1>
-            <p className="text-sm text-[#4E525A]">Gerez et suivez vos prospects</p>
+            <h1 className="text-[23.5px] font-semibold text-foreground mb-1">Leads</h1>
+            <p className="text-sm text-muted-foreground">Gerez et suivez vos prospects</p>
           </div>
         </div>
-        <div className="bg-white rounded-[14px] border border-[#E2E4E6] p-12">
+        <div className="bg-card rounded-[14px] border border-border p-12">
           <div className="text-center">
-            <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-[#FDE8E5] flex items-center justify-center">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#B42318" strokeWidth="2">
+            <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-red-100 dark:bg-red-900/30 flex items-center justify-center">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-red-600 dark:text-red-400">
                 <circle cx="12" cy="12" r="10" />
                 <line x1="12" y1="8" x2="12" y2="12" />
                 <line x1="12" y1="16" x2="12.01" y2="16" />
               </svg>
             </div>
-            <p className="font-medium text-[#0D0F14] mb-2">Erreur de chargement</p>
-            <p className="text-sm text-[#4E525A] mb-4">Impossible de charger les leads.</p>
-            <Link href="/leads" className="text-[#17191F] font-medium hover:underline">
+            <p className="font-medium text-foreground mb-2">Erreur de chargement</p>
+            <p className="text-sm text-muted-foreground mb-4">Impossible de charger les leads.</p>
+            <Link href="/leads" className="text-foreground font-medium hover:underline">
               Reessayer
             </Link>
           </div>

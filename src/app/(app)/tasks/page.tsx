@@ -20,16 +20,16 @@ export default async function TasksPage() {
     return (
       <div className="flex items-center justify-center h-[60vh]">
         <div className="text-center">
-          <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-[#FDE8E5] flex items-center justify-center">
+          <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-[#FDE8E5] dark:bg-[#B42318]/10 flex items-center justify-center">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#B42318" strokeWidth="2">
               <circle cx="12" cy="12" r="10" />
               <line x1="12" y1="8" x2="12" y2="12" />
               <line x1="12" y1="16" x2="12.01" y2="16" />
             </svg>
           </div>
-          <h2 className="text-xl font-semibold text-[#0D0F14] mb-2">Erreur de chargement</h2>
-          <p className="text-[#4E525A] mb-4">Impossible de charger votre profil.</p>
-          <Link href="/tasks" className="text-[#17191F] font-medium hover:underline">Reessayer</Link>
+          <h2 className="text-xl font-semibold text-[#0D0F14] dark:text-[#E6EDF3] mb-2">Erreur de chargement</h2>
+          <p className="text-[#4E525A] dark:text-[#8B949E] mb-4">Impossible de charger votre profil.</p>
+          <Link href="/tasks" className="text-[#17191F] dark:text-[#E6EDF3] font-medium hover:underline">Reessayer</Link>
         </div>
       </div>
     )
@@ -40,8 +40,8 @@ export default async function TasksPage() {
     return (
       <div className="flex items-center justify-center h-[60vh]">
         <div className="text-center">
-          <h2 className="text-xl font-semibold text-[#0D0F14] mb-2">Organisation non configuree</h2>
-          <p className="text-[#4E525A]">Completez votre onboarding pour acceder aux taches.</p>
+          <h2 className="text-xl font-semibold text-[#0D0F14] dark:text-[#E6EDF3] mb-2">Organisation non configuree</h2>
+          <p className="text-[#4E525A] dark:text-[#8B949E]">Completez votre onboarding pour acceder aux taches.</p>
         </div>
       </div>
     )
@@ -60,22 +60,22 @@ export default async function TasksPage() {
       <div>
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
           <div>
-            <h1 className="text-xl lg:text-[23.5px] font-semibold text-[#0D0F14] mb-1">Taches</h1>
-            <p className="text-sm text-[#4E525A]">Gerez vos taches et suivis</p>
+            <h1 className="text-xl lg:text-[23.5px] font-semibold text-[#0D0F14] dark:text-[#E6EDF3] mb-1">Taches</h1>
+            <p className="text-sm text-[#4E525A] dark:text-[#8B949E]">Gerez vos taches et suivis</p>
           </div>
         </div>
-        <div className="bg-white rounded-[14px] border border-[#E2E4E6] p-12">
+        <div className="bg-card rounded-[14px] border border-border p-12">
           <div className="text-center">
-            <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-[#FDE8E5] flex items-center justify-center">
+            <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-[#FDE8E5] dark:bg-[#B42318]/10 flex items-center justify-center">
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#B42318" strokeWidth="2">
                 <circle cx="12" cy="12" r="10" />
                 <line x1="12" y1="8" x2="12" y2="12" />
                 <line x1="12" y1="16" x2="12.01" y2="16" />
               </svg>
             </div>
-            <p className="font-medium text-[#0D0F14] mb-2">Erreur de chargement</p>
-            <p className="text-sm text-[#4E525A] mb-4">Impossible de charger les taches.</p>
-            <Link href="/tasks" className="text-[#17191F] font-medium hover:underline">Reessayer</Link>
+            <p className="font-medium text-foreground mb-2">Erreur de chargement</p>
+            <p className="text-sm text-muted-foreground mb-4">Impossible de charger les taches.</p>
+            <Link href="/tasks" className="text-foreground font-medium hover:underline">Reessayer</Link>
           </div>
         </div>
       </div>
@@ -95,8 +95,8 @@ export default async function TasksPage() {
       {/* Header - Responsive */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
         <div>
-          <h1 className="text-xl lg:text-[23.5px] font-semibold text-[#0D0F14] mb-1">Taches</h1>
-          <p className="text-sm text-[#4E525A]">
+          <h1 className="text-xl lg:text-[23.5px] font-semibold text-foreground mb-1">Taches</h1>
+          <p className="text-sm text-muted-foreground">
             Gerez vos taches et suivis
           </p>
         </div>
@@ -116,17 +116,17 @@ export default async function TasksPage() {
       {/* Task Columns - Responsive: horizontal scroll on mobile, grid on desktop */}
       <div className="flex lg:grid lg:grid-cols-3 gap-4 overflow-x-auto pb-4 lg:pb-0 -mx-4 px-4 lg:mx-0 lg:px-0">
         {/* To Do */}
-        <div className="flex-shrink-0 w-[280px] lg:w-auto bg-white rounded-[14px] border border-[#E2E4E6]">
-          <div className="flex items-center justify-between p-4 border-b border-[#E2E4E6]">
+        <div className="flex-shrink-0 w-[280px] lg:w-auto bg-card rounded-[14px] border border-border">
+          <div className="flex items-center justify-between p-4 border-b border-border">
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 rounded-full bg-[#9BA0A6]" aria-hidden="true" />
-              <h3 className="font-semibold text-[#0D0F14]">A faire</h3>
-              <span className="text-sm text-[#9BA0A6]">{pendingTasks.length}</span>
+              <h3 className="font-semibold text-foreground">A faire</h3>
+              <span className="text-sm text-muted-foreground">{pendingTasks.length}</span>
             </div>
           </div>
           <div className="p-4 space-y-3 min-h-[300px]">
             {pendingTasks.length === 0 ? (
-              <p className="text-sm text-[#9BA0A6] text-center py-8">Aucune tache</p>
+              <p className="text-sm text-muted-foreground text-center py-8">Aucune tache</p>
             ) : (
               pendingTasks.map((task) => (
                 <TaskCard key={task.id} task={task} today={today} />
@@ -136,17 +136,17 @@ export default async function TasksPage() {
         </div>
 
         {/* In Progress */}
-        <div className="flex-shrink-0 w-[280px] lg:w-auto bg-white rounded-[14px] border border-[#E2E4E6]">
-          <div className="flex items-center justify-between p-4 border-b border-[#E2E4E6]">
+        <div className="flex-shrink-0 w-[280px] lg:w-auto bg-card rounded-[14px] border border-border">
+          <div className="flex items-center justify-between p-4 border-b border-border">
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 rounded-full bg-[#1565C0]" aria-hidden="true" />
-              <h3 className="font-semibold text-[#0D0F14]">En cours</h3>
-              <span className="text-sm text-[#9BA0A6]">{inProgressTasks.length}</span>
+              <h3 className="font-semibold text-foreground">En cours</h3>
+              <span className="text-sm text-muted-foreground">{inProgressTasks.length}</span>
             </div>
           </div>
           <div className="p-4 space-y-3 min-h-[300px]">
             {inProgressTasks.length === 0 ? (
-              <p className="text-sm text-[#9BA0A6] text-center py-8">Aucune tache</p>
+              <p className="text-sm text-muted-foreground text-center py-8">Aucune tache</p>
             ) : (
               inProgressTasks.map((task) => (
                 <TaskCard key={task.id} task={task} today={today} />
@@ -156,17 +156,17 @@ export default async function TasksPage() {
         </div>
 
         {/* Done */}
-        <div className="flex-shrink-0 w-[280px] lg:w-auto bg-white rounded-[14px] border border-[#E2E4E6]">
-          <div className="flex items-center justify-between p-4 border-b border-[#E2E4E6]">
+        <div className="flex-shrink-0 w-[280px] lg:w-auto bg-card rounded-[14px] border border-border">
+          <div className="flex items-center justify-between p-4 border-b border-border">
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 rounded-full bg-[#147A3A]" aria-hidden="true" />
-              <h3 className="font-semibold text-[#0D0F14]">Termine</h3>
-              <span className="text-sm text-[#9BA0A6]">{completedTasks.length}</span>
+              <h3 className="font-semibold text-foreground">Termine</h3>
+              <span className="text-sm text-muted-foreground">{completedTasks.length}</span>
             </div>
           </div>
           <div className="p-4 space-y-3 min-h-[300px]">
             {completedTasks.length === 0 ? (
-              <p className="text-sm text-[#9BA0A6] text-center py-8">Aucune tache</p>
+              <p className="text-sm text-muted-foreground text-center py-8">Aucune tache</p>
             ) : (
               completedTasks.map((task) => (
                 <TaskCard key={task.id} task={task} today={today} />
@@ -196,20 +196,20 @@ function TaskCard({ task, today }: { task: Task; today: string }) {
   const isDueToday = dueDate === today
 
   const priorityColors: Record<string, string> = {
-    high: 'bg-[#FFEBEE] text-[#C62828]',
-    medium: 'bg-[#FFF3E0] text-[#E65100]',
-    low: 'bg-[#F5F5F5] text-[#616161]',
+    high: 'bg-[#FFEBEE] dark:bg-[#C62828]/20 text-[#C62828] dark:text-[#EF9A9A]',
+    medium: 'bg-[#FFF3E0] dark:bg-[#E65100]/20 text-[#E65100] dark:text-[#FFCC80]',
+    low: 'bg-muted text-muted-foreground',
   }
 
   return (
     <Link
       href={`/tasks/${task.uuid}`}
-      className="block p-3 bg-[#F5F7F9] rounded-[10px] hover:bg-[#EFF1F3] transition-colors cursor-pointer"
+      className="block p-3 bg-muted rounded-[10px] hover:bg-muted/80 transition-colors cursor-pointer"
       role="article"
       aria-label={`Tache: ${task.title}`}
     >
       <div className="flex items-start justify-between mb-2">
-        <p className="font-medium text-[#0D0F14] text-sm">{task.title}</p>
+        <p className="font-medium text-foreground text-sm">{task.title}</p>
         {task.priority && (
           <span className={`text-[10px] font-semibold uppercase px-1.5 py-0.5 rounded ${priorityColors[task.priority] || priorityColors.low}`}>
             {task.priority}

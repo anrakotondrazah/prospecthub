@@ -176,49 +176,49 @@ export default function BaseEntreprisesPage() {
     <div>
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
         <div>
-          <h1 className="text-xl lg:text-[23.5px] font-semibold text-[#0D0F14] mb-1">
+          <h1 className="text-xl lg:text-[23.5px] font-semibold text-foreground mb-1">
             Base Entreprises
           </h1>
-          <p className="text-sm text-[#4E525A]">
+          <p className="text-sm text-muted-foreground">
             {totalCount.toLocaleString('fr-FR')} entreprises enrichies disponibles
           </p>
         </div>
         <div className="flex items-center gap-3">
-          <div className="flex items-center gap-2 px-4 py-2 bg-[#F5F7F9] rounded-[10px]">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4E525A" strokeWidth="2">
+          <div className="flex items-center gap-2 px-4 py-2 bg-muted rounded-[10px]">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-muted-foreground">
               <circle cx="12" cy="12" r="10" />
               <path d="M12 6v6l4 2" />
             </svg>
-            <span className="text-sm font-medium text-[#0D0F14]">{creditsBalance} credits</span>
+            <span className="text-sm font-medium text-foreground">{creditsBalance} credits</span>
           </div>
         </div>
       </div>
 
-      <div className="bg-white rounded-[14px] border border-[#E2E4E6] mb-4">
-        <div className="p-4 border-b border-[#E2E4E6]">
+      <div className="bg-card rounded-[14px] border border-border mb-4">
+        <div className="p-4 border-b border-border">
           <div className="flex flex-wrap gap-3">
             <input
               type="text"
               placeholder="Rechercher une entreprise..."
               value={filters.search}
               onChange={(e) => setFilters(f => ({ ...f, search: e.target.value }))}
-              className="flex-1 min-w-[200px] px-3 py-2 text-sm border border-[#E2E4E6] rounded-[8px] focus:outline-none focus:ring-2 focus:ring-[#17191F]/10"
+              className="flex-1 min-w-[200px] px-3 py-2 text-sm border border-border rounded-[8px] bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring/20"
             />
             <input
               type="text"
               placeholder="Ville..."
               value={filters.city}
               onChange={(e) => setFilters(f => ({ ...f, city: e.target.value }))}
-              className="w-[150px] px-3 py-2 text-sm border border-[#E2E4E6] rounded-[8px] focus:outline-none focus:ring-2 focus:ring-[#17191F]/10"
+              className="w-[150px] px-3 py-2 text-sm border border-border rounded-[8px] bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring/20"
             />
-            <label className="flex items-center gap-2 px-3 py-2 bg-[#F5F7F9] rounded-[8px] cursor-pointer">
+            <label className="flex items-center gap-2 px-3 py-2 bg-muted rounded-[8px] cursor-pointer">
               <input
                 type="checkbox"
                 checked={filters.isRge}
                 onChange={(e) => setFilters(f => ({ ...f, isRge: e.target.checked }))}
                 className="w-4 h-4"
               />
-              <span className="text-sm text-[#0D0F14]">RGE uniquement</span>
+              <span className="text-sm text-foreground">RGE uniquement</span>
             </label>
           </div>
         </div>
@@ -231,36 +231,36 @@ export default function BaseEntreprisesPage() {
       )}
 
       {loading ? (
-        <div className="bg-white rounded-[14px] border border-[#E2E4E6] p-12">
+        <div className="bg-card rounded-[14px] border border-border p-12">
           <div className="text-center">
-            <div className="w-8 h-8 mx-auto mb-4 border-2 border-[#17191F] border-t-transparent rounded-full animate-spin" />
-            <p className="text-sm text-[#4E525A]">Chargement...</p>
+            <div className="w-8 h-8 mx-auto mb-4 border-2 border-foreground border-t-transparent rounded-full animate-spin" />
+            <p className="text-sm text-muted-foreground">Chargement...</p>
           </div>
         </div>
       ) : companies.length === 0 ? (
-        <div className="bg-white rounded-[14px] border border-[#E2E4E6] p-12">
+        <div className="bg-card rounded-[14px] border border-border p-12">
           <div className="text-center">
-            <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-[#F5F7F9] flex items-center justify-center">
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#9BA0A6" strokeWidth="2">
+            <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-muted flex items-center justify-center">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-muted-foreground">
                 <path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5" />
               </svg>
             </div>
-            <p className="font-medium text-[#0D0F14] mb-1">Aucune entreprise trouvee</p>
-            <p className="text-sm text-[#4E525A]">Modifiez vos filtres ou attendez le prochain enrichissement</p>
+            <p className="font-medium text-foreground mb-1">Aucune entreprise trouvee</p>
+            <p className="text-sm text-muted-foreground">Modifiez vos filtres ou attendez le prochain enrichissement</p>
           </div>
         </div>
       ) : (
-        <div className="bg-white rounded-[14px] border border-[#E2E4E6] overflow-hidden">
+        <div className="bg-card rounded-[14px] border border-border overflow-hidden">
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
-                <tr className="border-b border-[#E2E4E6] bg-[#F5F7F9]">
-                  <th className="text-left text-xs font-semibold text-[#4E525A] uppercase tracking-wider px-4 py-3">Entreprise</th>
-                  <th className="text-left text-xs font-semibold text-[#4E525A] uppercase tracking-wider px-4 py-3">Ville</th>
-                  <th className="text-left text-xs font-semibold text-[#4E525A] uppercase tracking-wider px-4 py-3">Secteur</th>
-                  <th className="text-left text-xs font-semibold text-[#4E525A] uppercase tracking-wider px-4 py-3">Score</th>
-                  <th className="text-left text-xs font-semibold text-[#4E525A] uppercase tracking-wider px-4 py-3">Contact</th>
-                  <th className="text-right text-xs font-semibold text-[#4E525A] uppercase tracking-wider px-4 py-3">Action</th>
+                <tr className="border-b border-border bg-muted">
+                  <th className="text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider px-4 py-3">Entreprise</th>
+                  <th className="text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider px-4 py-3">Ville</th>
+                  <th className="text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider px-4 py-3">Secteur</th>
+                  <th className="text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider px-4 py-3">Score</th>
+                  <th className="text-left text-xs font-semibold text-muted-foreground uppercase tracking-wider px-4 py-3">Contact</th>
+                  <th className="text-right text-xs font-semibold text-muted-foreground uppercase tracking-wider px-4 py-3">Action</th>
                 </tr>
               </thead>
               <tbody>
@@ -272,15 +272,15 @@ export default function BaseEntreprisesPage() {
                   const isUnlocking = unlocking === company.id
 
                   return (
-                    <tr key={company.id} className="border-b border-[#E2E4E6] hover:bg-[#F5F7F9]/50">
+                    <tr key={company.id} className="border-b border-border hover:bg-muted/50">
                       <td className="px-4 py-3">
                         <div>
-                          <p className="font-medium text-[#0D0F14] text-sm">{company.company_name}</p>
-                          <p className="text-xs text-[#9BA0A6]">SIRET: {company.siret}</p>
+                          <p className="font-medium text-foreground text-sm">{company.company_name}</p>
+                          <p className="text-xs text-muted-foreground">SIRET: {company.siret}</p>
                         </div>
                       </td>
                       <td className="px-4 py-3">
-                        <span className="text-sm text-[#4E525A]">
+                        <span className="text-sm text-muted-foreground">
                           {company.address_city || '-'}
                           {company.address_postal_code && ` (${company.address_postal_code.slice(0, 2)})`}
                         </span>
@@ -292,12 +292,12 @@ export default function BaseEntreprisesPage() {
                               RGE
                             </span>
                           )}
-                          <span className="text-xs text-[#9BA0A6]">{company.naf_code || '-'}</span>
+                          <span className="text-xs text-muted-foreground">{company.naf_code || '-'}</span>
                         </div>
                       </td>
                       <td className="px-4 py-3">
                         <div className="flex items-center gap-2">
-                          <div className="w-16 h-1.5 bg-[#E2E4E6] rounded-full overflow-hidden">
+                          <div className="w-16 h-1.5 bg-border rounded-full overflow-hidden">
                             <div
                               className={`h-full rounded-full ${
                                 tier === 'hot' ? 'bg-[#C62828]' :
@@ -314,11 +314,11 @@ export default function BaseEntreprisesPage() {
                       <td className="px-4 py-3">
                         {isUnlocked ? (
                           <div className="text-sm">
-                            {company.phone && <p className="text-[#0D0F14]">{company.phone}</p>}
-                            {company.email && <p className="text-[#4E525A] text-xs">{company.email}</p>}
+                            {company.phone && <p className="text-foreground">{company.phone}</p>}
+                            {company.email && <p className="text-muted-foreground text-xs">{company.email}</p>}
                           </div>
                         ) : (
-                          <span className="text-xs text-[#9BA0A6] italic">Ajouter pour voir</span>
+                          <span className="text-xs text-muted-foreground italic">Ajouter pour voir</span>
                         )}
                       </td>
                       <td className="px-4 py-3 text-right">
@@ -335,8 +335,8 @@ export default function BaseEntreprisesPage() {
                             disabled={isUnlocking || creditsBalance < cost}
                             className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-[8px] transition-colors ${
                               creditsBalance < cost
-                                ? 'bg-[#F5F5F5] text-[#9BA0A6] cursor-not-allowed'
-                                : 'bg-[#17191F] text-white hover:bg-[#0D0F14]'
+                                ? 'bg-muted text-muted-foreground cursor-not-allowed'
+                                : 'bg-[#17191F] dark:bg-[#58A6FF] text-white dark:text-[#0D1117] hover:bg-[#0D0F14] dark:hover:bg-[#4A93E8]'
                             }`}
                           >
                             {isUnlocking ? (

@@ -28,7 +28,7 @@ function checkPasswordStrength(password: string): PasswordStrength {
 
 function PasswordRequirement({ met, label }: { met: boolean; label: string }) {
   return (
-    <div className={`flex items-center gap-2 text-sm transition-colors ${met ? 'text-[#147A3A]' : 'text-[#9BA0A6]'}`}>
+    <div className={`flex items-center gap-2 text-sm transition-colors ${met ? 'text-green-600 dark:text-green-400' : 'text-muted-foreground'}`}>
       {met ? (
         <svg className="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
           <polyline points="20 6 9 17 4 12" />
@@ -116,9 +116,9 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="min-h-screen flex">
+    <div className="min-h-screen flex bg-background">
       {/* Left Side - Form */}
-      <div className="flex-1 flex flex-col p-8 max-w-[560px] overflow-y-auto">
+      <div className="flex-1 flex flex-col p-8 max-w-[560px] overflow-y-auto bg-card">
         {/* Logo */}
         <Link href="/" className="flex items-center gap-3 mb-10">
           <div className="w-10 h-10 bg-[#17191F] rounded-[10px] flex items-center justify-center">
@@ -128,20 +128,20 @@ export default function RegisterPage() {
               <path d="M2 12l10 5 10-5" stroke="#fff" strokeWidth="2" />
             </svg>
           </div>
-          <span className="text-xl font-semibold text-[#0D0F14]">ProspectHub</span>
+          <span className="text-xl font-semibold text-foreground">ProspectHub</span>
         </Link>
 
         <div className="flex-1 flex flex-col justify-center max-w-[400px] mx-auto w-full">
           <div className="mb-6">
-            <h1 className="text-[28px] font-bold text-[#0D0F14] mb-2">Creer votre compte</h1>
-            <p className="text-lg text-[#4E525A]">Commencez a prospecter en 5 minutes</p>
+            <h1 className="text-[28px] font-bold text-foreground mb-2">Creer votre compte</h1>
+            <p className="text-lg text-muted-foreground">Commencez a prospecter en 5 minutes</p>
           </div>
 
           {/* Google OAuth */}
           <button
             type="button"
             onClick={handleGoogleSignUp}
-            className="w-full h-12 flex items-center justify-center gap-3 bg-white border border-[#E2E4E6] rounded-[10px] font-medium text-[#0D0F14] hover:bg-[#F5F7F9] hover:border-[#C9CCD0] transition-colors mb-6"
+            className="w-full h-12 flex items-center justify-center gap-3 bg-card border border-border rounded-[10px] font-medium text-foreground hover:bg-muted transition-colors mb-6"
           >
             <svg width="20" height="20" viewBox="0 0 24 24">
               <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
@@ -152,10 +152,10 @@ export default function RegisterPage() {
             S&apos;inscrire avec Google
           </button>
 
-          <div className="flex items-center gap-4 text-[#9BA0A6] text-sm mb-6">
-            <div className="flex-1 h-px bg-[#E2E4E6]" />
+          <div className="flex items-center gap-4 text-muted-foreground text-sm mb-6">
+            <div className="flex-1 h-px bg-border" />
             <span>ou</span>
-            <div className="flex-1 h-px bg-[#E2E4E6]" />
+            <div className="flex-1 h-px bg-border" />
           </div>
 
           {/* Register Form */}
@@ -218,7 +218,7 @@ export default function RegisterPage() {
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-3 top-1/2 -translate-y-1/2 text-[#9BA0A6] hover:text-[#4E525A]"
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                 >
                   {showPassword ? (
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -244,7 +244,7 @@ export default function RegisterPage() {
                         className={`h-1 flex-1 rounded-sm transition-colors ${
                           i <= strength.score
                             ? strengthColors[strengthLevels[strength.score] as keyof typeof strengthColors]
-                            : 'bg-[#E2E4E6]'
+                            : 'bg-border'
                         }`}
                       />
                     ))}
@@ -265,16 +265,16 @@ export default function RegisterPage() {
                 id="terms"
                 checked={acceptTerms}
                 onChange={(e) => setAcceptTerms(e.target.checked)}
-                className="mt-1 w-4 h-4 rounded border-[#C9CCD0] accent-[#17191F]"
+                className="mt-1 w-4 h-4 rounded border-border accent-foreground"
                 required
               />
-              <label htmlFor="terms" className="text-sm text-[#4E525A] leading-relaxed">
+              <label htmlFor="terms" className="text-sm text-muted-foreground leading-relaxed">
                 J&apos;accepte les{' '}
-                <Link href="/terms" className="text-[#17191F] font-medium hover:underline">
+                <Link href="/terms" className="text-foreground font-medium hover:underline">
                   Conditions d&apos;utilisation
                 </Link>{' '}
                 et la{' '}
-                <Link href="/privacy" className="text-[#17191F] font-medium hover:underline">
+                <Link href="/privacy" className="text-foreground font-medium hover:underline">
                   Politique de confidentialite
                 </Link>
               </label>
@@ -290,10 +290,10 @@ export default function RegisterPage() {
             </Button>
           </form>
 
-          <div className="text-center mt-6 pt-6 border-t border-[#E2E4E6]">
-            <p className="text-[#4E525A]">
+          <div className="text-center mt-6 pt-6 border-t border-border">
+            <p className="text-muted-foreground">
               Deja un compte ?{' '}
-              <Link href="/auth/login" className="text-[#17191F] font-medium hover:underline">
+              <Link href="/auth/login" className="text-foreground font-medium hover:underline">
                 Se connecter
               </Link>
             </p>

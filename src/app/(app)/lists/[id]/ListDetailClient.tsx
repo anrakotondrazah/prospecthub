@@ -210,25 +210,25 @@ export function ListDetailClient({ list, initialMembers, availableLeads, organiz
   return (
     <div>
       <nav className="flex items-center gap-2 text-sm mb-4">
-        <Link href="/lists" className="text-[#4E525A] hover:text-[#0D0F14]">Listes</Link>
+        <Link href="/lists" className="text-muted-foreground hover:text-foreground">Listes</Link>
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#9BA0A6" strokeWidth="2">
           <polyline points="9 18 15 12 9 6" />
         </svg>
-        <span className="text-[#0D0F14] font-medium">{list.name}</span>
+        <span className="text-foreground font-medium">{list.name}</span>
       </nav>
 
-      <div className="bg-white rounded-[14px] border border-[#E2E4E6] p-6 mb-6">
+      <div className="bg-card rounded-[14px] border border-border p-6 mb-6">
         <div className="flex items-start justify-between mb-4">
           <div className="flex-1">
             <div className="flex items-center gap-3 mb-2">
-              <h1 className="text-2xl font-semibold text-[#0D0F14]">{list.name}</h1>
+              <h1 className="text-2xl font-semibold text-foreground">{list.name}</h1>
               <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-md text-xs font-medium ${
                 list.type === 'static' ? 'bg-[#E8F5E9] text-[#147A3A]' : 'bg-[#E3F2FD] text-[#1565C0]'
               }`}>
                 {list.type === 'static' ? 'Statique' : 'Dynamique'}
               </span>
             </div>
-            {list.description && <p className="text-[#4E525A]">{list.description}</p>}
+            {list.description && <p className="text-muted-foreground">{list.description}</p>}
           </div>
           <div className="flex items-center gap-2">
             <button
@@ -244,19 +244,19 @@ export function ListDetailClient({ list, initialMembers, availableLeads, organiz
             <button
               onClick={handleDeleteList}
               disabled={isDeleting}
-              className="px-4 py-2.5 bg-white border border-[#E2E4E6] text-[#B42318] rounded-[10px] font-medium hover:bg-[#FDE8E5] transition-colors disabled:opacity-50"
+              className="px-4 py-2.5 bg-card border border-border text-[#B42318] rounded-[10px] font-medium hover:bg-[#FDE8E5] dark:hover:bg-[#B42318]/20 transition-colors disabled:opacity-50"
             >
               {isDeleting ? 'Suppression...' : 'Supprimer'}
             </button>
           </div>
         </div>
 
-        <div className="flex items-center gap-6 text-sm text-[#4E525A]">
+        <div className="flex items-center gap-6 text-sm text-muted-foreground">
           <div className="flex items-center gap-2">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z" />
             </svg>
-            <span className="font-medium text-[#0D0F14]">{memberCount}</span> membres
+            <span className="font-medium text-foreground">{memberCount}</span> membres
           </div>
           <div className="flex items-center gap-2">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -285,7 +285,7 @@ export function ListDetailClient({ list, initialMembers, availableLeads, organiz
             placeholder="Rechercher dans les membres..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-2.5 bg-white border border-[#E2E4E6] rounded-[10px] text-sm focus:outline-none focus:border-[#17191F] transition-colors"
+            className="w-full pl-10 pr-4 py-2.5 bg-card border border-border rounded-[10px] text-sm text-foreground focus:outline-none focus:border-foreground transition-colors"
           />
         </div>
       </div>
@@ -308,22 +308,22 @@ export function ListDetailClient({ list, initialMembers, availableLeads, organiz
           </div>
         </div>
       ) : (
-        <div className="bg-white rounded-[14px] border border-[#E2E4E6] overflow-hidden">
+        <div className="bg-card rounded-[14px] border border-border overflow-hidden">
           <table className="w-full">
             <thead>
-              <tr className="border-b border-[#EFF1F3]">
-                <th className="text-left px-5 py-3.5 text-xs font-semibold text-[#4E525A] uppercase tracking-wide">Nom</th>
-                <th className="text-left px-5 py-3.5 text-xs font-semibold text-[#4E525A] uppercase tracking-wide">Entreprise</th>
-                <th className="text-left px-5 py-3.5 text-xs font-semibold text-[#4E525A] uppercase tracking-wide">Email</th>
-                <th className="text-left px-5 py-3.5 text-xs font-semibold text-[#4E525A] uppercase tracking-wide">Statut</th>
-                <th className="text-left px-5 py-3.5 text-xs font-semibold text-[#4E525A] uppercase tracking-wide">Score</th>
-                <th className="text-left px-5 py-3.5 text-xs font-semibold text-[#4E525A] uppercase tracking-wide">Ajoute le</th>
+              <tr className="border-b border-border">
+                <th className="text-left px-5 py-3.5 text-xs font-semibold text-muted-foreground uppercase tracking-wide">Nom</th>
+                <th className="text-left px-5 py-3.5 text-xs font-semibold text-muted-foreground uppercase tracking-wide">Entreprise</th>
+                <th className="text-left px-5 py-3.5 text-xs font-semibold text-muted-foreground uppercase tracking-wide">Email</th>
+                <th className="text-left px-5 py-3.5 text-xs font-semibold text-muted-foreground uppercase tracking-wide">Statut</th>
+                <th className="text-left px-5 py-3.5 text-xs font-semibold text-muted-foreground uppercase tracking-wide">Score</th>
+                <th className="text-left px-5 py-3.5 text-xs font-semibold text-muted-foreground uppercase tracking-wide">Ajoute le</th>
                 <th className="w-12 px-5 py-3.5"></th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#EFF1F3]">
+            <tbody className="divide-y divide-border">
               {filteredMembers.map((member) => (
-                <tr key={member.id} className="hover:bg-[#F5F7F9] transition-colors">
+                <tr key={member.id} className="hover:bg-muted transition-colors">
                   <td className="px-5 py-4">
                     <Link href={`/leads/${member.leads.id}`} className="block">
                       <div className="flex items-center gap-2">
@@ -332,13 +332,13 @@ export function ListDetailClient({ list, initialMembers, availableLeads, organiz
                             <path d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z" />
                           </svg>
                         )}
-                        <span className="font-medium text-[#0D0F14] hover:text-[#17191F]">{getLeadName(member.leads)}</span>
+                        <span className="font-medium text-foreground hover:text-foreground/80">{getLeadName(member.leads)}</span>
                       </div>
-                      {member.leads.job_title && <p className="text-sm text-[#4E525A] mt-0.5">{member.leads.job_title}</p>}
+                      {member.leads.job_title && <p className="text-sm text-muted-foreground mt-0.5">{member.leads.job_title}</p>}
                     </Link>
                   </td>
-                  <td className="px-5 py-4 text-[#0D0F14]">{member.leads.company_name || '-'}</td>
-                  <td className="px-5 py-4 text-sm text-[#4E525A]">{member.leads.email || '-'}</td>
+                  <td className="px-5 py-4 text-foreground">{member.leads.company_name || '-'}</td>
+                  <td className="px-5 py-4 text-sm text-muted-foreground">{member.leads.email || '-'}</td>
                   <td className="px-5 py-4">
                     <span className={`inline-block px-2 py-1 rounded-md text-xs font-medium ${getStatusColor(member.leads.status)}`}>
                       {member.leads.status}
@@ -346,13 +346,13 @@ export function ListDetailClient({ list, initialMembers, availableLeads, organiz
                   </td>
                   <td className="px-5 py-4">
                     <div className="flex items-center gap-2">
-                      <div className="w-16 h-1.5 bg-[#EFF1F3] rounded-full overflow-hidden">
-                        <div className="h-full bg-[#17191F] rounded-full" style={{ width: `${member.leads.score}%` }} />
+                      <div className="w-16 h-1.5 bg-muted rounded-full overflow-hidden">
+                        <div className="h-full bg-foreground rounded-full" style={{ width: `${member.leads.score}%` }} />
                       </div>
-                      <span className="text-sm font-medium text-[#0D0F14] w-8 text-right">{member.leads.score}</span>
+                      <span className="text-sm font-medium text-foreground w-8 text-right">{member.leads.score}</span>
                     </div>
                   </td>
-                  <td className="px-5 py-4 text-sm text-[#4E525A]">{formatDate(member.added_at)}</td>
+                  <td className="px-5 py-4 text-sm text-muted-foreground">{formatDate(member.added_at)}</td>
                   <td className="px-5 py-4">
                     <button
                       onClick={() => handleRemoveMember(member.id, member.lead_id)}
@@ -425,15 +425,15 @@ function AddLeadsModal({ isOpen, onClose, onAddLeads, availableLeads }: {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4" onClick={onClose}>
       <div className="absolute inset-0 bg-black/40 backdrop-blur-sm" />
-      <div className="relative bg-white rounded-[20px] shadow-2xl max-w-2xl w-full max-h-[80vh] flex flex-col" onClick={(e) => e.stopPropagation()}>
-        <div className="flex items-center justify-between p-6 border-b border-[#EFF1F3]">
+      <div className="relative bg-card rounded-[20px] shadow-2xl max-w-2xl w-full max-h-[80vh] flex flex-col" onClick={(e) => e.stopPropagation()}>
+        <div className="flex items-center justify-between p-6 border-b border-border">
           <div>
-            <h2 className="text-xl font-semibold text-[#0D0F14]">Ajouter des leads</h2>
-            <p className="text-sm text-[#4E525A] mt-1">
+            <h2 className="text-xl font-semibold text-foreground">Ajouter des leads</h2>
+            <p className="text-sm text-muted-foreground mt-1">
               {selectedLeadIds.size} lead{selectedLeadIds.size > 1 ? 's' : ''} selectionne{selectedLeadIds.size > 1 ? 's' : ''}
             </p>
           </div>
-          <button onClick={onClose} className="w-8 h-8 rounded-[10px] hover:bg-[#F5F7F9] flex items-center justify-center transition-colors">
+          <button onClick={onClose} className="w-8 h-8 rounded-[10px] hover:bg-muted flex items-center justify-center transition-colors">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4E525A" strokeWidth="2">
               <line x1="18" y1="6" x2="6" y2="18" />
               <line x1="6" y1="6" x2="18" y2="18" />
@@ -441,7 +441,7 @@ function AddLeadsModal({ isOpen, onClose, onAddLeads, availableLeads }: {
           </button>
         </div>
 
-        <div className="p-6 pb-4 border-b border-[#EFF1F3]">
+        <div className="p-6 pb-4 border-b border-border">
           <div className="relative">
             <svg className="absolute left-3 top-1/2 -translate-y-1/2 text-[#9BA0A6]" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <circle cx="11" cy="11" r="8" />
@@ -452,7 +452,7 @@ function AddLeadsModal({ isOpen, onClose, onAddLeads, availableLeads }: {
               placeholder="Rechercher des leads..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-10 pr-4 py-2.5 bg-white border border-[#E2E4E6] rounded-[10px] text-sm focus:outline-none focus:border-[#17191F] transition-colors"
+              className="w-full pl-10 pr-4 py-2.5 bg-card border border-border rounded-[10px] text-sm text-foreground focus:outline-none focus:border-foreground transition-colors"
             />
           </div>
         </div>
@@ -460,7 +460,7 @@ function AddLeadsModal({ isOpen, onClose, onAddLeads, availableLeads }: {
         <div className="flex-1 overflow-y-auto p-6">
           {filteredLeads.length === 0 ? (
             <div className="text-center py-8">
-              <p className="text-[#4E525A]">
+              <p className="text-muted-foreground">
                 {searchQuery ? 'Aucun lead trouve' : 'Tous les leads sont deja dans cette liste'}
               </p>
             </div>
@@ -478,11 +478,11 @@ function AddLeadsModal({ isOpen, onClose, onAddLeads, availableLeads }: {
                     key={lead.id}
                     onClick={() => toggleLead(lead.id)}
                     className={`w-full flex items-center gap-3 p-3 rounded-[10px] border-2 transition-all ${
-                      isSelected ? 'border-[#17191F] bg-[#F5F7F9]' : 'border-[#E2E4E6] hover:border-[#C5C9CE]'
+                      isSelected ? 'border-foreground bg-muted' : 'border-border hover:border-muted-foreground'
                     }`}
                   >
                     <div className={`w-5 h-5 rounded border-2 flex items-center justify-center flex-shrink-0 ${
-                      isSelected ? 'border-[#17191F] bg-[#17191F]' : 'border-[#C5C9CE]'
+                      isSelected ? 'border-blue-600 bg-blue-600' : 'border-muted-foreground'
                     }`}>
                       {isSelected && (
                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3">
@@ -491,8 +491,8 @@ function AddLeadsModal({ isOpen, onClose, onAddLeads, availableLeads }: {
                       )}
                     </div>
                     <div className="flex-1 text-left">
-                      <p className="font-medium text-[#0D0F14]">{displayName}</p>
-                      {lead.company_name && <p className="text-sm text-[#4E525A]">{lead.company_name}</p>}
+                      <p className="font-medium text-foreground">{displayName}</p>
+                      {lead.company_name && <p className="text-sm text-muted-foreground">{lead.company_name}</p>}
                     </div>
                     <span className={`text-xs px-2 py-1 rounded-md ${
                       lead.status === 'new' ? 'bg-[#E8F5E9] text-[#147A3A]' :
@@ -508,8 +508,8 @@ function AddLeadsModal({ isOpen, onClose, onAddLeads, availableLeads }: {
           )}
         </div>
 
-        <div className="flex items-center gap-3 p-6 border-t border-[#EFF1F3]">
-          <button onClick={onClose} className="flex-1 px-4 py-2.5 bg-white border border-[#E2E4E6] text-[#0D0F14] rounded-[10px] font-medium hover:bg-[#F5F7F9] transition-colors">
+        <div className="flex items-center gap-3 p-6 border-t border-border">
+          <button onClick={onClose} className="flex-1 px-4 py-2.5 bg-card border border-border text-foreground rounded-[10px] font-medium hover:bg-muted transition-colors">
             Annuler
           </button>
           <button

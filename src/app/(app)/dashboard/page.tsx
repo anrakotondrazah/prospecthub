@@ -7,14 +7,14 @@ const statusColors: Record<string, string> = {
   new: 'bg-[#E8F5E9] text-[#147A3A]',
   qualified: 'bg-[#E3F2FD] text-[#1565C0]',
   hot: 'bg-[#FFF3E0] text-[#E65100]',
-  contacted: 'bg-[#F5F7F9] text-[#4E525A]',
+  contacted: 'bg-muted text-muted-foreground',
   converted: 'bg-[#E8F5E9] text-[#147A3A]',
 }
 
 const priorityColors: Record<string, string> = {
   high: 'text-[#B42318]',
   medium: 'text-[#A66A08]',
-  low: 'text-[#4E525A]',
+  low: 'text-muted-foreground',
 }
 
 const taskIcons: Record<string, string> = {
@@ -84,8 +84,8 @@ export default async function DashboardPage() {
               <line x1="12" y1="16" x2="12.01" y2="16" />
             </svg>
           </div>
-          <h2 className="text-xl font-semibold text-[#0D0F14] mb-2">Erreur de chargement</h2>
-          <p className="text-[#4E525A] mb-4">Impossible de charger votre profil.</p>
+          <h2 className="text-xl font-semibold text-foreground mb-2">Erreur de chargement</h2>
+          <p className="text-muted-foreground mb-4">Impossible de charger votre profil.</p>
           <a href="/dashboard" className="text-[#17191F] font-medium hover:underline">Reessayer</a>
         </div>
       </div>
@@ -229,20 +229,20 @@ export default async function DashboardPage() {
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
         <div>
-          <h1 className="text-xl lg:text-2xl font-semibold text-[#0D0F14]">
+          <h1 className="text-xl lg:text-2xl font-semibold text-foreground">
             Bonjour, {firstName}
           </h1>
-          <p className="text-sm text-[#4E525A]">
+          <p className="text-sm text-muted-foreground">
             Voici un apercu de vos performances
           </p>
         </div>
         <div className="flex gap-2">
-          <div className="flex items-center gap-2 px-4 py-2 bg-[#F5F7F9] rounded-[10px]">
+          <div className="flex items-center gap-2 px-4 py-2 bg-muted rounded-[10px]">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4E525A" strokeWidth="2">
               <circle cx="12" cy="12" r="10" />
               <path d="M12 6v6l4 2" />
             </svg>
-            <span className="text-sm font-medium text-[#0D0F14]">{creditsBalance} credits</span>
+            <span className="text-sm font-medium text-foreground">{creditsBalance} credits</span>
           </div>
           <Link
             href="/base-entreprises"
@@ -258,9 +258,9 @@ export default async function DashboardPage() {
       </div>
 
       <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-        <div className="bg-white rounded-[14px] border border-[#E2E4E6] p-5">
+        <div className="bg-card rounded-[14px] border border-border p-5">
           <div className="flex items-center justify-between mb-3">
-            <span className="text-sm text-[#4E525A]">Total leads</span>
+            <span className="text-sm text-muted-foreground">Total leads</span>
             <div className="w-8 h-8 rounded-lg bg-[#E3F2FD] flex items-center justify-center">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#1565C0" strokeWidth="2">
                 <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
@@ -269,7 +269,7 @@ export default async function DashboardPage() {
             </div>
           </div>
           <div className="flex items-baseline gap-2">
-            <span className="text-3xl font-semibold text-[#0D0F14]">{leadStats.total}</span>
+            <span className="text-3xl font-semibold text-foreground">{leadStats.total}</span>
             {leadsTrend !== 0 && (
               <span className={`text-xs font-medium flex items-center gap-0.5 ${leadsTrend > 0 ? 'text-[#147A3A]' : 'text-[#B42318]'}`}>
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
@@ -283,42 +283,42 @@ export default async function DashboardPage() {
               </span>
             )}
           </div>
-          <p className="text-xs text-[#4E525A] mt-1">
+          <p className="text-xs text-muted-foreground mt-1">
             {leadStats.new} nouveaux ce mois
           </p>
         </div>
 
-        <div className="bg-white rounded-[14px] border border-[#E2E4E6] p-5">
+        <div className="bg-card rounded-[14px] border border-border p-5">
           <div className="flex items-center justify-between mb-3">
-            <span className="text-sm text-[#4E525A]">Leads chauds</span>
+            <span className="text-sm text-muted-foreground">Leads chauds</span>
             <div className="w-8 h-8 rounded-lg bg-[#FFF3E0] flex items-center justify-center">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#E65100" strokeWidth="2">
                 <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
               </svg>
             </div>
           </div>
-          <span className="text-3xl font-semibold text-[#0D0F14]">{leadStats.hot}</span>
+          <span className="text-3xl font-semibold text-foreground">{leadStats.hot}</span>
           <p className="text-xs text-[#E65100] mt-1">A traiter en priorite</p>
         </div>
 
-        <div className="bg-white rounded-[14px] border border-[#E2E4E6] p-5">
+        <div className="bg-card rounded-[14px] border border-border p-5">
           <div className="flex items-center justify-between mb-3">
-            <span className="text-sm text-[#4E525A]">Affaires actives</span>
+            <span className="text-sm text-muted-foreground">Affaires actives</span>
             <div className="w-8 h-8 rounded-lg bg-[#E8F5E9] flex items-center justify-center">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#147A3A" strokeWidth="2">
                 <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
               </svg>
             </div>
           </div>
-          <span className="text-3xl font-semibold text-[#0D0F14]">{dealsCount}</span>
-          <p className="text-xs text-[#4E525A] mt-1">
+          <span className="text-3xl font-semibold text-foreground">{dealsCount}</span>
+          <p className="text-xs text-muted-foreground mt-1">
             {totalPipelineValue > 0 ? `${(totalPipelineValue / 1000).toFixed(0)}k EUR` : '0 EUR'} en pipeline
           </p>
         </div>
 
-        <div className="bg-white rounded-[14px] border border-[#E2E4E6] p-5">
+        <div className="bg-card rounded-[14px] border border-border p-5">
           <div className="flex items-center justify-between mb-3">
-            <span className="text-sm text-[#4E525A]">Taches</span>
+            <span className="text-sm text-muted-foreground">Taches</span>
             <div className="w-8 h-8 rounded-lg bg-[#F3E8FF] flex items-center justify-center relative">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" strokeWidth="2">
                 <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2" />
@@ -331,7 +331,7 @@ export default async function DashboardPage() {
               )}
             </div>
           </div>
-          <span className="text-3xl font-semibold text-[#0D0F14]">{taskStats.total}</span>
+          <span className="text-3xl font-semibold text-foreground">{taskStats.total}</span>
           {taskStats.overdue > 0 ? (
             <p className="text-xs text-[#B42318] mt-1 font-medium">{taskStats.overdue} en retard</p>
           ) : taskStats.today > 0 ? (
@@ -343,21 +343,21 @@ export default async function DashboardPage() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 bg-white rounded-[14px] border border-[#E2E4E6] p-6">
+        <div className="lg:col-span-2 bg-card rounded-[14px] border border-border p-6">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-lg font-semibold text-[#0D0F14]">Activite des 7 derniers jours</h2>
-            <Link href="/activities" className="text-sm text-[#4E525A] hover:text-[#0D0F14]">
+            <h2 className="text-lg font-semibold text-foreground">Activite des 7 derniers jours</h2>
+            <Link href="/activities" className="text-sm text-muted-foreground hover:text-foreground">
               Voir tout
             </Link>
           </div>
           {activityStats.length === 0 || activityStats.every(d => d.emails + d.calls + d.meetings + d.notes === 0) ? (
-            <div className="text-center py-12 bg-[#F5F7F9] rounded-[10px]">
-              <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-white flex items-center justify-center">
+            <div className="text-center py-12 bg-muted rounded-[10px]">
+              <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-card flex items-center justify-center">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#9BA0A6" strokeWidth="2">
                   <path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
                 </svg>
               </div>
-              <p className="text-sm text-[#4E525A]">Aucune activite recente</p>
+              <p className="text-sm text-muted-foreground">Aucune activite recente</p>
             </div>
           ) : (
             <div className="space-y-6">
@@ -399,40 +399,40 @@ export default async function DashboardPage() {
                           />
                         )}
                       </div>
-                      <div className="text-xs text-[#9BA0A6] font-medium">{day.day}</div>
+                      <div className="text-xs text-muted-foreground font-medium">{day.day}</div>
                       {total > 0 && (
-                        <div className="text-xs font-semibold text-[#0D0F14]">{total}</div>
+                        <div className="text-xs font-semibold text-foreground">{total}</div>
                       )}
                     </div>
                   )
                 })}
               </div>
-              <div className="flex items-center justify-center gap-4 pt-4 border-t border-[#E2E4E6]">
+              <div className="flex items-center justify-center gap-4 pt-4 border-t border-border">
                 <div className="flex items-center gap-1.5">
                   <div className="w-3 h-3 rounded bg-[#3B82F6]" />
-                  <span className="text-xs text-[#4E525A]">Emails</span>
+                  <span className="text-xs text-muted-foreground">Emails</span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <div className="w-3 h-3 rounded bg-[#10B981]" />
-                  <span className="text-xs text-[#4E525A]">Appels</span>
+                  <span className="text-xs text-muted-foreground">Appels</span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <div className="w-3 h-3 rounded bg-[#8B5CF6]" />
-                  <span className="text-xs text-[#4E525A]">Reunions</span>
+                  <span className="text-xs text-muted-foreground">Reunions</span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <div className="w-3 h-3 rounded bg-[#F59E0B]" />
-                  <span className="text-xs text-[#4E525A]">Notes</span>
+                  <span className="text-xs text-muted-foreground">Notes</span>
                 </div>
               </div>
             </div>
           )}
         </div>
 
-        <div className="bg-white rounded-[14px] border border-[#E2E4E6] p-6">
+        <div className="bg-card rounded-[14px] border border-border p-6">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-lg font-semibold text-[#0D0F14]">Credits restants</h2>
-            <Link href="/settings/credits" className="text-sm text-[#4E525A] hover:text-[#0D0F14]">
+            <h2 className="text-lg font-semibold text-foreground">Credits restants</h2>
+            <Link href="/settings/credits" className="text-sm text-muted-foreground hover:text-foreground">
               Recharger
             </Link>
           </div>
@@ -443,31 +443,31 @@ export default async function DashboardPage() {
                 <path d="M12 6v6l4 2" />
               </svg>
             </div>
-            <div className="text-4xl font-bold text-[#0D0F14] mb-1">{creditsBalance}</div>
-            <p className="text-sm text-[#4E525A]">credits disponibles</p>
+            <div className="text-4xl font-bold text-foreground mb-1">{creditsBalance}</div>
+            <p className="text-sm text-muted-foreground">credits disponibles</p>
           </div>
-          <div className="pt-4 border-t border-[#E2E4E6]">
-            <p className="text-xs text-[#9BA0A6] text-center">1 credit = 1 enrichissement entreprise</p>
+          <div className="pt-4 border-t border-border">
+            <p className="text-xs text-muted-foreground text-center">1 credit = 1 enrichissement entreprise</p>
           </div>
         </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <div className="lg:col-span-2 bg-white rounded-[14px] border border-[#E2E4E6] p-6">
+        <div className="lg:col-span-2 bg-card rounded-[14px] border border-border p-6">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-lg font-semibold text-[#0D0F14]">Pipeline des affaires</h2>
-            <Link href="/deals" className="text-sm text-[#4E525A] hover:text-[#0D0F14]">
+            <h2 className="text-lg font-semibold text-foreground">Pipeline des affaires</h2>
+            <Link href="/deals" className="text-sm text-muted-foreground hover:text-foreground">
               Voir tout
             </Link>
           </div>
           {pipelineStats.length === 0 || totalPipelineValue === 0 ? (
-            <div className="text-center py-12 bg-[#F5F7F9] rounded-[10px]">
-              <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-white flex items-center justify-center">
+            <div className="text-center py-12 bg-muted rounded-[10px]">
+              <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-card flex items-center justify-center">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#9BA0A6" strokeWidth="2">
                   <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
                 </svg>
               </div>
-              <p className="text-sm text-[#4E525A]">Aucune affaire en cours</p>
+              <p className="text-sm text-muted-foreground">Aucune affaire en cours</p>
               <Link href="/deals" className="text-xs text-[#1565C0] hover:underline mt-1 inline-block">
                 Creer une affaire
               </Link>
@@ -476,8 +476,8 @@ export default async function DashboardPage() {
             <div className="space-y-4">
               {pipelineStats.map((stage) => (
                 <div key={stage.stage} className="flex items-center gap-4">
-                  <div className="w-24 text-sm text-[#4E525A] truncate">{stage.stage}</div>
-                  <div className="flex-1 h-8 bg-[#F5F7F9] rounded-lg overflow-hidden">
+                  <div className="w-24 text-sm text-muted-foreground truncate">{stage.stage}</div>
+                  <div className="flex-1 h-8 bg-muted rounded-lg overflow-hidden">
                     <div
                       className="h-full rounded-lg flex items-center px-3 transition-all"
                       style={{
@@ -488,7 +488,7 @@ export default async function DashboardPage() {
                       <span className="text-xs font-medium text-white">{stage.count}</span>
                     </div>
                   </div>
-                  <div className="w-20 text-right text-sm font-medium text-[#0D0F14]">
+                  <div className="w-20 text-right text-sm font-medium text-foreground">
                     {stage.value > 0 ? `${(stage.value / 1000).toFixed(0)}k` : '0'} EUR
                   </div>
                 </div>
@@ -497,16 +497,16 @@ export default async function DashboardPage() {
           )}
         </div>
 
-        <div className="bg-white rounded-[14px] border border-[#E2E4E6] p-6">
+        <div className="bg-card rounded-[14px] border border-border p-6">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold text-[#0D0F14]">Taches a venir</h2>
-            <Link href="/tasks" className="text-sm text-[#4E525A] hover:text-[#0D0F14]">
+            <h2 className="text-lg font-semibold text-foreground">Taches a venir</h2>
+            <Link href="/tasks" className="text-sm text-muted-foreground hover:text-foreground">
               Voir tout
             </Link>
           </div>
           {upcomingTasks.length === 0 ? (
-            <div className="text-center py-8 bg-[#F5F7F9] rounded-[10px]">
-              <p className="text-sm text-[#4E525A]">Aucune tache</p>
+            <div className="text-center py-8 bg-muted rounded-[10px]">
+              <p className="text-sm text-muted-foreground">Aucune tache</p>
             </div>
           ) : (
             <div className="space-y-3">
@@ -515,13 +515,13 @@ export default async function DashboardPage() {
                   ? { bg: 'bg-[#FDE8E5]', text: 'text-[#B42318]', label: 'Haute' }
                   : task.priority === 'medium'
                   ? { bg: 'bg-[#FFF3E0]', text: 'text-[#A66A08]', label: 'Moyenne' }
-                  : { bg: 'bg-[#F5F7F9]', text: 'text-[#4E525A]', label: 'Basse' }
+                  : { bg: 'bg-muted', text: 'text-muted-foreground', label: 'Basse' }
 
                 const isOverdue = task.dueDate === 'En retard'
                 const isToday = task.dueDate === "Aujourd'hui"
 
                 return (
-                  <div key={task.id} className="flex items-start gap-3 p-3 rounded-lg hover:bg-[#F5F7F9] transition-colors group">
+                  <div key={task.id} className="flex items-start gap-3 p-3 rounded-lg hover:bg-muted/80 transition-colors group">
                     <div className={`w-8 h-8 rounded-lg ${priorityBadge.bg} flex items-center justify-center flex-shrink-0 group-hover:scale-105 transition-transform`}>
                       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={priorityBadge.text.replace('text-', '#')} strokeWidth="2" className={priorityBadge.text}>
                         <path d={taskIcons[task.type] || taskIcons.task} />
@@ -529,13 +529,13 @@ export default async function DashboardPage() {
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2 mb-1">
-                        <p className="text-sm font-medium text-[#0D0F14] truncate">{task.title}</p>
+                        <p className="text-sm font-medium text-foreground truncate">{task.title}</p>
                         <span className={`px-1.5 py-0.5 text-[9px] font-bold uppercase rounded ${priorityBadge.bg} ${priorityBadge.text}`}>
                           {priorityBadge.label}
                         </span>
                       </div>
                       <div className="flex items-center gap-2">
-                        <p className={`text-xs font-medium ${isOverdue ? 'text-[#B42318]' : isToday ? 'text-[#E65100]' : 'text-[#4E525A]'}`}>
+                        <p className={`text-xs font-medium ${isOverdue ? 'text-[#B42318]' : isToday ? 'text-[#E65100]' : 'text-muted-foreground'}`}>
                           {task.dueDate}
                         </p>
                         {isOverdue && (
@@ -556,16 +556,16 @@ export default async function DashboardPage() {
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        <div className="bg-white rounded-[14px] border border-[#E2E4E6] p-6">
+        <div className="bg-card rounded-[14px] border border-border p-6">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold text-[#0D0F14]">Leads recents</h2>
-            <Link href="/leads" className="text-sm text-[#4E525A] hover:text-[#0D0F14]">
+            <h2 className="text-lg font-semibold text-foreground">Leads recents</h2>
+            <Link href="/leads" className="text-sm text-muted-foreground hover:text-foreground">
               Voir tout
             </Link>
           </div>
           {recentLeads.length === 0 ? (
-            <div className="text-center py-8 bg-[#F5F7F9] rounded-[10px]">
-              <p className="text-sm text-[#4E525A]">Aucun lead</p>
+            <div className="text-center py-8 bg-muted rounded-[10px]">
+              <p className="text-sm text-muted-foreground">Aucun lead</p>
               <Link href="/base-entreprises" className="text-xs text-[#1565C0] hover:underline mt-1 inline-block">
                 Trouver des leads
               </Link>
@@ -581,25 +581,25 @@ export default async function DashboardPage() {
                   <Link
                     key={lead.id}
                     href={`/leads/${lead.id}`}
-                    className="flex items-center gap-3 p-3 rounded-lg hover:bg-[#F5F7F9] transition-colors"
+                    className="flex items-center gap-3 p-3 rounded-lg hover:bg-muted/80 transition-colors"
                   >
                     <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#17191F] to-[#2a2d35] flex items-center justify-center text-white text-sm font-medium shadow-sm">
                       {lead.name.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase()}
                     </div>
                     <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2">
-                        <p className="text-sm font-medium text-[#0D0F14]">{lead.name}</p>
+                        <p className="text-sm font-medium text-foreground">{lead.name}</p>
                         {lead.status === 'hot' && (
                           <div className="w-1.5 h-1.5 rounded-full bg-[#E65100] animate-pulse" />
                         )}
                       </div>
-                      <p className="text-xs text-[#4E525A] truncate">{lead.company || 'Entreprise inconnue'}</p>
+                      <p className="text-xs text-muted-foreground truncate">{lead.company || 'Entreprise inconnue'}</p>
                     </div>
                     <div className={`px-2 py-1 rounded-md flex items-center gap-1 ${scoreColor}`}>
                       <span className="text-xs font-semibold">{score}</span>
                       <span className="text-[10px]">{scoreIcon}</span>
                     </div>
-                    <span className="text-xs text-[#9BA0A6] min-w-[48px] text-right">{lead.createdAt}</span>
+                    <span className="text-xs text-muted-foreground min-w-[48px] text-right">{lead.createdAt}</span>
                   </Link>
                 )
               })}
@@ -607,28 +607,28 @@ export default async function DashboardPage() {
           )}
         </div>
 
-        <div className="bg-white rounded-[14px] border border-[#E2E4E6] p-6">
+        <div className="bg-card rounded-[14px] border border-border p-6">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold text-[#0D0F14]">Statistiques</h2>
+            <h2 className="text-lg font-semibold text-foreground">Statistiques</h2>
           </div>
           <div className="grid grid-cols-2 gap-4">
-            <div className="p-4 bg-[#F5F7F9] rounded-[10px]">
-              <p className="text-xs text-[#9BA0A6] mb-1">Leads qualifies</p>
-              <p className="text-2xl font-semibold text-[#0D0F14]">{leadStats.qualified}</p>
+            <div className="p-4 bg-muted rounded-[10px]">
+              <p className="text-xs text-muted-foreground mb-1">Leads qualifies</p>
+              <p className="text-2xl font-semibold text-foreground">{leadStats.qualified}</p>
             </div>
-            <div className="p-4 bg-[#F5F7F9] rounded-[10px]">
-              <p className="text-xs text-[#9BA0A6] mb-1">Taux conversion</p>
-              <p className="text-2xl font-semibold text-[#0D0F14]">
+            <div className="p-4 bg-muted rounded-[10px]">
+              <p className="text-xs text-muted-foreground mb-1">Taux conversion</p>
+              <p className="text-2xl font-semibold text-foreground">
                 {leadStats.total > 0 ? Math.round((leadStats.qualified / leadStats.total) * 100) : 0}%
               </p>
             </div>
-            <div className="p-4 bg-[#F5F7F9] rounded-[10px]">
-              <p className="text-xs text-[#9BA0A6] mb-1">Credits restants</p>
-              <p className="text-2xl font-semibold text-[#0D0F14]">{creditsBalance}</p>
+            <div className="p-4 bg-muted rounded-[10px]">
+              <p className="text-xs text-muted-foreground mb-1">Credits restants</p>
+              <p className="text-2xl font-semibold text-foreground">{creditsBalance}</p>
             </div>
-            <div className="p-4 bg-[#F5F7F9] rounded-[10px]">
-              <p className="text-xs text-[#9BA0A6] mb-1">Taches aujourd'hui</p>
-              <p className="text-2xl font-semibold text-[#0D0F14]">{taskStats.today}</p>
+            <div className="p-4 bg-muted rounded-[10px]">
+              <p className="text-xs text-muted-foreground mb-1">Taches aujourd'hui</p>
+              <p className="text-2xl font-semibold text-foreground">{taskStats.today}</p>
             </div>
           </div>
         </div>
@@ -637,51 +637,51 @@ export default async function DashboardPage() {
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
         <Link
           href="/leads"
-          className="bg-white rounded-[14px] border border-[#E2E4E6] p-4 hover:border-[#17191F] transition-colors group"
+          className="bg-card rounded-[14px] border border-border p-4 hover:border-foreground transition-colors group"
         >
-          <div className="w-10 h-10 rounded-[10px] bg-[#F5F7F9] flex items-center justify-center mb-3 group-hover:bg-[#17191F] transition-colors">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-[#4E525A] group-hover:text-white transition-colors">
+          <div className="w-10 h-10 rounded-[10px] bg-muted flex items-center justify-center mb-3 group-hover:bg-foreground transition-colors">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-muted-foreground group-hover:text-white transition-colors">
               <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
               <circle cx="9" cy="7" r="4" />
             </svg>
           </div>
-          <h3 className="font-medium text-[#0D0F14] text-sm">Leads</h3>
+          <h3 className="font-medium text-foreground text-sm">Leads</h3>
         </Link>
 
         <Link
           href="/base-entreprises"
-          className="bg-white rounded-[14px] border border-[#E2E4E6] p-4 hover:border-[#17191F] transition-colors group"
+          className="bg-card rounded-[14px] border border-border p-4 hover:border-foreground transition-colors group"
         >
-          <div className="w-10 h-10 rounded-[10px] bg-[#F5F7F9] flex items-center justify-center mb-3 group-hover:bg-[#17191F] transition-colors">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-[#4E525A] group-hover:text-white transition-colors">
+          <div className="w-10 h-10 rounded-[10px] bg-muted flex items-center justify-center mb-3 group-hover:bg-foreground transition-colors">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-muted-foreground group-hover:text-white transition-colors">
               <path d="M4 7v10c0 2.21 3.582 4 8 4s8-1.79 8-4V7M4 7c0 2.21 3.582 4 8 4s8-1.79 8-4M4 7c0-2.21 3.582-4 8-4s8 1.79 8 4" />
             </svg>
           </div>
-          <h3 className="font-medium text-[#0D0F14] text-sm">Base B2B</h3>
+          <h3 className="font-medium text-foreground text-sm">Base B2B</h3>
         </Link>
 
         <Link
           href="/deals"
-          className="bg-white rounded-[14px] border border-[#E2E4E6] p-4 hover:border-[#17191F] transition-colors group"
+          className="bg-card rounded-[14px] border border-border p-4 hover:border-foreground transition-colors group"
         >
-          <div className="w-10 h-10 rounded-[10px] bg-[#F5F7F9] flex items-center justify-center mb-3 group-hover:bg-[#17191F] transition-colors">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-[#4E525A] group-hover:text-white transition-colors">
+          <div className="w-10 h-10 rounded-[10px] bg-muted flex items-center justify-center mb-3 group-hover:bg-foreground transition-colors">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-muted-foreground group-hover:text-white transition-colors">
               <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
             </svg>
           </div>
-          <h3 className="font-medium text-[#0D0F14] text-sm">Affaires</h3>
+          <h3 className="font-medium text-foreground text-sm">Affaires</h3>
         </Link>
 
         <Link
           href="/inbox"
-          className="bg-white rounded-[14px] border border-[#E2E4E6] p-4 hover:border-[#17191F] transition-colors group"
+          className="bg-card rounded-[14px] border border-border p-4 hover:border-foreground transition-colors group"
         >
-          <div className="w-10 h-10 rounded-[10px] bg-[#F5F7F9] flex items-center justify-center mb-3 group-hover:bg-[#17191F] transition-colors">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-[#4E525A] group-hover:text-white transition-colors">
+          <div className="w-10 h-10 rounded-[10px] bg-muted flex items-center justify-center mb-3 group-hover:bg-foreground transition-colors">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-muted-foreground group-hover:text-white transition-colors">
               <path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2v10z" />
             </svg>
           </div>
-          <h3 className="font-medium text-[#0D0F14] text-sm">Inbox</h3>
+          <h3 className="font-medium text-foreground text-sm">Inbox</h3>
         </Link>
       </div>
     </div>

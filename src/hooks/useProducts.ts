@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useCallback } from 'react'
+import { useState, useEffect, useCallback, useRef } from 'react'
 import { createClient } from '@/lib/supabase/client'
 
 export type Product = {
@@ -25,10 +25,12 @@ export function useProducts(organizationId: number | null) {
   const [products, setProducts] = useState<Product[]>([])
   const [isLoading, setIsLoading] = useState(true)
   const [error, setError] = useState<Error | null>(null)
+  const currentOrgIdRef = useRef(organizationId)
 
   const fetchProducts = useCallback(async () => {
     if (!organizationId) return
 
+    currentOrgIdRef.current = organizationId
     setIsLoading(true)
     setError(null)
 
@@ -43,11 +45,18 @@ export function useProducts(organizationId: number | null) {
 
       if (fetchError) throw fetchError
 
-      setProducts(data || [])
+      // Only update if this request is still for the current organization
+      if (currentOrgIdRef.current === organizationId) {
+        setProducts(data || [])
+      }
     } catch (err) {
-      setError(err instanceof Error ? err : new Error('Failed to fetch products'))
+      if (currentOrgIdRef.current === organizationId) {
+        setError(err instanceof Error ? err : new Error('Failed to fetch products'))
+      }
     } finally {
-      setIsLoading(false)
+      if (currentOrgIdRef.current === organizationId) {
+        setIsLoading(false)
+      }
     }
   }, [organizationId])
 

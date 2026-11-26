@@ -187,14 +187,26 @@ export function QuoteDetailClient({
   }
 
   const handleSend = async (quote: Quote) => {
-    // Update status to sent
-    const supabase = createClient()
-    await supabase
-      .from('quotes')
-      .update({ status: 'sent', sent_at: new Date().toISOString() })
-      .eq('id', quote.id)
+    try {
+      // Save pending edits first
+      await handleSave(quote)
 
-    router.refresh()
+      // Update status to sent
+      const supabase = createClient()
+      const { error } = await supabase
+        .from('quotes')
+        .update({ status: 'sent', sent_at: new Date().toISOString() })
+        .eq('id', quote.id)
+
+      if (error) {
+        throw error
+      }
+
+      router.refresh()
+    } catch (error) {
+      console.error('Error sending quote:', error)
+      alert('Erreur lors de l\'envoi du devis')
+    }
   }
 
   const handleGeneratePdf = async (): Promise<string> => {

@@ -134,7 +134,7 @@ export function TemplatesPageClient({
           body: template.body,
           type: template.type,
           category: template.category,
-          tokens: JSON.stringify(template.tokens),
+          tokens: typeof template.tokens === 'string' ? template.tokens : JSON.stringify(template.tokens || []),
           created_by: userId,
         })
         .select('*')

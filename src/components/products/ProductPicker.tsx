@@ -59,11 +59,18 @@ export function ProductPicker({
   }, [products, searchQuery, selectedCategory])
 
   const formatCurrency = (value: number, currency: string) => {
-    return new Intl.NumberFormat('fr-FR', {
-      style: 'currency',
-      currency,
-      minimumFractionDigits: 2,
-    }).format(value)
+    // Validate currency code (must be 3 uppercase letters)
+    const validCurrency = /^[A-Z]{3}$/.test(currency) ? currency : 'EUR'
+    try {
+      return new Intl.NumberFormat('fr-FR', {
+        style: 'currency',
+        currency: validCurrency,
+        minimumFractionDigits: 2,
+      }).format(value)
+    } catch {
+      // Fallback if currency is still invalid
+      return `${value.toFixed(2)} EUR`
+    }
   }
 
   if (!isOpen) return null

@@ -482,7 +482,7 @@ function AddLeadsModal({ isOpen, onClose, onAddLeads, availableLeads }: {
                     }`}
                   >
                     <div className={`w-5 h-5 rounded border-2 flex items-center justify-center flex-shrink-0 ${
-                      isSelected ? 'border-foreground bg-foreground' : 'border-muted-foreground'
+                      isSelected ? 'border-blue-600 bg-blue-600' : 'border-muted-foreground'
                     }`}>
                       {isSelected && (
                         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="3">

@@ -7,12 +7,22 @@ export function ThemeToggle() {
   const [isDark, setIsDark] = useState(false)
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem('theme')
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+    try {
+      const savedTheme = localStorage.getItem('theme')
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
 
-    if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
-      document.documentElement.classList.add('dark')
-      setIsDark(true)
+      if (savedTheme === 'dark' || (!savedTheme && prefersDark)) {
+        document.documentElement.classList.add('dark')
+        document.documentElement.classList.remove('light')
+        setIsDark(true)
+      } else {
+        document.documentElement.classList.add('light')
+        document.documentElement.classList.remove('dark')
+        setIsDark(false)
+      }
+    } catch {
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
+      setIsDark(prefersDark)
     }
   }, [])
 
@@ -22,10 +32,12 @@ export function ThemeToggle() {
 
     if (newIsDark) {
       document.documentElement.classList.add('dark')
-      localStorage.setItem('theme', 'dark')
+      document.documentElement.classList.remove('light')
+      try { localStorage.setItem('theme', 'dark') } catch {}
     } else {
+      document.documentElement.classList.add('light')
       document.documentElement.classList.remove('dark')
-      localStorage.setItem('theme', 'light')
+      try { localStorage.setItem('theme', 'light') } catch {}
     }
   }
 

@@ -196,8 +196,8 @@ function TaskCard({ task, today }: { task: Task; today: string }) {
   const isDueToday = dueDate === today
 
   const priorityColors: Record<string, string> = {
-    high: 'bg-[#FFEBEE] dark:bg-[#C62828]/20 text-[#C62828]',
-    medium: 'bg-[#FFF3E0] dark:bg-[#E65100]/20 text-[#E65100]',
+    high: 'bg-[#FFEBEE] dark:bg-[#C62828]/20 text-[#C62828] dark:text-[#EF9A9A]',
+    medium: 'bg-[#FFF3E0] dark:bg-[#E65100]/20 text-[#E65100] dark:text-[#FFCC80]',
     low: 'bg-muted text-muted-foreground',
   }
 

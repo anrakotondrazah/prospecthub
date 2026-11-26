@@ -336,7 +336,7 @@ export default function BaseEntreprisesPage() {
                             className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-[8px] transition-colors ${
                               creditsBalance < cost
                                 ? 'bg-muted text-muted-foreground cursor-not-allowed'
-                                : 'bg-[#17191F] dark:bg-[#58A6FF] text-white hover:bg-[#0D0F14] dark:hover:bg-[#4A93E8]'
+                                : 'bg-[#17191F] dark:bg-[#58A6FF] text-white dark:text-[#0D1117] hover:bg-[#0D0F14] dark:hover:bg-[#4A93E8]'
                             }`}
                           >
                             {isUnlocking ? (

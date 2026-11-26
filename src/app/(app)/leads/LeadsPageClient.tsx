@@ -6,6 +6,7 @@ import { LeadsTable } from './LeadsTable'
 import { ImportCSVModal } from '@/components/modals/ImportCSVModal'
 import { generateCSV, downloadCSV } from '@/lib/utils/csv'
 import { createClient } from '@/lib/supabase/client'
+import { DownloadButton, UploadButton, FillButton } from '@/components/ui/buttons'
 
 interface Lead {
   id: number
@@ -111,43 +112,25 @@ export function LeadsPageClient({ initialLeads, organizationId }: LeadsPageClien
           </p>
         </div>
         <div className="flex items-center gap-3">
-          <button
+          <UploadButton
             onClick={() => setIsImportModalOpen(true)}
-            className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-muted-foreground bg-card border border-border rounded-[10px] hover:bg-muted transition-colors"
-          >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12" />
-            </svg>
-            Importer
-          </button>
-          <button
+            tooltip="Importer CSV"
+          />
+          <DownloadButton
             onClick={handleExport}
+            tooltip="Exporter CSV"
             disabled={isExporting || leads.length === 0}
-            className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-muted-foreground bg-card border border-border rounded-[10px] hover:bg-muted transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {isExporting ? (
-              <>
-                <div className="w-4 h-4 border-2 border-muted-foreground border-t-transparent rounded-full animate-spin" />
-                Export...
-              </>
-            ) : (
-              <>
+          />
+          <Link href="/base-entreprises">
+            <FillButton>
+              <span className="flex items-center gap-2">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" />
+                  <line x1="12" y1="5" x2="12" y2="19" />
+                  <line x1="5" y1="12" x2="19" y2="12" />
                 </svg>
-                Exporter
-              </>
-            )}
-          </button>
-          <Link
-            href="/base-entreprises"
-            className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-[#17191F] rounded-[10px] hover:bg-[#2D3038] transition-colors"
-          >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <line x1="12" y1="5" x2="12" y2="19" />
-              <line x1="5" y1="12" x2="19" y2="12" />
-            </svg>
-            Trouver leads
+                Trouver leads
+              </span>
+            </FillButton>
           </Link>
         </div>
       </div>

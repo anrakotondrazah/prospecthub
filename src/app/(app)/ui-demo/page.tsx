@@ -9,13 +9,13 @@ import {
   PayButton,
   FillButton,
   AnimatedCheckbox,
-  FillCheckbox,
 } from '@/components/ui/buttons'
 import { TabBar } from '@/components/ui/TabBar'
 
 export default function UIDemoPage() {
   const [checked1, setChecked1] = useState(false)
   const [checked2, setChecked2] = useState(false)
+  const [checked3, setChecked3] = useState(true)
   const [activeTab, setActiveTab] = useState('tab1')
 
   const tabs = [
@@ -88,64 +88,42 @@ export default function UIDemoPage() {
       {/* Checkboxes */}
       <section className="space-y-4">
         <h2 className="text-lg font-semibold text-foreground border-b border-border pb-2">
-          Animated Checkboxes
+          Animated Checkbox (SVG Stroke)
         </h2>
-        <div className="flex items-center gap-8">
-          <div className="flex items-center gap-3">
-            <AnimatedCheckbox
-              id="demo-checkbox-1"
-              checked={checked1}
-              onChange={setChecked1}
-            />
-            <label htmlFor="demo-checkbox-1" className="text-foreground cursor-pointer">
-              SVG Stroke
-            </label>
-          </div>
-
-          <div className="flex items-center gap-3">
-            <FillCheckbox
-              id="demo-checkbox-2"
-              checked={checked2}
-              onChange={setChecked2}
-            />
-            <label htmlFor="demo-checkbox-2" className="text-foreground cursor-pointer">
-              Fill Diagonal
-            </label>
-          </div>
+        <div className="flex flex-col gap-4">
+          <AnimatedCheckbox
+            id="demo-checkbox-1"
+            checked={checked1}
+            onChange={setChecked1}
+            label="Option non selectionnee"
+          />
+          <AnimatedCheckbox
+            id="demo-checkbox-2"
+            checked={checked2}
+            onChange={setChecked2}
+            label="Accepter les conditions generales"
+          />
+          <AnimatedCheckbox
+            id="demo-checkbox-3"
+            checked={checked3}
+            onChange={setChecked3}
+            label="Recevoir les notifications"
+          />
         </div>
       </section>
 
-      {/* Tab Bar Variants */}
+      {/* Tab Bar */}
       <section className="space-y-6">
         <h2 className="text-lg font-semibold text-foreground border-b border-border pb-2">
-          Tab Bar (iOS spring animation)
+          Tab Bar (iOS Pill - spring animation)
         </h2>
 
         <div className="space-y-3">
-          <p className="text-sm text-muted-foreground">Pill variant (iOS-style)</p>
           <TabBar
             tabs={tabs}
             defaultTab="tab1"
             variant="pill"
             onChange={setActiveTab}
-          />
-        </div>
-
-        <div className="space-y-3">
-          <p className="text-sm text-muted-foreground">Underline variant</p>
-          <TabBar
-            tabs={tabs}
-            defaultTab="tab2"
-            variant="underline"
-          />
-        </div>
-
-        <div className="space-y-3">
-          <p className="text-sm text-muted-foreground">Dot variant (Material)</p>
-          <TabBar
-            tabs={tabs}
-            defaultTab="tab3"
-            variant="dot"
           />
         </div>
 

@@ -127,25 +127,30 @@ body {
   }
 }
 
-@keyframes icon-rotate {
+@keyframes iconRotate {
   0% {
     opacity: 0;
+    visibility: hidden;
     transform: translateY(10px) scale(0.5);
   }
-  10% {
+  5% {
     opacity: 1;
+    visibility: visible;
     transform: translateY(0) scale(1);
   }
-  30% {
+  15% {
     opacity: 1;
+    visibility: visible;
     transform: translateY(0) scale(1);
   }
-  40% {
+  20% {
     opacity: 0;
+    visibility: hidden;
     transform: translateY(-10px) scale(0.5);
   }
   100% {
     opacity: 0;
+    visibility: hidden;
     transform: translateY(-10px) scale(0.5);
   }
 }
@@ -170,7 +175,7 @@ body {
 }
 
 .animate-icon-rotate {
-  animation: icon-rotate 2.5s infinite;
+  animation: iconRotate 2.5s infinite;
 }
 
 .animate-fade-in {
@@ -182,48 +187,66 @@ body {
 }
 
 /* ============================================
-   SCROLLBAR - Ghost style (appears on hover/scroll)
+   SCROLLBAR - Ghost style (truly invisible, no arrows)
    ============================================ */
 
-/* Webkit browsers (Chrome, Safari, Edge) */
+/* Webkit browsers (Chrome, Safari, Edge) - base scrollbar */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 8px;
+  height: 8px;
+  background: transparent !important;
 }
 
 ::-webkit-scrollbar-track {
-  background: transparent;
+  background: transparent !important;
 }
 
 ::-webkit-scrollbar-thumb {
   background: transparent;
-  border-radius: 3px;
-  transition: background 0.3s ease;
+  border-radius: 4px;
 }
 
+/* FORCE remove ALL scrollbar buttons/arrows - every possible selector */
 ::-webkit-scrollbar-button {
-  display: none;
-  width: 0;
-  height: 0;
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  background: transparent !important;
+  appearance: none !important;
 }
 
-/* Show scrollbar on hover */
+::-webkit-scrollbar-button:start:decrement,
+::-webkit-scrollbar-button:end:increment,
+::-webkit-scrollbar-button:start:increment,
+::-webkit-scrollbar-button:end:decrement {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+::-webkit-scrollbar-corner,
+::-webkit-resizer {
+  display: none !important;
+  background: transparent !important;
+}
+
+/* Show scrollbar thumb on hover - subtle color matching theme */
 *:hover::-webkit-scrollbar-thumb {
-  background: var(--muted-foreground);
+  background: rgba(128, 128, 128, 0.4);
 }
 
 *:hover::-webkit-scrollbar-thumb:hover {
-  background: var(--foreground);
+  background: rgba(128, 128, 128, 0.6);
 }
 
-/* Firefox - thin scrollbar, auto-hide not supported natively */
+/* Firefox - thin scrollbar */
 * {
   scrollbar-width: thin;
   scrollbar-color: transparent transparent;
 }
 
 *:hover {
-  scrollbar-color: var(--muted-foreground) transparent;
+  scrollbar-color: rgba(128, 128, 128, 0.4) transparent;
 }
 
 /* Container that shows scrollbar only on hover */
@@ -233,7 +256,15 @@ body {
 }
 
 .scrollbar-ghost:hover {
-  scrollbar-color: var(--muted-foreground) transparent;
+  scrollbar-color: rgba(128, 128, 128, 0.4) transparent;
+}
+
+.scrollbar-ghost::-webkit-scrollbar {
+  background: transparent !important;
+}
+
+.scrollbar-ghost::-webkit-scrollbar-track {
+  background: transparent !important;
 }
 
 .scrollbar-ghost::-webkit-scrollbar-thumb {
@@ -241,7 +272,7 @@ body {
 }
 
 .scrollbar-ghost:hover::-webkit-scrollbar-thumb {
-  background: var(--muted-foreground);
+  background: rgba(128, 128, 128, 0.4);
 }
 
 /* Hide scrollbar completely */
@@ -378,38 +409,29 @@ body {
   position: relative;
   padding: 12px 24px;
   font-size: 16px;
-  background: var(--foreground);
-  color: var(--background);
+  background: #1a1a1a;
+  color: white;
   border: none;
-  border-radius: 10px;
+  border-radius: 8px;
   cursor: pointer;
   display: flex;
   align-items: center;
   gap: 10px;
-  transition: all 0.25s ease-out;
-}
-
-.dark .pay-btn {
-  background: #1a1a1a;
-  color: white;
+  transition: all 0.3s ease;
 }
 
 .pay-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
 }
 
-.pay-btn:active {
-  transform: scale(0.98);
-}
-
-.pay-btn .icon-container {
+.icon-container {
   position: relative;
   width: 24px;
   height: 24px;
 }
 
-.pay-btn .icon {
+.icon {
   position: absolute;
   top: 0;
   left: 0;
@@ -420,9 +442,13 @@ body {
   visibility: hidden;
 }
 
-.pay-btn .default-icon {
+.default-icon {
   opacity: 1;
   visibility: visible;
+}
+
+.pay-btn:hover .icon {
+  animation: none;
 }
 
 .pay-btn:hover .wallet-icon {
@@ -454,6 +480,7 @@ body {
   animation: none;
   opacity: 0;
   visibility: hidden;
+  transition: all 0.3s ease;
 }
 
 .pay-btn:active .check-icon {
@@ -490,19 +517,6 @@ body {
   transform: translate3d(0, 0, 0);
 }
 
-.check::before {
-  content: "";
-  position: absolute;
-  top: -15px;
-  left: -15px;
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background: var(--muted);
-  opacity: 0;
-  transition: opacity 0.2s ease;
-}
-
 .check svg {
   position: relative;
   z-index: 1;
@@ -525,10 +539,6 @@ body {
   stroke-dasharray: 22;
   stroke-dashoffset: 66;
   transition: stroke-dashoffset 0.2s linear 0.15s;
-}
-
-.check:hover::before {
-  opacity: 1;
 }
 
 .check:hover svg {

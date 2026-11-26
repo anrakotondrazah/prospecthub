@@ -5,6 +5,7 @@ import { QuoteLineItem, type QuoteLine } from './QuoteLineItem'
 import { QuoteSummary } from './QuoteSummary'
 import { QuoteStatusBadge, type QuoteStatus } from './QuoteStatusBadge'
 import { ProductPicker } from '@/components/products/ProductPicker'
+import { PayButton, SaveButton, DownloadButton } from '@/components/ui/buttons'
 
 export type Quote = {
   id?: number
@@ -189,56 +190,19 @@ export function QuoteEditor({
         </div>
         <div className="flex items-center gap-3">
           {onGeneratePdf && (
-            <button
+            <DownloadButton
               onClick={() => onGeneratePdf(quote)}
-              disabled={disabled || isSaving}
-              className="px-4 py-2.5 bg-white border border-[#E2E4E6] text-[#4E525A] rounded-xl font-medium hover:bg-[#F5F7F9] transition-colors flex items-center gap-2 disabled:opacity-50"
-            >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
-                <polyline points="14 2 14 8 20 8" />
-                <line x1="12" y1="18" x2="12" y2="12" />
-                <line x1="9" y1="15" x2="15" y2="15" />
-              </svg>
-              PDF
-            </button>
+              tooltip="Telecharger PDF"
+            />
           )}
           {onSend && quote.status === 'draft' && (
-            <button
-              onClick={() => onSend(quote)}
-              disabled={disabled || isSaving}
-              className="px-4 py-2.5 bg-white border border-[#E2E4E6] text-[#4E525A] rounded-xl font-medium hover:bg-[#F5F7F9] transition-colors flex items-center gap-2 disabled:opacity-50"
-            >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <line x1="22" y1="2" x2="11" y2="13" />
-                <polygon points="22 2 15 22 11 13 2 9 22 2" />
-              </svg>
+            <PayButton onClick={() => onSend(quote)}>
               Envoyer
-            </button>
+            </PayButton>
           )}
-          <button
-            onClick={handleSave}
-            disabled={disabled || isSaving}
-            className="px-4 py-2.5 bg-[#17191F] text-white rounded-xl font-medium hover:bg-[#2A2D35] transition-colors flex items-center gap-2 disabled:opacity-50"
-          >
-            {isSaving ? (
-              <>
-                <svg className="animate-spin" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M21 12a9 9 0 11-6.219-8.56" />
-                </svg>
-                Enregistrement...
-              </>
-            ) : (
-              <>
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z" />
-                  <polyline points="17 21 17 13 7 13 7 21" />
-                  <polyline points="7 3 7 8 15 8" />
-                </svg>
-                Enregistrer
-              </>
-            )}
-          </button>
+          <SaveButton onClick={handleSave}>
+            {isSaving ? 'Enregistrement...' : 'Enregistrer'}
+          </SaveButton>
         </div>
       </div>
 

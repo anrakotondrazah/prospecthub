@@ -1,0 +1,365 @@
+'use client'
+
+import { useState, ReactNode } from 'react'
+import { useRouter } from 'next/navigation'
+import { TabBar } from '@/components/ui/TabBar'
+import { LogoutButton, AnimatedCheckbox, SaveButton } from '@/components/ui/buttons'
+import { createClient } from '@/lib/supabase/client'
+
+interface SettingsClientProps {
+  fullName: string
+  email: string
+  initials: string
+  firstName: string
+  lastName: string
+  orgName: string
+  orgIndustry: string
+  children: ReactNode // ThemeSettings
+}
+
+export function SettingsClient({
+  fullName,
+  email,
+  initials,
+  firstName,
+  lastName,
+  orgName,
+  orgIndustry,
+  children,
+}: SettingsClientProps) {
+  const router = useRouter()
+  const [activeTab, setActiveTab] = useState('profile')
+  const [isLoggingOut, setIsLoggingOut] = useState(false)
+
+  // Notification preferences (stored locally for now)
+  const [notifications, setNotifications] = useState({
+    emailNewLead: true,
+    emailWeeklyReport: false,
+    emailTaskReminder: true,
+    browserNotifications: false,
+  })
+
+  const tabs = [
+    {
+      id: 'profile',
+      label: 'Profil',
+      icon: (
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+          <circle cx="12" cy="7" r="4" />
+        </svg>
+      ),
+    },
+    {
+      id: 'preferences',
+      label: 'Preferences',
+      icon: (
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
+          <circle cx="12" cy="12" r="3" />
+        </svg>
+      ),
+    },
+    {
+      id: 'account',
+      label: 'Compte',
+      icon: (
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
+          <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+        </svg>
+      ),
+    },
+  ]
+
+  const handleLogout = async () => {
+    setIsLoggingOut(true)
+    try {
+      const supabase = createClient()
+      await supabase.auth.signOut()
+      router.push('/login')
+    } catch {
+      setIsLoggingOut(false)
+    }
+  }
+
+  const handleSaveNotifications = () => {
+    // TODO: Save to database when backend is ready
+    console.log('Saving notifications:', notifications)
+  }
+
+  return (
+    <div>
+      <div className="mb-6">
+        <h1 className="text-xl lg:text-[23.5px] font-semibold text-[#0D0F14] dark:text-[#E6EDF3] mb-1">Parametres</h1>
+        <p className="text-sm text-[#4E525A] dark:text-[#8B949E]">
+          Gerez votre compte et vos preferences
+        </p>
+      </div>
+
+      {/* TabBar Navigation */}
+      <div className="mb-6">
+        <TabBar
+          tabs={tabs}
+          defaultTab="profile"
+          onChange={setActiveTab}
+          variant="pill"
+          className="max-w-md"
+        />
+      </div>
+
+      {/* Tab Content */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Main Content - 2/3 */}
+        <div className="lg:col-span-2 space-y-6">
+          {/* Profile Tab */}
+          {activeTab === 'profile' && (
+            <>
+              <div className="bg-white dark:bg-[#161B22] rounded-[14px] border border-[#E2E4E6] dark:border-[#30363D] p-4 lg:p-6 transition-colors duration-200">
+                <h2 className="text-lg font-semibold text-[#0D0F14] dark:text-[#E6EDF3] mb-4">Profil</h2>
+                <div className="flex items-center gap-4 mb-6">
+                  <div className="w-14 lg:w-16 h-14 lg:h-16 rounded-full bg-[#17191F] dark:bg-[#58A6FF] flex items-center justify-center text-white text-lg lg:text-xl font-semibold flex-shrink-0">
+                    {initials}
+                  </div>
+                  <div className="min-w-0">
+                    <p className="font-medium text-[#0D0F14] dark:text-[#E6EDF3] truncate">{fullName}</p>
+                    <p className="text-sm text-[#4E525A] dark:text-[#8B949E] truncate">{email}</p>
+                  </div>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label htmlFor="firstName" className="block text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3] mb-2">Prenom</label>
+                    <input
+                      id="firstName"
+                      type="text"
+                      defaultValue={firstName}
+                      className="w-full h-10 px-3 border border-[#E2E4E6] dark:border-[#30363D] rounded-[10px] text-sm bg-[#F5F7F9] dark:bg-[#0D1117] text-[#9BA0A6] dark:text-[#8B949E] cursor-not-allowed"
+                      disabled
+                      aria-describedby="firstName-hint"
+                    />
+                    <p id="firstName-hint" className="sr-only">Modification non disponible</p>
+                  </div>
+                  <div>
+                    <label htmlFor="lastName" className="block text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3] mb-2">Nom</label>
+                    <input
+                      id="lastName"
+                      type="text"
+                      defaultValue={lastName}
+                      className="w-full h-10 px-3 border border-[#E2E4E6] dark:border-[#30363D] rounded-[10px] text-sm bg-[#F5F7F9] dark:bg-[#0D1117] text-[#9BA0A6] dark:text-[#8B949E] cursor-not-allowed"
+                      disabled
+                      aria-describedby="lastName-hint"
+                    />
+                    <p id="lastName-hint" className="sr-only">Modification non disponible</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bg-white dark:bg-[#161B22] rounded-[14px] border border-[#E2E4E6] dark:border-[#30363D] p-4 lg:p-6 transition-colors duration-200">
+                <h2 className="text-lg font-semibold text-[#0D0F14] dark:text-[#E6EDF3] mb-4">Organisation</h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label htmlFor="orgName" className="block text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3] mb-2">Nom</label>
+                    <input
+                      id="orgName"
+                      type="text"
+                      defaultValue={orgName}
+                      className="w-full h-10 px-3 border border-[#E2E4E6] dark:border-[#30363D] rounded-[10px] text-sm bg-[#F5F7F9] dark:bg-[#0D1117] text-[#9BA0A6] dark:text-[#8B949E] cursor-not-allowed"
+                      disabled
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="orgIndustry" className="block text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3] mb-2">Secteur</label>
+                    <input
+                      id="orgIndustry"
+                      type="text"
+                      defaultValue={orgIndustry}
+                      className="w-full h-10 px-3 border border-[#E2E4E6] dark:border-[#30363D] rounded-[10px] text-sm bg-[#F5F7F9] dark:bg-[#0D1117] text-[#9BA0A6] dark:text-[#8B949E] cursor-not-allowed"
+                      disabled
+                    />
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
+
+          {/* Preferences Tab */}
+          {activeTab === 'preferences' && (
+            <>
+              {/* ThemeSettings passed as children */}
+              {children}
+
+              {/* Notifications */}
+              <div className="bg-white dark:bg-[#161B22] rounded-[14px] border border-[#E2E4E6] dark:border-[#30363D] p-4 lg:p-6 transition-colors duration-200">
+                <div className="flex items-center justify-between mb-4">
+                  <h2 className="text-lg font-semibold text-[#0D0F14] dark:text-[#E6EDF3]">Notifications</h2>
+                  <SaveButton onClick={handleSaveNotifications}>Enregistrer</SaveButton>
+                </div>
+                <p className="text-sm text-[#4E525A] dark:text-[#8B949E] mb-6">
+                  Configurez vos preferences de notification
+                </p>
+
+                <div className="space-y-5">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3]">Nouveaux leads</p>
+                      <p className="text-xs text-[#4E525A] dark:text-[#8B949E]">Recevez un email pour chaque nouveau lead</p>
+                    </div>
+                    <AnimatedCheckbox
+                      id="notif-new-lead"
+                      checked={notifications.emailNewLead}
+                      onChange={(checked) => setNotifications(prev => ({ ...prev, emailNewLead: checked }))}
+                    />
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3]">Rapport hebdomadaire</p>
+                      <p className="text-xs text-[#4E525A] dark:text-[#8B949E]">Resume de votre activite chaque lundi</p>
+                    </div>
+                    <AnimatedCheckbox
+                      id="notif-weekly"
+                      checked={notifications.emailWeeklyReport}
+                      onChange={(checked) => setNotifications(prev => ({ ...prev, emailWeeklyReport: checked }))}
+                    />
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3]">Rappels de taches</p>
+                      <p className="text-xs text-[#4E525A] dark:text-[#8B949E]">Notifications pour les taches a venir</p>
+                    </div>
+                    <AnimatedCheckbox
+                      id="notif-tasks"
+                      checked={notifications.emailTaskReminder}
+                      onChange={(checked) => setNotifications(prev => ({ ...prev, emailTaskReminder: checked }))}
+                    />
+                  </div>
+
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3]">Notifications navigateur</p>
+                      <p className="text-xs text-[#4E525A] dark:text-[#8B949E]">Alertes en temps reel dans votre navigateur</p>
+                    </div>
+                    <AnimatedCheckbox
+                      id="notif-browser"
+                      checked={notifications.browserNotifications}
+                      onChange={(checked) => setNotifications(prev => ({ ...prev, browserNotifications: checked }))}
+                    />
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
+
+          {/* Account Tab */}
+          {activeTab === 'account' && (
+            <>
+              <div className="bg-white dark:bg-[#161B22] rounded-[14px] border border-[#E2E4E6] dark:border-[#30363D] p-4 lg:p-6 transition-colors duration-200">
+                <h2 className="text-lg font-semibold text-[#0D0F14] dark:text-[#E6EDF3] mb-4">Plan actuel</h2>
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-2xl font-bold text-[#0D0F14] dark:text-[#E6EDF3]">Free</span>
+                  <span className="px-2 py-1 text-xs font-semibold uppercase rounded bg-[#F5F7F9] dark:bg-[#0D1117] text-[#4E525A] dark:text-[#8B949E]">
+                    Actuel
+                  </span>
+                </div>
+                <ul className="space-y-2 text-sm text-[#4E525A] dark:text-[#8B949E] mb-4">
+                  <li className="flex items-center gap-2">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#147A3A" strokeWidth="2" aria-hidden="true">
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                    50 leads/mois
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#147A3A" strokeWidth="2" aria-hidden="true">
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                    1 utilisateur
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#147A3A" strokeWidth="2" aria-hidden="true">
+                      <polyline points="20 6 9 17 4 12" />
+                    </svg>
+                    Export CSV
+                  </li>
+                </ul>
+                <button
+                  className="w-full h-10 text-sm font-medium text-white/60 bg-[#17191F]/60 dark:bg-white/10 rounded-[10px] cursor-not-allowed"
+                  disabled
+                  title="Bientot disponible"
+                >
+                  Passer a Pro
+                </button>
+              </div>
+
+              <div className="bg-white dark:bg-[#161B22] rounded-[14px] border border-[#E2E4E6] dark:border-[#30363D] p-4 lg:p-6 transition-colors duration-200">
+                <h2 className="text-lg font-semibold text-[#0D0F14] dark:text-[#E6EDF3] mb-4">Session</h2>
+                <p className="text-sm text-[#4E525A] dark:text-[#8B949E] mb-4">
+                  Connecte en tant que <span className="font-medium text-[#0D0F14] dark:text-[#E6EDF3]">{email}</span>
+                </p>
+                <div className="flex items-center gap-4">
+                  <LogoutButton onClick={handleLogout} />
+                  {isLoggingOut && (
+                    <span className="text-sm text-[#4E525A] dark:text-[#8B949E]">Deconnexion...</span>
+                  )}
+                </div>
+              </div>
+
+              <div className="bg-white dark:bg-[#161B22] rounded-[14px] border border-red-200 dark:border-red-900/50 p-4 lg:p-6 transition-colors duration-200">
+                <h2 className="text-lg font-semibold text-[#B42318] dark:text-red-400 mb-4">Zone de danger</h2>
+                <p className="text-sm text-[#4E525A] dark:text-[#8B949E] mb-4">
+                  Actions irreversibles sur votre compte
+                </p>
+                <button
+                  className="w-full h-10 text-sm font-medium text-[#B42318]/60 dark:text-red-400/60 border border-[#B42318]/60 dark:border-red-400/60 rounded-[10px] cursor-not-allowed"
+                  disabled
+                  title="Bientot disponible"
+                >
+                  Supprimer le compte
+                </button>
+              </div>
+            </>
+          )}
+        </div>
+
+        {/* Sidebar - Quick Links (visible on all tabs) */}
+        <div className="space-y-6 order-first lg:order-last">
+          <div className="bg-white dark:bg-[#161B22] rounded-[14px] border border-[#E2E4E6] dark:border-[#30363D] p-4 lg:p-6 transition-colors duration-200">
+            <h2 className="text-lg font-semibold text-[#0D0F14] dark:text-[#E6EDF3] mb-4">Configuration</h2>
+            <ul className="space-y-2">
+              <li>
+                <a
+                  href="/settings/properties"
+                  className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-[#4E525A] dark:text-[#8B949E] hover:bg-black/[0.03] dark:hover:bg-white/[0.05] hover:text-[#0D0F14] dark:hover:text-[#E6EDF3] transition-all"
+                >
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M12 3h7a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-7m0-18H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h7m0-18v18" />
+                  </svg>
+                  <span>Proprietes personnalisees</span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="ml-auto">
+                    <path d="M9 18l6-6-6-6" />
+                  </svg>
+                </a>
+              </li>
+            </ul>
+          </div>
+
+          {/* Mobile: Show plan info */}
+          <div className="lg:hidden bg-white dark:bg-[#161B22] rounded-[14px] border border-[#E2E4E6] dark:border-[#30363D] p-4 transition-colors duration-200">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-sm text-[#4E525A] dark:text-[#8B949E]">Plan actuel</p>
+                <p className="text-lg font-bold text-[#0D0F14] dark:text-[#E6EDF3]">Free</p>
+              </div>
+              <button
+                onClick={() => setActiveTab('account')}
+                className="text-sm text-[#0066FF] dark:text-[#58A6FF] font-medium"
+              >
+                Voir details
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}

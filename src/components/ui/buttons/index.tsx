@@ -56,26 +56,28 @@ export const SaveButton = forwardRef<HTMLButtonElement, {
 SaveButton.displayName = 'SaveButton'
 
 // ============================================
-// BOUTON DOWNLOAD - Meme timing que FillButton (0.25s)
+// BOUTON DOWNLOAD - Fill effect like FillButton
 // ============================================
 export const DownloadButton = forwardRef<HTMLButtonElement, {
   onClick?: () => void
   tooltip?: string
+  disabled?: boolean
 }>(
-  ({ onClick, tooltip = 'Download' }, ref) => (
+  ({ onClick, tooltip = 'Download', disabled = false }, ref) => (
     <button
       ref={ref}
       onClick={onClick}
-      className="group w-[50px] h-[50px] border-none rounded-full bg-muted dark:bg-[#21262D] flex flex-col items-center justify-center cursor-pointer relative transition-all duration-[250ms] ease-out shadow-md hover:bg-[#58A6FF] dark:hover:bg-[#58A6FF] active:scale-95"
+      disabled={disabled}
+      className={`group w-[50px] h-[50px] border-none rounded-full bg-muted dark:bg-[#21262D] flex flex-col items-center justify-center cursor-pointer relative transition-all duration-[250ms] ease-out shadow-md active:scale-95 overflow-hidden z-[1] before:content-[''] before:absolute before:top-0 before:left-0 before:h-full before:w-0 before:rounded-full before:bg-[#58A6FF] before:z-[-1] before:transition-all before:duration-[250ms] before:ease-out hover:before:w-full ${disabled ? 'opacity-50 cursor-not-allowed hover:before:w-0' : ''}`}
     >
       <svg
-        className="w-4 h-4 fill-[#58A6FF] transition-all duration-[250ms] ease-out group-hover:fill-white group-hover:-translate-y-0.5"
+        className="w-4 h-4 fill-[#58A6FF] transition-all duration-[250ms] ease-out group-hover:fill-white group-hover:-translate-y-0.5 relative z-[2]"
         viewBox="0 0 384 512"
       >
         <path d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8 224 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z" />
       </svg>
-      <div className="w-[18px] h-[5px] border-b-2 border-l-2 border-r-2 border-[#58A6FF] transition-all duration-[250ms] ease-out group-hover:border-white" />
-      <span className="absolute left-full ml-3 opacity-0 bg-foreground dark:bg-[#161B22] text-background dark:text-white py-1.5 px-3 rounded-lg text-sm font-medium flex items-center justify-center transition-all duration-[250ms] ease-out pointer-events-none tracking-wide group-hover:opacity-100 shadow-lg whitespace-nowrap">
+      <div className="w-[18px] h-[5px] border-b-2 border-l-2 border-r-2 border-[#58A6FF] transition-all duration-[250ms] ease-out group-hover:border-white relative z-[2]" />
+      <span className="absolute left-full ml-3 opacity-0 bg-foreground dark:bg-[#161B22] text-background dark:text-white py-1.5 px-3 rounded-lg text-sm font-medium flex items-center justify-center transition-all duration-[250ms] ease-out pointer-events-none tracking-wide group-hover:opacity-100 shadow-lg whitespace-nowrap z-[10]">
         {tooltip}
       </span>
     </button>
@@ -84,26 +86,28 @@ export const DownloadButton = forwardRef<HTMLButtonElement, {
 DownloadButton.displayName = 'DownloadButton'
 
 // ============================================
-// BOUTON UPLOAD - Meme timing que FillButton (0.25s)
+// BOUTON UPLOAD - Fill effect like FillButton
 // ============================================
 export const UploadButton = forwardRef<HTMLButtonElement, {
   onClick?: () => void
   tooltip?: string
+  disabled?: boolean
 }>(
-  ({ onClick, tooltip = 'Upload' }, ref) => (
+  ({ onClick, tooltip = 'Upload', disabled = false }, ref) => (
     <button
       ref={ref}
       onClick={onClick}
-      className="group w-[50px] h-[50px] border-none rounded-full bg-muted dark:bg-[#21262D] flex flex-col items-center justify-center cursor-pointer relative transition-all duration-[250ms] ease-out shadow-md hover:bg-[#22c55e] dark:hover:bg-[#22c55e] active:scale-95"
+      disabled={disabled}
+      className={`group w-[50px] h-[50px] border-none rounded-full bg-muted dark:bg-[#21262D] flex flex-col items-center justify-center cursor-pointer relative transition-all duration-[250ms] ease-out shadow-md active:scale-95 overflow-hidden z-[1] before:content-[''] before:absolute before:top-0 before:left-0 before:h-full before:w-0 before:rounded-full before:bg-[#22c55e] before:z-[-1] before:transition-all before:duration-[250ms] before:ease-out hover:before:w-full ${disabled ? 'opacity-50 cursor-not-allowed hover:before:w-0' : ''}`}
     >
-      <div className="w-[18px] h-[5px] border-t-2 border-l-2 border-r-2 border-[#22c55e] transition-all duration-[250ms] ease-out group-hover:border-white" />
+      <div className="w-[18px] h-[5px] border-t-2 border-l-2 border-r-2 border-[#22c55e] transition-all duration-[250ms] ease-out group-hover:border-white relative z-[2]" />
       <svg
-        className="w-4 h-4 fill-[#22c55e] transition-all duration-[250ms] ease-out group-hover:fill-white group-hover:translate-y-0.5"
+        className="w-4 h-4 fill-[#22c55e] transition-all duration-[250ms] ease-out group-hover:fill-white group-hover:translate-y-0.5 relative z-[2]"
         viewBox="0 0 384 512"
       >
         <path d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2l105.4 105.4c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z" />
       </svg>
-      <span className="absolute left-full ml-3 opacity-0 bg-foreground dark:bg-[#161B22] text-background dark:text-white py-1.5 px-3 rounded-lg text-sm font-medium flex items-center justify-center transition-all duration-[250ms] ease-out pointer-events-none tracking-wide group-hover:opacity-100 shadow-lg whitespace-nowrap">
+      <span className="absolute left-full ml-3 opacity-0 bg-foreground dark:bg-[#161B22] text-background dark:text-white py-1.5 px-3 rounded-lg text-sm font-medium flex items-center justify-center transition-all duration-[250ms] ease-out pointer-events-none tracking-wide group-hover:opacity-100 shadow-lg whitespace-nowrap z-[10]">
         {tooltip}
       </span>
     </button>
@@ -192,9 +196,10 @@ export const AnimatedCheckbox = forwardRef<HTMLInputElement, {
   checked?: boolean
   onChange?: (checked: boolean) => void
   id?: string
+  label?: string
 }>(
-  ({ checked = false, onChange, id = 'cbx' }, ref) => (
-    <div className="inline-flex items-center">
+  ({ checked = false, onChange, id = 'cbx', label }, ref) => (
+    <div className="inline-flex items-center gap-3">
       <input
         ref={ref}
         type="checkbox"
@@ -205,7 +210,7 @@ export const AnimatedCheckbox = forwardRef<HTMLInputElement, {
       />
       <label
         htmlFor={id}
-        className="check cursor-pointer relative w-[18px] h-[18px]"
+        className="check cursor-pointer relative w-[18px] h-[18px] flex-shrink-0"
       >
         <svg viewBox="0 0 18 18" className="w-[18px] h-[18px]">
           <path
@@ -218,6 +223,11 @@ export const AnimatedCheckbox = forwardRef<HTMLInputElement, {
           />
         </svg>
       </label>
+      {label && (
+        <span className="text-foreground cursor-pointer select-none" onClick={() => onChange?.(!checked)}>
+          {label}
+        </span>
+      )}
     </div>
   )
 )

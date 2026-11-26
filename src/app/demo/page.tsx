@@ -67,7 +67,7 @@ export default function DemoPage() {
 
       <div className="flex">
         {/* Sidebar */}
-        <aside className="w-[260px] bg-white border-r border-[#E2E4E6] min-h-[calc(100vh-36px)] hidden lg:block">
+        <aside className="w-[260px] bg-white border-r border-[#E2E4E6] min-h-[calc(100vh-36px)] hidden lg:block relative">
           <div className="p-5 border-b border-[#EFF1F3]">
             <Link href="/" className="flex items-center gap-3">
               <div className="w-9 h-9 bg-[#17191F] rounded-[10px] flex items-center justify-center">

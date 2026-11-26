@@ -135,6 +135,27 @@ export default async function SettingsPage() {
 
         {/* Sidebar - reorder on mobile */}
         <div className="space-y-6 order-first lg:order-last">
+          {/* Quick Links */}
+          <div className="bg-white dark:bg-[#161B22] rounded-[14px] border border-[#E2E4E6] dark:border-[#30363D] p-4 lg:p-6 transition-colors duration-200">
+            <h2 className="text-lg font-semibold text-[#0D0F14] dark:text-[#E6EDF3] mb-4">Configuration</h2>
+            <ul className="space-y-2">
+              <li>
+                <a
+                  href="/settings/properties"
+                  className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-[#4E525A] dark:text-[#8B949E] hover:bg-black/[0.03] dark:hover:bg-white/[0.05] hover:text-[#0D0F14] dark:hover:text-[#E6EDF3] transition-all"
+                >
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M12 3h7a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-7m0-18H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h7m0-18v18" />
+                  </svg>
+                  <span>Proprietes personnalisees</span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="ml-auto">
+                    <path d="M9 18l6-6-6-6" />
+                  </svg>
+                </a>
+              </li>
+            </ul>
+          </div>
+
           <div className="bg-white dark:bg-[#161B22] rounded-[14px] border border-[#E2E4E6] dark:border-[#30363D] p-4 lg:p-6 transition-colors duration-200">
             <h2 className="text-lg font-semibold text-[#0D0F14] dark:text-[#E6EDF3] mb-4">Plan actuel</h2>
             <div className="flex items-center justify-between mb-4">

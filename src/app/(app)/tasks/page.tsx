@@ -180,6 +180,7 @@ export default async function TasksPage() {
 
 interface Task {
   id: number
+  uuid: string
   title: string
   description: string | null
   status: string
@@ -200,8 +201,9 @@ function TaskCard({ task, today }: { task: Task; today: string }) {
   }
 
   return (
-    <div
-      className="p-3 bg-[#F5F7F9] rounded-[10px] hover:bg-[#EFF1F3] transition-colors"
+    <a
+      href={`/tasks/${task.uuid}`}
+      className="block p-3 bg-[#F5F7F9] rounded-[10px] hover:bg-[#EFF1F3] transition-colors cursor-pointer"
       role="article"
       aria-label={`Tache: ${task.title}`}
     >
@@ -234,6 +236,6 @@ function TaskCard({ task, today }: { task: Task; today: string }) {
           </span>
         </div>
       )}
-    </div>
+    </a>
   )
 }

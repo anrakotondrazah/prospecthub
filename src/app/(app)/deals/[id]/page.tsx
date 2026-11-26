@@ -1,6 +1,8 @@
 import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import { DealAssociations } from './DealAssociations'
+import { DealActions } from '@/components/activities/DealActions'
 
 export const instant = false
 
@@ -258,24 +260,15 @@ export default async function DealDetailPage({ params }: { params: Promise<{ id:
             <h2 className="text-sm font-semibold text-[#0D0F14] dark:text-[#E6EDF3] mb-4">
               Actions
             </h2>
-            <div className="space-y-2">
-              <button
-                disabled
-                className="w-full px-4 py-2.5 bg-black/[0.03] dark:bg-white/[0.03] border border-black/[0.08] dark:border-[#30363D] text-[#9BA0A6] dark:text-[#8B949E] rounded-xl text-sm font-medium cursor-not-allowed"
-              >
-                Modifier
-              </button>
-              <button
-                disabled
-                className="w-full px-4 py-2.5 bg-black/[0.03] dark:bg-white/[0.03] border border-black/[0.08] dark:border-[#30363D] text-[#9BA0A6] dark:text-[#8B949E] rounded-xl text-sm font-medium cursor-not-allowed"
-              >
-                Supprimer
-              </button>
-            </div>
-            <p className="text-xs text-[#9BA0A6] dark:text-[#8B949E] mt-3 text-center">
-              Bientôt disponible
-            </p>
+            <DealActions dealId={deal.id} />
           </div>
+
+          {/* Associations */}
+          <DealAssociations
+            dealId={deal.id}
+            organizationId={orgId}
+            userId={user.id}
+          />
         </div>
       </div>
     </div>

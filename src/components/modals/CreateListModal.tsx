@@ -1,12 +1,25 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useCallback } from 'react'
 import { createClient } from '@/lib/supabase/client'
+import { ListFiltersEditor, createEmptyFilters, type ListFilters } from '@/components/lists/ListFiltersEditor'
+
+type List = {
+  id: number
+  uuid: string
+  name: string
+  description: string | null
+  type: 'static' | 'dynamic'
+  filters: ListFilters | null
+  member_count: number
+  created_at: string
+  updated_at: string
+}
 
 type CreateListModalProps = {
   isOpen: boolean
   onClose: () => void
-  onListCreated: (list: any) => void
+  onListCreated: (list: List) => void
   organizationId: number
   userId: string
 }
@@ -15,8 +28,22 @@ export function CreateListModal({ isOpen, onClose, onListCreated, organizationId
   const [name, setName] = useState('')
   const [description, setDescription] = useState('')
   const [type, setType] = useState<'static' | 'dynamic'>('static')
+  const [filters, setFilters] = useState<ListFilters>(createEmptyFilters())
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+
+  const resetForm = useCallback(() => {
+    setName('')
+    setDescription('')
+    setType('static')
+    setFilters(createEmptyFilters())
+    setError(null)
+  }, [])
+
+  const handleClose = useCallback(() => {
+    resetForm()
+    onClose()
+  }, [resetForm, onClose])
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -24,6 +51,15 @@ export function CreateListModal({ isOpen, onClose, onListCreated, organizationId
     if (!name.trim()) {
       setError('Le nom est obligatoire')
       return
+    }
+
+    // Validate filters for dynamic lists
+    if (type === 'dynamic') {
+      const hasValidConditions = filters.groups.some(g => g.conditions.length > 0)
+      if (!hasValidConditions) {
+        setError('Une liste dynamique doit avoir au moins une condition de filtre')
+        return
+      }
     }
 
     setIsLoading(true)
@@ -39,23 +75,23 @@ export function CreateListModal({ isOpen, onClose, onListCreated, organizationId
           name: name.trim(),
           description: description.trim() || null,
           type,
+          filters: type === 'dynamic' ? filters : null,
           created_by: userId,
         })
-        .select('id, uuid, name, description, type, member_count, created_at, updated_at')
+        .select('id, uuid, name, description, type, filters, member_count, created_at, updated_at')
         .single()
 
       if (insertError) throw insertError
 
       // Reset form
-      setName('')
-      setDescription('')
-      setType('static')
+      resetForm()
 
       // Call parent callback
       onListCreated(data)
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Error creating list:', err)
-      setError(err.message || 'Erreur lors de la creation de la liste')
+      const message = err instanceof Error ? err.message : 'Erreur lors de la creation de la liste'
+      setError(message)
     } finally {
       setIsLoading(false)
     }
@@ -64,20 +100,22 @@ export function CreateListModal({ isOpen, onClose, onListCreated, organizationId
   if (!isOpen) return null
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4" onClick={onClose}>
+    <div className="fixed inset-0 z-50 flex items-center justify-center p-4" onClick={handleClose}>
       {/* Backdrop */}
       <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" />
 
       {/* Modal */}
       <div
-        className="relative bg-white/95 backdrop-blur-xl rounded-2xl shadow-lg max-w-md w-full"
+        className={`relative bg-white/95 backdrop-blur-xl rounded-2xl shadow-lg w-full ${
+          type === 'dynamic' ? 'max-w-2xl max-h-[90vh] overflow-hidden flex flex-col' : 'max-w-md'
+        }`}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-black/[0.06]">
           <h2 className="text-xl font-semibold text-[#0D0F14]">Creer une liste</h2>
           <button
-            onClick={onClose}
+            onClick={handleClose}
             className="w-8 h-8 rounded-xl hover:bg-black/[0.04] flex items-center justify-center transition-all duration-200 active:scale-95"
             aria-label="Fermer"
           >
@@ -89,7 +127,7 @@ export function CreateListModal({ isOpen, onClose, onListCreated, organizationId
         </div>
 
         {/* Form */}
-        <form onSubmit={handleSubmit} className="p-6 space-y-5">
+        <form onSubmit={handleSubmit} className={`p-6 space-y-5 ${type === 'dynamic' ? 'flex-1 overflow-y-auto' : ''}`}>
           {/* Error Message */}
           {error && (
             <div className="p-4 bg-[#FDE8E5] border border-[#B42318]/20 rounded-xl flex items-start gap-3 shadow-sm">
@@ -169,25 +207,52 @@ export function CreateListModal({ isOpen, onClose, onListCreated, organizationId
               <button
                 type="button"
                 onClick={() => setType('dynamic')}
-                disabled={true}
-                className="p-4 rounded-xl border border-black/[0.08] opacity-50 cursor-not-allowed"
+                disabled={isLoading}
+                className={`p-4 rounded-xl border transition-all duration-200 ${
+                  type === 'dynamic'
+                    ? 'border-[#0066FF] bg-[#0066FF]/5 shadow-sm'
+                    : 'border-black/[0.08] hover:border-black/[0.12] hover:bg-black/[0.02]'
+                }`}
               >
                 <div className="flex items-center gap-2 mb-2">
-                  <div className="w-5 h-5 rounded-full border-2 border-black/[0.2]" />
+                  <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
+                    type === 'dynamic' ? 'border-[#0066FF]' : 'border-black/[0.2]'
+                  }`}>
+                    {type === 'dynamic' && (
+                      <div className="w-2.5 h-2.5 rounded-full bg-[#0066FF]" />
+                    )}
+                  </div>
                   <span className="font-medium text-[#0D0F14]">Dynamique</span>
                 </div>
                 <p className="text-xs text-[#4E525A] text-left">
-                  Bientot disponible
+                  Mise a jour automatique par filtres
                 </p>
               </button>
             </div>
           </div>
 
+          {/* Dynamic List Filters */}
+          {type === 'dynamic' && (
+            <div>
+              <label className="block text-sm font-medium text-[#0D0F14] mb-3">
+                Filtres de la liste
+              </label>
+              <p className="text-xs text-[#4E525A] mb-4">
+                Les leads correspondant a ces criteres seront automatiquement ajoutes a la liste.
+              </p>
+              <ListFiltersEditor
+                filters={filters}
+                onChange={setFilters}
+                disabled={isLoading}
+              />
+            </div>
+          )}
+
           {/* Actions */}
           <div className="flex items-center gap-3 pt-4">
             <button
               type="button"
-              onClick={onClose}
+              onClick={handleClose}
               disabled={isLoading}
               className="flex-1 px-4 py-2.5 bg-transparent border border-black/[0.08] text-[#4E525A] rounded-xl font-medium hover:bg-black/[0.03] transition-all duration-200 disabled:opacity-50 active:scale-[0.98]"
             >

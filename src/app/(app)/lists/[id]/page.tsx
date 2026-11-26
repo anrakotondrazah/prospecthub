@@ -114,8 +114,8 @@ export default async function ListDetailPage({ params }: PageProps) {
 
   const members: Member[] = (supabaseMembers as SupabaseMember[] || []).map(member => ({
     ...member,
-    leads: member.leads[0]
-  }))
+    leads: member.leads?.[0]
+  })).filter(m => m.leads)
 
   // Get all leads for adding to list
   const { data: allLeads, error: leadsError } = await supabase

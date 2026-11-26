@@ -110,7 +110,7 @@ Incluent: /contact 404, variables inutilisees, imports morts, apostrophes non ec
 | Listes | OK | - |
 | Base B2B | OK | Recherche confuse |
 | Entreprises | CASSE | Erreur chargement |
-| Affaires | OK | - |
+| Affaires | OK (UI) | Creation non testee |
 | Taches | OK | Bouton "+" desactive |
 | Inbox | CONFUS | Badge desynchronise |
 | Rapports | CONFUS | "Bientot disponible" |
@@ -123,8 +123,8 @@ Incluent: /contact 404, variables inutilisees, imports morts, apostrophes non ec
 
 | Bouton | Page | Verdict |
 |--------|------|---------|
-| Nouvelle affaire | /deals | OK |
-| Creer l'affaire | Modal | OK |
+| Nouvelle affaire | /deals | OK (UI) |
+| Creer l'affaire | Modal | NON TESTE (persistence) |
 | Nouvelle tache | /tasks | NE FAIT RIEN |
 | Nouvelle activite | /inbox | NE FAIT RIEN |
 | Creer une liste | /lists | OK |

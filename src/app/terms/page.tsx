@@ -189,7 +189,7 @@ export default function TermsPage() {
                 7. Résiliation
               </h2>
               <p className="text-[#4E525A] dark:text-[#9BA0A6] leading-relaxed mb-4">
-                Vous pouvez résilier votre compte à tout moment depuis les paramètres de votre compte.
+                Vous pouvez demander la résiliation de votre compte à tout moment en contactant notre support via la page Contact.
               </p>
               <p className="text-[#4E525A] dark:text-[#9BA0A6] leading-relaxed">
                 ProspectHub se réserve le droit de suspendre ou de résilier votre accès en cas de non-respect des présentes CGU.

@@ -50,7 +50,7 @@ ProspectHub est un CRM B2B en phase de developpement actif. L'interface est mode
 | C01 | Pages CGU/Privacy 404 | Legal, UX | QA, UX | HTTP 404 | /terms, /privacy | Creer pages statiques |
 | C02 | Titre "Create Next App" | Design, A11y, SEO | Design, A11y, QA | layout.tsx:17 | layout.tsx | Modifier metadata.title |
 | C03 | lang="en" sur site francais | A11y | A11y | layout.tsx:24 | layout.tsx | Changer en lang="fr" |
-| C04 | Routes API 404 prod | Back | Back, Perf | curl /api/leads | Toutes sauf /notifications | Debug deploiement Vercel |
+| C04 | Routes API 404 prod | Back | Back, Perf | curl /api/leads, /api/activities | Routes testees: leads, activities (404) | Debug deploiement Vercel |
 | C05 | OAuth Google redirige landing | UX, QA | QA, UX | Clic bouton | /auth/login | Corriger integration Supabase |
 | C06 | /forgot-password 404 | UX, QA | QA, UX | Prefetch 404 | /auth/login | Implementer ou masquer |
 | C07 | Badge Inbox "3" desynchronise | UX, Design | Design, UX | Screenshot | Sidebar + /inbox | Synchroniser compteur |

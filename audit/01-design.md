@@ -48,7 +48,7 @@
 | m04 | /register | Transition abrupte entre fond blanc (gauche) et bleu fonce (droite) | Screenshot register-1920.png | Ajouter gradient ou element de transition |
 | m05 | /settings | Donnees de test visibles ("blahblah", "consulting") | Screenshot settings-1920.png | Remplacer par donnees par defaut professionnelles ou vider |
 | m06 | Mobile | Carte "Affaires actives" - texte passe sur 2 lignes | Screenshot dashboard-mobile-375.png | Raccourcir en "Affaires" ou reduire font-size |
-| m07 | /inbox | Badge "3" sur Inbox dans sidebar ne correspond pas au "0 activites" affiche | Snapshot navigation | Synchroniser les compteurs |
+| m07 | /inbox | (Doublon m01) Badge desynchronise - voir M01 ci-dessus | Snapshot navigation | Voir M01 |
 | m08 | Sidebar | Section "Bientot disponible" prend beaucoup de place avec 9 items grises | Tous screenshots app | Regrouper ou masquer derriere un accordeon |
 
 ### COSMETIQUES (Nice to have)
@@ -108,7 +108,7 @@
 5. **M03** - /templates redirige vers /settings
 6. **M04** - Boutons disabled sans feedback (Passer a Pro, Supprimer)
 7. **M05** - Bouton "+ Nouvelle tache" grise sans explication
-8. **c01** - Font fallback override les Geist fonts (`globals.css:66`)
+8. **c06** - Font fallback override les Geist fonts (`globals.css:66`)
 9. **m01** - Contrastes textes descriptifs faibles
 10. **m08** - Sidebar "Bientot disponible" trop longue (9 items)
 

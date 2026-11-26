@@ -294,9 +294,9 @@ export default function RootLayout({ children }) {
 - UX degradee, utilisateurs ressentent lenteur
 - Consommation bande passante inutile
 
-**Solution immediate**: Ajouter `prefetch={false}` aux liens non-critiques du sidebar. Gain attendu: -1200ms FCP.
+**Solution immediate**: Ajouter `prefetch={false}` aux liens non-critiques du sidebar. Gain estime: ~1000-1500ms FCP (a mesurer apres implementation).
 
-**ROI**: 1h de travail pour 50% d'amelioration FCP.
+**ROI estime**: 1h de travail pour amelioration significative FCP (mesure post-implementation requise).
 
 ---
 

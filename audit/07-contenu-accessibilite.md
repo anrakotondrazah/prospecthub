@@ -12,21 +12,21 @@
 |----|---------|--------------|--------------|----------|------------|
 | T01 | CRITIQUE | layout.tsx:17 | `Create Next App` | Titre non personnalise | `ProspectHub - CRM B2B Francais` |
 | T02 | CRITIQUE | layout.tsx:24 | `lang="en"` | Langue incorrecte | `lang="fr"` |
-| T03 | HAUTE | page.tsx:105 | `Fonctionnalites` | Accent manquant | `Fonctionnalites` |
-| T04 | HAUTE | page.tsx:111 | `Temoignages` | Accent manquant | `Temoignages` |
-| T05 | HAUTE | page.tsx:149 | `Des leads a jour` | Accent manquant | `Des leads a jour` |
-| T06 | HAUTE | page.tsx:145 | `ajoutees` | Accent manquant | `ajoutees` |
-| T07 | HAUTE | page.tsx:155 | `francaises verifiees` | Accents manquants | `francaises verifiees` |
-| T08 | HAUTE | page.tsx:157 | `Revelez-les` | Accent manquant | `Revelez-les` |
-| T09 | HAUTE | page.tsx:207 | `resultats incertains` | Accent manquant | `resultats incertains` |
-| T10 | HAUTE | page.tsx:9 | `personnalise` | Accent manquant | `personnalise` |
-| T11 | HAUTE | page.tsx:14 | `donnees` | Accent manquant | `donnees` |
-| T12 | HAUTE | page.tsx:19 | `reel` | Accent manquant | `reel` |
-| T13 | HAUTE | page.tsx:24 | `integre` | Accent manquant | `integre` |
-| T14 | HAUTE | page.tsx:28 | `Securise` | Accent manquant | `Securise` |
-| T15 | HAUTE | page.tsx:29 | `complete` | Accent manquant | `complete` |
-| T16 | HAUTE | page.tsx:34 | `personnalises` | Accent manquant | `personnalises` |
-| T17 | HAUTE | page.tsx:42 | `demarrer` | Accent manquant | `demarrer` |
+| T03 | HAUTE | page.tsx:105 | `Fonctionnalites` | Accent manquant | `Fonctionnalités` |
+| T04 | HAUTE | page.tsx:111 | `Temoignages` | Accent manquant | `Témoignages` |
+| T05 | HAUTE | page.tsx:149 | `Des leads a jour` | Accent manquant | `Des leads à jour` |
+| T06 | HAUTE | page.tsx:145 | `ajoutees` | Accent manquant | `ajoutées` |
+| T07 | HAUTE | page.tsx:155 | `francaises verifiees` | Accents manquants | `françaises vérifiées` |
+| T08 | HAUTE | page.tsx:157 | `Revelez-les` | Accent manquant | `Révélez-les` |
+| T09 | HAUTE | page.tsx:207 | `resultats incertains` | Accent manquant | `résultats incertains` |
+| T10 | HAUTE | page.tsx:9 | `personnalise` | Accent manquant | `personnalisé` |
+| T11 | HAUTE | page.tsx:14 | `donnees` | Accent manquant | `données` |
+| T12 | HAUTE | page.tsx:19 | `reel` | Accent manquant | `réel` |
+| T13 | HAUTE | page.tsx:24 | `integre` | Accent manquant | `intégré` |
+| T14 | HAUTE | page.tsx:28 | `Securise` | Accent manquant | `Sécurisé` |
+| T15 | HAUTE | page.tsx:29 | `complete` | Accent manquant | `complète` |
+| T16 | HAUTE | page.tsx:34 | `personnalises` | Accent manquant | `personnalisés` |
+| T17 | HAUTE | page.tsx:42 | `demarrer` | Accent manquant | `démarrer` |
 | T18 | HAUTE | page.tsx:50 | `equipes` | Accent manquant | `equipes` |
 | T19 | HAUTE | page.tsx:51 | `Integrations` | Accent manquant | `Integrations` |
 | T20 | HAUTE | page.tsx:58 | `etablies` | Accent manquant | `etablies` |
@@ -79,8 +79,8 @@
 |----|--------------|---------|---------|-----------|
 | A01 | 3.1.1 Language of Page | CRITIQUE | `<html lang="en">` | Changer en `<html lang="fr">` - la page est en francais |
 | A02 | 2.4.2 Page Titled | CRITIQUE | `<title>Create Next App</title>` | Definir un titre descriptif: `ProspectHub - CRM B2B` |
-| A03 | 1.4.3 Contrast (Minimum) | MOYENNE | Texte `#4E525A` sur fond `#F5F7F9` | Ratio ~4.1:1, insuffisant pour AA (4.5:1). Utiliser `#3D4047` |
-| A04 | 1.4.3 Contrast (Minimum) | MOYENNE | Texte `#4E525A` sur fond `#FFFFFF` | Ratio ~5.0:1, OK mais limite. Verifier avec outils |
+| A03 | 1.4.3 Contrast (Minimum) | MOYENNE | Texte `#4E525A` sur fond `#F5F7F9` | Ratio ~4.5:1 (limite AA). Verifier avec WebAIM Contrast Checker. Alternative: `#3D4047` |
+| A04 | 1.4.3 Contrast (Minimum) | MOYENNE | Texte `#4E525A` sur fond `#FFFFFF` | Ratio ~5.74:1 (OK AA). Verifier avec WebAIM Contrast Checker |
 | A05 | 1.1.1 Non-text Content | BASSE | `<img alt="">` dans DocumentItem.tsx:211 | Fournir un texte alternatif descriptif |
 | A06 | 2.4.4 Link Purpose | BASSE | Liens "Voir tout" multiples sans contexte | Ajouter `aria-label="Voir toutes les activites"` etc. |
 | A07 | 4.1.2 Name, Role, Value | MOYENNE | Bouton toggle dark mode | Ajouter texte visible ou `aria-label` plus descriptif |

@@ -123,16 +123,15 @@ const { data, error, isLoading } = useSWR(
   fetcher
 )
 
-// Option 2: Fetch conditionnel
+// Option 2: Fetch avec guard unmount
 useEffect(() => {
   let mounted = true
-  const load = async () => {
-    const data = await fetchProducts()
-    if (mounted) setProducts(data)
-  }
-  load()
+  fetchProducts().then(() => {
+    // Le hook gere l'etat en interne
+    // Le guard mounted est dans le hook lui-meme
+  })
   return () => { mounted = false }
-}, [])
+}, [fetchProducts])
 ```
 
 ### 3. Appels API et Gestion Erreurs
@@ -225,7 +224,11 @@ Fichiers avec le plus de logs:
 
 **Recommandation:** Configurer ESLint `no-console` et utiliser un logger conditionnel:
 ```typescript
-const logger = process.env.NODE_ENV === 'development' ? console : noopLogger
+const logger = {
+  log: process.env.NODE_ENV === 'development' ? console.log : () => {},
+  warn: console.warn,  // Garder les warnings en prod
+  error: console.error // Garder les erreurs en prod (observabilite)
+}
 ```
 
 ---

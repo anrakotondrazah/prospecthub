@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
@@ -8,6 +7,34 @@ export const instant = false
 
 type PageProps = {
   params: Promise<{ id: string }>
+}
+
+type Lead = {
+  id: number
+  uuid: string
+  first_name: string | null
+  last_name: string | null
+  email: string | null
+  phone: string | null
+  company_name: string | null
+  job_title: string | null
+  status: string
+  score: number
+  is_hot: boolean
+}
+
+type SupabaseMember = {
+  id: number
+  lead_id: number
+  added_at: string
+  leads: Lead[]
+}
+
+type Member = {
+  id: number
+  lead_id: number
+  added_at: string
+  leads: Lead
 }
 
 export default async function ListDetailPage({ params }: PageProps) {
@@ -58,7 +85,7 @@ export default async function ListDetailPage({ params }: PageProps) {
   }
 
   // Get list members with lead details
-  const { data: members, error: membersError } = await supabase
+  const { data: supabaseMembers, error: membersError } = await supabase
     .from('list_members')
     .select(`
       id,
@@ -85,6 +112,11 @@ export default async function ListDetailPage({ params }: PageProps) {
     console.error('Error loading members:', membersError)
   }
 
+  const members: Member[] = (supabaseMembers as SupabaseMember[] || []).map(member => ({
+    ...member,
+    leads: member.leads[0]
+  }))
+
   // Get all leads for adding to list
   const { data: allLeads, error: leadsError } = await supabase
     .from('leads')
@@ -100,7 +132,7 @@ export default async function ListDetailPage({ params }: PageProps) {
   return (
     <ListDetailClient
       list={list}
-      initialMembers={members || []}
+      initialMembers={members}
       availableLeads={allLeads || []}
       organizationId={orgId}
       userId={user.id}

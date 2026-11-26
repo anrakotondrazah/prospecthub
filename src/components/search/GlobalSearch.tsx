@@ -111,7 +111,8 @@ export function GlobalSearch({ organizationId }: GlobalSearchProps) {
 
       setResults(searchResults)
       setSelectedIndex(0)
-    } catch {
+    } catch (err) {
+      console.error('Erreur recherche globale:', err)
       setResults([])
     }
 

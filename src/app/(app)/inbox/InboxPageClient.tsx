@@ -57,7 +57,7 @@ export function InboxPageClient({ initialActivities }: InboxPageClientProps) {
         <button
           className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white/60 bg-[#17191F]/60 rounded-[10px] cursor-not-allowed"
           disabled
-          title="Bientot disponible"
+          title="Fonctionnalité bientôt disponible"
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <line x1="12" y1="5" x2="12" y2="19" />

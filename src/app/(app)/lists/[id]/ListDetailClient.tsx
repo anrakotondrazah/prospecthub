@@ -1,7 +1,7 @@
-// @ts-nocheck
 'use client'
 
 import { useState } from 'react'
+import { useRouter } from 'next/navigation'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/client'
 import { EmptyState } from '@/components/ui/EmptyState'
@@ -38,6 +38,13 @@ type Member = {
   leads: Lead
 }
 
+type SupabaseMember = {
+  id: number
+  lead_id: number
+  added_at: string
+  leads: Lead[]
+}
+
 type AvailableLead = {
   id: number
   uuid: string
@@ -57,6 +64,7 @@ type ListDetailClientProps = {
 }
 
 export function ListDetailClient({ list, initialMembers, availableLeads, organizationId, userId }: ListDetailClientProps) {
+  const router = useRouter()
   const [members, setMembers] = useState<Member[]>(initialMembers)
   const [memberCount, setMemberCount] = useState(list.member_count)
   const [isAddModalOpen, setIsAddModalOpen] = useState(false)
@@ -103,8 +111,14 @@ export function ListDetailClient({ list, initialMembers, availableLeads, organiz
 
       if (error) throw error
 
-      setMembers([...data, ...members])
-      setMemberCount(memberCount + data.length)
+      const supabaseData = data as SupabaseMember[]
+      const mappedMembers: Member[] = supabaseData.map(member => ({
+        ...member,
+        leads: member.leads[0]
+      }))
+
+      setMembers([...mappedMembers, ...members])
+      setMemberCount(memberCount + mappedMembers.length)
       setIsAddModalOpen(false)
     } catch (err: any) {
       console.error('Error adding leads:', err)
@@ -146,7 +160,7 @@ export function ListDetailClient({ list, initialMembers, availableLeads, organiz
       const supabase = createClient()
       const { error } = await supabase.from('lists').delete().eq('id', list.id)
       if (error) throw error
-      window.location.href = '/lists'
+      router.push('/lists')
     } catch (err: any) {
       console.error('Error deleting list:', err)
       alert('Erreur lors de la suppression de la liste')

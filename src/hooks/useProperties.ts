@@ -39,9 +39,9 @@ export function useProperties({ entityType, autoFetch = true }: UsePropertiesOpt
       }
 
       setProperties(data.properties)
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Error fetching properties:', err)
-      setError(err.message || 'Erreur lors du chargement des proprietes')
+      setError(err instanceof Error ? err.message : 'Erreur lors du chargement des proprietes')
     } finally {
       setIsLoading(false)
     }
@@ -66,9 +66,9 @@ export function useProperties({ entityType, autoFetch = true }: UsePropertiesOpt
 
       setProperties(prev => [...prev, data.property])
       return data.property
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Error creating property:', err)
-      setError(err.message || 'Erreur lors de la creation de la propriete')
+      setError(err instanceof Error ? err.message : 'Erreur lors de la creation de la propriete')
       return null
     }
   }, [entityType])
@@ -91,9 +91,9 @@ export function useProperties({ entityType, autoFetch = true }: UsePropertiesOpt
         prev.map(p => (p.id === id ? data.property : p))
       )
       return data.property
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Error updating property:', err)
-      setError(err.message || 'Erreur lors de la mise a jour de la propriete')
+      setError(err instanceof Error ? err.message : 'Erreur lors de la mise a jour de la propriete')
       return null
     }
   }, [])
@@ -112,9 +112,9 @@ export function useProperties({ entityType, autoFetch = true }: UsePropertiesOpt
 
       setProperties(prev => prev.filter(p => p.id !== propertyId))
       return true
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Error deleting property:', err)
-      setError(err.message || 'Erreur lors de la suppression de la propriete')
+      setError(err instanceof Error ? err.message : 'Erreur lors de la suppression de la propriete')
       return false
     }
   }, [])
@@ -144,9 +144,9 @@ export function useProperties({ entityType, autoFetch = true }: UsePropertiesOpt
       )
 
       return true
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Error reordering properties:', err)
-      setError(err.message || 'Erreur lors du reordonnancement')
+      setError(err instanceof Error ? err.message : 'Erreur lors du reordonnancement')
       // Refetch to restore correct order
       fetchProperties()
       return false
@@ -187,6 +187,15 @@ interface UsePropertyValuesReturn {
   saveValues: () => Promise<boolean>
 }
 
+interface ApiPropertyValue {
+  property_id: number
+  value_text?: string | null
+  value_number?: number | null
+  value_date?: string | null
+  value_boolean?: boolean | null
+  value_json?: unknown
+}
+
 export function usePropertyValues({
   entityType,
   entityId,
@@ -210,7 +219,7 @@ export function usePropertyValues({
 
         if (data.success) {
           const valueMap: Record<string, PropertyValue> = {}
-          data.values?.forEach((v: any) => {
+          data.values?.forEach((v: ApiPropertyValue) => {
             const prop = properties.find(p => p.id === v.property_id)
             if (prop) {
               valueMap[prop.field_name] = {
@@ -273,9 +282,9 @@ export function usePropertyValues({
       }
 
       return true
-    } catch (err: any) {
+    } catch (err: unknown) {
       console.error('Error saving property values:', err)
-      setError(err.message || 'Erreur lors de la sauvegarde')
+      setError(err instanceof Error ? err.message : 'Erreur lors de la sauvegarde')
       return false
     } finally {
       setIsLoading(false)

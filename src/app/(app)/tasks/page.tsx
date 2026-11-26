@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
 
 export const instant = false
@@ -28,7 +29,7 @@ export default async function TasksPage() {
           </div>
           <h2 className="text-xl font-semibold text-[#0D0F14] mb-2">Erreur de chargement</h2>
           <p className="text-[#4E525A] mb-4">Impossible de charger votre profil.</p>
-          <a href="/tasks" className="text-[#17191F] font-medium hover:underline">Reessayer</a>
+          <Link href="/tasks" className="text-[#17191F] font-medium hover:underline">Reessayer</Link>
         </div>
       </div>
     )
@@ -74,7 +75,7 @@ export default async function TasksPage() {
             </div>
             <p className="font-medium text-[#0D0F14] mb-2">Erreur de chargement</p>
             <p className="text-sm text-[#4E525A] mb-4">Impossible de charger les taches.</p>
-            <a href="/tasks" className="text-[#17191F] font-medium hover:underline">Reessayer</a>
+            <Link href="/tasks" className="text-[#17191F] font-medium hover:underline">Reessayer</Link>
           </div>
         </div>
       </div>
@@ -102,7 +103,7 @@ export default async function TasksPage() {
         <button
           className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white/60 bg-[#17191F]/60 rounded-[10px] cursor-not-allowed"
           disabled
-          title="Bientot disponible"
+          title="Fonctionnalité bientôt disponible"
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <line x1="12" y1="5" x2="12" y2="19" />
@@ -201,7 +202,7 @@ function TaskCard({ task, today }: { task: Task; today: string }) {
   }
 
   return (
-    <a
+    <Link
       href={`/tasks/${task.uuid}`}
       className="block p-3 bg-[#F5F7F9] rounded-[10px] hover:bg-[#EFF1F3] transition-colors cursor-pointer"
       role="article"
@@ -236,6 +237,6 @@ function TaskCard({ task, today }: { task: Task; today: string }) {
           </span>
         </div>
       )}
-    </a>
+    </Link>
   )
 }

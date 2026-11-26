@@ -137,10 +137,18 @@ export async function PUT(request: NextRequest, { params }: Props) {
     // Update lines if provided
     if (body.lines) {
       // Delete existing lines
-      await supabase
+      const { error: deleteError } = await supabase
         .from('quote_lines')
         .delete()
         .eq('quote_id', quote.id)
+
+      if (deleteError) {
+        console.error('Error deleting quote lines:', deleteError)
+        return NextResponse.json(
+          { success: false, message: 'Erreur lors de la suppression des lignes du devis' },
+          { status: 500 }
+        )
+      }
 
       // Insert new lines
       if (body.lines.length > 0) {
@@ -171,9 +179,17 @@ export async function PUT(request: NextRequest, { params }: Props) {
           display_order: index,
         }))
 
-        await supabase
+        const { error: insertError } = await supabase
           .from('quote_lines')
           .insert(linesToInsert)
+
+        if (insertError) {
+          console.error('Error inserting quote lines:', insertError)
+          return NextResponse.json(
+            { success: false, message: 'Erreur lors de l\'insertion des lignes du devis' },
+            { status: 500 }
+          )
+        }
       }
     }
 

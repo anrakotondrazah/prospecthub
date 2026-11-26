@@ -102,7 +102,8 @@ export function ImportCSVModal({ isOpen, onClose, onImport }: ImportCSVModalProp
       const result = await onImport(leads)
       setImportResult(result)
       setStep('done')
-    } catch {
+    } catch (err) {
+      console.error('Erreur import CSV:', err)
       setImportResult({ success: 0, errors: rows.length })
       setStep('done')
     }

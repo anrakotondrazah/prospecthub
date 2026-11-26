@@ -99,7 +99,13 @@ export function useQuotes(organizationId: number | null) {
   }, [organizationId])
 
   useEffect(() => {
-    fetchQuotes()
+    let mounted = true
+    const load = async () => {
+      if (!mounted) return
+      await fetchQuotes()
+    }
+    load()
+    return () => { mounted = false }
   }, [fetchQuotes])
 
   const createQuote = useCallback(async (quoteData: {

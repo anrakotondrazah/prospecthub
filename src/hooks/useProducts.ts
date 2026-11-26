@@ -61,7 +61,13 @@ export function useProducts(organizationId: number | null) {
   }, [organizationId])
 
   useEffect(() => {
-    fetchProducts()
+    let mounted = true
+    const load = async () => {
+      if (!mounted) return
+      await fetchProducts()
+    }
+    load()
+    return () => { mounted = false }
   }, [fetchProducts])
 
   const createProduct = useCallback(async (productData: Omit<Product, 'id' | 'uuid' | 'created_at'>) => {

@@ -164,7 +164,8 @@ export default function BaseEntreprisesPage() {
       } else {
         alert(result.message || 'Erreur lors du deblocage')
       }
-    } catch {
+    } catch (err) {
+      console.error('Erreur deblocage lead:', err)
       alert('Erreur reseau')
     }
 

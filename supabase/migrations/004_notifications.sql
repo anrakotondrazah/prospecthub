@@ -30,10 +30,12 @@ CREATE POLICY notifications_select_policy ON notifications
     user_id = auth.uid()::text::uuid
   );
 
--- Policy: Le systeme peut creer des notifications
+-- Policy: Seul le service role ou l'utilisateur lui-meme peut creer ses notifications
 CREATE POLICY notifications_insert_policy ON notifications
   FOR INSERT
-  WITH CHECK (true);
+  WITH CHECK (
+    user_id = auth.uid()::text::uuid
+  );
 
 -- Policy: Les utilisateurs peuvent mettre a jour leurs propres notifications (mark as read)
 CREATE POLICY notifications_update_policy ON notifications

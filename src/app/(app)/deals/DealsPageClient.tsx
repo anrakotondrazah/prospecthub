@@ -68,7 +68,16 @@ export function DealsPageClient({
     if (!over) return
 
     const dealId = active.id as number
-    const newStageId = over.id as number
+    const overId = over.id as number
+
+    // Validate that over.id is a valid stage_id (not a deal_id)
+    const targetStage = stages.find((s) => s.id === overId)
+    if (!targetStage) {
+      // over.id is not a valid stage, might be a deal card
+      return
+    }
+
+    const newStageId = targetStage.id
 
     // Find the deal
     const deal = deals.find((d) => d.id === dealId)

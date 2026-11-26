@@ -45,6 +45,18 @@ function validateLead(lead: LeadImportData): { valid: boolean; error?: string } 
   return { valid: true }
 }
 
+/**
+ * Import leads from CSV
+ *
+ * IMPORTANT: This import is PARTIALLY ATOMIC by design:
+ * - Validation errors are collected and skipped (partial success)
+ * - Inserts are done in batches of 50
+ * - If a batch fails, only that batch is lost (not rolled back)
+ * - Other batches continue to be inserted
+ *
+ * This allows maximum data recovery in case of errors.
+ * The response includes detailed error reports for failed validations and batches.
+ */
 export async function POST(request: Request) {
   try {
     const supabase = await createClient()

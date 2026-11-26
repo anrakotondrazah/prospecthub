@@ -5,6 +5,17 @@ type Props = {
   params: Promise<{ uuid: string }>
 }
 
+// HTML escape function to prevent XSS
+function escapeHtml(text: string | null | undefined): string {
+  if (!text) return ''
+  return text
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;')
+}
+
 // PDF generation helper function
 function generatePdfHtml(quote: {
   quote_number: string
@@ -58,7 +69,7 @@ function generatePdfHtml(quote: {
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>${quote.quote_number} - ${quote.name}</title>
+  <title>${escapeHtml(quote.quote_number)} - ${escapeHtml(quote.name)}</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body {
@@ -113,14 +124,14 @@ function generatePdfHtml(quote: {
 <body>
   <div class="header">
     <div class="company-info">
-      <h1>${organization.name}</h1>
-      ${organization.billing_address ? `<p>${organization.billing_address}</p>` : ''}
-      ${organization.billing_email ? `<p>${organization.billing_email}</p>` : ''}
-      ${organization.website ? `<p>${organization.website}</p>` : ''}
+      <h1>${escapeHtml(organization.name)}</h1>
+      ${organization.billing_address ? `<p>${escapeHtml(organization.billing_address)}</p>` : ''}
+      ${organization.billing_email ? `<p>${escapeHtml(organization.billing_email)}</p>` : ''}
+      ${organization.website ? `<p>${escapeHtml(organization.website)}</p>` : ''}
     </div>
     <div class="quote-info">
       <h2>DEVIS</h2>
-      <div class="number">${quote.quote_number}</div>
+      <div class="number">${escapeHtml(quote.quote_number)}</div>
       <div class="dates">
         <p>Date: ${formatDate(quote.quote_date)}</p>
         ${quote.valid_until ? `<p>Valide jusqu'au: ${formatDate(quote.valid_until)}</p>` : ''}
@@ -131,16 +142,16 @@ function generatePdfHtml(quote: {
   ${quote.recipient_name || quote.recipient_company ? `
   <div class="recipient">
     <h3>Destinataire</h3>
-    ${quote.recipient_name ? `<p><strong>${quote.recipient_name}</strong></p>` : ''}
-    ${quote.recipient_company ? `<p>${quote.recipient_company}</p>` : ''}
-    ${quote.recipient_email ? `<p>${quote.recipient_email}</p>` : ''}
-    ${quote.recipient_address ? `<p>${quote.recipient_address}</p>` : ''}
+    ${quote.recipient_name ? `<p><strong>${escapeHtml(quote.recipient_name)}</strong></p>` : ''}
+    ${quote.recipient_company ? `<p>${escapeHtml(quote.recipient_company)}</p>` : ''}
+    ${quote.recipient_email ? `<p>${escapeHtml(quote.recipient_email)}</p>` : ''}
+    ${quote.recipient_address ? `<p>${escapeHtml(quote.recipient_address)}</p>` : ''}
   </div>
   ` : ''}
 
   ${quote.introduction ? `
   <div class="introduction">
-    <p>${quote.introduction}</p>
+    <p>${escapeHtml(quote.introduction)}</p>
   </div>
   ` : ''}
 
@@ -158,8 +169,8 @@ function generatePdfHtml(quote: {
       ${quote.quote_lines.map(line => `
       <tr>
         <td>
-          <div class="item-name">${line.name}</div>
-          ${line.description ? `<div class="item-desc">${line.description}</div>` : ''}
+          <div class="item-name">${escapeHtml(line.name)}</div>
+          ${line.description ? `<div class="item-desc">${escapeHtml(line.description)}</div>` : ''}
         </td>
         <td>${line.quantity}</td>
         <td>${formatCurrency(line.unit_price)}</td>
@@ -194,12 +205,12 @@ function generatePdfHtml(quote: {
   ${quote.terms ? `
   <div class="terms">
     <h3>Conditions</h3>
-    <p>${quote.terms}</p>
+    <p>${escapeHtml(quote.terms)}</p>
   </div>
   ` : ''}
 
   <div class="footer">
-    <p>${organization.name} - ${quote.quote_number}</p>
+    <p>${escapeHtml(organization.name)} - ${escapeHtml(quote.quote_number)}</p>
   </div>
 </body>
 </html>

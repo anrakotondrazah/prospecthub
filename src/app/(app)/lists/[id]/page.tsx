@@ -61,10 +61,10 @@ export default async function ListDetailPage({ params }: PageProps) {
     return (
       <div className="flex items-center justify-center h-[60vh]">
         <div className="text-center">
-          <h2 className="text-xl font-semibold text-[#0D0F14] mb-2">
+          <h2 className="text-xl font-semibold text-foreground mb-2">
             Erreur de chargement
           </h2>
-          <p className="text-[#4E525A]">Impossible de charger votre profil.</p>
+          <p className="text-muted-foreground">Impossible de charger votre profil.</p>
         </div>
       </div>
     )

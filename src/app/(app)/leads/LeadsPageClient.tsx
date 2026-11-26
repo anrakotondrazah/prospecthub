@@ -105,15 +105,15 @@ export function LeadsPageClient({ initialLeads, organizationId }: LeadsPageClien
     <div>
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
         <div>
-          <h1 className="text-[23.5px] font-semibold text-[#0D0F14] mb-1">Leads</h1>
-          <p className="text-sm text-[#4E525A]">
+          <h1 className="text-[23.5px] font-semibold text-foreground mb-1">Leads</h1>
+          <p className="text-sm text-muted-foreground">
             {leads.length} lead{leads.length !== 1 ? 's' : ''}
           </p>
         </div>
         <div className="flex items-center gap-3">
           <button
             onClick={() => setIsImportModalOpen(true)}
-            className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-[#4E525A] bg-white border border-[#E2E4E6] rounded-[10px] hover:bg-[#F5F7F9] transition-colors"
+            className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-muted-foreground bg-card border border-border rounded-[10px] hover:bg-muted transition-colors"
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12" />
@@ -123,11 +123,11 @@ export function LeadsPageClient({ initialLeads, organizationId }: LeadsPageClien
           <button
             onClick={handleExport}
             disabled={isExporting || leads.length === 0}
-            className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-[#4E525A] bg-white border border-[#E2E4E6] rounded-[10px] hover:bg-[#F5F7F9] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-muted-foreground bg-card border border-border rounded-[10px] hover:bg-muted transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
           >
             {isExporting ? (
               <>
-                <div className="w-4 h-4 border-2 border-[#4E525A] border-t-transparent rounded-full animate-spin" />
+                <div className="w-4 h-4 border-2 border-muted-foreground border-t-transparent rounded-full animate-spin" />
                 Export...
               </>
             ) : (

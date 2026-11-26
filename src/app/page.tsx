@@ -85,9 +85,9 @@ const testimonials = [
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-background">
       {/* Navigation */}
-      <nav className="sticky top-0 z-50 h-[72px] border-b border-[#E2E4E6] bg-white/98 backdrop-blur-sm">
+      <nav className="sticky top-0 z-50 h-[72px] border-b border-border bg-background/98 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto h-full px-6 flex items-center justify-between">
           <Link href="/" className="flex items-center gap-3">
             <div className="w-10 h-10 bg-[#17191F] rounded-[10px] flex items-center justify-center">
@@ -97,17 +97,17 @@ export default function LandingPage() {
                 <path d="M2 12l10 5 10-5" stroke="#fff" strokeWidth="2" />
               </svg>
             </div>
-            <span className="text-xl font-semibold text-[#0D0F14]">ProspectHub</span>
+            <span className="text-xl font-semibold text-foreground">ProspectHub</span>
           </Link>
 
           <div className="hidden md:flex items-center gap-1">
-            <a href="#features" className="px-3 py-2 text-[#4E525A] font-medium hover:text-[#0D0F14] hover:bg-[#F5F7F9] rounded-[10px] transition-colors">
+            <a href="#features" className="px-3 py-2 text-muted-foreground font-medium hover:text-foreground hover:bg-muted rounded-[10px] transition-colors">
               Fonctionnalites
             </a>
-            <a href="#pricing" className="px-3 py-2 text-[#4E525A] font-medium hover:text-[#0D0F14] hover:bg-[#F5F7F9] rounded-[10px] transition-colors">
+            <a href="#pricing" className="px-3 py-2 text-muted-foreground font-medium hover:text-foreground hover:bg-muted rounded-[10px] transition-colors">
               Tarifs
             </a>
-            <a href="#testimonials" className="px-3 py-2 text-[#4E525A] font-medium hover:text-[#0D0F14] hover:bg-[#F5F7F9] rounded-[10px] transition-colors">
+            <a href="#testimonials" className="px-3 py-2 text-muted-foreground font-medium hover:text-foreground hover:bg-muted rounded-[10px] transition-colors">
               Temoignages
             </a>
           </div>
@@ -115,13 +115,13 @@ export default function LandingPage() {
           <div className="flex items-center gap-3">
             <Link
               href="/demo"
-              className="hidden sm:flex px-4 py-2 text-sm font-medium text-[#4E525A] hover:text-[#0D0F14] transition-colors"
+              className="hidden sm:flex px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
             >
               Demo
             </Link>
             <Link
               href="/auth/login"
-              className="px-4 py-2 text-sm font-medium text-[#4E525A] hover:text-[#0D0F14] transition-colors"
+              className="px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
             >
               Connexion
             </Link>
@@ -145,13 +145,13 @@ export default function LandingPage() {
             Nouveau: 500+ entreprises ajoutees cette semaine
           </div>
 
-          <h1 className="text-[48px] md:text-[56px] font-bold text-[#0D0F14] leading-[1.1] tracking-[-0.02em] mb-6">
+          <h1 className="text-[48px] md:text-[56px] font-bold text-foreground leading-[1.1] tracking-[-0.02em] mb-6">
             Des leads a jour.
             <br />
             <span className="text-[#0066FF]">Un CRM pour les travailler.</span>
           </h1>
 
-          <p className="text-xl text-[#4E525A] mb-10 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-xl text-muted-foreground mb-10 max-w-2xl mx-auto leading-relaxed">
             Acces a +50 000 entreprises francaises verifiees.
             <br />
             Revelez-les avec vos credits.
@@ -166,7 +166,7 @@ export default function LandingPage() {
             </Link>
             <Link
               href="/demo"
-              className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-4 text-base font-semibold text-[#0D0F14] bg-white/80 backdrop-blur-sm border-2 border-[#E2E4E6] rounded-[12px] hover:border-[#0066FF] hover:bg-white transition-all"
+              className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-4 text-base font-semibold text-foreground bg-card/80 backdrop-blur-sm border-2 border-border rounded-[12px] hover:border-[#0066FF] hover:bg-card transition-all"
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <circle cx="12" cy="12" r="10" />
@@ -176,21 +176,21 @@ export default function LandingPage() {
             </Link>
           </div>
 
-          <p className="mt-6 text-sm text-[#9BA0A6]">
+          <p className="mt-6 text-sm text-muted-foreground/70">
             Rejoint par 150+ commerciaux ce mois
           </p>
         </div>
       </section>
 
       {/* Social Proof Bar */}
-      <section className="py-8 border-y border-[#E2E4E6] bg-[#F5F7F9]">
+      <section className="py-8 border-y border-border bg-muted">
         <div className="max-w-7xl mx-auto px-6">
-          <p className="text-center text-sm text-[#9BA0A6] mb-6">
+          <p className="text-center text-sm text-muted-foreground/70 mb-6">
             Ils nous font confiance
           </p>
           <div className="flex flex-wrap items-center justify-center gap-8 md:gap-16 opacity-60">
             {['TechStartup', 'ConseilPro', 'AgenceDigitale', 'InnovCorp', 'StartupLab'].map((company) => (
-              <span key={company} className="text-lg font-semibold text-[#4E525A]">
+              <span key={company} className="text-lg font-semibold text-muted-foreground">
                 {company}
               </span>
             ))}
@@ -201,59 +201,59 @@ export default function LandingPage() {
       {/* Problem Section */}
       <section className="py-24 px-6">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-[36px] md:text-[42px] font-bold text-[#0D0F14] mb-6 leading-tight">
+          <h2 className="text-[36px] md:text-[42px] font-bold text-foreground mb-6 leading-tight">
             Prospecter prend trop de temps
             <br />
             pour des resultats incertains
           </h2>
           <div className="grid md:grid-cols-3 gap-6 mt-12">
-            <div className="p-6 bg-white/80 backdrop-blur-sm border border-[#E2E4E6] rounded-[16px]">
+            <div className="p-6 bg-card/80 backdrop-blur-sm border border-border rounded-[16px]">
               <div className="w-12 h-12 mb-4 mx-auto rounded-[12px] bg-[#FEF2F2] flex items-center justify-center">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#DC2626" strokeWidth="2">
                   <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
                 </svg>
               </div>
-              <h3 className="font-semibold text-[#0D0F14] mb-2">Fichiers perimes</h3>
-              <p className="text-sm text-[#4E525A]">Donnees obsoletes sans date de verification</p>
+              <h3 className="font-semibold text-foreground mb-2">Fichiers perimes</h3>
+              <p className="text-sm text-muted-foreground">Donnees obsoletes sans date de verification</p>
             </div>
-            <div className="p-6 bg-white/80 backdrop-blur-sm border border-[#E2E4E6] rounded-[16px]">
+            <div className="p-6 bg-card/80 backdrop-blur-sm border border-border rounded-[16px]">
               <div className="w-12 h-12 mb-4 mx-auto rounded-[12px] bg-[#FEF2F2] flex items-center justify-center">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#DC2626" strokeWidth="2">
                   <path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                   <line x1="23" y1="1" x2="1" y2="23" />
                 </svg>
               </div>
-              <h3 className="font-semibold text-[#0D0F14] mb-2">Numeros qui ne repondent plus</h3>
-              <p className="text-sm text-[#4E525A]">Contacts non a jour, temps perdu</p>
+              <h3 className="font-semibold text-foreground mb-2">Numeros qui ne repondent plus</h3>
+              <p className="text-sm text-muted-foreground">Contacts non a jour, temps perdu</p>
             </div>
-            <div className="p-6 bg-white/80 backdrop-blur-sm border border-[#E2E4E6] rounded-[16px]">
+            <div className="p-6 bg-card/80 backdrop-blur-sm border border-border rounded-[16px]">
               <div className="w-12 h-12 mb-4 mx-auto rounded-[12px] bg-[#FEF2F2] flex items-center justify-center">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#DC2626" strokeWidth="2">
                   <path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z" />
                   <line x1="9" y1="22" x2="15" y2="22" />
                 </svg>
               </div>
-              <h3 className="font-semibold text-[#0D0F14] mb-2">Entreprises fermees</h3>
-              <p className="text-sm text-[#4E525A]">Aucune verification de statut</p>
+              <h3 className="font-semibold text-foreground mb-2">Entreprises fermees</h3>
+              <p className="text-sm text-muted-foreground">Aucune verification de statut</p>
             </div>
           </div>
         </div>
       </section>
 
       {/* Solution Section - 3 Pillars */}
-      <section className="py-24 px-6 bg-gradient-to-b from-[#F5F7F9] to-white">
+      <section className="py-24 px-6 bg-gradient-to-b from-muted to-background">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-[36px] font-bold text-[#0D0F14] mb-4">
+            <h2 className="text-[36px] font-bold text-foreground mb-4">
               La solution ProspectHub
             </h2>
-            <p className="text-lg text-[#4E525A] max-w-2xl mx-auto">
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Trois piliers pour une prospection efficace
             </p>
           </div>
 
           <div className="grid md:grid-cols-3 gap-8">
-            <div className="relative p-8 bg-white/90 backdrop-blur-sm border border-[#E2E4E6] rounded-[20px] hover:shadow-xl hover:border-[#0066FF] transition-all">
+            <div className="relative p-8 bg-card/90 backdrop-blur-sm border border-border rounded-[20px] hover:shadow-xl hover:border-[#0066FF] transition-all">
               <div className="absolute top-6 right-6 w-10 h-10 rounded-full bg-[#0066FF]/10 flex items-center justify-center">
                 <span className="text-sm font-bold text-[#0066FF]">1</span>
               </div>
@@ -263,15 +263,15 @@ export default function LandingPage() {
                   <polyline points="12 6 12 12 16 14" />
                 </svg>
               </div>
-              <h3 className="text-xl font-bold text-[#0D0F14] mb-3">
+              <h3 className="text-xl font-bold text-foreground mb-3">
                 Fraicheur
               </h3>
-              <p className="text-[#4E525A] leading-relaxed">
+              <p className="text-muted-foreground leading-relaxed">
                 Date de verification affichee sur chaque fiche. Vous savez toujours si votre lead est a jour.
               </p>
             </div>
 
-            <div className="relative p-8 bg-white/90 backdrop-blur-sm border border-[#E2E4E6] rounded-[20px] hover:shadow-xl hover:border-[#0066FF] transition-all">
+            <div className="relative p-8 bg-card/90 backdrop-blur-sm border border-border rounded-[20px] hover:shadow-xl hover:border-[#0066FF] transition-all">
               <div className="absolute top-6 right-6 w-10 h-10 rounded-full bg-[#0066FF]/10 flex items-center justify-center">
                 <span className="text-sm font-bold text-[#0066FF]">2</span>
               </div>
@@ -281,15 +281,15 @@ export default function LandingPage() {
                   <circle cx="12" cy="12" r="3" />
                 </svg>
               </div>
-              <h3 className="text-xl font-bold text-[#0D0F14] mb-3">
+              <h3 className="text-xl font-bold text-foreground mb-3">
                 Transparence
               </h3>
-              <p className="text-[#4E525A] leading-relaxed">
+              <p className="text-muted-foreground leading-relaxed">
                 Source documentee pour chaque donnee. Registre public, partenaire verifie, ou signalement.
               </p>
             </div>
 
-            <div className="relative p-8 bg-white/90 backdrop-blur-sm border border-[#E2E4E6] rounded-[20px] hover:shadow-xl hover:border-[#0066FF] transition-all">
+            <div className="relative p-8 bg-card/90 backdrop-blur-sm border border-border rounded-[20px] hover:shadow-xl hover:border-[#0066FF] transition-all">
               <div className="absolute top-6 right-6 w-10 h-10 rounded-full bg-[#0066FF]/10 flex items-center justify-center">
                 <span className="text-sm font-bold text-[#0066FF]">3</span>
               </div>
@@ -298,10 +298,10 @@ export default function LandingPage() {
                   <polyline points="22 12 18 12 15 21 9 3 6 12 2 12" />
                 </svg>
               </div>
-              <h3 className="text-xl font-bold text-[#0D0F14] mb-3">
+              <h3 className="text-xl font-bold text-foreground mb-3">
                 Simplicite
               </h3>
-              <p className="text-[#4E525A] leading-relaxed">
+              <p className="text-muted-foreground leading-relaxed">
                 De la recherche au premier email dans le meme outil. Pas de copier-coller entre plateformes.
               </p>
             </div>
@@ -313,10 +313,10 @@ export default function LandingPage() {
       <section className="py-24 px-6">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-[36px] font-bold text-[#0D0F14] mb-4">
+            <h2 className="text-[36px] font-bold text-foreground mb-4">
               Comment ca marche
             </h2>
-            <p className="text-lg text-[#4E525A]">
+            <p className="text-lg text-muted-foreground">
               De la recherche au contact en 3 etapes
             </p>
           </div>
@@ -326,11 +326,11 @@ export default function LandingPage() {
               <div className="flex-shrink-0 w-16 h-16 rounded-full bg-gradient-to-br from-[#0066FF] to-[#0052CC] flex items-center justify-center text-white text-2xl font-bold shadow-lg">
                 1
               </div>
-              <div className="flex-1 p-6 bg-white/80 backdrop-blur-sm border border-[#E2E4E6] rounded-[16px]">
-                <h3 className="text-xl font-bold text-[#0D0F14] mb-2">
+              <div className="flex-1 p-6 bg-card/80 backdrop-blur-sm border border-border rounded-[16px]">
+                <h3 className="text-xl font-bold text-foreground mb-2">
                   Recherchez
                 </h3>
-                <p className="text-[#4E525A] leading-relaxed">
+                <p className="text-muted-foreground leading-relaxed">
                   Filtrez par secteur d'activite, taille d'entreprise, et localisation. Notre catalogue de +50 000 entreprises francaises verifiees.
                 </p>
               </div>
@@ -340,11 +340,11 @@ export default function LandingPage() {
               <div className="flex-shrink-0 w-16 h-16 rounded-full bg-gradient-to-br from-[#0066FF] to-[#0052CC] flex items-center justify-center text-white text-2xl font-bold shadow-lg">
                 2
               </div>
-              <div className="flex-1 p-6 bg-white/80 backdrop-blur-sm border border-[#E2E4E6] rounded-[16px]">
-                <h3 className="text-xl font-bold text-[#0D0F14] mb-2">
+              <div className="flex-1 p-6 bg-card/80 backdrop-blur-sm border border-border rounded-[16px]">
+                <h3 className="text-xl font-bold text-foreground mb-2">
                   Revelez
                 </h3>
-                <p className="text-[#4E525A] leading-relaxed">
+                <p className="text-muted-foreground leading-relaxed">
                   Debloquez les coordonnees completes avec vos credits. Email, telephone, dirigeants - toutes les infos pour contacter.
                 </p>
               </div>
@@ -354,11 +354,11 @@ export default function LandingPage() {
               <div className="flex-shrink-0 w-16 h-16 rounded-full bg-gradient-to-br from-[#0066FF] to-[#0052CC] flex items-center justify-center text-white text-2xl font-bold shadow-lg">
                 3
               </div>
-              <div className="flex-1 p-6 bg-white/80 backdrop-blur-sm border border-[#E2E4E6] rounded-[16px]">
-                <h3 className="text-xl font-bold text-[#0D0F14] mb-2">
+              <div className="flex-1 p-6 bg-card/80 backdrop-blur-sm border border-border rounded-[16px]">
+                <h3 className="text-xl font-bold text-foreground mb-2">
                   Contactez
                 </h3>
-                <p className="text-[#4E525A] leading-relaxed">
+                <p className="text-muted-foreground leading-relaxed">
                   Lancez vos sequences d'emails, suivez dans le pipeline, et convertissez. Tout se passe dans ProspectHub.
                 </p>
               </div>
@@ -371,10 +371,10 @@ export default function LandingPage() {
       <section id="features" className="py-24 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-[36px] font-bold text-[#0D0F14] mb-4">
+            <h2 className="text-[36px] font-bold text-foreground mb-4">
               Tout ce dont vous avez besoin
             </h2>
-            <p className="text-lg text-[#4E525A] max-w-2xl mx-auto">
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
               Un CRM complet, sans la complexite. Concentrez-vous sur vos ventes, pas sur votre outil.
             </p>
           </div>
@@ -383,17 +383,17 @@ export default function LandingPage() {
             {features.map((feature, i) => (
               <div
                 key={i}
-                className="p-6 bg-white border border-[#E2E4E6] rounded-[16px] hover:border-[#17191F] hover:shadow-lg transition-all"
+                className="p-6 bg-card border border-border rounded-[16px] hover:border-[#17191F] hover:shadow-lg transition-all"
               >
-                <div className="w-12 h-12 mb-4 rounded-[12px] bg-[#F5F7F9] flex items-center justify-center">
+                <div className="w-12 h-12 mb-4 rounded-[12px] bg-muted flex items-center justify-center">
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#17191F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d={feature.icon} />
                   </svg>
                 </div>
-                <h3 className="text-lg font-semibold text-[#0D0F14] mb-2">
+                <h3 className="text-lg font-semibold text-foreground mb-2">
                   {feature.title}
                 </h3>
-                <p className="text-[#4E525A] leading-relaxed">
+                <p className="text-muted-foreground leading-relaxed">
                   {feature.description}
                 </p>
               </div>
@@ -403,13 +403,13 @@ export default function LandingPage() {
       </section>
 
       {/* Pricing */}
-      <section id="pricing" className="py-24 px-6 bg-[#F5F7F9]">
+      <section id="pricing" className="py-24 px-6 bg-muted">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-[36px] font-bold text-[#0D0F14] mb-4">
+            <h2 className="text-[36px] font-bold text-foreground mb-4">
               Tarifs simples et transparents
             </h2>
-            <p className="text-lg text-[#4E525A]">
+            <p className="text-lg text-muted-foreground">
               Commencez gratuitement, evoluez selon vos besoins.
             </p>
           </div>
@@ -421,20 +421,20 @@ export default function LandingPage() {
                 className={`p-8 rounded-[20px] ${
                   plan.highlighted
                     ? 'bg-[#17191F] text-white ring-4 ring-[#17191F]/20'
-                    : 'bg-white border border-[#E2E4E6]'
+                    : 'bg-card border border-border'
                 }`}
               >
-                <h3 className={`text-xl font-semibold mb-2 ${plan.highlighted ? 'text-white' : 'text-[#0D0F14]'}`}>
+                <h3 className={`text-xl font-semibold mb-2 ${plan.highlighted ? 'text-white' : 'text-foreground'}`}>
                   {plan.name}
                 </h3>
-                <p className={`text-sm mb-6 ${plan.highlighted ? 'text-white/70' : 'text-[#4E525A]'}`}>
+                <p className={`text-sm mb-6 ${plan.highlighted ? 'text-white/70' : 'text-muted-foreground'}`}>
                   {plan.description}
                 </p>
                 <div className="mb-6">
-                  <span className={`text-[48px] font-bold ${plan.highlighted ? 'text-white' : 'text-[#0D0F14]'}`}>
+                  <span className={`text-[48px] font-bold ${plan.highlighted ? 'text-white' : 'text-foreground'}`}>
                     {plan.price}
                   </span>
-                  <span className={plan.highlighted ? 'text-white/70' : 'text-[#4E525A]'}>
+                  <span className={plan.highlighted ? 'text-white/70' : 'text-muted-foreground'}>
                     EUR/mois
                   </span>
                 </div>
@@ -451,7 +451,7 @@ export default function LandingPage() {
                       >
                         <polyline points="20 6 9 17 4 12" />
                       </svg>
-                      <span className={plan.highlighted ? 'text-white/90' : 'text-[#4E525A]'}>
+                      <span className={plan.highlighted ? 'text-white/90' : 'text-muted-foreground'}>
                         {feature}
                       </span>
                     </li>
@@ -461,7 +461,7 @@ export default function LandingPage() {
                   href={plan.name === 'Business' ? '/contact' : '/auth/register'}
                   className={`block w-full py-3 text-center font-semibold rounded-[10px] transition-colors ${
                     plan.highlighted
-                      ? 'bg-white text-[#17191F] hover:bg-[#F5F7F9]'
+                      ? 'bg-card text-foreground hover:bg-muted'
                       : 'bg-[#17191F] text-white hover:bg-[#2D3039]'
                   }`}
                 >
@@ -477,7 +477,7 @@ export default function LandingPage() {
       <section id="testimonials" className="py-24 px-6">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-[36px] font-bold text-[#0D0F14] mb-4">
+            <h2 className="text-[36px] font-bold text-foreground mb-4">
               Ce que disent nos clients
             </h2>
           </div>
@@ -486,7 +486,7 @@ export default function LandingPage() {
             {testimonials.map((testimonial, i) => (
               <div
                 key={i}
-                className="p-6 bg-white border border-[#E2E4E6] rounded-[16px]"
+                className="p-6 bg-card border border-border rounded-[16px]"
               >
                 <div className="flex gap-1 mb-4">
                   {[1, 2, 3, 4, 5].map((star) => (
@@ -495,12 +495,12 @@ export default function LandingPage() {
                     </svg>
                   ))}
                 </div>
-                <p className="text-[#4E525A] mb-6 leading-relaxed">
+                <p className="text-muted-foreground mb-6 leading-relaxed">
                   &ldquo;{testimonial.quote}&rdquo;
                 </p>
                 <div>
-                  <p className="font-semibold text-[#0D0F14]">{testimonial.author}</p>
-                  <p className="text-sm text-[#9BA0A6]">
+                  <p className="font-semibold text-foreground">{testimonial.author}</p>
+                  <p className="text-sm text-muted-foreground/70">
                     {testimonial.role}, {testimonial.company}
                   </p>
                 </div>
@@ -525,13 +525,13 @@ export default function LandingPage() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               href="/auth/register"
-              className="w-full sm:w-auto px-8 py-4 text-base font-semibold text-[#0066FF] bg-white rounded-[12px] hover:bg-[#F5F7F9] transition-all shadow-xl hover:shadow-2xl hover:scale-105"
+              className="w-full sm:w-auto px-8 py-4 text-base font-semibold text-[#0066FF] bg-white rounded-[12px] hover:bg-muted transition-all shadow-xl hover:shadow-2xl hover:scale-105"
             >
               Creer mon compte gratuit
             </Link>
             <Link
               href="/demo"
-              className="w-full sm:w-auto px-8 py-4 text-base font-semibold text-white border-2 border-white/40 rounded-[12px] hover:border-white hover:bg-white/10 transition-all backdrop-blur-sm"
+              className="w-full sm:w-auto px-8 py-4 text-base font-semibold text-white border-2 border-white/40 rounded-[12px] hover:border-white hover:bg-card/10 transition-all backdrop-blur-sm"
             >
               Voir en 2 min
             </Link>
@@ -543,7 +543,7 @@ export default function LandingPage() {
       </section>
 
       {/* Footer */}
-      <footer className="py-12 px-6 border-t border-[#E2E4E6]">
+      <footer className="py-12 px-6 border-t border-border">
         <div className="max-w-7xl mx-auto">
           <div className="flex flex-col md:flex-row items-center justify-between gap-6">
             <div className="flex items-center gap-3">
@@ -554,16 +554,16 @@ export default function LandingPage() {
                   <path d="M2 12l10 5 10-5" stroke="#fff" strokeWidth="2" />
                 </svg>
               </div>
-              <span className="font-semibold text-[#0D0F14]">ProspectHub</span>
+              <span className="font-semibold text-foreground">ProspectHub</span>
             </div>
 
-            <div className="flex items-center gap-6 text-sm text-[#4E525A]">
-              <Link href="/privacy" className="hover:text-[#0D0F14]">Confidentialite</Link>
-              <Link href="/terms" className="hover:text-[#0D0F14]">CGU</Link>
-              <Link href="/contact" className="hover:text-[#0D0F14]">Contact</Link>
+            <div className="flex items-center gap-6 text-sm text-muted-foreground">
+              <Link href="/privacy" className="hover:text-foreground">Confidentialite</Link>
+              <Link href="/terms" className="hover:text-foreground">CGU</Link>
+              <Link href="/contact" className="hover:text-foreground">Contact</Link>
             </div>
 
-            <p className="text-sm text-[#9BA0A6]">
+            <p className="text-sm text-muted-foreground/70">
               2026 ProspectHub. Tous droits reserves.
             </p>
           </div>

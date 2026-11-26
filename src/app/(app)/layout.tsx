@@ -32,7 +32,7 @@ export default async function AppLayout({
   const fullName = profile ? `${profile.first_name || ''} ${profile.last_name || ''}`.trim() : null
 
   return (
-    <div className="min-h-screen bg-[#F5F7F9]">
+    <div className="min-h-screen bg-muted">
       <Sidebar
         user={{
           email: user.email,

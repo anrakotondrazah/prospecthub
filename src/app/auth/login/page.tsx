@@ -49,9 +49,9 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-[#F5F7F9] flex items-center justify-center p-4">
+    <div className="min-h-screen bg-muted flex items-center justify-center p-4">
       <div className="w-full max-w-[420px]">
-        <div className="bg-white rounded-[20px] shadow-[0_12px_32px_-4px_rgba(13,15,20,0.12)] p-8">
+        <div className="bg-card rounded-[20px] shadow-[0_12px_32px_-4px_rgba(13,15,20,0.12)] dark:shadow-[0_12px_32px_-4px_rgba(0,0,0,0.4)] p-8">
           {/* Logo */}
           <div className="flex items-center justify-center gap-3 mb-8">
             <div className="w-10 h-10 bg-[#17191F] rounded-[10px] flex items-center justify-center">
@@ -61,13 +61,13 @@ export default function LoginPage() {
                 <path d="M2 12l10 5 10-5" stroke="#fff" strokeWidth="2"/>
               </svg>
             </div>
-            <span className="text-xl font-semibold text-[#0D0F14]">ProspectHub</span>
+            <span className="text-xl font-semibold text-foreground">ProspectHub</span>
           </div>
 
-          <h1 className="text-[23.5px] font-semibold text-[#0D0F14] text-center mb-2">
+          <h1 className="text-[23.5px] font-semibold text-foreground text-center mb-2">
             Connexion
           </h1>
-          <p className="text-sm text-[#4E525A] text-center mb-8">
+          <p className="text-sm text-muted-foreground text-center mb-8">
             Entrez vos identifiants pour acceder a votre compte
           </p>
 
@@ -99,10 +99,10 @@ export default function LoginPage() {
             Continuer avec Google
           </Button>
 
-          <div className="flex items-center gap-4 text-[#9BA0A6] text-sm mb-6">
-            <div className="flex-1 h-px bg-[#E2E4E6]" />
+          <div className="flex items-center gap-4 text-muted-foreground text-sm mb-6">
+            <div className="flex-1 h-px bg-border" />
             <span>ou</span>
-            <div className="flex-1 h-px bg-[#E2E4E6]" />
+            <div className="flex-1 h-px bg-border" />
           </div>
 
           {/* Login Form */}
@@ -130,7 +130,7 @@ export default function LoginPage() {
                 <Label htmlFor="password" className="mb-0">Mot de passe</Label>
                 <Link
                   href="/auth/forgot-password"
-                  className="text-sm text-[#17191F] hover:underline"
+                  className="text-sm text-foreground hover:underline"
                 >
                   Mot de passe oublie ?
                 </Link>
@@ -150,15 +150,15 @@ export default function LoginPage() {
             </Button>
           </form>
 
-          <p className="text-sm text-[#4E525A] text-center mt-6">
+          <p className="text-sm text-muted-foreground text-center mt-6">
             Pas encore de compte ?{' '}
-            <Link href="/auth/register" className="text-[#17191F] font-medium hover:underline">
+            <Link href="/auth/register" className="text-foreground font-medium hover:underline">
               Creer un compte
             </Link>
           </p>
         </div>
 
-        <p className="text-xs text-[#9BA0A6] text-center mt-6">
+        <p className="text-xs text-muted-foreground text-center mt-6">
           En vous connectant, vous acceptez nos{' '}
           <Link href="/terms" className="underline">CGU</Link>
           {' '}et notre{' '}

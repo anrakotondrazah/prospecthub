@@ -46,10 +46,10 @@ export function InboxPageClient({ initialActivities }: InboxPageClientProps) {
     <div>
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
         <div>
-          <h1 className="text-xl lg:text-[23.5px] font-semibold text-[#0D0F14] mb-1">
+          <h1 className="text-xl lg:text-[23.5px] font-semibold text-foreground mb-1">
             Boite de reception
           </h1>
-          <p className="text-sm text-[#4E525A]">
+          <p className="text-sm text-muted-foreground">
             {filteredActivities.length} activite{filteredActivities.length !== 1 ? 's' : ''}
             {selectedType !== 'all' && ' filtrees'}
           </p>
@@ -85,10 +85,10 @@ export function InboxPageClient({ initialActivities }: InboxPageClientProps) {
         <div className="space-y-6">
           {Object.entries(groupedActivities).map(([dateLabel, dayActivities]) => (
             <div key={dateLabel}>
-              <h2 className="text-sm font-semibold text-[#4E525A] uppercase tracking-wider mb-3">
+              <h2 className="text-sm font-semibold text-muted-foreground uppercase tracking-wider mb-3">
                 {dateLabel}
               </h2>
-              <div className="bg-white rounded-[14px] border border-[#E2E4E6] divide-y divide-[#E2E4E6]">
+              <div className="bg-card rounded-[14px] border border-border divide-y divide-border">
                 {dayActivities.map((activity) => (
                   <ActivityItem key={activity.id} activity={activity} />
                 ))}

@@ -80,16 +80,16 @@ function LeadDetailPanel({ lead, onClose }: { lead: Lead; onClose: () => void })
       />
 
       {/* Panel */}
-      <div className="fixed right-0 top-0 bottom-0 w-full max-w-md bg-white shadow-2xl z-50 overflow-y-auto">
+      <div className="fixed right-0 top-0 bottom-0 w-full max-w-md bg-card shadow-2xl z-50 overflow-y-auto">
         {/* Header */}
-        <div className="sticky top-0 bg-white border-b border-[#E2E4E6] px-6 py-4 flex items-center justify-between">
-          <h2 className="text-lg font-semibold text-[#0D0F14]">Detail du lead</h2>
+        <div className="sticky top-0 bg-card border-b border-border px-6 py-4 flex items-center justify-between">
+          <h2 className="text-lg font-semibold text-foreground">Detail du lead</h2>
           <button
             onClick={onClose}
-            className="p-2 rounded-[8px] hover:bg-[#F5F7F9] transition-colors"
+            className="p-2 rounded-[8px] hover:bg-muted transition-colors"
             aria-label="Fermer le panel"
           >
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#4E525A" strokeWidth="2">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-muted-foreground">
               <line x1="18" y1="6" x2="6" y2="18" />
               <line x1="6" y1="6" x2="18" y2="18" />
             </svg>
@@ -104,9 +104,9 @@ function LeadDetailPanel({ lead, onClose }: { lead: Lead; onClose: () => void })
               {initials}
             </div>
             <div>
-              <h3 className="text-xl font-semibold text-[#0D0F14]">{fullName}</h3>
+              <h3 className="text-xl font-semibold text-foreground">{fullName}</h3>
               {lead.company_name && (
-                <p className="text-[#4E525A]">{lead.company_name}</p>
+                <p className="text-muted-foreground">{lead.company_name}</p>
               )}
               <div className="flex items-center gap-2 mt-1">
                 <span className={`inline-flex px-2 py-0.5 text-xs font-medium rounded ${statusStyle.bg} ${statusStyle.text}`}>
@@ -127,7 +127,7 @@ function LeadDetailPanel({ lead, onClose }: { lead: Lead; onClose: () => void })
           {/* Quick Actions */}
           <div className="flex gap-2 mb-6">
             <button
-              className="flex-1 flex items-center justify-center gap-2 py-2.5 text-sm font-medium text-[#4E525A] border border-[#E2E4E6] rounded-[10px] hover:bg-[#F5F7F9] transition-colors"
+              className="flex-1 flex items-center justify-center gap-2 py-2.5 text-sm font-medium text-muted-foreground border border-border rounded-[10px] hover:bg-muted transition-colors"
               disabled
               title="Bientot disponible"
             >
@@ -138,7 +138,7 @@ function LeadDetailPanel({ lead, onClose }: { lead: Lead; onClose: () => void })
               Email
             </button>
             <button
-              className="flex-1 flex items-center justify-center gap-2 py-2.5 text-sm font-medium text-[#4E525A] border border-[#E2E4E6] rounded-[10px] hover:bg-[#F5F7F9] transition-colors"
+              className="flex-1 flex items-center justify-center gap-2 py-2.5 text-sm font-medium text-muted-foreground border border-border rounded-[10px] hover:bg-muted transition-colors"
               disabled
               title="Bientot disponible"
             >
@@ -148,7 +148,7 @@ function LeadDetailPanel({ lead, onClose }: { lead: Lead; onClose: () => void })
               Appeler
             </button>
             <button
-              className="flex-1 flex items-center justify-center gap-2 py-2.5 text-sm font-medium text-[#4E525A] border border-[#E2E4E6] rounded-[10px] hover:bg-[#F5F7F9] transition-colors"
+              className="flex-1 flex items-center justify-center gap-2 py-2.5 text-sm font-medium text-muted-foreground border border-border rounded-[10px] hover:bg-muted transition-colors"
               disabled
               title="Bientot disponible"
             >
@@ -164,31 +164,31 @@ function LeadDetailPanel({ lead, onClose }: { lead: Lead; onClose: () => void })
 
           {/* Contact Info */}
           <div className="mb-6">
-            <h4 className="text-sm font-semibold text-[#0D0F14] uppercase tracking-wider mb-3">
+            <h4 className="text-sm font-semibold text-foreground uppercase tracking-wider mb-3">
               Informations de contact
             </h4>
             <div className="space-y-3">
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-[8px] bg-[#F5F7F9] flex items-center justify-center">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4E525A" strokeWidth="2">
+                <div className="w-8 h-8 rounded-[8px] bg-muted flex items-center justify-center">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-muted-foreground">
                     <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
                     <polyline points="22,6 12,13 2,6" />
                   </svg>
                 </div>
                 <div>
-                  <p className="text-xs text-[#9BA0A6]">Email</p>
-                  <p className="text-sm text-[#0D0F14]">{lead.email || '-'}</p>
+                  <p className="text-xs text-muted-foreground">Email</p>
+                  <p className="text-sm text-foreground">{lead.email || '-'}</p>
                 </div>
               </div>
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-[8px] bg-[#F5F7F9] flex items-center justify-center">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4E525A" strokeWidth="2">
+                <div className="w-8 h-8 rounded-[8px] bg-muted flex items-center justify-center">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-muted-foreground">
                     <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
                   </svg>
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-xs text-[#9BA0A6]">Telephone</p>
-                  <p className="text-sm text-[#0D0F14] truncate">{lead.phone || '-'}</p>
+                  <p className="text-xs text-muted-foreground">Telephone</p>
+                  <p className="text-sm text-foreground truncate">{lead.phone || '-'}</p>
                   {lead.phone && (
                     <div className="mt-1">
                       <VerificationBadge type="bloctel" />
@@ -197,14 +197,14 @@ function LeadDetailPanel({ lead, onClose }: { lead: Lead; onClose: () => void })
                 </div>
               </div>
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 rounded-[8px] bg-[#F5F7F9] flex items-center justify-center">
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4E525A" strokeWidth="2">
+                <div className="w-8 h-8 rounded-[8px] bg-muted flex items-center justify-center">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-muted-foreground">
                     <path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5" />
                   </svg>
                 </div>
                 <div>
-                  <p className="text-xs text-[#9BA0A6]">Entreprise</p>
-                  <p className="text-sm text-[#0D0F14]">{lead.company_name || '-'}</p>
+                  <p className="text-xs text-muted-foreground">Entreprise</p>
+                  <p className="text-sm text-foreground">{lead.company_name || '-'}</p>
                 </div>
               </div>
             </div>
@@ -212,7 +212,7 @@ function LeadDetailPanel({ lead, onClose }: { lead: Lead; onClose: () => void })
 
           {/* Lead Info */}
           <div className="mb-6">
-            <h4 className="text-sm font-semibold text-[#0D0F14] uppercase tracking-wider mb-3">
+            <h4 className="text-sm font-semibold text-foreground uppercase tracking-wider mb-3">
               Informations lead
             </h4>
 
@@ -223,50 +223,50 @@ function LeadDetailPanel({ lead, onClose }: { lead: Lead; onClose: () => void })
             </div>
 
             <div className="grid grid-cols-2 gap-4">
-              <div className="p-3 bg-[#F5F7F9] rounded-[10px]">
-                <p className="text-xs text-[#9BA0A6] mb-1">Score</p>
+              <div className="p-3 bg-muted rounded-[10px]">
+                <p className="text-xs text-muted-foreground mb-1">Score</p>
                 {lead.score !== null ? (
                   <span className={`inline-flex px-2 py-1 text-sm font-semibold rounded ${scoreStyle.bg} ${scoreStyle.text}`}>
                     {lead.score}/10
                   </span>
                 ) : (
-                  <span className="text-sm text-[#4E525A]">-</span>
+                  <span className="text-sm text-muted-foreground">-</span>
                 )}
               </div>
-              <div className="p-3 bg-[#F5F7F9] rounded-[10px]">
-                <p className="text-xs text-[#9BA0A6] mb-1">Source</p>
-                <p className="text-sm font-medium text-[#0D0F14]">{lead.source || '-'}</p>
+              <div className="p-3 bg-muted rounded-[10px]">
+                <p className="text-xs text-muted-foreground mb-1">Source</p>
+                <p className="text-sm font-medium text-foreground">{lead.source || '-'}</p>
               </div>
-              <div className="p-3 bg-[#F5F7F9] rounded-[10px]">
-                <p className="text-xs text-[#9BA0A6] mb-1">Cree le</p>
-                <p className="text-sm font-medium text-[#0D0F14]">{createdDate}</p>
+              <div className="p-3 bg-muted rounded-[10px]">
+                <p className="text-xs text-muted-foreground mb-1">Cree le</p>
+                <p className="text-sm font-medium text-foreground">{createdDate}</p>
               </div>
-              <div className="p-3 bg-[#F5F7F9] rounded-[10px]">
-                <p className="text-xs text-[#9BA0A6] mb-1">ID</p>
-                <p className="text-sm font-mono text-[#4E525A] truncate">{lead.uuid.slice(0, 8)}</p>
+              <div className="p-3 bg-muted rounded-[10px]">
+                <p className="text-xs text-muted-foreground mb-1">ID</p>
+                <p className="text-sm font-mono text-muted-foreground truncate">{lead.uuid.slice(0, 8)}</p>
               </div>
             </div>
           </div>
 
           {/* Timeline placeholder */}
           <div>
-            <h4 className="text-sm font-semibold text-[#0D0F14] uppercase tracking-wider mb-3">
+            <h4 className="text-sm font-semibold text-foreground uppercase tracking-wider mb-3">
               Activite
             </h4>
-            <div className="text-center py-8 bg-[#F5F7F9] rounded-[10px]">
-              <div className="w-10 h-10 mx-auto mb-3 rounded-full bg-white flex items-center justify-center">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9BA0A6" strokeWidth="2">
+            <div className="text-center py-8 bg-muted rounded-[10px]">
+              <div className="w-10 h-10 mx-auto mb-3 rounded-full bg-card flex items-center justify-center">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-muted-foreground">
                   <circle cx="12" cy="12" r="10" />
                   <polyline points="12 6 12 12 16 14" />
                 </svg>
               </div>
-              <p className="text-sm text-[#4E525A]">Aucune activite</p>
-              <p className="text-xs text-[#9BA0A6] mt-1">Les actions apparaitront ici.</p>
+              <p className="text-sm text-muted-foreground">Aucune activite</p>
+              <p className="text-xs text-muted-foreground mt-1">Les actions apparaitront ici.</p>
             </div>
           </div>
 
           {/* View Full Detail Button */}
-          <div className="mt-6 pt-6 border-t border-[#E2E4E6]">
+          <div className="mt-6 pt-6 border-t border-border">
             <Link
               href={`/leads/${lead.id}`}
               className="flex items-center justify-center gap-2 w-full py-3 text-sm font-medium text-white bg-[#17191F] rounded-[10px] hover:bg-[#2D3038] transition-colors"
@@ -366,25 +366,25 @@ export function LeadsTable({ leads }: LeadsTableProps) {
 
   return (
     <>
-      <div className="bg-white rounded-[14px] border border-[#E2E4E6] overflow-hidden">
+      <div className="bg-card rounded-[14px] border border-border overflow-hidden">
         {/* Tabs */}
-        <div className="flex items-center gap-1 px-4 pt-4 border-b border-[#E2E4E6] overflow-x-auto">
+        <div className="flex items-center gap-1 px-4 pt-4 border-b border-border overflow-x-auto">
           {TABS.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
               className={`flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 transition-colors whitespace-nowrap ${
                 activeTab === tab.id
-                  ? 'text-[#0D0F14] border-[#17191F]'
-                  : 'text-[#4E525A] border-transparent hover:text-[#0D0F14]'
+                  ? 'text-foreground border-foreground'
+                  : 'text-muted-foreground border-transparent hover:text-foreground'
               }`}
             >
               {tab.label}
               <span
                 className={`px-1.5 py-0.5 text-xs rounded ${
                   activeTab === tab.id
-                    ? 'bg-[#17191F] text-white'
-                    : 'bg-[#F5F7F9] text-[#4E525A]'
+                    ? 'bg-foreground text-background'
+                    : 'bg-muted text-muted-foreground'
                 }`}
               >
                 {tabCounts[tab.id as keyof typeof tabCounts]}
@@ -394,11 +394,11 @@ export function LeadsTable({ leads }: LeadsTableProps) {
         </div>
 
         {/* Toolbar */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-4 py-3 border-b border-[#E2E4E6]">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 px-4 py-3 border-b border-border">
           <div className="flex items-center gap-3">
             <div className="relative flex-1 sm:flex-none">
               <svg
-                className="absolute left-3 top-1/2 -translate-y-1/2 text-[#9BA0A6]"
+                className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground"
                 width="16"
                 height="16"
                 viewBox="0 0 24 24"
@@ -414,12 +414,12 @@ export function LeadsTable({ leads }: LeadsTableProps) {
                 placeholder="Rechercher..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full sm:w-64 h-9 pl-9 pr-3 text-sm border border-[#E2E4E6] rounded-[8px] focus:outline-none focus:ring-2 focus:ring-[#17191F] focus:border-transparent"
+                className="w-full sm:w-64 h-9 pl-9 pr-3 text-sm bg-background border border-border rounded-[8px] focus:outline-none focus:ring-2 focus:ring-ring focus:border-transparent"
                 aria-label="Rechercher des leads"
               />
             </div>
             <button
-              className="hidden sm:flex items-center gap-2 h-9 px-3 text-sm text-[#9BA0A6] border border-[#E2E4E6] rounded-[8px] cursor-not-allowed"
+              className="hidden sm:flex items-center gap-2 h-9 px-3 text-sm text-muted-foreground border border-border rounded-[8px] cursor-not-allowed"
               disabled
               title="Bientot disponible"
             >
@@ -432,7 +432,7 @@ export function LeadsTable({ leads }: LeadsTableProps) {
           <div className="flex items-center gap-2">
             <button
               onClick={() => setIsImportModalOpen(true)}
-              className="flex items-center gap-2 h-9 px-3 text-sm text-[#0D0F14] border border-[#E2E4E6] rounded-[8px] hover:bg-[#F5F7F9] transition-colors"
+              className="flex items-center gap-2 h-9 px-3 text-sm text-foreground border border-border rounded-[8px] hover:bg-muted transition-colors"
             >
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12" />
@@ -440,7 +440,7 @@ export function LeadsTable({ leads }: LeadsTableProps) {
               Importer
             </button>
             <button
-              className="flex items-center gap-2 h-9 px-3 text-sm text-[#9BA0A6] border border-[#E2E4E6] rounded-[8px] cursor-not-allowed"
+              className="flex items-center gap-2 h-9 px-3 text-sm text-muted-foreground border border-border rounded-[8px] cursor-not-allowed"
               disabled
               title="Bientot disponible"
             >
@@ -456,32 +456,32 @@ export function LeadsTable({ leads }: LeadsTableProps) {
         <div className="overflow-x-auto">
           <table className="w-full">
             <thead>
-              <tr className="border-b border-[#E2E4E6]">
+              <tr className="border-b border-border">
                 <th className="w-12 px-4 py-3">
                   <input
                     type="checkbox"
                     checked={allVisibleSelected}
                     onChange={toggleSelectAll}
-                    className="w-4 h-4 rounded border-[#C9CCD0] accent-[#17191F]"
+                    className="w-4 h-4 rounded border-border accent-foreground"
                     aria-label="Selectionner tous les leads visibles"
                   />
                 </th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-[#4E525A] uppercase tracking-wider">
+                <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
                   Contact
                 </th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-[#4E525A] uppercase tracking-wider">
+                <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
                   Entreprise
                 </th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-[#4E525A] uppercase tracking-wider hidden md:table-cell">
+                <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider hidden md:table-cell">
                   Email
                 </th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-[#4E525A] uppercase tracking-wider">
+                <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
                   Statut
                 </th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-[#4E525A] uppercase tracking-wider hidden lg:table-cell">
+                <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider hidden lg:table-cell">
                   Score
                 </th>
-                <th className="px-4 py-3 text-left text-xs font-medium text-[#4E525A] uppercase tracking-wider hidden lg:table-cell">
+                <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider hidden lg:table-cell">
                   Source
                 </th>
                 <th className="w-12 px-4 py-3"></th>
@@ -520,7 +520,7 @@ export function LeadsTable({ leads }: LeadsTableProps) {
                   return (
                     <tr
                       key={lead.id}
-                      className="border-b border-[#E2E4E6] hover:bg-[#F5F7F9] transition-colors cursor-pointer"
+                      className="border-b border-border hover:bg-muted transition-colors cursor-pointer"
                       onClick={() => setSelectedLead(lead)}
                     >
                       <td className="px-4 py-3" onClick={(e) => e.stopPropagation()}>
@@ -528,29 +528,29 @@ export function LeadsTable({ leads }: LeadsTableProps) {
                           type="checkbox"
                           checked={selectedLeads.includes(lead.id)}
                           onChange={() => toggleSelect(lead.id)}
-                          className="w-4 h-4 rounded border-[#C9CCD0] accent-[#17191F]"
+                          className="w-4 h-4 rounded border-border accent-foreground"
                           aria-label={`Selectionner ${fullName}`}
                         />
                       </td>
                       <td className="px-4 py-3">
                         <div className="flex items-center gap-3">
-                          <div className="w-8 h-8 rounded-full bg-[#17191F] flex items-center justify-center text-white text-xs font-medium flex-shrink-0">
+                          <div className="w-8 h-8 rounded-full bg-foreground flex items-center justify-center text-background text-xs font-medium flex-shrink-0">
                             {initials}
                           </div>
                           <div className="min-w-0">
-                            <span className="font-medium text-[#0D0F14] block truncate">
+                            <span className="font-medium text-foreground block truncate">
                               {fullName}
                             </span>
                             {lead.is_hot && (
-                              <span className="text-xs text-[#C62828]">Chaud</span>
+                              <span className="text-xs text-red-600 dark:text-red-400">Chaud</span>
                             )}
                           </div>
                         </div>
                       </td>
-                      <td className="px-4 py-3 text-[#4E525A] truncate max-w-[150px]">
+                      <td className="px-4 py-3 text-muted-foreground truncate max-w-[150px]">
                         {lead.company_name || '-'}
                       </td>
-                      <td className="px-4 py-3 text-[#4E525A] truncate max-w-[200px] hidden md:table-cell">
+                      <td className="px-4 py-3 text-muted-foreground truncate max-w-[200px] hidden md:table-cell">
                         {lead.email || '-'}
                       </td>
                       <td className="px-4 py-3">
@@ -571,15 +571,15 @@ export function LeadsTable({ leads }: LeadsTableProps) {
                           '-'
                         )}
                       </td>
-                      <td className="px-4 py-3 text-[#4E525A] hidden lg:table-cell">
+                      <td className="px-4 py-3 text-muted-foreground hidden lg:table-cell">
                         {lead.source || '-'}
                       </td>
                       <td className="px-4 py-3" onClick={(e) => e.stopPropagation()}>
                         <button
-                          className="p-1 rounded hover:bg-[#E2E4E6]"
+                          className="p-1 rounded hover:bg-muted"
                           aria-label={`Actions pour ${fullName}`}
                         >
-                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4E525A" strokeWidth="2">
+                          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-muted-foreground">
                             <circle cx="12" cy="12" r="1" />
                             <circle cx="12" cy="5" r="1" />
                             <circle cx="12" cy="19" r="1" />
@@ -596,8 +596,8 @@ export function LeadsTable({ leads }: LeadsTableProps) {
 
         {/* Pagination */}
         {filteredLeads.length > 0 && (
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 px-4 py-3 border-t border-[#E2E4E6]">
-            <p className="text-sm text-[#4E525A]">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 px-4 py-3 border-t border-border">
+            <p className="text-sm text-muted-foreground">
               {selectedLeads.length > 0
                 ? `${selectedLeads.length} selectionne(s) sur ${filteredLeads.length}`
                 : `${filteredLeads.length} entreprise${filteredLeads.length > 1 ? 's correspondent' : ' correspond'} a votre recherche`}
@@ -605,13 +605,13 @@ export function LeadsTable({ leads }: LeadsTableProps) {
             <div className="flex items-center gap-2">
               <button
                 disabled
-                className="px-3 py-1.5 text-sm text-[#9BA0A6] border border-[#E2E4E6] rounded-[8px] cursor-not-allowed"
+                className="px-3 py-1.5 text-sm text-muted-foreground border border-border rounded-[8px] cursor-not-allowed"
               >
                 Precedent
               </button>
               <button
                 disabled
-                className="px-3 py-1.5 text-sm text-[#9BA0A6] border border-[#E2E4E6] rounded-[8px] cursor-not-allowed"
+                className="px-3 py-1.5 text-sm text-muted-foreground border border-border rounded-[8px] cursor-not-allowed"
               >
                 Suivant
               </button>

@@ -4,6 +4,8 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useTheme } from '@/components/providers/ThemeProvider'
+import { NotificationBell } from '@/components/notifications/NotificationBell'
+import { TrustBadge } from '@/components/ui/TrustBadge'
 
 const navItems = [
   {
@@ -112,13 +114,15 @@ const bottomItems = [
 
 interface SidebarProps {
   user?: {
+    id?: string
     email?: string
     full_name?: string
   }
+  organizationId?: number
   plan?: string
 }
 
-export function Sidebar({ user, plan = 'Free' }: SidebarProps) {
+export function Sidebar({ user, organizationId, plan = 'Free' }: SidebarProps) {
   const pathname = usePathname()
   const [isCollapsed, setIsCollapsed] = useState(false)
   const { theme, setTheme, resolvedTheme } = useTheme()
@@ -304,32 +308,45 @@ export function Sidebar({ user, plan = 'Free' }: SidebarProps) {
           })}
         </ul>
 
-        {/* Dark Mode Toggle */}
+        {/* Notification Bell & Dark Mode */}
         {!isCollapsed && (
-          <button
-            onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
-            className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-black/[0.03] dark:hover:bg-white/[0.05] transition-all duration-200 active:scale-[0.98] text-[#4E525A] dark:text-[#8B949E] hover:text-[#0D0F14] dark:hover:text-[#E6EDF3]"
-            aria-label={`Basculer en mode ${resolvedTheme === 'dark' ? 'clair' : 'sombre'}`}
-          >
-            {resolvedTheme === 'dark' ? (
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <circle cx="12" cy="12" r="5" />
-                <line x1="12" y1="1" x2="12" y2="3" />
-                <line x1="12" y1="21" x2="12" y2="23" />
-                <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
-                <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
-                <line x1="1" y1="12" x2="3" y2="12" />
-                <line x1="21" y1="12" x2="23" y2="12" />
-                <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
-                <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
-              </svg>
-            ) : (
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
-                <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
-              </svg>
+          <div className="flex items-center gap-2 px-3 py-2">
+            {user?.id && organizationId && (
+              <NotificationBell userId={user.id} organizationId={organizationId} />
             )}
-            <span>{resolvedTheme === 'dark' ? 'Mode clair' : 'Mode sombre'}</span>
-          </button>
+            <button
+              onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
+              className="w-9 h-9 rounded-xl bg-black/[0.03] dark:bg-white/[0.05] hover:bg-black/[0.06] dark:hover:bg-white/[0.1] flex items-center justify-center transition-all duration-200 text-[#4E525A] dark:text-[#8B949E]"
+              aria-label={`Basculer en mode ${resolvedTheme === 'dark' ? 'clair' : 'sombre'}`}
+            >
+              {resolvedTheme === 'dark' ? (
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <circle cx="12" cy="12" r="5" />
+                  <line x1="12" y1="1" x2="12" y2="3" />
+                  <line x1="12" y1="21" x2="12" y2="23" />
+                  <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+                  <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+                  <line x1="1" y1="12" x2="3" y2="12" />
+                  <line x1="21" y1="12" x2="23" y2="12" />
+                  <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+                  <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+                </svg>
+              ) : (
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+                  <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+                </svg>
+              )}
+            </button>
+          </div>
+        )}
+
+        {/* Trust Badges */}
+        {!isCollapsed && (
+          <div className="px-3 py-3 space-y-2 border-t border-black/[0.06] dark:border-[#30363D]">
+            <TrustBadge type="hosting" variant="light" className="dark:!text-[#8B949E]" />
+            <TrustBadge type="rgpd" variant="light" className="dark:!text-[#8B949E]" />
+            <TrustBadge type="encryption" variant="light" className="dark:!text-[#8B949E]" />
+          </div>
         )}
 
         {/* User */}

@@ -161,14 +161,14 @@ export function GlobalSearch({ organizationId }: GlobalSearchProps) {
   return (
     <>
       <div
-        className="fixed inset-0 bg-black/30 z-50"
+        className="fixed inset-0 bg-black/30 dark:bg-black/50 backdrop-blur-sm z-50"
         onClick={() => setIsOpen(false)}
         aria-hidden="true"
       />
       <div className="fixed inset-x-0 top-20 z-50 flex justify-center px-4">
-        <div className="w-full max-w-xl bg-white rounded-[14px] shadow-2xl overflow-hidden">
-          <div className="flex items-center gap-3 px-4 py-3 border-b border-[#E2E4E6]">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9BA0A6" strokeWidth="2">
+        <div className="w-full max-w-xl bg-white/95 dark:bg-gray-900/95 backdrop-blur-xl rounded-[14px] shadow-2xl overflow-hidden border border-black/[0.08] dark:border-white/[0.08]">
+          <div className="flex items-center gap-3 px-4 py-3 border-b border-black/[0.06] dark:border-white/[0.06]">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-[#9BA0A6] dark:text-[#8B949E]">
               <circle cx="11" cy="11" r="8" />
               <path d="M21 21l-4.35-4.35" />
             </svg>
@@ -179,13 +179,13 @@ export function GlobalSearch({ organizationId }: GlobalSearchProps) {
               onChange={(e) => setQuery(e.target.value)}
               onKeyDown={handleKeyDown}
               placeholder="Rechercher leads, entreprises, affaires..."
-              className="flex-1 text-sm bg-transparent outline-none placeholder-[#9BA0A6]"
+              className="flex-1 text-sm bg-transparent outline-none placeholder-[#9BA0A6] dark:placeholder-[#8B949E] text-[#0D0F14] dark:text-[#E6EDF3]"
               aria-label="Recherche globale"
             />
             {isLoading && (
-              <div className="w-4 h-4 border-2 border-[#9BA0A6] border-t-transparent rounded-full animate-spin" />
+              <div className="w-4 h-4 border-2 border-[#9BA0A6] dark:border-[#8B949E] border-t-transparent rounded-full animate-spin" />
             )}
-            <kbd className="hidden sm:inline-flex px-2 py-1 text-[10px] font-medium text-[#9BA0A6] bg-[#F5F7F9] rounded border border-[#E2E4E6]">
+            <kbd className="hidden sm:inline-flex px-2 py-1 text-[10px] font-medium text-[#9BA0A6] dark:text-[#8B949E] bg-black/[0.03] dark:bg-white/[0.05] rounded border border-black/[0.08] dark:border-white/[0.08]">
               ESC
             </kbd>
           </div>
@@ -193,11 +193,11 @@ export function GlobalSearch({ organizationId }: GlobalSearchProps) {
           <div className="max-h-80 overflow-y-auto">
             {query.length < 2 ? (
               <div className="px-4 py-8 text-center">
-                <p className="text-sm text-[#9BA0A6]">Tapez au moins 2 caracteres</p>
+                <p className="text-sm text-[#9BA0A6] dark:text-[#8B949E]">Tapez au moins 2 caracteres</p>
               </div>
             ) : results.length === 0 && !isLoading ? (
               <div className="px-4 py-8 text-center">
-                <p className="text-sm text-[#9BA0A6]">Aucun resultat pour "{query}"</p>
+                <p className="text-sm text-[#9BA0A6] dark:text-[#8B949E]">Aucun resultat pour "{query}"</p>
               </div>
             ) : (
               <div className="py-2">
@@ -205,22 +205,24 @@ export function GlobalSearch({ organizationId }: GlobalSearchProps) {
                   <button
                     key={`${result.type}-${result.id}`}
                     onClick={() => handleResultClick(result)}
-                    className={`w-full flex items-center gap-3 px-4 py-3 text-left transition-colors ${
-                      index === selectedIndex ? 'bg-[#F5F7F9]' : 'hover:bg-[#F5F7F9]/50'
+                    className={`w-full flex items-center gap-3 px-4 py-3 text-left transition-all duration-200 rounded-xl mx-2 ${
+                      index === selectedIndex
+                        ? 'bg-black/[0.06] dark:bg-white/[0.1] shadow-sm'
+                        : 'hover:bg-black/[0.03] dark:hover:bg-white/[0.05]'
                     }`}
                   >
-                    <div className="w-8 h-8 rounded-[8px] bg-[#F5F7F9] flex items-center justify-center flex-shrink-0">
-                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4E525A" strokeWidth="2">
+                    <div className="w-8 h-8 rounded-lg bg-black/[0.03] dark:bg-white/[0.05] backdrop-blur-sm flex items-center justify-center flex-shrink-0 border border-black/[0.06] dark:border-white/[0.06]">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-[#4E525A] dark:text-[#8B949E]">
                         <path d={typeIcons[result.type]} />
                       </svg>
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-[#0D0F14] truncate">{result.title}</p>
+                      <p className="text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3] truncate">{result.title}</p>
                       {result.subtitle && (
-                        <p className="text-xs text-[#9BA0A6] truncate">{result.subtitle}</p>
+                        <p className="text-xs text-[#9BA0A6] dark:text-[#8B949E] truncate">{result.subtitle}</p>
                       )}
                     </div>
-                    <span className="text-[10px] font-medium text-[#9BA0A6] uppercase">
+                    <span className="text-[10px] font-medium text-[#9BA0A6] dark:text-[#8B949E] uppercase px-2 py-1 bg-black/[0.03] dark:bg-white/[0.05] rounded-md">
                       {typeLabels[result.type]}
                     </span>
                   </button>
@@ -229,18 +231,18 @@ export function GlobalSearch({ organizationId }: GlobalSearchProps) {
             )}
           </div>
 
-          <div className="px-4 py-2 border-t border-[#E2E4E6] bg-[#F5F7F9]">
-            <div className="flex items-center gap-4 text-[10px] text-[#9BA0A6]">
+          <div className="px-4 py-2 border-t border-black/[0.06] dark:border-white/[0.06] bg-black/[0.02] dark:bg-white/[0.02]">
+            <div className="flex items-center gap-4 text-[10px] text-[#9BA0A6] dark:text-[#8B949E]">
               <span className="flex items-center gap-1">
-                <kbd className="px-1.5 py-0.5 bg-white rounded border border-[#E2E4E6]">↑↓</kbd>
+                <kbd className="px-1.5 py-0.5 bg-white/80 dark:bg-gray-800/80 rounded border border-black/[0.08] dark:border-white/[0.08]">↑↓</kbd>
                 naviguer
               </span>
               <span className="flex items-center gap-1">
-                <kbd className="px-1.5 py-0.5 bg-white rounded border border-[#E2E4E6]">↵</kbd>
+                <kbd className="px-1.5 py-0.5 bg-white/80 dark:bg-gray-800/80 rounded border border-black/[0.08] dark:border-white/[0.08]">↵</kbd>
                 ouvrir
               </span>
               <span className="flex items-center gap-1">
-                <kbd className="px-1.5 py-0.5 bg-white rounded border border-[#E2E4E6]">esc</kbd>
+                <kbd className="px-1.5 py-0.5 bg-white/80 dark:bg-gray-800/80 rounded border border-black/[0.08] dark:border-white/[0.08]">esc</kbd>
                 fermer
               </span>
             </div>

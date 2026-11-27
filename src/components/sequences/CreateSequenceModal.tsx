@@ -281,7 +281,6 @@ export function CreateSequenceModal({
               Annuler
             </button>
             <FillButton
-              onClick={() => {}}
               disabled={isSubmitting || !name.trim()}
             >
               {isSubmitting ? (

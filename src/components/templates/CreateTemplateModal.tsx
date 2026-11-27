@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from 'react'
 import { createClient } from '@/lib/supabase/client'
+import { FillButton } from '@/components/ui/buttons'
 import { TemplateEditor } from './TemplateEditor'
 import { validateTemplate, extractTokensFromText } from '@/lib/utils/tokens'
 import { X, Mail, MessageSquare, Loader2 } from 'lucide-react'
@@ -322,22 +323,20 @@ export function CreateTemplateModal({
             >
               Annuler
             </button>
-            <button
-              type="submit"
+            <FillButton
               disabled={isLoading || !name.trim() || !body.trim()}
-              className="px-5 py-2.5 bg-[#0066FF] text-white rounded-xl font-medium hover:bg-[#0052CC] shadow-sm hover:shadow-md transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.98] flex items-center gap-2"
             >
               {isLoading ? (
-                <>
+                <span className="flex items-center gap-2">
                   <Loader2 className="w-4 h-4 animate-spin" />
                   {isEditing ? 'Mise a jour...' : 'Creation...'}
-                </>
+                </span>
               ) : isEditing ? (
                 'Mettre a jour'
               ) : (
                 'Creer le template'
               )}
-            </button>
+            </FillButton>
           </div>
         </form>
       </div>

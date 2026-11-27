@@ -127,7 +127,7 @@ export default function LandingPage() {
             </Link>
             <Link
               href="/auth/register"
-              className="px-4 py-2 text-sm font-medium text-white bg-[#17191F] rounded-[10px] hover:bg-[#2D3039] transition-colors"
+              className="relative px-4 py-2 text-sm font-medium text-white bg-[#17191F] rounded-[10px] overflow-hidden z-[1] transition-all duration-[250ms] ease-out before:content-[''] before:absolute before:top-0 before:left-0 before:h-full before:w-0 before:rounded-[10px] before:bg-[#0066FF] before:z-[-1] before:transition-all before:duration-[250ms] before:ease-out hover:before:w-full active:scale-95"
             >
               Commencer
             </Link>
@@ -160,13 +160,13 @@ export default function LandingPage() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               href="/auth/register"
-              className="w-full sm:w-auto px-8 py-4 text-base font-semibold text-white bg-[#0066FF] rounded-[12px] hover:bg-[#0052CC] transition-all shadow-lg shadow-[#0066FF]/20"
+              className="relative w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-white bg-[#0066FF] rounded-[12px] shadow-lg shadow-[#0066FF]/20 overflow-hidden z-[1] transition-all duration-[250ms] ease-out before:content-[''] before:absolute before:top-0 before:left-0 before:h-full before:w-0 before:rounded-[12px] before:bg-white before:z-[-1] before:transition-all before:duration-[250ms] before:ease-out hover:before:w-full hover:text-[#0066FF] active:scale-95"
             >
               Commencer gratuitement - 10 credits offerts
             </Link>
             <Link
               href="/demo"
-              className="w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-4 text-base font-semibold text-foreground bg-card/80 backdrop-blur-sm border-2 border-border rounded-[12px] hover:border-[#0066FF] hover:bg-card transition-all"
+              className="relative w-full sm:w-auto flex items-center justify-center gap-2 px-8 py-4 text-base font-semibold text-foreground bg-card/80 backdrop-blur-sm border-2 border-border rounded-[12px] overflow-hidden z-[1] transition-all duration-[250ms] ease-out before:content-[''] before:absolute before:top-0 before:left-0 before:h-full before:w-0 before:rounded-[12px] before:bg-[#0066FF] before:z-[-1] before:transition-all before:duration-[250ms] before:ease-out hover:before:w-full hover:text-white hover:border-[#0066FF] active:scale-95"
             >
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <circle cx="12" cy="12" r="10" />
@@ -459,10 +459,10 @@ export default function LandingPage() {
                 </ul>
                 <Link
                   href={plan.name === 'Business' ? '/contact' : '/auth/register'}
-                  className={`block w-full py-3 text-center font-semibold rounded-[10px] transition-colors ${
+                  className={`relative block w-full py-3 text-center font-semibold rounded-[10px] overflow-hidden z-[1] transition-all duration-[250ms] ease-out before:content-[''] before:absolute before:top-0 before:left-0 before:h-full before:w-0 before:rounded-[10px] before:z-[-1] before:transition-all before:duration-[250ms] before:ease-out hover:before:w-full active:scale-95 ${
                     plan.highlighted
-                      ? 'bg-card text-foreground hover:bg-muted'
-                      : 'bg-[#17191F] text-white hover:bg-[#2D3039]'
+                      ? 'bg-card text-foreground before:bg-[#0066FF] hover:text-white'
+                      : 'bg-[#17191F] text-white before:bg-[#0066FF]'
                   }`}
                 >
                   {plan.cta}
@@ -525,13 +525,13 @@ export default function LandingPage() {
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               href="/auth/register"
-              className="w-full sm:w-auto px-8 py-4 text-base font-semibold text-[#0066FF] bg-white rounded-[12px] hover:bg-muted transition-all shadow-xl hover:shadow-2xl hover:scale-105"
+              className="relative w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-[#0066FF] bg-white rounded-[12px] shadow-xl overflow-hidden z-[1] transition-all duration-[250ms] ease-out before:content-[''] before:absolute before:top-0 before:left-0 before:h-full before:w-0 before:rounded-[12px] before:bg-[#0066FF] before:z-[-1] before:transition-all before:duration-[250ms] before:ease-out hover:before:w-full hover:text-white hover:shadow-2xl active:scale-95"
             >
               Creer mon compte gratuit
             </Link>
             <Link
               href="/demo"
-              className="w-full sm:w-auto px-8 py-4 text-base font-semibold text-white border-2 border-white/40 rounded-[12px] hover:border-white hover:bg-card/10 transition-all backdrop-blur-sm"
+              className="relative w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-white border-2 border-white/40 rounded-[12px] backdrop-blur-sm overflow-hidden z-[1] transition-all duration-[250ms] ease-out before:content-[''] before:absolute before:top-0 before:left-0 before:h-full before:w-0 before:rounded-[12px] before:bg-white before:z-[-1] before:transition-all before:duration-[250ms] before:ease-out hover:before:w-full hover:text-[#0066FF] hover:border-white active:scale-95"
             >
               Voir en 2 min
             </Link>

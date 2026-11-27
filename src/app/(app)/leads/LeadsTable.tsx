@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { ImportCSVModal } from '@/components/modals/ImportCSVModal'
 import { VerificationBadge } from '@/components/ui/VerificationBadge'
 import { EmptyState } from '@/components/ui/EmptyState'
+import { AnimatedCheckbox } from '@/components/ui/buttons'
 
 interface Lead {
   id: number
@@ -458,12 +459,10 @@ export function LeadsTable({ leads }: LeadsTableProps) {
             <thead>
               <tr className="border-b border-border">
                 <th className="w-12 px-4 py-3">
-                  <input
-                    type="checkbox"
+                  <AnimatedCheckbox
                     checked={allVisibleSelected}
-                    onChange={toggleSelectAll}
-                    className="w-4 h-4 rounded border-border accent-foreground"
-                    aria-label="Selectionner tous les leads visibles"
+                    onChange={() => toggleSelectAll()}
+                    id="select-all-leads"
                   />
                 </th>
                 <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">

@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useCallback, useRef } from 'react'
+import { FillButton } from '@/components/ui/buttons'
 import { parseCSV, autoMapColumns, LEAD_FIELD_MAPPINGS } from '@/lib/utils/csv'
 
 interface ImportCSVModalProps {
@@ -300,13 +301,12 @@ export function ImportCSVModal({ isOpen, onClose, onImport }: ImportCSVModalProp
                 >
                   Retour
                 </button>
-                <button
+                <FillButton
                   onClick={() => setStep('preview')}
                   disabled={!Object.values(mapping).some(Boolean)}
-                  className="px-4 py-2 text-sm font-medium text-white bg-[#17191F] rounded-[8px] hover:bg-[#2D3038] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   Apercu
-                </button>
+                </FillButton>
               </>
             )}
 
@@ -318,23 +318,19 @@ export function ImportCSVModal({ isOpen, onClose, onImport }: ImportCSVModalProp
                 >
                   Retour
                 </button>
-                <button
+                <FillButton
                   onClick={handleImport}
                   disabled={isProcessing}
-                  className="px-4 py-2 text-sm font-medium text-white bg-[#17191F] rounded-[8px] hover:bg-[#2D3038] transition-colors disabled:opacity-50"
                 >
                   Importer {rows.length} leads
-                </button>
+                </FillButton>
               </>
             )}
 
             {step === 'done' && (
-              <button
-                onClick={handleClose}
-                className="ml-auto px-4 py-2 text-sm font-medium text-white bg-[#17191F] rounded-[8px] hover:bg-[#2D3038] transition-colors"
-              >
+              <FillButton onClick={handleClose} className="ml-auto">
                 Fermer
-              </button>
+              </FillButton>
             )}
           </div>
         </div>

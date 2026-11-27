@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import { createClient } from '@/lib/supabase/client'
-import { FillButton } from '@/components/ui/buttons'
+import { FillButton, AnimatedCheckbox } from '@/components/ui/buttons'
 
 interface SharedCompany {
   id: number
@@ -212,15 +212,14 @@ export default function BaseEntreprisesPage() {
               onChange={(e) => setFilters(f => ({ ...f, city: e.target.value }))}
               className="w-[150px] px-3 py-2 text-sm border border-border rounded-[8px] bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-ring/20"
             />
-            <label className="flex items-center gap-2 px-3 py-2 bg-muted rounded-[8px] cursor-pointer">
-              <input
-                type="checkbox"
+            <div className="flex items-center px-3 py-2 bg-muted rounded-[8px]">
+              <AnimatedCheckbox
                 checked={filters.isRge}
-                onChange={(e) => setFilters(f => ({ ...f, isRge: e.target.checked }))}
-                className="w-4 h-4"
+                onChange={(checked) => setFilters(f => ({ ...f, isRge: checked }))}
+                id="rge-filter"
+                label="RGE uniquement"
               />
-              <span className="text-sm text-foreground">RGE uniquement</span>
-            </label>
+            </div>
           </div>
         </div>
       </div>

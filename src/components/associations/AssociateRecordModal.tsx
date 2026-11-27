@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
+import { FillButton } from '@/components/ui/buttons'
 import { AssociationPicker, type EntityType } from './AssociationPicker'
 
 interface SelectedEntity {
@@ -221,13 +222,13 @@ export function AssociateRecordModal({
           >
             Annuler
           </button>
-          <button
+          <FillButton
             onClick={handleSubmit}
             disabled={isLoading || selectedEntities.length === 0}
-            className="flex-1 px-4 py-2.5 bg-[#17191F] text-white rounded-xl text-sm font-medium hover:bg-[#2D2F36] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex-1"
           >
             {isLoading ? 'Association...' : `Associer (${selectedEntities.length})`}
-          </button>
+          </FillButton>
         </div>
       </div>
     </div>

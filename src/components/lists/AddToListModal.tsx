@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useEffect } from 'react'
 import { createClient } from '@/lib/supabase/client'
+import { FillButton } from '@/components/ui/buttons'
 
 type Lead = {
   id: number
@@ -276,10 +277,10 @@ export function AddToListModal({
           >
             Annuler
           </button>
-          <button
+          <FillButton
             onClick={handleAddToList}
             disabled={!selectedListId || isAdding}
-            className="flex-1 px-4 py-2.5 bg-[#17191F] text-white rounded-[10px] font-medium hover:bg-[#2A2D35] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex-1"
           >
             {isAdding ? (
               <span className="flex items-center justify-center gap-2">
@@ -291,7 +292,7 @@ export function AddToListModal({
             ) : (
               'Ajouter a la liste'
             )}
-          </button>
+          </FillButton>
         </div>
       </div>
     </div>

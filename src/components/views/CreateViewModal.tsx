@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { createClient } from '@/lib/supabase/client'
+import { FillButton, AnimatedCheckbox } from '@/components/ui/buttons'
 import { Users, Lock } from 'lucide-react'
 
 type Filter = {
@@ -223,33 +224,16 @@ export function CreateViewModal({
             </div>
 
             {/* Default View Checkbox */}
-            <div>
-              <label className="flex items-center gap-3 cursor-pointer">
-                <div className="relative">
-                  <input
-                    type="checkbox"
-                    checked={isDefault}
-                    onChange={(e) => setIsDefault(e.target.checked)}
-                    disabled={isLoading}
-                    className="sr-only"
-                  />
-                  <div className={`w-5 h-5 rounded border-2 transition-all ${
-                    isDefault
-                      ? 'bg-[#0066FF] border-[#0066FF]'
-                      : 'border-black/[0.2] hover:border-black/[0.3]'
-                  }`}>
-                    {isDefault && (
-                      <svg className="w-full h-full text-white p-0.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
-                        <polyline points="20 6 9 17 4 12" />
-                      </svg>
-                    )}
-                  </div>
-                </div>
-                <div>
-                  <span className="text-sm font-medium text-[#0D0F14]">Definir comme vue par defaut</span>
-                  <p className="text-xs text-[#4E525A]">Cette vue s&apos;affichera automatiquement</p>
-                </div>
-              </label>
+            <div className="flex items-center gap-3">
+              <AnimatedCheckbox
+                id="default-view-checkbox"
+                checked={isDefault}
+                onChange={setIsDefault}
+              />
+              <div>
+                <span className="text-sm font-medium text-[#0D0F14]">Definir comme vue par defaut</span>
+                <p className="text-xs text-[#4E525A]">Cette vue s&apos;affichera automatiquement</p>
+              </div>
             </div>
 
             {/* Columns Selection */}
@@ -314,10 +298,9 @@ export function CreateViewModal({
             >
               Annuler
             </button>
-            <button
-              type="submit"
+            <FillButton
               disabled={isLoading || !name.trim() || selectedColumns.length === 0}
-              className="flex-1 px-4 py-2.5 bg-[#0066FF] text-white rounded-xl font-medium hover:bg-[#0052CC] shadow-sm hover:shadow-md transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.98]"
+              className="flex-1"
             >
               {isLoading ? (
                 <span className="flex items-center justify-center gap-2">
@@ -329,7 +312,7 @@ export function CreateViewModal({
               ) : (
                 'Creer la vue'
               )}
-            </button>
+            </FillButton>
           </div>
         </form>
       </div>

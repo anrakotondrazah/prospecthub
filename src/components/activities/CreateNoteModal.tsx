@@ -1,6 +1,7 @@
 'use client'
 
 import { useState } from 'react'
+import { FillButton } from '@/components/ui/buttons'
 import { useActivities } from '@/hooks/useActivities'
 
 interface CreateNoteModalProps {
@@ -156,10 +157,9 @@ export function CreateNoteModal({
             >
               Annuler
             </button>
-            <button
-              type="submit"
+            <FillButton
               disabled={isLoading || !body.trim()}
-              className="flex-1 px-4 py-2.5 bg-[#0066FF] text-white rounded-xl font-medium hover:bg-[#0052CC] shadow-sm hover:shadow-md transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed active:scale-[0.98]"
+              className="flex-1"
             >
               {isLoading ? (
                 <span className="flex items-center justify-center gap-2">
@@ -171,7 +171,7 @@ export function CreateNoteModal({
               ) : (
                 'Creer la note'
               )}
-            </button>
+            </FillButton>
           </div>
         </form>
       </div>

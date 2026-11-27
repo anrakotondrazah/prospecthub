@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/server'
+import { FillButton } from '@/components/ui/buttons'
 
 export const instant = false
 
@@ -93,27 +94,23 @@ export default async function CompaniesPage() {
           </p>
         </div>
         <div className="flex items-center gap-3">
-          <button
-            className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-muted-foreground bg-card border border-border rounded-[10px] cursor-not-allowed"
-            disabled
-            title="Bientot disponible"
-          >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12" />
-            </svg>
-            Importer
-          </button>
-          <button
-            className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white/60 bg-foreground/60 rounded-[10px] cursor-not-allowed"
-            disabled
-            title="Bientot disponible"
-          >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <line x1="12" y1="5" x2="12" y2="19" />
-              <line x1="5" y1="12" x2="19" y2="12" />
-            </svg>
-            Nouvelle entreprise
-          </button>
+          <FillButton disabled title="Bientot disponible">
+            <span className="flex items-center gap-2">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12" />
+              </svg>
+              Importer
+            </span>
+          </FillButton>
+          <FillButton disabled title="Bientot disponible">
+            <span className="flex items-center gap-2">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <line x1="12" y1="5" x2="12" y2="19" />
+                <line x1="5" y1="12" x2="19" y2="12" />
+              </svg>
+              Nouvelle entreprise
+            </span>
+          </FillButton>
         </div>
       </div>
 
@@ -243,18 +240,12 @@ export default async function CompaniesPage() {
               {companies.length} entreprise{companies.length > 1 ? 's' : ''}
             </p>
             <div className="flex items-center gap-2">
-              <button
-                disabled
-                className="px-3 py-1.5 text-sm text-muted-foreground border border-border rounded-[8px] cursor-not-allowed"
-              >
+              <FillButton disabled className="h-9 px-4 text-sm">
                 Precedent
-              </button>
-              <button
-                disabled
-                className="px-3 py-1.5 text-sm text-muted-foreground border border-border rounded-[8px] cursor-not-allowed"
-              >
+              </FillButton>
+              <FillButton disabled className="h-9 px-4 text-sm">
                 Suivant
-              </button>
+              </FillButton>
             </div>
           </div>
         )}

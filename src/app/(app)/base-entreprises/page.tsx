@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useCallback } from 'react'
 import { createClient } from '@/lib/supabase/client'
+import { FillButton } from '@/components/ui/buttons'
 
 interface SharedCompany {
   id: number
@@ -330,30 +331,28 @@ export default function BaseEntreprisesPage() {
                             Dans vos leads
                           </span>
                         ) : (
-                          <button
+                          <FillButton
                             onClick={() => handleUnlock(company)}
                             disabled={isUnlocking || creditsBalance < cost}
-                            className={`inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium rounded-[8px] transition-colors ${
-                              creditsBalance < cost
-                                ? 'bg-muted text-muted-foreground cursor-not-allowed'
-                                : 'bg-[#17191F] dark:bg-[#58A6FF] text-white dark:text-[#0D1117] hover:bg-[#0D0F14] dark:hover:bg-[#4A93E8]'
-                            }`}
+                            className="h-8 px-3 text-xs"
                           >
-                            {isUnlocking ? (
-                              <>
-                                <div className="w-3 h-3 border border-white border-t-transparent rounded-full animate-spin" />
-                                Ajout...
-                              </>
-                            ) : (
-                              <>
-                                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                                  <line x1="12" y1="5" x2="12" y2="19" />
-                                  <line x1="5" y1="12" x2="19" y2="12" />
-                                </svg>
-                                {cost} credit{cost > 1 ? 's' : ''}
-                              </>
-                            )}
-                          </button>
+                            <span className="flex items-center gap-1.5">
+                              {isUnlocking ? (
+                                <>
+                                  <div className="w-3 h-3 border border-current border-t-transparent rounded-full animate-spin" />
+                                  Ajout...
+                                </>
+                              ) : (
+                                <>
+                                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                                    <line x1="12" y1="5" x2="12" y2="19" />
+                                    <line x1="5" y1="12" x2="19" y2="12" />
+                                  </svg>
+                                  {cost} credit{cost > 1 ? 's' : ''}
+                                </>
+                              )}
+                            </span>
+                          </FillButton>
                         )}
                       </td>
                     </tr>

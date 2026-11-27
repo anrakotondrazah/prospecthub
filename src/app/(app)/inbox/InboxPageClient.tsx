@@ -4,6 +4,7 @@ import { useState, useMemo } from 'react'
 import { Activity, ActivityItem } from '@/components/inbox/ActivityItem'
 import { ActivityFilters, ActivityType } from '@/components/inbox/ActivityFilters'
 import { EmptyState } from '@/components/ui/EmptyState'
+import { FillButton } from '@/components/ui/buttons'
 
 interface InboxPageClientProps {
   initialActivities: Activity[]
@@ -54,17 +55,15 @@ export function InboxPageClient({ initialActivities }: InboxPageClientProps) {
             {selectedType !== 'all' && ' filtrees'}
           </p>
         </div>
-        <button
-          className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white/60 bg-[#17191F]/60 rounded-[10px] cursor-not-allowed"
-          disabled
-          title="Fonctionnalité bientôt disponible"
-        >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <line x1="12" y1="5" x2="12" y2="19" />
-            <line x1="5" y1="12" x2="19" y2="12" />
-          </svg>
-          Nouvelle activite
-        </button>
+        <FillButton disabled title="Fonctionnalite bientot disponible">
+          <span className="flex items-center gap-2">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <line x1="12" y1="5" x2="12" y2="19" />
+              <line x1="5" y1="12" x2="19" y2="12" />
+            </svg>
+            Nouvelle activite
+          </span>
+        </FillButton>
       </div>
 
       {/* Filters */}

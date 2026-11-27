@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { CreateTemplateModal, type MessageTemplate } from '@/components/templates'
+import { FillButton } from '@/components/ui/buttons'
 import {
   Plus,
   Search,
@@ -170,16 +171,15 @@ export function TemplatesPageClient({
             {templates.length} template{templates.length !== 1 ? 's' : ''} de messages
           </p>
         </div>
-        <button
-          onClick={() => {
+        <FillButton onClick={() => {
             setEditingTemplate(null)
             setShowCreateModal(true)
-          }}
-          className="flex items-center gap-2 px-4 py-2.5 bg-[#0066FF] text-white rounded-xl font-medium hover:bg-[#0052CC] shadow-sm hover:shadow-md transition-all duration-200 active:scale-[0.98]"
-        >
-          <Plus className="w-4 h-4" />
-          Nouveau template
-        </button>
+          }}>
+          <span className="flex items-center gap-2">
+            <Plus className="w-4 h-4" />
+            Nouveau template
+          </span>
+        </FillButton>
       </div>
 
       {/* Filters */}
@@ -256,12 +256,12 @@ export function TemplatesPageClient({
               <p className="text-[#4E525A] max-w-md mx-auto mb-6">
                 Creez votre premier template de message pour accelerer vos communications.
               </p>
-              <button
-                onClick={() => setShowCreateModal(true)}
-                className="px-5 py-2.5 rounded-[10px] bg-[#0066FF] text-white text-sm font-medium hover:bg-[#0052CC] transition-all"
-              >
-                Creer un template
-              </button>
+              <FillButton onClick={() => setShowCreateModal(true)}>
+                <span className="flex items-center gap-2">
+                  <Plus className="w-4 h-4" />
+                  Creer un template
+                </span>
+              </FillButton>
             </>
           ) : (
             <>

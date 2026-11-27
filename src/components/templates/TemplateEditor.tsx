@@ -121,7 +121,7 @@ export function TemplateEditor({
       {/* Subject field */}
       <div>
         <div className="flex items-center justify-between mb-2">
-          <label htmlFor="template-subject" className="text-sm font-medium text-[#0D0F14]">
+          <label htmlFor="template-subject" className="text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3]">
             Objet (optionnel)
           </label>
           <button
@@ -144,14 +144,14 @@ export function TemplateEditor({
           onClick={() => handleSelectionChange('subject')}
           placeholder="Ex: Bonjour {{lead.first_name}}, decouvrez notre solution"
           disabled={disabled}
-          className="w-full px-4 py-2.5 bg-white border border-black/[0.08] rounded-xl text-sm focus:outline-none focus:border-[#0066FF] focus:ring-3 focus:ring-[#0066FF]/10 transition-all duration-200 disabled:bg-[#F5F7F9] disabled:cursor-not-allowed"
+          className="w-full px-4 py-2.5 bg-white/80 dark:bg-[#161B22]/80 border border-black/[0.08] dark:border-[#30363D] rounded-xl text-sm text-[#0D0F14] dark:text-[#E6EDF3] focus:outline-none focus:border-[#0066FF] focus:ring-3 focus:ring-[#0066FF]/10 transition-all duration-200 disabled:bg-[#F5F7F9] dark:disabled:bg-[#21262D] disabled:cursor-not-allowed"
         />
       </div>
 
       {/* Body field */}
       <div>
         <div className="flex items-center justify-between mb-2">
-          <label htmlFor="template-body" className="text-sm font-medium text-[#0D0F14]">
+          <label htmlFor="template-body" className="text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3]">
             Corps du message <span className="text-[#B42318]">*</span>
           </label>
           <button
@@ -182,11 +182,11 @@ Cordialement,
 {{organization.name}}`}
           rows={12}
           disabled={disabled}
-          className="w-full px-4 py-3 bg-white border border-black/[0.08] rounded-xl text-sm focus:outline-none focus:border-[#0066FF] focus:ring-3 focus:ring-[#0066FF]/10 transition-all duration-200 resize-y min-h-[200px] disabled:bg-[#F5F7F9] disabled:cursor-not-allowed font-mono"
+          className="w-full px-4 py-3 bg-white/80 dark:bg-[#161B22]/80 border border-black/[0.08] dark:border-[#30363D] rounded-xl text-sm text-[#0D0F14] dark:text-[#E6EDF3] focus:outline-none focus:border-[#0066FF] focus:ring-3 focus:ring-[#0066FF]/10 transition-all duration-200 resize-y min-h-[200px] disabled:bg-[#F5F7F9] dark:disabled:bg-[#21262D] disabled:cursor-not-allowed font-mono"
         />
-        <div className="flex items-center justify-between mt-2 text-xs text-[#9BA0A6]">
+        <div className="flex items-center justify-between mt-2 text-xs text-[#9BA0A6] dark:text-[#8B949E]">
           <span>
-            Tapez <code className="bg-[#F5F7F9] px-1 rounded">{'{'}</code> pour inserer un token
+            Tapez <code className="bg-[#F5F7F9] dark:bg-[#21262D] px-1 rounded">{'{'}</code> pour inserer un token
           </span>
           <span>{body.length} caracteres</span>
         </div>
@@ -198,7 +198,7 @@ Cordialement,
           {validation.errors.map((error, i) => (
             <div
               key={`error-${i}`}
-              className="flex items-start gap-2 p-3 bg-[#FDE8E5] rounded-lg"
+              className="flex items-start gap-2 p-3 bg-[#FDE8E5] dark:bg-[#B42318]/10 rounded-lg"
             >
               <AlertCircle className="w-4 h-4 text-[#B42318] mt-0.5 flex-shrink-0" />
               <span className="text-sm text-[#B42318]">{error}</span>
@@ -207,10 +207,10 @@ Cordialement,
           {validation.warnings.map((warning, i) => (
             <div
               key={`warning-${i}`}
-              className="flex items-start gap-2 p-3 bg-[#FEF3C7] rounded-lg"
+              className="flex items-start gap-2 p-3 bg-[#FEF3C7] dark:bg-[#92400E]/10 rounded-lg"
             >
-              <AlertCircle className="w-4 h-4 text-[#92400E] mt-0.5 flex-shrink-0" />
-              <span className="text-sm text-[#92400E]">{warning}</span>
+              <AlertCircle className="w-4 h-4 text-[#92400E] dark:text-[#F59E0B] mt-0.5 flex-shrink-0" />
+              <span className="text-sm text-[#92400E] dark:text-[#F59E0B]">{warning}</span>
             </div>
           ))}
         </div>
@@ -218,7 +218,7 @@ Cordialement,
 
       {/* Success indicator */}
       {validation.isValid && validation.usedTokens.length > 0 && (
-        <div className="flex items-center gap-2 p-3 bg-[#ECFDF5] rounded-lg">
+        <div className="flex items-center gap-2 p-3 bg-[#ECFDF5] dark:bg-[#059669]/10 rounded-lg">
           <CheckCircle className="w-4 h-4 text-[#059669]" />
           <span className="text-sm text-[#059669]">
             Template valide avec {validation.usedTokens.length} token{validation.usedTokens.length > 1 ? 's' : ''} de personnalisation

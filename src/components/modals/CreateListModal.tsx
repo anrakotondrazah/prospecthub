@@ -107,20 +107,20 @@ export function CreateListModal({ isOpen, onClose, onListCreated, organizationId
 
       {/* Modal */}
       <div
-        className={`relative bg-white/95 backdrop-blur-xl rounded-2xl shadow-lg w-full ${
+        className={`relative bg-white/95 dark:bg-[#0D1117]/95 backdrop-blur-xl rounded-2xl shadow-lg w-full ${
           type === 'dynamic' ? 'max-w-2xl max-h-[90vh] overflow-hidden flex flex-col' : 'max-w-md'
         }`}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-black/[0.06]">
-          <h2 className="text-xl font-semibold text-[#0D0F14]">Creer une liste</h2>
+        <div className="flex items-center justify-between p-6 border-b border-black/[0.06] dark:border-[#30363D]">
+          <h2 className="text-xl font-semibold text-[#0D0F14] dark:text-[#E6EDF3]">Creer une liste</h2>
           <button
             onClick={handleClose}
-            className="w-8 h-8 rounded-xl hover:bg-black/[0.04] flex items-center justify-center transition-all duration-200 active:scale-95"
+            className="w-8 h-8 rounded-xl hover:bg-black/[0.04] dark:hover:bg-white/[0.05] flex items-center justify-center transition-all duration-200 active:scale-95"
             aria-label="Fermer"
           >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4E525A" strokeWidth="2">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-[#4E525A] dark:text-[#8B949E]">
               <line x1="18" y1="6" x2="6" y2="18" />
               <line x1="6" y1="6" x2="18" y2="18" />
             </svg>
@@ -131,7 +131,7 @@ export function CreateListModal({ isOpen, onClose, onListCreated, organizationId
         <form onSubmit={handleSubmit} className={`p-6 space-y-5 ${type === 'dynamic' ? 'flex-1 overflow-y-auto' : ''}`}>
           {/* Error Message */}
           {error && (
-            <div className="p-4 bg-[#FDE8E5] border border-[#B42318]/20 rounded-xl flex items-start gap-3 shadow-sm">
+            <div className="p-4 bg-[#FDE8E5] dark:bg-[#B42318]/10 border border-[#B42318]/20 rounded-xl flex items-start gap-3 shadow-sm">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B42318" strokeWidth="2" className="flex-shrink-0 mt-0.5">
                 <circle cx="12" cy="12" r="10" />
                 <line x1="12" y1="8" x2="12" y2="12" />
@@ -143,7 +143,7 @@ export function CreateListModal({ isOpen, onClose, onListCreated, organizationId
 
           {/* Name Field */}
           <div>
-            <label htmlFor="list-name" className="block text-sm font-medium text-[#0D0F14] mb-2">
+            <label htmlFor="list-name" className="block text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3] mb-2">
               Nom de la liste <span className="text-[#B42318]">*</span>
             </label>
             <input
@@ -152,7 +152,7 @@ export function CreateListModal({ isOpen, onClose, onListCreated, organizationId
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Ex: Leads chauds Q4"
-              className="w-full px-4 py-2.5 bg-white/80 backdrop-blur-sm border border-black/[0.08] rounded-xl text-sm focus:outline-none focus:border-[#0066FF] focus:ring-3 focus:ring-[#0066FF]/10 transition-all duration-200 shadow-sm hover:border-black/[0.12]"
+              className="w-full px-4 py-2.5 bg-white/80 dark:bg-[#161B22]/80 backdrop-blur-sm border border-black/[0.08] dark:border-[#30363D] rounded-xl text-sm text-[#0D0F14] dark:text-[#E6EDF3] focus:outline-none focus:border-[#0066FF] focus:ring-3 focus:ring-[#0066FF]/10 transition-all duration-200 shadow-sm hover:border-black/[0.12] dark:hover:border-[#30363D]"
               disabled={isLoading}
               maxLength={255}
             />
@@ -160,7 +160,7 @@ export function CreateListModal({ isOpen, onClose, onListCreated, organizationId
 
           {/* Description Field */}
           <div>
-            <label htmlFor="list-description" className="block text-sm font-medium text-[#0D0F14] mb-2">
+            <label htmlFor="list-description" className="block text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3] mb-2">
               Description (optionnel)
             </label>
             <textarea
@@ -169,14 +169,14 @@ export function CreateListModal({ isOpen, onClose, onListCreated, organizationId
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Decrivez lobjectif de cette liste..."
               rows={3}
-              className="w-full px-4 py-2.5 bg-white/80 backdrop-blur-sm border border-black/[0.08] rounded-xl text-sm focus:outline-none focus:border-[#0066FF] focus:ring-3 focus:ring-[#0066FF]/10 transition-all duration-200 shadow-sm hover:border-black/[0.12] resize-none"
+              className="w-full px-4 py-2.5 bg-white/80 dark:bg-[#161B22]/80 backdrop-blur-sm border border-black/[0.08] dark:border-[#30363D] rounded-xl text-sm text-[#0D0F14] dark:text-[#E6EDF3] focus:outline-none focus:border-[#0066FF] focus:ring-3 focus:ring-[#0066FF]/10 transition-all duration-200 shadow-sm hover:border-black/[0.12] dark:hover:border-[#30363D] resize-none"
               disabled={isLoading}
             />
           </div>
 
           {/* Type Selection */}
           <div>
-            <label className="block text-sm font-medium text-[#0D0F14] mb-3">
+            <label className="block text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3] mb-3">
               Type de liste
             </label>
             <div className="grid grid-cols-2 gap-3">
@@ -187,20 +187,20 @@ export function CreateListModal({ isOpen, onClose, onListCreated, organizationId
                 className={`p-4 rounded-xl border transition-all duration-200 ${
                   type === 'static'
                     ? 'border-[#0066FF] bg-[#0066FF]/5 shadow-sm'
-                    : 'border-black/[0.08] hover:border-black/[0.12] hover:bg-black/[0.02]'
+                    : 'border-black/[0.08] dark:border-[#30363D] hover:border-black/[0.12] dark:hover:border-[#30363D] hover:bg-black/[0.02] dark:hover:bg-white/[0.02]'
                 }`}
               >
                 <div className="flex items-center gap-2 mb-2">
                   <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
-                    type === 'static' ? 'border-[#0066FF]' : 'border-black/[0.2]'
+                    type === 'static' ? 'border-[#0066FF]' : 'border-black/[0.2] dark:border-[#30363D]'
                   }`}>
                     {type === 'static' && (
                       <div className="w-2.5 h-2.5 rounded-full bg-[#0066FF]" />
                     )}
                   </div>
-                  <span className="font-medium text-[#0D0F14]">Statique</span>
+                  <span className="font-medium text-[#0D0F14] dark:text-[#E6EDF3]">Statique</span>
                 </div>
-                <p className="text-xs text-[#4E525A] text-left">
+                <p className="text-xs text-[#4E525A] dark:text-[#8B949E] text-left">
                   Ajoutez et retirez des leads manuellement
                 </p>
               </button>
@@ -212,20 +212,20 @@ export function CreateListModal({ isOpen, onClose, onListCreated, organizationId
                 className={`p-4 rounded-xl border transition-all duration-200 ${
                   type === 'dynamic'
                     ? 'border-[#0066FF] bg-[#0066FF]/5 shadow-sm'
-                    : 'border-black/[0.08] hover:border-black/[0.12] hover:bg-black/[0.02]'
+                    : 'border-black/[0.08] dark:border-[#30363D] hover:border-black/[0.12] dark:hover:border-[#30363D] hover:bg-black/[0.02] dark:hover:bg-white/[0.02]'
                 }`}
               >
                 <div className="flex items-center gap-2 mb-2">
                   <div className={`w-5 h-5 rounded-full border-2 flex items-center justify-center ${
-                    type === 'dynamic' ? 'border-[#0066FF]' : 'border-black/[0.2]'
+                    type === 'dynamic' ? 'border-[#0066FF]' : 'border-black/[0.2] dark:border-[#30363D]'
                   }`}>
                     {type === 'dynamic' && (
                       <div className="w-2.5 h-2.5 rounded-full bg-[#0066FF]" />
                     )}
                   </div>
-                  <span className="font-medium text-[#0D0F14]">Dynamique</span>
+                  <span className="font-medium text-[#0D0F14] dark:text-[#E6EDF3]">Dynamique</span>
                 </div>
-                <p className="text-xs text-[#4E525A] text-left">
+                <p className="text-xs text-[#4E525A] dark:text-[#8B949E] text-left">
                   Mise a jour automatique par filtres
                 </p>
               </button>
@@ -235,10 +235,10 @@ export function CreateListModal({ isOpen, onClose, onListCreated, organizationId
           {/* Dynamic List Filters */}
           {type === 'dynamic' && (
             <div>
-              <label className="block text-sm font-medium text-[#0D0F14] mb-3">
+              <label className="block text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3] mb-3">
                 Filtres de la liste
               </label>
-              <p className="text-xs text-[#4E525A] mb-4">
+              <p className="text-xs text-[#4E525A] dark:text-[#8B949E] mb-4">
                 Les leads correspondant a ces criteres seront automatiquement ajoutes a la liste.
               </p>
               <ListFiltersEditor
@@ -255,7 +255,7 @@ export function CreateListModal({ isOpen, onClose, onListCreated, organizationId
               type="button"
               onClick={handleClose}
               disabled={isLoading}
-              className="flex-1 px-4 py-2.5 bg-transparent border border-black/[0.08] text-[#4E525A] rounded-xl font-medium hover:bg-black/[0.03] transition-all duration-200 disabled:opacity-50 active:scale-[0.98]"
+              className="flex-1 px-4 py-2.5 bg-transparent border border-black/[0.08] dark:border-[#30363D] text-[#4E525A] dark:text-[#8B949E] rounded-xl font-medium hover:bg-black/[0.03] dark:hover:bg-white/[0.03] transition-all duration-200 disabled:opacity-50 active:scale-[0.98]"
             >
               Annuler
             </button>

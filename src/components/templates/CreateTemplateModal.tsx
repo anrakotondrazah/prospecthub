@@ -180,25 +180,25 @@ export function CreateTemplateModal({
 
       {/* Modal */}
       <div
-        className="relative bg-white/95 backdrop-blur-xl rounded-2xl shadow-lg max-w-2xl w-full max-h-[90vh] overflow-hidden flex flex-col"
+        className="relative bg-white/95 dark:bg-[#0D1117]/95 backdrop-blur-xl rounded-2xl shadow-lg max-w-2xl w-full max-h-[90vh] overflow-hidden flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-black/[0.06]">
+        <div className="flex items-center justify-between p-6 border-b border-black/[0.06] dark:border-[#30363D]">
           <div>
-            <h2 className="text-xl font-semibold text-[#0D0F14]">
+            <h2 className="text-xl font-semibold text-[#0D0F14] dark:text-[#E6EDF3]">
               {isEditing ? 'Modifier le template' : 'Creer un template'}
             </h2>
-            <p className="text-sm text-[#4E525A] mt-0.5">
+            <p className="text-sm text-[#4E525A] dark:text-[#8B949E] mt-0.5">
               Utilisez des tokens pour personnaliser vos messages
             </p>
           </div>
           <button
             onClick={onClose}
-            className="w-8 h-8 rounded-xl hover:bg-black/[0.04] flex items-center justify-center transition-all duration-200 active:scale-95"
+            className="w-8 h-8 rounded-xl hover:bg-black/[0.04] dark:hover:bg-white/[0.05] flex items-center justify-center transition-all duration-200 active:scale-95"
             aria-label="Fermer"
           >
-            <X className="w-5 h-5 text-[#4E525A]" />
+            <X className="w-5 h-5 text-[#4E525A] dark:text-[#8B949E]" />
           </button>
         </div>
 
@@ -207,7 +207,7 @@ export function CreateTemplateModal({
           <div className="p-6 space-y-5">
             {/* Error Message */}
             {error && (
-              <div className="p-4 bg-[#FDE8E5] border border-[#B42318]/20 rounded-xl flex items-start gap-3 shadow-sm">
+              <div className="p-4 bg-[#FDE8E5] dark:bg-[#B42318]/10 border border-[#B42318]/20 rounded-xl flex items-start gap-3 shadow-sm">
                 <svg
                   width="20"
                   height="20"
@@ -229,7 +229,7 @@ export function CreateTemplateModal({
             <div className="grid grid-cols-2 gap-4">
               {/* Name Field */}
               <div>
-                <label htmlFor="template-name" className="block text-sm font-medium text-[#0D0F14] mb-2">
+                <label htmlFor="template-name" className="block text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3] mb-2">
                   Nom du template <span className="text-[#B42318]">*</span>
                 </label>
                 <input
@@ -238,7 +238,7 @@ export function CreateTemplateModal({
                   value={name}
                   onChange={(e) => setName(e.target.value)}
                   placeholder="Ex: Premier contact prospect"
-                  className="w-full px-4 py-2.5 bg-white border border-black/[0.08] rounded-xl text-sm focus:outline-none focus:border-[#0066FF] focus:ring-3 focus:ring-[#0066FF]/10 transition-all duration-200"
+                  className="w-full px-4 py-2.5 bg-white/80 dark:bg-[#161B22]/80 border border-black/[0.08] dark:border-[#30363D] rounded-xl text-sm text-[#0D0F14] dark:text-[#E6EDF3] focus:outline-none focus:border-[#0066FF] focus:ring-3 focus:ring-[#0066FF]/10 transition-all duration-200"
                   disabled={isLoading}
                   maxLength={255}
                 />
@@ -246,7 +246,7 @@ export function CreateTemplateModal({
 
               {/* Type Selection */}
               <div>
-                <label className="block text-sm font-medium text-[#0D0F14] mb-2">Type</label>
+                <label className="block text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3] mb-2">Type</label>
                 <div className="flex gap-2">
                   {TEMPLATE_TYPES.map((t) => (
                     <button
@@ -257,7 +257,7 @@ export function CreateTemplateModal({
                       className={`flex-1 flex items-center justify-center gap-1.5 px-3 py-2.5 rounded-xl border transition-all duration-200 ${
                         type === t.value
                           ? 'border-[#0066FF] bg-[#0066FF]/5 text-[#0066FF]'
-                          : 'border-black/[0.08] text-[#4E525A] hover:border-black/[0.12] hover:bg-black/[0.02]'
+                          : 'border-black/[0.08] dark:border-[#30363D] text-[#4E525A] dark:text-[#8B949E] hover:border-black/[0.12] dark:hover:border-[#30363D] hover:bg-black/[0.02] dark:hover:bg-white/[0.02]'
                       }`}
                     >
                       {t.icon}
@@ -270,7 +270,7 @@ export function CreateTemplateModal({
 
             {/* Category */}
             <div>
-              <label htmlFor="template-category" className="block text-sm font-medium text-[#0D0F14] mb-2">
+              <label htmlFor="template-category" className="block text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3] mb-2">
                 Categorie (optionnel)
               </label>
               {categories.length > 0 ? (
@@ -278,7 +278,7 @@ export function CreateTemplateModal({
                   id="template-category"
                   value={category}
                   onChange={(e) => setCategory(e.target.value)}
-                  className="w-full px-4 py-2.5 bg-white border border-black/[0.08] rounded-xl text-sm focus:outline-none focus:border-[#0066FF] focus:ring-3 focus:ring-[#0066FF]/10 transition-all duration-200"
+                  className="w-full px-4 py-2.5 bg-white/80 dark:bg-[#161B22]/80 border border-black/[0.08] dark:border-[#30363D] rounded-xl text-sm text-[#0D0F14] dark:text-[#E6EDF3] focus:outline-none focus:border-[#0066FF] focus:ring-3 focus:ring-[#0066FF]/10 transition-all duration-200"
                   disabled={isLoading}
                 >
                   <option value="">Aucune categorie</option>
@@ -295,7 +295,7 @@ export function CreateTemplateModal({
                   value={category}
                   onChange={(e) => setCategory(e.target.value)}
                   placeholder="Ex: Prospection, Suivi, Relance..."
-                  className="w-full px-4 py-2.5 bg-white border border-black/[0.08] rounded-xl text-sm focus:outline-none focus:border-[#0066FF] focus:ring-3 focus:ring-[#0066FF]/10 transition-all duration-200"
+                  className="w-full px-4 py-2.5 bg-white/80 dark:bg-[#161B22]/80 border border-black/[0.08] dark:border-[#30363D] rounded-xl text-sm text-[#0D0F14] dark:text-[#E6EDF3] focus:outline-none focus:border-[#0066FF] focus:ring-3 focus:ring-[#0066FF]/10 transition-all duration-200"
                   disabled={isLoading}
                   maxLength={100}
                 />
@@ -314,12 +314,12 @@ export function CreateTemplateModal({
           </div>
 
           {/* Footer Actions */}
-          <div className="flex items-center justify-end gap-3 p-6 border-t border-black/[0.06] bg-[#FAFBFC]">
+          <div className="flex items-center justify-end gap-3 p-6 border-t border-black/[0.06] dark:border-[#30363D] bg-[#FAFBFC] dark:bg-[#161B22]">
             <button
               type="button"
               onClick={onClose}
               disabled={isLoading}
-              className="px-5 py-2.5 bg-transparent border border-black/[0.08] text-[#4E525A] rounded-xl font-medium hover:bg-black/[0.03] transition-all duration-200 disabled:opacity-50 active:scale-[0.98]"
+              className="px-5 py-2.5 bg-transparent border border-black/[0.08] dark:border-[#30363D] text-[#4E525A] dark:text-[#8B949E] rounded-xl font-medium hover:bg-black/[0.03] dark:hover:bg-white/[0.03] transition-all duration-200 disabled:opacity-50 active:scale-[0.98]"
             >
               Annuler
             </button>

@@ -132,18 +132,18 @@ export function CreateProductModal({
 
       {/* Modal */}
       <div
-        className="relative bg-white/95 backdrop-blur-xl rounded-2xl shadow-lg max-w-lg w-full max-h-[90vh] overflow-y-auto"
+        className="relative bg-white/95 dark:bg-[#0D1117]/95 backdrop-blur-xl rounded-2xl shadow-lg max-w-lg w-full max-h-[90vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-black/[0.06] sticky top-0 bg-white/95 backdrop-blur-xl">
-          <h2 className="text-xl font-semibold text-[#0D0F14]">Creer un produit</h2>
+        <div className="flex items-center justify-between p-6 border-b border-black/[0.06] dark:border-[#30363D] sticky top-0 bg-white/95 dark:bg-[#0D1117]/95 backdrop-blur-xl">
+          <h2 className="text-xl font-semibold text-[#0D0F14] dark:text-[#E6EDF3]">Creer un produit</h2>
           <button
             onClick={onClose}
-            className="w-8 h-8 rounded-xl hover:bg-black/[0.04] flex items-center justify-center transition-all duration-200 active:scale-95"
+            className="w-8 h-8 rounded-xl hover:bg-black/[0.04] dark:hover:bg-white/[0.05] flex items-center justify-center transition-all duration-200 active:scale-95"
             aria-label="Fermer"
           >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4E525A" strokeWidth="2">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-[#4E525A] dark:text-[#8B949E]">
               <line x1="18" y1="6" x2="6" y2="18" />
               <line x1="6" y1="6" x2="18" y2="18" />
             </svg>
@@ -154,7 +154,7 @@ export function CreateProductModal({
         <form onSubmit={handleSubmit} className="p-6 space-y-5">
           {/* Error Message */}
           {error && (
-            <div className="p-4 bg-[#FDE8E5] border border-[#B42318]/20 rounded-xl flex items-start gap-3 shadow-sm">
+            <div className="p-4 bg-[#FDE8E5] dark:bg-[#B42318]/10 border border-[#B42318]/20 rounded-xl flex items-start gap-3 shadow-sm">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B42318" strokeWidth="2" className="flex-shrink-0 mt-0.5">
                 <circle cx="12" cy="12" r="10" />
                 <line x1="12" y1="8" x2="12" y2="12" />
@@ -166,7 +166,7 @@ export function CreateProductModal({
 
           {/* Name Field */}
           <div>
-            <label htmlFor="product-name" className="block text-sm font-medium text-[#0D0F14] mb-2">
+            <label htmlFor="product-name" className="block text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3] mb-2">
               Nom du produit <span className="text-[#B42318]">*</span>
             </label>
             <input
@@ -175,7 +175,7 @@ export function CreateProductModal({
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Ex: Consultation 1h"
-              className="w-full px-4 py-2.5 bg-white/80 backdrop-blur-sm border border-black/[0.08] rounded-xl text-sm focus:outline-none focus:border-[#0066FF] focus:ring-3 focus:ring-[#0066FF]/10 transition-all duration-200 shadow-sm hover:border-black/[0.12]"
+              className="w-full px-4 py-2.5 bg-white/80 dark:bg-[#161B22]/80 backdrop-blur-sm border border-black/[0.08] dark:border-[#30363D] rounded-xl text-sm text-[#0D0F14] dark:text-[#E6EDF3] focus:outline-none focus:border-[#0066FF] focus:ring-3 focus:ring-[#0066FF]/10 transition-all duration-200 shadow-sm hover:border-black/[0.12] dark:hover:border-[#30363D]"
               disabled={isLoading}
               maxLength={255}
             />
@@ -184,7 +184,7 @@ export function CreateProductModal({
           {/* SKU & Category */}
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label htmlFor="product-sku" className="block text-sm font-medium text-[#0D0F14] mb-2">
+              <label htmlFor="product-sku" className="block text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3] mb-2">
                 Reference / SKU
               </label>
               <input
@@ -193,12 +193,12 @@ export function CreateProductModal({
                 value={sku}
                 onChange={(e) => setSku(e.target.value)}
                 placeholder="CONS-001"
-                className="w-full px-4 py-2.5 bg-white/80 backdrop-blur-sm border border-black/[0.08] rounded-xl text-sm focus:outline-none focus:border-[#0066FF] focus:ring-3 focus:ring-[#0066FF]/10 transition-all duration-200 shadow-sm hover:border-black/[0.12]"
+                className="w-full px-4 py-2.5 bg-white/80 dark:bg-[#161B22]/80 backdrop-blur-sm border border-black/[0.08] dark:border-[#30363D] rounded-xl text-sm text-[#0D0F14] dark:text-[#E6EDF3] focus:outline-none focus:border-[#0066FF] focus:ring-3 focus:ring-[#0066FF]/10 transition-all duration-200 shadow-sm hover:border-black/[0.12] dark:hover:border-[#30363D]"
                 disabled={isLoading}
               />
             </div>
             <div>
-              <label htmlFor="product-category" className="block text-sm font-medium text-[#0D0F14] mb-2">
+              <label htmlFor="product-category" className="block text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3] mb-2">
                 Categorie
               </label>
               <input
@@ -207,7 +207,7 @@ export function CreateProductModal({
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
                 placeholder="Services"
-                className="w-full px-4 py-2.5 bg-white/80 backdrop-blur-sm border border-black/[0.08] rounded-xl text-sm focus:outline-none focus:border-[#0066FF] focus:ring-3 focus:ring-[#0066FF]/10 transition-all duration-200 shadow-sm hover:border-black/[0.12]"
+                className="w-full px-4 py-2.5 bg-white/80 dark:bg-[#161B22]/80 backdrop-blur-sm border border-black/[0.08] dark:border-[#30363D] rounded-xl text-sm text-[#0D0F14] dark:text-[#E6EDF3] focus:outline-none focus:border-[#0066FF] focus:ring-3 focus:ring-[#0066FF]/10 transition-all duration-200 shadow-sm hover:border-black/[0.12] dark:hover:border-[#30363D]"
                 disabled={isLoading}
               />
             </div>
@@ -215,7 +215,7 @@ export function CreateProductModal({
 
           {/* Description */}
           <div>
-            <label htmlFor="product-description" className="block text-sm font-medium text-[#0D0F14] mb-2">
+            <label htmlFor="product-description" className="block text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3] mb-2">
               Description
             </label>
             <textarea
@@ -224,7 +224,7 @@ export function CreateProductModal({
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Decrivez votre produit ou service..."
               rows={3}
-              className="w-full px-4 py-2.5 bg-white/80 backdrop-blur-sm border border-black/[0.08] rounded-xl text-sm focus:outline-none focus:border-[#0066FF] focus:ring-3 focus:ring-[#0066FF]/10 transition-all duration-200 shadow-sm hover:border-black/[0.12] resize-none"
+              className="w-full px-4 py-2.5 bg-white/80 dark:bg-[#161B22]/80 backdrop-blur-sm border border-black/[0.08] dark:border-[#30363D] rounded-xl text-sm text-[#0D0F14] dark:text-[#E6EDF3] focus:outline-none focus:border-[#0066FF] focus:ring-3 focus:ring-[#0066FF]/10 transition-all duration-200 shadow-sm hover:border-black/[0.12] dark:hover:border-[#30363D] resize-none"
               disabled={isLoading}
             />
           </div>
@@ -232,7 +232,7 @@ export function CreateProductModal({
           {/* Price & Unit */}
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label htmlFor="product-price" className="block text-sm font-medium text-[#0D0F14] mb-2">
+              <label htmlFor="product-price" className="block text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3] mb-2">
                 Prix unitaire HT <span className="text-[#B42318]">*</span>
               </label>
               <div className="relative">
@@ -244,21 +244,21 @@ export function CreateProductModal({
                   placeholder="0.00"
                   min="0"
                   step="0.01"
-                  className="w-full px-4 py-2.5 pr-12 bg-white/80 backdrop-blur-sm border border-black/[0.08] rounded-xl text-sm focus:outline-none focus:border-[#0066FF] focus:ring-3 focus:ring-[#0066FF]/10 transition-all duration-200 shadow-sm hover:border-black/[0.12]"
+                  className="w-full px-4 py-2.5 pr-12 bg-white/80 dark:bg-[#161B22]/80 backdrop-blur-sm border border-black/[0.08] dark:border-[#30363D] rounded-xl text-sm text-[#0D0F14] dark:text-[#E6EDF3] focus:outline-none focus:border-[#0066FF] focus:ring-3 focus:ring-[#0066FF]/10 transition-all duration-200 shadow-sm hover:border-black/[0.12] dark:hover:border-[#30363D]"
                   disabled={isLoading}
                 />
-                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-[#9BA0A6]">EUR</span>
+                <span className="absolute right-4 top-1/2 -translate-y-1/2 text-sm text-[#9BA0A6] dark:text-[#8B949E]">EUR</span>
               </div>
             </div>
             <div>
-              <label htmlFor="product-unit" className="block text-sm font-medium text-[#0D0F14] mb-2">
+              <label htmlFor="product-unit" className="block text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3] mb-2">
                 Unite
               </label>
               <select
                 id="product-unit"
                 value={unit}
                 onChange={(e) => setUnit(e.target.value)}
-                className="w-full px-4 py-2.5 bg-white/80 backdrop-blur-sm border border-black/[0.08] rounded-xl text-sm focus:outline-none focus:border-[#0066FF] focus:ring-3 focus:ring-[#0066FF]/10 transition-all duration-200 shadow-sm hover:border-black/[0.12]"
+                className="w-full px-4 py-2.5 bg-white/80 dark:bg-[#161B22]/80 backdrop-blur-sm border border-black/[0.08] dark:border-[#30363D] rounded-xl text-sm text-[#0D0F14] dark:text-[#E6EDF3] focus:outline-none focus:border-[#0066FF] focus:ring-3 focus:ring-[#0066FF]/10 transition-all duration-200 shadow-sm hover:border-black/[0.12] dark:hover:border-[#30363D]"
                 disabled={isLoading}
               >
                 {UNITS.map((u) => (
@@ -270,7 +270,7 @@ export function CreateProductModal({
 
           {/* Tax Rate */}
           <div>
-            <label htmlFor="product-tax" className="block text-sm font-medium text-[#0D0F14] mb-2">
+            <label htmlFor="product-tax" className="block text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3] mb-2">
               Taux de TVA
             </label>
             <div className="flex gap-2">
@@ -282,8 +282,8 @@ export function CreateProductModal({
                   disabled={isLoading}
                   className={`flex-1 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
                     taxRate === rate.value
-                      ? 'bg-[#17191F] text-white'
-                      : 'bg-[#F5F7F9] text-[#4E525A] hover:bg-[#E2E4E6]'
+                      ? 'bg-[#17191F] dark:bg-[#E6EDF3] text-white dark:text-[#0D1117]'
+                      : 'bg-[#F5F7F9] dark:bg-[#21262D] text-[#4E525A] dark:text-[#8B949E] hover:bg-[#E2E4E6] dark:hover:bg-[#30363D]'
                   } disabled:opacity-50`}
                 >
                   {rate.label}
@@ -293,10 +293,10 @@ export function CreateProductModal({
           </div>
 
           {/* Recurring toggle */}
-          <div className="flex items-center justify-between p-4 bg-[#F5F7F9] rounded-xl">
+          <div className="flex items-center justify-between p-4 bg-[#F5F7F9] dark:bg-[#21262D] rounded-xl">
             <div>
-              <p className="text-sm font-medium text-[#0D0F14]">Produit recurrent</p>
-              <p className="text-xs text-[#4E525A]">Ce produit est facture de maniere recurrente</p>
+              <p className="text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3]">Produit recurrent</p>
+              <p className="text-xs text-[#4E525A] dark:text-[#8B949E]">Ce produit est facture de maniere recurrente</p>
             </div>
             <button
               type="button"
@@ -320,7 +320,7 @@ export function CreateProductModal({
               type="button"
               onClick={onClose}
               disabled={isLoading}
-              className="flex-1 px-4 py-2.5 bg-transparent border border-black/[0.08] text-[#4E525A] rounded-xl font-medium hover:bg-black/[0.03] transition-all duration-200 disabled:opacity-50 active:scale-[0.98]"
+              className="flex-1 px-4 py-2.5 bg-transparent border border-black/[0.08] dark:border-[#30363D] text-[#4E525A] dark:text-[#8B949E] rounded-xl font-medium hover:bg-black/[0.03] dark:hover:bg-white/[0.03] transition-all duration-200 disabled:opacity-50 active:scale-[0.98]"
             >
               Annuler
             </button>

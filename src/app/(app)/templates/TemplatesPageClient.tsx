@@ -166,8 +166,8 @@ export function TemplatesPageClient({
       {/* Header */}
       <div className="flex items-center justify-between mb-6">
         <div>
-          <h1 className="text-[23.5px] font-semibold text-[#0D0F14] mb-1">Templates</h1>
-          <p className="text-sm text-[#4E525A]">
+          <h1 className="text-[23.5px] font-semibold text-[#0D0F14] dark:text-[#E6EDF3] mb-1">Templates</h1>
+          <p className="text-sm text-[#4E525A] dark:text-[#8B949E]">
             {templates.length} template{templates.length !== 1 ? 's' : ''} de messages
           </p>
         </div>
@@ -186,24 +186,24 @@ export function TemplatesPageClient({
       <div className="flex items-center gap-3 mb-6">
         {/* Search */}
         <div className="relative flex-1 max-w-md">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#9BA0A6]" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#9BA0A6] dark:text-[#8B949E]" />
           <input
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Rechercher un template..."
-            className="w-full pl-10 pr-4 py-2.5 bg-white border border-black/[0.08] rounded-xl text-sm focus:outline-none focus:border-[#0066FF] focus:ring-3 focus:ring-[#0066FF]/10 transition-all duration-200"
+            className="w-full pl-10 pr-4 py-2.5 bg-white dark:bg-[#161B22] border border-black/[0.08] dark:border-white/[0.08] rounded-xl text-sm text-[#0D0F14] dark:text-[#E6EDF3] placeholder:text-[#9BA0A6] dark:placeholder:text-[#8B949E] focus:outline-none focus:border-[#0066FF] focus:ring-3 focus:ring-[#0066FF]/10 transition-all duration-200"
           />
         </div>
 
         {/* Type filter */}
-        <div className="flex items-center gap-1 p-1 bg-[#F5F7F9] rounded-xl">
+        <div className="flex items-center gap-2 p-1 bg-[#F5F7F9] dark:bg-[#21262D] rounded-xl">
           <button
             onClick={() => setFilterType('all')}
-            className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${
+            className={`px-4 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition-all duration-200 ${
               filterType === 'all'
-                ? 'bg-white text-[#0D0F14] shadow-sm'
-                : 'text-[#4E525A] hover:text-[#0D0F14]'
+                ? 'bg-foreground text-background'
+                : 'bg-muted text-muted-foreground hover:bg-muted/80'
             }`}
           >
             Tous
@@ -212,10 +212,10 @@ export function TemplatesPageClient({
             <button
               key={type}
               onClick={() => setFilterType(type)}
-              className={`flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-sm font-medium transition-all ${
+              className={`flex items-center gap-1.5 px-4 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition-all duration-200 ${
                 filterType === type
-                  ? 'bg-white text-[#0D0F14] shadow-sm'
-                  : 'text-[#4E525A] hover:text-[#0D0F14]'
+                  ? 'bg-foreground text-background'
+                  : 'bg-muted text-muted-foreground hover:bg-muted/80'
               }`}
             >
               {TYPE_ICONS[type]}
@@ -230,7 +230,7 @@ export function TemplatesPageClient({
             <select
               value={filterCategory}
               onChange={(e) => setFilterCategory(e.target.value)}
-              className="appearance-none pl-9 pr-8 py-2.5 bg-white border border-black/[0.08] rounded-xl text-sm focus:outline-none focus:border-[#0066FF] focus:ring-3 focus:ring-[#0066FF]/10 cursor-pointer"
+              className="appearance-none pl-9 pr-8 py-2.5 bg-white dark:bg-[#161B22] border border-black/[0.08] dark:border-white/[0.08] rounded-xl text-sm text-[#0D0F14] dark:text-[#E6EDF3] focus:outline-none focus:border-[#0066FF] focus:ring-3 focus:ring-[#0066FF]/10 cursor-pointer"
             >
               <option value="all">Toutes categories</option>
               {templateCategories.map((cat) => (
@@ -239,21 +239,21 @@ export function TemplatesPageClient({
                 </option>
               ))}
             </select>
-            <Filter className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#9BA0A6] pointer-events-none" />
+            <Filter className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#9BA0A6] dark:text-[#8B949E] pointer-events-none" />
           </div>
         )}
       </div>
 
       {/* Templates Grid */}
       {filteredTemplates.length === 0 ? (
-        <div className="bg-white rounded-[14px] border border-[#E2E4E6] p-12 text-center">
-          <div className="w-20 h-20 mx-auto mb-5 rounded-[14px] bg-[#F5F7F9] flex items-center justify-center">
-            <FileText className="w-12 h-12 text-[#9BA0A6]" strokeWidth={1.5} />
+        <div className="bg-white dark:bg-[#161B22] rounded-[14px] border border-[#E2E4E6] dark:border-[#30363D] p-12 text-center">
+          <div className="w-20 h-20 mx-auto mb-5 rounded-[14px] bg-[#F5F7F9] dark:bg-[#21262D] flex items-center justify-center">
+            <FileText className="w-12 h-12 text-[#9BA0A6] dark:text-[#8B949E]" strokeWidth={1.5} />
           </div>
           {templates.length === 0 ? (
             <>
-              <h2 className="text-xl font-semibold text-[#0D0F14] mb-2">Aucun template</h2>
-              <p className="text-[#4E525A] max-w-md mx-auto mb-6">
+              <h2 className="text-xl font-semibold text-[#0D0F14] dark:text-[#E6EDF3] mb-2">Aucun template</h2>
+              <p className="text-[#4E525A] dark:text-[#8B949E] max-w-md mx-auto mb-6">
                 Creez votre premier template de message pour accelerer vos communications.
               </p>
               <FillButton onClick={() => setShowCreateModal(true)}>
@@ -265,8 +265,8 @@ export function TemplatesPageClient({
             </>
           ) : (
             <>
-              <h2 className="text-xl font-semibold text-[#0D0F14] mb-2">Aucun resultat</h2>
-              <p className="text-[#4E525A] max-w-md mx-auto">
+              <h2 className="text-xl font-semibold text-[#0D0F14] dark:text-[#E6EDF3] mb-2">Aucun resultat</h2>
+              <p className="text-[#4E525A] dark:text-[#8B949E] max-w-md mx-auto">
                 Aucun template ne correspond a vos criteres de recherche.
               </p>
             </>
@@ -277,7 +277,7 @@ export function TemplatesPageClient({
           {filteredTemplates.map((template) => (
             <div
               key={template.id}
-              className="bg-white rounded-xl border border-black/[0.08] p-5 hover:shadow-md hover:border-black/[0.12] transition-all duration-200 group"
+              className="bg-white dark:bg-[#161B22] rounded-xl border border-black/[0.08] dark:border-white/[0.08] p-5 hover:shadow-md hover:border-black/[0.12] dark:hover:border-white/[0.12] transition-all duration-200 group"
             >
               {/* Header */}
               <div className="flex items-start justify-between mb-3">
@@ -296,8 +296,8 @@ export function TemplatesPageClient({
                     {TYPE_ICONS[template.type]}
                   </div>
                   <div>
-                    <h3 className="font-medium text-[#0D0F14] text-sm">{template.name}</h3>
-                    <span className="text-xs text-[#9BA0A6]">{TYPE_LABELS[template.type]}</span>
+                    <h3 className="font-medium text-[#0D0F14] dark:text-[#E6EDF3] text-sm">{template.name}</h3>
+                    <span className="text-xs text-[#9BA0A6] dark:text-[#8B949E]">{TYPE_LABELS[template.type]}</span>
                   </div>
                 </div>
 
@@ -308,27 +308,27 @@ export function TemplatesPageClient({
                       e.stopPropagation()
                       setActiveDropdown(activeDropdown === template.id ? null : template.id)
                     }}
-                    className="w-7 h-7 rounded-lg hover:bg-black/[0.04] flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
+                    className="w-7 h-7 rounded-lg hover:bg-black/[0.04] dark:hover:bg-white/[0.04] flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity"
                   >
-                    <MoreVertical className="w-4 h-4 text-[#4E525A]" />
+                    <MoreVertical className="w-4 h-4 text-[#4E525A] dark:text-[#8B949E]" />
                   </button>
 
                   {activeDropdown === template.id && (
-                    <div className="absolute right-0 top-full mt-1 w-40 bg-white rounded-lg shadow-lg border border-black/[0.08] py-1 z-10">
+                    <div className="absolute right-0 top-full mt-1 w-40 bg-white dark:bg-[#161B22] rounded-lg shadow-lg border border-black/[0.08] dark:border-white/[0.08] py-1 z-10">
                       <button
                         onClick={() => {
                           setEditingTemplate(template)
                           setShowCreateModal(true)
                           setActiveDropdown(null)
                         }}
-                        className="w-full flex items-center gap-2 px-3 py-2 text-sm text-[#0D0F14] hover:bg-[#F5F7F9]"
+                        className="w-full flex items-center gap-2 px-3 py-2 text-sm text-[#0D0F14] dark:text-[#E6EDF3] hover:bg-[#F5F7F9] dark:hover:bg-[#21262D]"
                       >
                         <Edit2 className="w-4 h-4" />
                         Modifier
                       </button>
                       <button
                         onClick={() => handleDuplicate(template)}
-                        className="w-full flex items-center gap-2 px-3 py-2 text-sm text-[#0D0F14] hover:bg-[#F5F7F9]"
+                        className="w-full flex items-center gap-2 px-3 py-2 text-sm text-[#0D0F14] dark:text-[#E6EDF3] hover:bg-[#F5F7F9] dark:hover:bg-[#21262D]"
                       >
                         <Copy className="w-4 h-4" />
                         Dupliquer
@@ -336,7 +336,7 @@ export function TemplatesPageClient({
                       <button
                         onClick={() => handleDelete(template)}
                         disabled={isDeleting === template.id}
-                        className="w-full flex items-center gap-2 px-3 py-2 text-sm text-[#B42318] hover:bg-[#FDE8E5]"
+                        className="w-full flex items-center gap-2 px-3 py-2 text-sm text-[#B42318] hover:bg-[#FDE8E5] dark:hover:bg-[#B42318]/10"
                       >
                         {isDeleting === template.id ? (
                           <Loader2 className="w-4 h-4 animate-spin" />
@@ -353,24 +353,24 @@ export function TemplatesPageClient({
               {/* Subject */}
               {template.subject && (
                 <div className="mb-2">
-                  <span className="text-xs text-[#9BA0A6]">Objet:</span>
-                  <p className="text-sm text-[#0D0F14] truncate">{template.subject}</p>
+                  <span className="text-xs text-[#9BA0A6] dark:text-[#8B949E]">Objet:</span>
+                  <p className="text-sm text-[#0D0F14] dark:text-[#E6EDF3] truncate">{template.subject}</p>
                 </div>
               )}
 
               {/* Body preview */}
-              <p className="text-sm text-[#4E525A] line-clamp-3 mb-3">{template.body}</p>
+              <p className="text-sm text-[#4E525A] dark:text-[#8B949E] line-clamp-3 mb-3">{template.body}</p>
 
               {/* Footer */}
-              <div className="flex items-center justify-between pt-3 border-t border-black/[0.06]">
+              <div className="flex items-center justify-between pt-3 border-t border-black/[0.06] dark:border-white/[0.06]">
                 {template.category ? (
-                  <span className="text-xs text-[#4E525A] bg-[#F5F7F9] px-2 py-1 rounded">
+                  <span className="text-xs text-[#4E525A] dark:text-[#8B949E] bg-[#F5F7F9] dark:bg-[#21262D] px-2 py-1 rounded">
                     {template.category}
                   </span>
                 ) : (
                   <span />
                 )}
-                <div className="flex items-center gap-3 text-xs text-[#9BA0A6]">
+                <div className="flex items-center gap-3 text-xs text-[#9BA0A6] dark:text-[#8B949E]">
                   {template.usage_count > 0 && (
                     <span>{template.usage_count} utilisation{template.usage_count > 1 ? 's' : ''}</span>
                   )}

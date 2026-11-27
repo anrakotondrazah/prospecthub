@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { ImportCSVModal } from '@/components/modals/ImportCSVModal'
 import { VerificationBadge } from '@/components/ui/VerificationBadge'
 import { EmptyState } from '@/components/ui/EmptyState'
-import { AnimatedCheckbox } from '@/components/ui/buttons'
+import { AnimatedCheckbox, FillButton } from '@/components/ui/buttons'
 
 interface Lead {
   id: number
@@ -431,25 +431,22 @@ export function LeadsTable({ leads }: LeadsTableProps) {
             </button>
           </div>
           <div className="flex items-center gap-2">
-            <button
-              onClick={() => setIsImportModalOpen(true)}
-              className="flex items-center gap-2 h-9 px-3 text-sm text-foreground border border-border rounded-[8px] hover:bg-muted transition-colors"
-            >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12" />
-              </svg>
-              Importer
-            </button>
-            <button
-              className="flex items-center gap-2 h-9 px-3 text-sm text-muted-foreground border border-border rounded-[8px] cursor-not-allowed"
-              disabled
-              title="Bientot disponible"
-            >
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" />
-              </svg>
-              Exporter
-            </button>
+            <FillButton onClick={() => setIsImportModalOpen(true)}>
+              <span className="flex items-center gap-2">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12" />
+                </svg>
+                Importer
+              </span>
+            </FillButton>
+            <FillButton disabled title="Bientot disponible">
+              <span className="flex items-center gap-2">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" />
+                </svg>
+                Exporter
+              </span>
+            </FillButton>
           </div>
         </div>
 

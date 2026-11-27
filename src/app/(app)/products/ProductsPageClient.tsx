@@ -3,7 +3,7 @@
 import { useState, useMemo } from 'react'
 import { CreateProductModal } from '@/components/products/CreateProductModal'
 import { createClient } from '@/lib/supabase/client'
-import { FillButton } from '@/components/ui/buttons'
+import { FillButton, AnimatedCheckbox } from '@/components/ui/buttons'
 
 type Product = {
   id: number
@@ -241,15 +241,12 @@ export function ProductsPageClient({
           </div>
         )}
 
-        <label className="flex items-center gap-2 text-sm text-[#4E525A] cursor-pointer">
-          <input
-            type="checkbox"
-            checked={showInactive}
-            onChange={(e) => setShowInactive(e.target.checked)}
-            className="w-4 h-4 rounded border-[#E2E4E6] text-[#17191F] focus:ring-[#17191F]"
-          />
-          Afficher les inactifs
-        </label>
+        <AnimatedCheckbox
+          id="showInactive"
+          checked={showInactive}
+          onChange={setShowInactive}
+          label="Afficher les inactifs"
+        />
       </div>
 
       {/* Products Grid */}

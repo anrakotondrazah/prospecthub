@@ -202,8 +202,9 @@ export const AnimatedCheckbox = forwardRef<HTMLInputElement, {
   onChange?: (checked: boolean) => void
   id?: string
   label?: string
+  'aria-label'?: string
 }>(
-  ({ checked = false, onChange, id = 'cbx', label }, ref) => (
+  ({ checked = false, onChange, id = 'cbx', label, 'aria-label': ariaLabel }, ref) => (
     <div className="inline-flex items-center gap-3">
       <input
         ref={ref}
@@ -212,10 +213,11 @@ export const AnimatedCheckbox = forwardRef<HTMLInputElement, {
         checked={checked}
         onChange={(e) => onChange?.(e.target.checked)}
         className="sr-only peer"
+        aria-label={ariaLabel}
       />
       <label
         htmlFor={id}
-        className="check cursor-pointer relative w-[18px] h-[18px] flex-shrink-0"
+        className="check cursor-pointer relative w-[18px] h-[18px] flex-shrink-0 rounded-full peer-focus-visible:ring-2 peer-focus-visible:ring-ring peer-focus-visible:ring-offset-2"
       >
         <svg viewBox="0 0 18 18" className="w-[18px] h-[18px]">
           <path

@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import { FillButton } from '@/components/ui/buttons'
 
 interface EmptyStateProps {
   type: 'pipeline' | 'inbox' | 'leads' | 'tasks' | 'lists'
@@ -91,24 +92,25 @@ export function EmptyState({ type, action, actionLabel, actionHref }: EmptyState
           {config.description}
         </p>
         {action ? (
-          <button
-            onClick={action}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#17191F] dark:bg-[#E6EDF3] text-white dark:text-[#0D1117] font-medium hover:bg-[#2C2F36] dark:hover:bg-[#D0D7DE] transition-colors"
-          >
-            {finalActionLabel}
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M5 12h14M12 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </button>
+          <FillButton onClick={action}>
+            <span className="flex items-center gap-2">
+              {finalActionLabel}
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M5 12h14M12 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </span>
+          </FillButton>
         ) : (
           <Link
             href={finalActionHref}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-[#17191F] dark:bg-[#E6EDF3] text-white dark:text-[#0D1117] font-medium hover:bg-[#2C2F36] dark:hover:bg-[#D0D7DE] transition-colors"
+            className="relative inline-flex items-center justify-center h-[42px] px-6 border-none rounded-[15px] z-[1] font-bold text-[17px] shadow-md transition-all duration-[250ms] ease-out overflow-hidden bg-muted text-foreground before:content-[''] before:absolute before:top-0 before:left-0 before:h-full before:w-0 before:rounded-[15px] before:bg-foreground before:z-[-1] before:shadow-md before:transition-all before:duration-[250ms] before:ease-out hover:before:w-full hover:text-background active:scale-95"
           >
-            {finalActionLabel}
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <path d="M5 12h14M12 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
+            <span className="flex items-center gap-2">
+              {finalActionLabel}
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M5 12h14M12 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </span>
           </Link>
         )}
       </div>

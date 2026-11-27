@@ -7,12 +7,14 @@ import { parseCSV, autoMapColumns, LEAD_FIELD_MAPPINGS } from '@/lib/utils/csv'
 interface ImportCSVModalProps {
   isOpen: boolean
   onClose: () => void
-  onImport: (leads: Record<string, string>[]) => Promise<{ success: number; errors: number }>
+  onImport: (data: Record<string, string>[]) => Promise<{ success: number; errors: number }>
+  fieldLabels?: Record<string, string>
+  title?: string
 }
 
 type Step = 'upload' | 'mapping' | 'preview' | 'importing' | 'done'
 
-const FIELD_LABELS: Record<string, string> = {
+const DEFAULT_LEAD_FIELDS: Record<string, string> = {
   first_name: 'Prenom',
   last_name: 'Nom',
   email: 'Email',
@@ -24,7 +26,20 @@ const FIELD_LABELS: Record<string, string> = {
   source: 'Source',
 }
 
-export function ImportCSVModal({ isOpen, onClose, onImport }: ImportCSVModalProps) {
+export const COMPANY_FIELD_LABELS: Record<string, string> = {
+  name: 'Nom entreprise',
+  website: 'Site web',
+  industry: 'Secteur',
+  employees_count: 'Effectif',
+  phone: 'Telephone',
+  email: 'Email',
+  address_street: 'Adresse',
+  address_city: 'Ville',
+  address_postal_code: 'Code postal',
+}
+
+export function ImportCSVModal({ isOpen, onClose, onImport, fieldLabels, title = 'Importer des leads' }: ImportCSVModalProps) {
+  const FIELD_LABELS = fieldLabels || DEFAULT_LEAD_FIELDS
   const [step, setStep] = useState<Step>('upload')
   const [headers, setHeaders] = useState<string[]>([])
   const [rows, setRows] = useState<string[][]>([])
@@ -128,7 +143,7 @@ export function ImportCSVModal({ isOpen, onClose, onImport }: ImportCSVModalProp
           aria-modal="true"
         >
           <div className="flex items-center justify-between px-6 py-4 border-b border-[#E2E4E6]">
-            <h2 className="text-lg font-semibold text-[#0D0F14]">Importer des leads</h2>
+            <h2 className="text-lg font-semibold text-[#0D0F14]">{title}</h2>
             <button
               onClick={handleClose}
               className="p-2 rounded-[8px] hover:bg-[#F5F7F9] transition-colors"

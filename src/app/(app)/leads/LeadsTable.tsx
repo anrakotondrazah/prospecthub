@@ -1,11 +1,10 @@
 'use client'
 
-import { useState, useCallback } from 'react'
+import { useState } from 'react'
 import Link from 'next/link'
-import { ImportCSVModal } from '@/components/modals/ImportCSVModal'
 import { VerificationBadge } from '@/components/ui/VerificationBadge'
 import { EmptyState } from '@/components/ui/EmptyState'
-import { AnimatedCheckbox, FillButton } from '@/components/ui/buttons'
+import { AnimatedCheckbox } from '@/components/ui/buttons'
 
 interface Lead {
   id: number
@@ -291,7 +290,6 @@ export function LeadsTable({ leads }: LeadsTableProps) {
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedLeads, setSelectedLeads] = useState<number[]>([])
   const [selectedLead, setSelectedLead] = useState<Lead | null>(null)
-  const [isImportModalOpen, setIsImportModalOpen] = useState(false)
 
   const tabCounts = {
     all: leads.length,
@@ -335,57 +333,27 @@ export function LeadsTable({ leads }: LeadsTableProps) {
     )
   }
 
-  const handleImport = useCallback(async (leadsData: Record<string, string>[]) => {
-    try {
-      const response = await fetch('/api/leads/import', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ leads: leadsData }),
-      })
-
-      const result = await response.json()
-
-      if (!response.ok) {
-        throw new Error(result.message || 'Erreur import')
-      }
-
-      // Reload page to show new leads
-      window.location.reload()
-
-      return {
-        success: result.imported || 0,
-        errors: result.errors || 0,
-      }
-    } catch (error) {
-      console.error('Import error:', error)
-      return {
-        success: 0,
-        errors: leadsData.length,
-      }
-    }
-  }, [])
-
   return (
     <>
       <div className="bg-card rounded-[14px] border border-border overflow-hidden">
         {/* Tabs */}
-        <div className="flex items-center gap-1 px-4 pt-4 border-b border-border overflow-x-auto">
+        <div className="flex items-center gap-2 px-4 pt-4 pb-2 overflow-x-auto">
           {TABS.map((tab) => (
             <button
               key={tab.id}
               onClick={() => setActiveTab(tab.id)}
-              className={`flex items-center gap-2 px-4 py-3 text-sm font-medium border-b-2 transition-colors whitespace-nowrap ${
+              className={`flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium whitespace-nowrap transition-all duration-200 ${
                 activeTab === tab.id
-                  ? 'text-foreground border-foreground'
-                  : 'text-muted-foreground border-transparent hover:text-foreground'
+                  ? 'bg-foreground text-background'
+                  : 'bg-muted text-muted-foreground hover:bg-muted/80'
               }`}
             >
               {tab.label}
               <span
                 className={`px-1.5 py-0.5 text-xs rounded ${
                   activeTab === tab.id
-                    ? 'bg-foreground text-background'
-                    : 'bg-muted text-muted-foreground'
+                    ? 'bg-background/20'
+                    : 'bg-foreground/10'
                 }`}
               >
                 {tabCounts[tab.id as keyof typeof tabCounts]}
@@ -429,24 +397,6 @@ export function LeadsTable({ leads }: LeadsTableProps) {
               </svg>
               Filtres
             </button>
-          </div>
-          <div className="flex items-center gap-2">
-            <FillButton onClick={() => setIsImportModalOpen(true)}>
-              <span className="flex items-center gap-2">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12" />
-                </svg>
-                Importer
-              </span>
-            </FillButton>
-            <FillButton disabled title="Bientot disponible">
-              <span className="flex items-center gap-2">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3" />
-                </svg>
-                Exporter
-              </span>
-            </FillButton>
           </div>
         </div>
 
@@ -620,13 +570,6 @@ export function LeadsTable({ leads }: LeadsTableProps) {
       {selectedLead && (
         <LeadDetailPanel lead={selectedLead} onClose={() => setSelectedLead(null)} />
       )}
-
-      {/* Import CSV Modal */}
-      <ImportCSVModal
-        isOpen={isImportModalOpen}
-        onClose={() => setIsImportModalOpen(false)}
-        onImport={handleImport}
-      />
     </>
   )
 }

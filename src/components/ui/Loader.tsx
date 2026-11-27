@@ -131,8 +131,11 @@ export function Loader({ size = 'md', color = '#5D3FD3', className = '' }: Loade
 
 export function PageLoader() {
   return (
-    <div className="flex items-center justify-center min-h-[60vh]">
-      <Loader size="lg" />
+    <div className="flex items-center justify-center min-h-[60vh]" role="status" aria-live="polite">
+      <div className="text-center">
+        <Loader size="lg" />
+        <span className="sr-only">Chargement...</span>
+      </div>
     </div>
   )
 }

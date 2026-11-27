@@ -208,7 +208,7 @@ export function TokenPicker({
                       {token.description}
                     </p>
                   </div>
-                  <code className="text-[10px] text-[#0066FF] bg-[#0066FF]/5 dark:bg-[#0066FF]/10 px-2 py-1 rounded ml-2 font-mono whitespace-nowrap">
+                  <code className="text-[10px] text-[#0066FF] dark:text-[#58A6FF] bg-[#0066FF]/5 dark:bg-[#58A6FF]/15 px-2 py-1 rounded ml-2 font-mono whitespace-nowrap">
                     {`{{${token.name}}}`}
                   </code>
                 </div>

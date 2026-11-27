@@ -187,12 +187,14 @@ function TaskCard({ task, today }: { task: Task; today: string }) {
   const isDueToday = dueDate === today
 
   const priorityColors: Record<string, string> = {
+    urgent: 'bg-[#B71C1C] dark:bg-[#B71C1C]/30 text-white dark:text-[#FFCDD2]',
     high: 'bg-[#FFEBEE] dark:bg-[#C62828]/20 text-[#C62828] dark:text-[#EF9A9A]',
     medium: 'bg-[#FFF3E0] dark:bg-[#E65100]/20 text-[#E65100] dark:text-[#FFCC80]',
     low: 'bg-muted text-muted-foreground',
   }
 
   const priorityLabels: Record<string, string> = {
+    urgent: 'Urgent',
     high: 'Haute',
     medium: 'Moyenne',
     low: 'Basse',

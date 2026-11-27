@@ -1,8 +1,7 @@
 'use client'
 
-import { format, isToday, isTomorrow, isPast, differenceInMinutes } from 'date-fns'
+import { format, isToday, isTomorrow, differenceInMinutes } from 'date-fns'
 import { fr } from 'date-fns/locale'
-import Link from 'next/link'
 
 export interface MeetingData {
   id: number
@@ -82,33 +81,31 @@ export function MeetingCard({ meeting, compact = false, onJoin, onReschedule, on
 
   if (compact) {
     return (
-      <Link href={`/meetings/${meeting.uuid}`}>
-        <div
-          className="p-3 rounded-xl border-l-4 bg-white/80 dark:bg-[#161B22]/80 hover:bg-white dark:hover:bg-[#161B22] hover:shadow-sm transition-all duration-200"
-          style={{ borderLeftColor: meeting.color }}
-        >
-          <div className="flex items-center justify-between gap-2">
-            <div className="min-w-0 flex-1">
-              <p className="text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3] truncate">
-                {meeting.title}
-              </p>
-              <p className="text-xs text-[#9BA0A6] dark:text-[#8B949E]">
-                {formatMeetingTime()}
-              </p>
-            </div>
-            <svg
-              width="16"
-              height="16"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke={meeting.color}
-              strokeWidth="1.5"
-            >
-              <path d={MEETING_TYPE_ICONS[meeting.meeting_type]} />
-            </svg>
+      <div
+        className="p-3 rounded-xl border-l-4 bg-white/80 dark:bg-[#161B22]/80 hover:bg-white dark:hover:bg-[#161B22] hover:shadow-sm transition-all duration-200 cursor-default"
+        style={{ borderLeftColor: meeting.color }}
+      >
+        <div className="flex items-center justify-between gap-2">
+          <div className="min-w-0 flex-1">
+            <p className="text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3] truncate">
+              {meeting.title}
+            </p>
+            <p className="text-xs text-[#9BA0A6] dark:text-[#8B949E]">
+              {formatMeetingTime()}
+            </p>
           </div>
+          <svg
+            width="16"
+            height="16"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke={meeting.color}
+            strokeWidth="1.5"
+          >
+            <path d={MEETING_TYPE_ICONS[meeting.meeting_type]} />
+          </svg>
         </div>
-      </Link>
+      </div>
     )
   }
 
@@ -136,11 +133,9 @@ export function MeetingCard({ meeting, compact = false, onJoin, onReschedule, on
 
           {/* Title & Meta */}
           <div className="min-w-0">
-            <Link href={`/meetings/${meeting.uuid}`}>
-              <h4 className="font-medium text-sm text-[#0D0F14] dark:text-[#E6EDF3] hover:text-[#0066FF] transition-colors line-clamp-1">
-                {meeting.title}
-              </h4>
-            </Link>
+            <h4 className="font-medium text-sm text-[#0D0F14] dark:text-[#E6EDF3] line-clamp-1">
+              {meeting.title}
+            </h4>
             {meeting.associated_company && (
               <p className="text-xs text-[#4E525A] dark:text-[#8B949E] truncate">
                 {meeting.associated_company.name}

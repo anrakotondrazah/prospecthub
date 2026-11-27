@@ -40,7 +40,10 @@ export default async function MeetingsPage() {
 
   const orgId = profile.organization_id as number
 
-  // Get upcoming meetings
+  // Get upcoming meetings (next 90 days for reasonable scope)
+  const ninetyDaysLater = new Date()
+  ninetyDaysLater.setDate(ninetyDaysLater.getDate() + 90)
+
   const { data: meetings, error: meetingsError } = await supabase
     .from('meetings')
     .select(`
@@ -62,8 +65,9 @@ export default async function MeetingsPage() {
     `)
     .eq('organization_id', orgId)
     .gte('start_time', new Date().toISOString())
+    .lte('start_time', ninetyDaysLater.toISOString())
     .order('start_time', { ascending: true })
-    .limit(50)
+    .limit(100)
 
   return (
     <MeetingsPageClient

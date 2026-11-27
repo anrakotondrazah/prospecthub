@@ -18,6 +18,7 @@ interface DealRow {
   id: number
   stage_id: number
   value: number | null
+  lead_id: number | null
   pipeline_stages: PipelineStageRow | null
 }
 
@@ -53,6 +54,7 @@ export default async function ReportsPage() {
   let dealsWon = 0
   let conversionRate = 0
   let pipelineStages: { name: string; value: number; color: string }[] = []
+  let hasError = false
 
   if (orgId) {
     const now = new Date()
@@ -66,6 +68,7 @@ export default async function ReportsPage() {
       tasksCompletedRes,
       dealsRes,
       stagesRes,
+      convertedLeadsRes,
     ] = await Promise.all([
       supabase
         .from('leads')
@@ -88,35 +91,47 @@ export default async function ReportsPage() {
         .eq('status', 'completed'),
       supabase
         .from('deals')
-        .select('id, stage_id, value, pipeline_stages(id, name, color, is_won)')
+        .select('id, stage_id, value, lead_id, pipeline_stages(id, name, color, is_won)')
         .eq('organization_id', orgId),
       supabase
         .from('pipeline_stages')
         .select('id, name, color, is_won, is_lost')
         .eq('organization_id', orgId)
         .order('display_order'),
+      // Count distinct leads that have been converted (status = converted)
+      supabase
+        .from('leads')
+        .select('*', { count: 'exact', head: true })
+        .eq('organization_id', orgId)
+        .eq('status', 'converted'),
     ])
 
-    totalLeads = totalLeadsRes.count || 0
-    qualifiedLeads = qualifiedLeadsRes.count || 0
-    leadsThisMonth = leadsThisMonthRes.count || 0
-    tasksCompleted = tasksCompletedRes.count || 0
+    // Check for errors
+    if (totalLeadsRes.error || dealsRes.error || stagesRes.error) {
+      hasError = true
+    }
 
-    const deals = (dealsRes.data || []) as unknown as DealRow[]
-    const stages: PipelineStageRow[] = stagesRes.data && stagesRes.data.length > 0
+    // Only use data if queries succeeded
+    if (!totalLeadsRes.error) totalLeads = totalLeadsRes.count || 0
+    if (!qualifiedLeadsRes.error) qualifiedLeads = qualifiedLeadsRes.count || 0
+    if (!leadsThisMonthRes.error) leadsThisMonth = leadsThisMonthRes.count || 0
+    if (!tasksCompletedRes.error) tasksCompleted = tasksCompletedRes.count || 0
+    if (!convertedLeadsRes.error) convertedLeads = convertedLeadsRes.count || 0
+
+    const deals = !dealsRes.error ? ((dealsRes.data || []) as unknown as DealRow[]) : []
+    const stages: PipelineStageRow[] = !stagesRes.error && stagesRes.data && stagesRes.data.length > 0
       ? (stagesRes.data as PipelineStageRow[])
       : DEFAULT_STAGES
 
     // Calculate deals won and total revenue
     dealsWon = deals.filter((d) => d.pipeline_stages?.is_won === true).length
-    convertedLeads = dealsWon
 
     totalRevenue = deals
       .filter((d) => d.pipeline_stages?.is_won === true)
       .reduce((sum, d) => sum + (d.value || 0), 0)
 
-    // Calculate conversion rate
-    conversionRate = totalLeads > 0 ? Math.round((dealsWon / totalLeads) * 100) : 0
+    // Calculate conversion rate using converted leads count
+    conversionRate = totalLeads > 0 ? Math.round((convertedLeads / totalLeads) * 100) : 0
 
     // Build pipeline stages data
     pipelineStages = stages
@@ -146,6 +161,15 @@ export default async function ReportsPage() {
         </div>
         <DownloadButton tooltip="Exporter PDF" disabled />
       </div>
+
+      {/* Error Banner */}
+      {hasError && (
+        <div className="p-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl">
+          <p className="text-sm text-amber-800 dark:text-amber-200">
+            Certaines donnees n&apos;ont pas pu etre chargees. Les metriques affichees peuvent etre partielles.
+          </p>
+        </div>
+      )}
 
       {/* Stats Cards */}
       <StatsCards

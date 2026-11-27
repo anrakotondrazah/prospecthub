@@ -1,5 +1,6 @@
 -- Migration 013: Sequences module
 -- Automated email sequences for prospection
+-- IDEMPOTENT: Safe to run multiple times
 
 -- Enable uuid-ossp if not already enabled
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
@@ -79,52 +80,77 @@ ALTER TABLE sequence_steps ENABLE ROW LEVEL SECURITY;
 ALTER TABLE sequence_enrollments ENABLE ROW LEVEL SECURITY;
 ALTER TABLE sequence_execution_log ENABLE ROW LEVEL SECURITY;
 
+-- =============================================
 -- RLS Policies for sequences
+-- =============================================
+DROP POLICY IF EXISTS "sequences_select" ON sequences;
 CREATE POLICY "sequences_select" ON sequences FOR SELECT
   USING (organization_id IN (SELECT organization_id FROM profiles WHERE id = auth.uid()));
 
+DROP POLICY IF EXISTS "sequences_insert" ON sequences;
 CREATE POLICY "sequences_insert" ON sequences FOR INSERT
   WITH CHECK (organization_id IN (SELECT organization_id FROM profiles WHERE id = auth.uid()));
 
+DROP POLICY IF EXISTS "sequences_update" ON sequences;
 CREATE POLICY "sequences_update" ON sequences FOR UPDATE
   USING (organization_id IN (SELECT organization_id FROM profiles WHERE id = auth.uid()));
 
+DROP POLICY IF EXISTS "sequences_delete" ON sequences;
 CREATE POLICY "sequences_delete" ON sequences FOR DELETE
   USING (organization_id IN (SELECT organization_id FROM profiles WHERE id = auth.uid()));
 
+-- =============================================
 -- RLS Policies for sequence_steps
+-- =============================================
+DROP POLICY IF EXISTS "sequence_steps_select" ON sequence_steps;
 CREATE POLICY "sequence_steps_select" ON sequence_steps FOR SELECT
   USING (sequence_id IN (SELECT id FROM sequences WHERE organization_id IN (SELECT organization_id FROM profiles WHERE id = auth.uid())));
 
+DROP POLICY IF EXISTS "sequence_steps_insert" ON sequence_steps;
 CREATE POLICY "sequence_steps_insert" ON sequence_steps FOR INSERT
   WITH CHECK (sequence_id IN (SELECT id FROM sequences WHERE organization_id IN (SELECT organization_id FROM profiles WHERE id = auth.uid())));
 
+DROP POLICY IF EXISTS "sequence_steps_update" ON sequence_steps;
 CREATE POLICY "sequence_steps_update" ON sequence_steps FOR UPDATE
   USING (sequence_id IN (SELECT id FROM sequences WHERE organization_id IN (SELECT organization_id FROM profiles WHERE id = auth.uid())));
 
+DROP POLICY IF EXISTS "sequence_steps_delete" ON sequence_steps;
 CREATE POLICY "sequence_steps_delete" ON sequence_steps FOR DELETE
   USING (sequence_id IN (SELECT id FROM sequences WHERE organization_id IN (SELECT organization_id FROM profiles WHERE id = auth.uid())));
 
+-- =============================================
 -- RLS Policies for sequence_enrollments
+-- =============================================
+DROP POLICY IF EXISTS "sequence_enrollments_select" ON sequence_enrollments;
 CREATE POLICY "sequence_enrollments_select" ON sequence_enrollments FOR SELECT
   USING (sequence_id IN (SELECT id FROM sequences WHERE organization_id IN (SELECT organization_id FROM profiles WHERE id = auth.uid())));
 
+DROP POLICY IF EXISTS "sequence_enrollments_insert" ON sequence_enrollments;
 CREATE POLICY "sequence_enrollments_insert" ON sequence_enrollments FOR INSERT
   WITH CHECK (sequence_id IN (SELECT id FROM sequences WHERE organization_id IN (SELECT organization_id FROM profiles WHERE id = auth.uid())));
 
+DROP POLICY IF EXISTS "sequence_enrollments_update" ON sequence_enrollments;
 CREATE POLICY "sequence_enrollments_update" ON sequence_enrollments FOR UPDATE
   USING (sequence_id IN (SELECT id FROM sequences WHERE organization_id IN (SELECT organization_id FROM profiles WHERE id = auth.uid())));
 
+DROP POLICY IF EXISTS "sequence_enrollments_delete" ON sequence_enrollments;
 CREATE POLICY "sequence_enrollments_delete" ON sequence_enrollments FOR DELETE
   USING (sequence_id IN (SELECT id FROM sequences WHERE organization_id IN (SELECT organization_id FROM profiles WHERE id = auth.uid())));
 
+-- =============================================
 -- RLS Policies for sequence_execution_log
+-- =============================================
+DROP POLICY IF EXISTS "sequence_execution_log_select" ON sequence_execution_log;
 CREATE POLICY "sequence_execution_log_select" ON sequence_execution_log FOR SELECT
   USING (enrollment_id IN (SELECT id FROM sequence_enrollments WHERE sequence_id IN (SELECT id FROM sequences WHERE organization_id IN (SELECT organization_id FROM profiles WHERE id = auth.uid()))));
 
+DROP POLICY IF EXISTS "sequence_execution_log_insert" ON sequence_execution_log;
 CREATE POLICY "sequence_execution_log_insert" ON sequence_execution_log FOR INSERT
   WITH CHECK (enrollment_id IN (SELECT id FROM sequence_enrollments WHERE sequence_id IN (SELECT id FROM sequences WHERE organization_id IN (SELECT organization_id FROM profiles WHERE id = auth.uid()))));
 
+-- =============================================
+-- Triggers
+-- =============================================
 -- Trigger to update updated_at on sequences
 CREATE OR REPLACE FUNCTION update_sequences_updated_at()
 RETURNS TRIGGER AS $$

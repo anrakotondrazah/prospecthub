@@ -111,18 +111,18 @@ export function CreateQuoteModal({
 
       {/* Modal */}
       <div
-        className="relative bg-white/95 backdrop-blur-xl rounded-2xl shadow-lg max-w-lg w-full"
+        className="relative bg-white/95 dark:bg-[#0D1117]/95 backdrop-blur-xl rounded-2xl shadow-lg max-w-lg w-full"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-black/[0.06]">
-          <h2 className="text-xl font-semibold text-[#0D0F14]">Creer un devis</h2>
+        <div className="flex items-center justify-between p-6 border-b border-black/[0.06] dark:border-[#30363D]">
+          <h2 className="text-xl font-semibold text-[#0D0F14] dark:text-[#E6EDF3]">Creer un devis</h2>
           <button
             onClick={onClose}
-            className="w-8 h-8 rounded-xl hover:bg-black/[0.04] flex items-center justify-center transition-all duration-200 active:scale-95"
+            className="w-8 h-8 rounded-xl hover:bg-black/[0.04] dark:hover:bg-white/[0.05] flex items-center justify-center transition-all duration-200 active:scale-95"
             aria-label="Fermer"
           >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4E525A" strokeWidth="2">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-[#4E525A] dark:text-[#8B949E]">
               <line x1="18" y1="6" x2="6" y2="18" />
               <line x1="6" y1="6" x2="18" y2="18" />
             </svg>
@@ -133,19 +133,19 @@ export function CreateQuoteModal({
         <form onSubmit={handleSubmit} className="p-6 space-y-5">
           {/* Error Message */}
           {error && (
-            <div className="p-4 bg-[#FDE8E5] border border-[#B42318]/20 rounded-xl flex items-start gap-3 shadow-sm">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B42318" strokeWidth="2" className="flex-shrink-0 mt-0.5">
+            <div className="p-4 bg-[#FDE8E5] dark:bg-[#B42318]/10 border border-[#B42318]/20 rounded-xl flex items-start gap-3 shadow-sm">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="flex-shrink-0 mt-0.5 text-[#B42318] dark:text-[#F87171]">
                 <circle cx="12" cy="12" r="10" />
                 <line x1="12" y1="8" x2="12" y2="12" />
                 <line x1="12" y1="16" x2="12.01" y2="16" />
               </svg>
-              <p className="text-sm text-[#B42318]">{error}</p>
+              <p className="text-sm text-[#B42318] dark:text-[#F87171]">{error}</p>
             </div>
           )}
 
           {/* Name Field */}
           <div>
-            <label htmlFor="quote-name" className="block text-sm font-medium text-[#0D0F14] mb-2">
+            <label htmlFor="quote-name" className="block text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3] mb-2">
               Nom du devis <span className="text-[#B42318]">*</span>
             </label>
             <input
@@ -154,7 +154,7 @@ export function CreateQuoteModal({
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="Ex: Proposition commerciale Q4"
-              className="w-full px-4 py-2.5 bg-white/80 backdrop-blur-sm border border-black/[0.08] rounded-xl text-sm focus:outline-none focus:border-[#0066FF] focus:ring-3 focus:ring-[#0066FF]/10 transition-all duration-200 shadow-sm hover:border-black/[0.12]"
+              className="w-full px-4 py-2.5 bg-white/80 dark:bg-[#161B22]/80 backdrop-blur-sm border border-black/[0.08] dark:border-[#30363D] rounded-xl text-sm text-[#0D0F14] dark:text-[#E6EDF3] focus:outline-none focus:border-[#0066FF] focus:ring-3 focus:ring-[#0066FF]/10 transition-all duration-200 shadow-sm hover:border-black/[0.12] dark:hover:border-[#30363D]"
               disabled={isLoading}
               maxLength={255}
             />
@@ -163,14 +163,14 @@ export function CreateQuoteModal({
           {/* Company select */}
           {companies.length > 0 && (
             <div>
-              <label htmlFor="quote-company" className="block text-sm font-medium text-[#0D0F14] mb-2">
+              <label htmlFor="quote-company" className="block text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3] mb-2">
                 Entreprise
               </label>
               <select
                 id="quote-company"
                 value={companyId || ''}
                 onChange={(e) => setCompanyId(e.target.value ? parseInt(e.target.value) : null)}
-                className="w-full px-4 py-2.5 bg-white/80 backdrop-blur-sm border border-black/[0.08] rounded-xl text-sm focus:outline-none focus:border-[#0066FF] focus:ring-3 focus:ring-[#0066FF]/10 transition-all duration-200 shadow-sm hover:border-black/[0.12]"
+                className="w-full px-4 py-2.5 bg-white/80 dark:bg-[#161B22]/80 backdrop-blur-sm border border-black/[0.08] dark:border-[#30363D] rounded-xl text-sm text-[#0D0F14] dark:text-[#E6EDF3] focus:outline-none focus:border-[#0066FF] focus:ring-3 focus:ring-[#0066FF]/10 transition-all duration-200 shadow-sm hover:border-black/[0.12] dark:hover:border-[#30363D]"
                 disabled={isLoading}
               >
                 <option value="">Selectionnez une entreprise...</option>
@@ -184,14 +184,14 @@ export function CreateQuoteModal({
           {/* Deal select */}
           {deals.length > 0 && (
             <div>
-              <label htmlFor="quote-deal" className="block text-sm font-medium text-[#0D0F14] mb-2">
+              <label htmlFor="quote-deal" className="block text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3] mb-2">
                 Associer a un deal
               </label>
               <select
                 id="quote-deal"
                 value={dealId || ''}
                 onChange={(e) => setDealId(e.target.value ? parseInt(e.target.value) : null)}
-                className="w-full px-4 py-2.5 bg-white/80 backdrop-blur-sm border border-black/[0.08] rounded-xl text-sm focus:outline-none focus:border-[#0066FF] focus:ring-3 focus:ring-[#0066FF]/10 transition-all duration-200 shadow-sm hover:border-black/[0.12]"
+                className="w-full px-4 py-2.5 bg-white/80 dark:bg-[#161B22]/80 backdrop-blur-sm border border-black/[0.08] dark:border-[#30363D] rounded-xl text-sm text-[#0D0F14] dark:text-[#E6EDF3] focus:outline-none focus:border-[#0066FF] focus:ring-3 focus:ring-[#0066FF]/10 transition-all duration-200 shadow-sm hover:border-black/[0.12] dark:hover:border-[#30363D]"
                 disabled={isLoading}
               >
                 <option value="">Aucun deal</option>
@@ -205,7 +205,7 @@ export function CreateQuoteModal({
           {/* Recipient fields */}
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label htmlFor="recipient-name" className="block text-sm font-medium text-[#0D0F14] mb-2">
+              <label htmlFor="recipient-name" className="block text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3] mb-2">
                 Contact
               </label>
               <input
@@ -214,12 +214,12 @@ export function CreateQuoteModal({
                 value={recipientName}
                 onChange={(e) => setRecipientName(e.target.value)}
                 placeholder="Jean Dupont"
-                className="w-full px-4 py-2.5 bg-white/80 backdrop-blur-sm border border-black/[0.08] rounded-xl text-sm focus:outline-none focus:border-[#0066FF] focus:ring-3 focus:ring-[#0066FF]/10 transition-all duration-200 shadow-sm hover:border-black/[0.12]"
+                className="w-full px-4 py-2.5 bg-white/80 dark:bg-[#161B22]/80 backdrop-blur-sm border border-black/[0.08] dark:border-[#30363D] rounded-xl text-sm text-[#0D0F14] dark:text-[#E6EDF3] focus:outline-none focus:border-[#0066FF] focus:ring-3 focus:ring-[#0066FF]/10 transition-all duration-200 shadow-sm hover:border-black/[0.12] dark:hover:border-[#30363D]"
                 disabled={isLoading}
               />
             </div>
             <div>
-              <label htmlFor="recipient-email" className="block text-sm font-medium text-[#0D0F14] mb-2">
+              <label htmlFor="recipient-email" className="block text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3] mb-2">
                 Email
               </label>
               <input
@@ -228,7 +228,7 @@ export function CreateQuoteModal({
                 value={recipientEmail}
                 onChange={(e) => setRecipientEmail(e.target.value)}
                 placeholder="jean@entreprise.fr"
-                className="w-full px-4 py-2.5 bg-white/80 backdrop-blur-sm border border-black/[0.08] rounded-xl text-sm focus:outline-none focus:border-[#0066FF] focus:ring-3 focus:ring-[#0066FF]/10 transition-all duration-200 shadow-sm hover:border-black/[0.12]"
+                className="w-full px-4 py-2.5 bg-white/80 dark:bg-[#161B22]/80 backdrop-blur-sm border border-black/[0.08] dark:border-[#30363D] rounded-xl text-sm text-[#0D0F14] dark:text-[#E6EDF3] focus:outline-none focus:border-[#0066FF] focus:ring-3 focus:ring-[#0066FF]/10 transition-all duration-200 shadow-sm hover:border-black/[0.12] dark:hover:border-[#30363D]"
                 disabled={isLoading}
               />
             </div>
@@ -236,7 +236,7 @@ export function CreateQuoteModal({
 
           {/* Valid until */}
           <div>
-            <label htmlFor="valid-until" className="block text-sm font-medium text-[#0D0F14] mb-2">
+            <label htmlFor="valid-until" className="block text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3] mb-2">
               Valide jusqu&apos;au
             </label>
             <input
@@ -244,7 +244,7 @@ export function CreateQuoteModal({
               type="date"
               value={validUntil}
               onChange={(e) => setValidUntil(e.target.value)}
-              className="w-full px-4 py-2.5 bg-white/80 backdrop-blur-sm border border-black/[0.08] rounded-xl text-sm focus:outline-none focus:border-[#0066FF] focus:ring-3 focus:ring-[#0066FF]/10 transition-all duration-200 shadow-sm hover:border-black/[0.12]"
+              className="w-full px-4 py-2.5 bg-white/80 dark:bg-[#161B22]/80 backdrop-blur-sm border border-black/[0.08] dark:border-[#30363D] rounded-xl text-sm text-[#0D0F14] dark:text-[#E6EDF3] focus:outline-none focus:border-[#0066FF] focus:ring-3 focus:ring-[#0066FF]/10 transition-all duration-200 shadow-sm hover:border-black/[0.12] dark:hover:border-[#30363D]"
               disabled={isLoading}
             />
           </div>
@@ -255,7 +255,7 @@ export function CreateQuoteModal({
               type="button"
               onClick={onClose}
               disabled={isLoading}
-              className="flex-1 px-4 py-2.5 bg-transparent border border-black/[0.08] text-[#4E525A] rounded-xl font-medium hover:bg-black/[0.03] transition-all duration-200 disabled:opacity-50 active:scale-[0.98]"
+              className="flex-1 px-4 py-2.5 bg-transparent border border-black/[0.08] dark:border-[#30363D] text-[#4E525A] dark:text-[#8B949E] rounded-xl font-medium hover:bg-black/[0.03] dark:hover:bg-white/[0.03] transition-all duration-200 disabled:opacity-50 active:scale-[0.98]"
             >
               Annuler
             </button>

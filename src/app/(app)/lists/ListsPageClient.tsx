@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Link from 'next/link'
 import { CreateListModal } from '@/components/modals/CreateListModal'
+import { FillButton } from '@/components/ui/buttons'
 
 type List = {
   id: number
@@ -56,16 +57,15 @@ export function ListsPageClient({ initialLists, organizationId, userId }: ListsP
             Organisez vos leads en listes statiques ou dynamiques
           </p>
         </div>
-        <button
-          onClick={() => setIsCreateModalOpen(true)}
-          className="px-4 py-2.5 bg-foreground dark:bg-[#58A6FF] text-background dark:text-[#0D1117] rounded-[10px] font-medium hover:opacity-90 transition-colors flex items-center gap-2"
-        >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-            <line x1="12" y1="5" x2="12" y2="19" />
-            <line x1="5" y1="12" x2="19" y2="12" />
-          </svg>
-          Creer une liste
-        </button>
+        <FillButton onClick={() => setIsCreateModalOpen(true)}>
+          <span className="flex items-center gap-2">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+              <line x1="12" y1="5" x2="12" y2="19" />
+              <line x1="5" y1="12" x2="19" y2="12" />
+            </svg>
+            Creer une liste
+          </span>
+        </FillButton>
       </div>
 
       {/* Stats */}
@@ -161,16 +161,15 @@ export function ListsPageClient({ initialLists, organizationId, userId }: ListsP
                 : 'Creez votre premiere liste pour organiser vos leads'}
             </p>
             {!searchQuery && (
-              <button
-                onClick={() => setIsCreateModalOpen(true)}
-                className="px-4 py-2.5 bg-foreground dark:bg-[#58A6FF] text-background dark:text-[#0D1117] rounded-[10px] font-medium hover:opacity-90 transition-colors inline-flex items-center gap-2"
-              >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                  <line x1="12" y1="5" x2="12" y2="19" />
-                  <line x1="5" y1="12" x2="19" y2="12" />
-                </svg>
-                Creer une liste
-              </button>
+              <FillButton onClick={() => setIsCreateModalOpen(true)}>
+                <span className="flex items-center gap-2">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                    <line x1="12" y1="5" x2="12" y2="19" />
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                  </svg>
+                  Creer une liste
+                </span>
+              </FillButton>
             )}
           </div>
         </div>

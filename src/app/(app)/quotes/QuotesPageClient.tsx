@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { QuoteStatusBadge, type QuoteStatus } from '@/components/quotes/QuoteStatusBadge'
 import { CreateQuoteModal } from '@/components/quotes/CreateQuoteModal'
+import { FillButton } from '@/components/ui/buttons'
 
 type Quote = {
   id: number
@@ -117,16 +118,15 @@ export function QuotesPageClient({
             Creez et envoyez des devis professionnels
           </p>
         </div>
-        <button
-          onClick={() => setIsCreateModalOpen(true)}
-          className="px-4 py-2.5 bg-[#17191F] text-white rounded-[10px] font-medium hover:bg-[#2A2D35] transition-colors flex items-center gap-2"
-        >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-            <line x1="12" y1="5" x2="12" y2="19" />
-            <line x1="5" y1="12" x2="19" y2="12" />
-          </svg>
-          Creer un devis
-        </button>
+        <FillButton onClick={() => setIsCreateModalOpen(true)}>
+          <span className="flex items-center gap-2">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+              <line x1="12" y1="5" x2="12" y2="19" />
+              <line x1="5" y1="12" x2="19" y2="12" />
+            </svg>
+            Creer un devis
+          </span>
+        </FillButton>
       </div>
 
       {/* Stats */}
@@ -252,16 +252,15 @@ export function QuotesPageClient({
                 : 'Creez votre premier devis pour commencer'}
             </p>
             {!searchQuery && statusFilter === 'all' && (
-              <button
-                onClick={() => setIsCreateModalOpen(true)}
-                className="px-4 py-2.5 bg-[#17191F] text-white rounded-[10px] font-medium hover:bg-[#2A2D35] transition-colors inline-flex items-center gap-2"
-              >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                  <line x1="12" y1="5" x2="12" y2="19" />
-                  <line x1="5" y1="12" x2="19" y2="12" />
-                </svg>
-                Creer un devis
-              </button>
+              <FillButton onClick={() => setIsCreateModalOpen(true)}>
+                <span className="flex items-center gap-2">
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                    <line x1="12" y1="5" x2="12" y2="19" />
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                  </svg>
+                  Creer un devis
+                </span>
+              </FillButton>
             )}
           </div>
         </div>

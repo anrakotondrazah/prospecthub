@@ -1,3 +1,6 @@
 export { CreateNoteModal } from './CreateNoteModal'
 export { LogCallModal } from './LogCallModal'
 export { ActivityForm } from './ActivityForm'
+export { ActivityTimeline } from './ActivityTimeline'
+export { ActivityTimelineItem } from './ActivityTimelineItem'
+export type { Activity, ActivityType } from './ActivityTimelineItem'

@@ -1,6 +1,7 @@
 'use client'
 
-import { useState } from 'react'
+import { useState, useMemo } from 'react'
+import DOMPurify from 'dompurify'
 import { generatePreview, extractTokensFromText, AVAILABLE_TOKENS, Token } from '@/lib/utils/tokens'
 import { Eye, EyeOff, AlertCircle, CheckCircle } from 'lucide-react'
 
@@ -113,13 +114,16 @@ export function TokenPreview({ subject, body, showToggle = true }: TokenPreviewP
               <div
                 className="text-sm text-[#0D0F14] whitespace-pre-wrap leading-relaxed"
                 dangerouslySetInnerHTML={{
-                  __html: previewBody
-                    .replace(/\n/g, '<br />')
-                    // Highlight tokens that couldn't be replaced (kept as {{...}})
-                    .replace(
-                      /\{\{([^}]+)\}\}/g,
-                      '<span class="bg-[#FEF3C7] text-[#92400E] px-1 rounded font-mono text-xs">{{$1}}</span>'
-                    ),
+                  __html: DOMPurify.sanitize(
+                    previewBody
+                      .replace(/\n/g, '<br />')
+                      // Highlight tokens that couldn't be replaced (kept as {{...}})
+                      .replace(
+                        /\{\{([^}]+)\}\}/g,
+                        '<span class="bg-[#FEF3C7] text-[#92400E] px-1 rounded font-mono text-xs">{{$1}}</span>'
+                      ),
+                    { ALLOWED_TAGS: ['br', 'span'], ALLOWED_ATTR: ['class'] }
+                  ),
                 }}
               />
             </div>

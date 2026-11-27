@@ -2,6 +2,7 @@ import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { LeadActions } from '@/components/activities/LeadActions'
+import { ActivityTimeline } from '@/components/activities/ActivityTimeline'
 
 export const instant = false
 
@@ -163,45 +164,17 @@ export default async function LeadDetailPage({ params }: LeadPageProps) {
             <h2 className="text-sm font-semibold text-[#0D0F14] uppercase tracking-wider mb-4">
               Historique des activites
             </h2>
-            {(!activities || activities.length === 0) ? (
-              <div className="text-center py-8 bg-[#F5F7F9] rounded-[10px]">
-                <div className="w-10 h-10 mx-auto mb-3 rounded-full bg-white flex items-center justify-center">
-                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#9BA0A6" strokeWidth="2">
-                    <circle cx="12" cy="12" r="10" />
-                    <polyline points="12 6 12 12 16 14" />
-                  </svg>
-                </div>
-                <p className="text-sm text-[#4E525A]">Aucune activite</p>
-                <p className="text-xs text-[#9BA0A6] mt-1">Les actions apparaitront ici.</p>
-              </div>
-            ) : (
-              <div className="space-y-4">
-                {activities.map((activity) => (
-                  <div key={activity.id} className="flex gap-3 p-3 bg-[#F5F7F9] rounded-[10px]">
-                    <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center flex-shrink-0">
-                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#4E525A" strokeWidth="2">
-                        <circle cx="12" cy="12" r="10" />
-                        <polyline points="12 6 12 12 16 14" />
-                      </svg>
-                    </div>
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-[#0D0F14]">{activity.subject || activity.activity_type}</p>
-                      {activity.body && (
-                        <p className="text-xs text-[#4E525A] mt-1 line-clamp-2">{activity.body}</p>
-                      )}
-                      <p className="text-xs text-[#9BA0A6] mt-1">
-                        {new Date(activity.activity_date).toLocaleDateString('fr-FR', {
-                          day: 'numeric',
-                          month: 'short',
-                          hour: '2-digit',
-                          minute: '2-digit',
-                        })}
-                      </p>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            )}
+            <ActivityTimeline
+              activities={(activities || []).map((a) => ({
+                id: a.id,
+                activity_type: a.activity_type as 'note' | 'call' | 'email' | 'meeting' | 'task' | 'other',
+                subject: a.subject,
+                body: a.body,
+                activity_date: a.activity_date,
+                created_at: a.created_at,
+              }))}
+              emptyMessage="Aucune activite"
+            />
           </div>
         </div>
 

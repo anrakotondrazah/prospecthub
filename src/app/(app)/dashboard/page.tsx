@@ -1,5 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import Link from 'next/link'
+import { FindLeadsButton } from '@/components/dashboard/FindLeadsButton'
 
 export const instant = false
 
@@ -244,16 +245,7 @@ export default async function DashboardPage() {
             </svg>
             <span className="text-sm font-medium text-foreground">{creditsBalance} credits</span>
           </div>
-          <Link
-            href="/base-entreprises"
-            className="inline-flex items-center gap-2 px-4 py-2 bg-[#17191F] text-white rounded-[10px] text-sm font-medium hover:bg-[#2a2d35] transition-colors"
-          >
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-              <line x1="12" y1="5" x2="12" y2="19" />
-              <line x1="5" y1="12" x2="19" y2="12" />
-            </svg>
-            Trouver leads
-          </Link>
+          <FindLeadsButton />
         </div>
       </div>
 

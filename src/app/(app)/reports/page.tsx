@@ -1,26 +1,194 @@
+import { createClient } from '@/lib/supabase/server'
+import { StatsCards } from '@/components/reports/StatsCards'
+import { LeadFunnelChart } from '@/components/reports/LeadFunnelChart'
+import { PipelineChart } from '@/components/reports/PipelineChart'
+import { DownloadButton } from '@/components/ui/buttons'
+
 export const instant = false
 
-export default function ReportsPage() {
+interface PipelineStageRow {
+  id: number
+  name: string
+  color: string
+  is_won?: boolean
+  is_lost?: boolean
+}
+
+interface DealRow {
+  id: number
+  stage_id: number
+  value: number | null
+  lead_id: number | null
+  pipeline_stages: PipelineStageRow | null
+}
+
+const DEFAULT_STAGES: PipelineStageRow[] = [
+  { id: 1, name: 'Prospection', color: '#6B7280' },
+  { id: 2, name: 'Qualification', color: '#3B82F6' },
+  { id: 3, name: 'Proposition', color: '#8B5CF6' },
+  { id: 4, name: 'Negociation', color: '#F59E0B' },
+  { id: 5, name: 'Gagne', color: '#10B981', is_won: true },
+]
+
+export default async function ReportsPage() {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
+
+  if (!user) return null
+
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('organization_id')
+    .eq('id', user.id)
+    .single()
+
+  const orgId = profile?.organization_id as number | null
+
+  // Default stats
+  let totalLeads = 0
+  let qualifiedLeads = 0
+  let convertedLeads = 0
+  let leadsThisMonth = 0
+  let totalRevenue = 0
+  let tasksCompleted = 0
+  let dealsWon = 0
+  let conversionRate = 0
+  let pipelineStages: { name: string; value: number; color: string }[] = []
+  let hasError = false
+
+  if (orgId) {
+    const now = new Date()
+    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1).toISOString()
+
+    // Execute all queries in parallel
+    const [
+      totalLeadsRes,
+      qualifiedLeadsRes,
+      leadsThisMonthRes,
+      tasksCompletedRes,
+      dealsRes,
+      stagesRes,
+      convertedLeadsRes,
+    ] = await Promise.all([
+      supabase
+        .from('leads')
+        .select('*', { count: 'exact', head: true })
+        .eq('organization_id', orgId),
+      supabase
+        .from('leads')
+        .select('*', { count: 'exact', head: true })
+        .eq('organization_id', orgId)
+        .eq('status', 'qualified'),
+      supabase
+        .from('leads')
+        .select('*', { count: 'exact', head: true })
+        .eq('organization_id', orgId)
+        .gte('created_at', startOfMonth),
+      supabase
+        .from('tasks')
+        .select('*', { count: 'exact', head: true })
+        .eq('organization_id', orgId)
+        .eq('status', 'completed'),
+      supabase
+        .from('deals')
+        .select('id, stage_id, value, lead_id, pipeline_stages(id, name, color, is_won)')
+        .eq('organization_id', orgId),
+      supabase
+        .from('pipeline_stages')
+        .select('id, name, color, is_won, is_lost')
+        .eq('organization_id', orgId)
+        .order('display_order'),
+      // Count distinct leads that have been converted (status = converted)
+      supabase
+        .from('leads')
+        .select('*', { count: 'exact', head: true })
+        .eq('organization_id', orgId)
+        .eq('status', 'converted'),
+    ])
+
+    // Check for errors
+    if (totalLeadsRes.error || dealsRes.error || stagesRes.error) {
+      hasError = true
+    }
+
+    // Only use data if queries succeeded
+    if (!totalLeadsRes.error) totalLeads = totalLeadsRes.count || 0
+    if (!qualifiedLeadsRes.error) qualifiedLeads = qualifiedLeadsRes.count || 0
+    if (!leadsThisMonthRes.error) leadsThisMonth = leadsThisMonthRes.count || 0
+    if (!tasksCompletedRes.error) tasksCompleted = tasksCompletedRes.count || 0
+    if (!convertedLeadsRes.error) convertedLeads = convertedLeadsRes.count || 0
+
+    const deals = !dealsRes.error ? ((dealsRes.data || []) as unknown as DealRow[]) : []
+    const stages: PipelineStageRow[] = !stagesRes.error && stagesRes.data && stagesRes.data.length > 0
+      ? (stagesRes.data as PipelineStageRow[])
+      : DEFAULT_STAGES
+
+    // Calculate deals won and total revenue
+    dealsWon = deals.filter((d) => d.pipeline_stages?.is_won === true).length
+
+    totalRevenue = deals
+      .filter((d) => d.pipeline_stages?.is_won === true)
+      .reduce((sum, d) => sum + (d.value || 0), 0)
+
+    // Calculate conversion rate using converted leads count
+    conversionRate = totalLeads > 0 ? Math.round((convertedLeads / totalLeads) * 100) : 0
+
+    // Build pipeline stages data
+    pipelineStages = stages
+      .filter((s) => !s.is_lost)
+      .map((stage) => {
+        const stageDeals = deals.filter((d) => d.stage_id === stage.id)
+        const stageValue = stageDeals.reduce((sum, d) => sum + (d.value || 0), 0)
+        return {
+          name: stage.name,
+          value: stageValue,
+          color: stage.color,
+        }
+      })
+  }
+
   return (
-    <div>
-      <div className="mb-6">
-        <h1 className="text-[23.5px] font-semibold text-foreground mb-1">Rapports</h1>
-        <p className="text-sm text-muted-foreground">
-          Analysez vos performances de prospection
-        </p>
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="flex items-center justify-between">
+        <div>
+          <h1 className="text-[23.5px] font-semibold text-foreground mb-1">
+            Rapports
+          </h1>
+          <p className="text-sm text-muted-foreground">
+            Analysez vos performances de prospection
+          </p>
+        </div>
+        <DownloadButton tooltip="Exporter PDF" disabled />
       </div>
 
-      {/* Coming Soon */}
-      <div className="bg-card rounded-[14px] border border-border p-12 text-center">
-        <div className="w-16 h-16 mx-auto mb-4 rounded-full bg-muted flex items-center justify-center">
-          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="text-muted-foreground">
-            <path d="M9 19v-6a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2zm0 0V9a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v10m-6 0a2 2 0 0 0 2 2h2a2 2 0 0 0 2-2m0 0V5a2 2 0 0 1 2-2h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-2a2 2 0 0 1-2-2z" />
-          </svg>
+      {/* Error Banner */}
+      {hasError && (
+        <div className="p-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl">
+          <p className="text-sm text-amber-800 dark:text-amber-200">
+            Certaines donnees n&apos;ont pas pu etre chargees. Les metriques affichees peuvent etre partielles.
+          </p>
         </div>
-        <h2 className="text-xl font-semibold text-foreground mb-2">Bientot disponible</h2>
-        <p className="text-muted-foreground max-w-md mx-auto">
-          Les rapports detailles de vos performances seront disponibles dans une prochaine mise a jour.
-        </p>
+      )}
+
+      {/* Stats Cards */}
+      <StatsCards
+        totalLeads={totalLeads}
+        conversionRate={conversionRate}
+        totalRevenue={totalRevenue}
+        tasksCompleted={tasksCompleted}
+        leadsThisMonth={leadsThisMonth}
+        dealsWon={dealsWon}
+      />
+
+      {/* Charts Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <LeadFunnelChart
+          totalLeads={totalLeads}
+          qualifiedLeads={qualifiedLeads}
+          convertedLeads={convertedLeads}
+        />
+        <PipelineChart stages={pipelineStages} />
       </div>
     </div>
   )

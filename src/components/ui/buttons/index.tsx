@@ -10,7 +10,7 @@ export const LogoutButton = forwardRef<HTMLButtonElement, { onClick?: () => void
     <button
       ref={ref}
       onClick={onClick}
-      className="group flex items-center justify-start w-[45px] h-[45px] border-none rounded-full cursor-pointer relative overflow-hidden transition-all duration-300 shadow-md bg-red-500 hover:w-[125px] hover:rounded-[40px] active:translate-x-0.5 active:translate-y-0.5"
+      className="group flex items-center justify-start w-10 h-10 border-none rounded-full cursor-pointer relative overflow-hidden transition-all duration-300 shadow-md bg-red-500 hover:w-[120px] hover:rounded-[40px] active:translate-x-0.5 active:translate-y-0.5"
     >
       <span className="w-full flex items-center justify-center transition-all duration-300 group-hover:w-[30%] group-hover:pl-5">
         <svg viewBox="0 0 512 512" className="w-[17px] fill-white">
@@ -36,7 +36,7 @@ export const SaveButton = forwardRef<HTMLButtonElement, {
     <button
       ref={ref}
       onClick={onClick}
-      className="group font-inherit text-lg bg-foreground dark:bg-[#212121] text-background dark:text-white fill-muted-foreground py-3 px-4 pl-3.5 flex items-center cursor-pointer border-none rounded-[15px] font-bold hover:bg-foreground/90 dark:hover:bg-black active:scale-95 transition-all duration-200"
+      className="group font-inherit text-lg bg-foreground dark:bg-[#212121] text-background dark:text-white fill-muted-foreground h-[42px] px-4 pl-3.5 flex items-center cursor-pointer border-none rounded-[15px] font-bold hover:bg-foreground/90 dark:hover:bg-black active:scale-95 transition-all duration-200"
     >
       <div className="flex items-center justify-center transition-transform duration-300 group-hover:translate-x-5 group-hover:scale-110">
         <svg
@@ -68,10 +68,10 @@ export const DownloadButton = forwardRef<HTMLButtonElement, {
       ref={ref}
       onClick={onClick}
       disabled={disabled}
-      className={`group w-[50px] h-[50px] border-none rounded-full bg-muted dark:bg-[#21262D] flex flex-col items-center justify-center cursor-pointer relative transition-all duration-[250ms] ease-out shadow-md active:scale-95 overflow-hidden z-[1] before:content-[''] before:absolute before:top-0 before:left-0 before:h-full before:w-0 before:rounded-full before:bg-[#58A6FF] before:z-[-1] before:transition-all before:duration-[250ms] before:ease-out hover:before:w-full ${disabled ? 'opacity-50 cursor-not-allowed hover:before:w-0' : ''}`}
+      className={`group w-10 h-10 border-none rounded-full bg-muted dark:bg-[#21262D] flex flex-col items-center justify-center cursor-pointer relative transition-all duration-[250ms] ease-out shadow-md active:scale-95 overflow-hidden z-[1] before:content-[''] before:absolute before:top-0 before:left-0 before:h-full before:w-0 before:rounded-full before:bg-[#58A6FF] before:z-[-1] before:transition-all before:duration-[250ms] before:ease-out hover:before:w-full ${disabled ? 'opacity-50 cursor-not-allowed hover:before:w-0' : ''}`}
     >
       <svg
-        className="w-4 h-4 fill-[#58A6FF] transition-all duration-[250ms] ease-out group-hover:fill-white group-hover:-translate-y-0.5 relative z-[2]"
+        className="w-3.5 h-3.5 fill-[#58A6FF] transition-all duration-[250ms] ease-out group-hover:fill-white group-hover:-translate-y-0.5 relative z-[2]"
         viewBox="0 0 384 512"
       >
         <path d="M169.4 470.6c12.5 12.5 32.8 12.5 45.3 0l160-160c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0L224 370.8 224 64c0-17.7-14.3-32-32-32s-32 14.3-32 32l0 306.7L54.6 265.4c-12.5-12.5-32.8-12.5-45.3 0s-12.5 32.8 0 45.3l160 160z" />
@@ -98,11 +98,11 @@ export const UploadButton = forwardRef<HTMLButtonElement, {
       ref={ref}
       onClick={onClick}
       disabled={disabled}
-      className={`group w-[50px] h-[50px] border-none rounded-full bg-muted dark:bg-[#21262D] flex flex-col items-center justify-center cursor-pointer relative transition-all duration-[250ms] ease-out shadow-md active:scale-95 overflow-hidden z-[1] before:content-[''] before:absolute before:top-0 before:left-0 before:h-full before:w-0 before:rounded-full before:bg-[#22c55e] before:z-[-1] before:transition-all before:duration-[250ms] before:ease-out hover:before:w-full ${disabled ? 'opacity-50 cursor-not-allowed hover:before:w-0' : ''}`}
+      className={`group w-10 h-10 border-none rounded-full bg-muted dark:bg-[#21262D] flex flex-col items-center justify-center cursor-pointer relative transition-all duration-[250ms] ease-out shadow-md active:scale-95 overflow-hidden z-[1] before:content-[''] before:absolute before:top-0 before:left-0 before:h-full before:w-0 before:rounded-full before:bg-[#22c55e] before:z-[-1] before:transition-all before:duration-[250ms] before:ease-out hover:before:w-full ${disabled ? 'opacity-50 cursor-not-allowed hover:before:w-0' : ''}`}
     >
       <div className="w-[18px] h-[5px] border-t-2 border-l-2 border-r-2 border-[#22c55e] transition-all duration-[250ms] ease-out group-hover:border-white relative z-[2]" />
       <svg
-        className="w-4 h-4 fill-[#22c55e] transition-all duration-[250ms] ease-out group-hover:fill-white group-hover:translate-y-0.5 relative z-[2]"
+        className="w-3.5 h-3.5 fill-[#22c55e] transition-all duration-[250ms] ease-out group-hover:fill-white group-hover:translate-y-0.5 relative z-[2]"
         viewBox="0 0 384 512"
       >
         <path d="M214.6 41.4c-12.5-12.5-32.8-12.5-45.3 0l-160 160c-12.5 12.5-12.5 32.8 0 45.3s32.8 12.5 45.3 0L160 141.2V448c0 17.7 14.3 32 32 32s32-14.3 32-32V141.2l105.4 105.4c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3l-160-160z" />
@@ -126,7 +126,7 @@ export const PayButton = forwardRef<HTMLButtonElement, {
     <button
       ref={ref}
       onClick={onClick}
-      className="pay-btn group"
+      className="pay-btn group h-[42px]"
     >
       <div className="icon-container">
         {/* Wallet - default */}
@@ -168,8 +168,11 @@ export const FillButton = forwardRef<HTMLButtonElement, {
   onClick?: () => void
   children?: React.ReactNode
   variant?: 'default' | 'danger' | 'success'
+  disabled?: boolean
+  className?: string
+  title?: string
 }>(
-  ({ onClick, children = 'Click me', variant = 'default' }, ref) => {
+  ({ onClick, children = 'Click me', variant = 'default', disabled = false, className = '', title }, ref) => {
     const variantClasses = {
       default: 'bg-muted text-foreground before:bg-foreground hover:text-background',
       danger: 'bg-red-100 dark:bg-red-900/20 text-red-600 before:bg-red-500 hover:text-white',
@@ -180,7 +183,9 @@ export const FillButton = forwardRef<HTMLButtonElement, {
       <button
         ref={ref}
         onClick={onClick}
-        className={`relative py-3.5 px-6 border-none rounded-[15px] z-[1] font-bold text-[17px] shadow-md transition-all duration-[250ms] ease-out overflow-hidden before:content-[''] before:absolute before:top-0 before:left-0 before:h-full before:w-0 before:rounded-[15px] before:z-[-1] before:shadow-md before:transition-all before:duration-[250ms] before:ease-out hover:before:w-full active:scale-95 ${variantClasses[variant]}`}
+        disabled={disabled}
+        title={title}
+        className={`relative h-[42px] px-6 border-none rounded-[15px] z-[1] font-bold text-[17px] shadow-md transition-all duration-[250ms] ease-out overflow-hidden before:content-[''] before:absolute before:top-0 before:left-0 before:h-full before:w-0 before:rounded-[15px] before:z-[-1] before:shadow-md before:transition-all before:duration-[250ms] before:ease-out hover:before:w-full active:scale-95 ${variantClasses[variant]} ${disabled ? 'opacity-50 cursor-not-allowed hover:before:w-0 active:scale-100' : ''} ${className}`}
       >
         {children}
       </button>

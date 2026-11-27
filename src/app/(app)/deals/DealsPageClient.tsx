@@ -7,6 +7,7 @@ import { KanbanColumn, PipelineStage } from '@/components/deals/KanbanColumn'
 import { DealCard, Deal } from '@/components/deals/DealCard'
 import { CreateDealModal } from '@/components/modals/CreateDealModal'
 import { EmptyState } from '@/components/ui/EmptyState'
+import { FillButton } from '@/components/ui/buttons'
 
 interface DealsPageClientProps {
   initialDeals: Deal[]
@@ -130,16 +131,15 @@ export function DealsPageClient({
             {weightedValue.toLocaleString('fr-FR', { maximumFractionDigits: 0 })} EUR pondéré
           </p>
         </div>
-        <button
-          onClick={() => setIsCreateModalOpen(true)}
-          className="flex items-center gap-2 px-4 py-2.5 text-sm font-medium text-white bg-[#0066FF] rounded-xl hover:bg-[#0052CC] shadow-sm hover:shadow-md transition-all duration-200 active:scale-[0.98]"
-        >
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-            <line x1="12" y1="5" x2="12" y2="19" />
-            <line x1="5" y1="12" x2="19" y2="12" />
-          </svg>
-          Nouvelle affaire
-        </button>
+        <FillButton onClick={() => setIsCreateModalOpen(true)}>
+          <span className="flex items-center gap-2">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+              <line x1="12" y1="5" x2="12" y2="19" />
+              <line x1="5" y1="12" x2="19" y2="12" />
+            </svg>
+            Nouvelle affaire
+          </span>
+        </FillButton>
       </div>
 
       {/* Kanban Board */}

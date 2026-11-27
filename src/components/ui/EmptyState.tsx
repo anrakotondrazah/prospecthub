@@ -101,15 +101,16 @@ export function EmptyState({ type, action, actionLabel, actionHref }: EmptyState
             </span>
           </FillButton>
         ) : (
-          <Link href={finalActionHref}>
-            <FillButton>
-              <span className="flex items-center gap-2">
-                {finalActionLabel}
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M5 12h14M12 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </span>
-            </FillButton>
+          <Link
+            href={finalActionHref}
+            className="relative inline-flex items-center justify-center h-[42px] px-6 border-none rounded-[15px] z-[1] font-bold text-[17px] shadow-md transition-all duration-[250ms] ease-out overflow-hidden bg-muted text-foreground before:content-[''] before:absolute before:top-0 before:left-0 before:h-full before:w-0 before:rounded-[15px] before:bg-foreground before:z-[-1] before:shadow-md before:transition-all before:duration-[250ms] before:ease-out hover:before:w-full hover:text-background active:scale-95"
+          >
+            <span className="flex items-center gap-2">
+              {finalActionLabel}
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                <path d="M5 12h14M12 5l7 7-7 7" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            </span>
           </Link>
         )}
       </div>

@@ -4,7 +4,7 @@ import { useState, useCallback } from 'react'
 import Link from 'next/link'
 import { createClient } from '@/lib/supabase/client'
 import { DownloadButton, UploadButton, FillButton, AnimatedCheckbox } from '@/components/ui/buttons'
-import { ImportCSVModal } from '@/components/modals/ImportCSVModal'
+import { ImportCSVModal, COMPANY_FIELD_LABELS } from '@/components/modals/ImportCSVModal'
 import { generateCSV, downloadCSV } from '@/lib/utils/csv'
 
 interface Company {
@@ -75,11 +75,17 @@ export function CompaniesPageClient({ initialCompanies, organizationId }: Compan
     setIsExporting(true)
 
     try {
-      const { data: allCompanies } = await supabase
+      const { data: allCompanies, error } = await supabase
         .from('companies')
         .select('name, website, industry, employees_count, phone, email, address_street, address_city, address_postal_code, created_at')
         .eq('organization_id', organizationId)
         .order('created_at', { ascending: false })
+
+      if (error) {
+        console.error('Erreur export entreprises:', error)
+        alert('Erreur lors de l\'export. Veuillez reessayer.')
+        return
+      }
 
       if (allCompanies && allCompanies.length > 0) {
         const headers = ['name', 'website', 'industry', 'employees_count', 'phone', 'email', 'address_street', 'address_city', 'address_postal_code', 'created_at']
@@ -89,9 +95,10 @@ export function CompaniesPageClient({ initialCompanies, organizationId }: Compan
       }
     } catch (err) {
       console.error('Erreur export entreprises:', err)
+      alert('Erreur lors de l\'export. Veuillez reessayer.')
+    } finally {
+      setIsExporting(false)
     }
-
-    setIsExporting(false)
   }, [organizationId, supabase])
 
   const toggleSelectAll = useCallback(() => {
@@ -178,6 +185,7 @@ export function CompaniesPageClient({ initialCompanies, organizationId }: Compan
                     checked={companies.length > 0 && selectedIds.size === companies.length}
                     onChange={toggleSelectAll}
                     id="select-all-companies"
+                    aria-label="Selectionner toutes les entreprises"
                   />
                 </th>
                 <th className="px-4 py-3 text-left text-xs font-medium text-muted-foreground uppercase tracking-wider">
@@ -222,6 +230,7 @@ export function CompaniesPageClient({ initialCompanies, organizationId }: Compan
                           checked={selectedIds.has(company.id)}
                           onChange={() => toggleSelect(company.id)}
                           id={`company-${company.id}`}
+                          aria-label={`Selectionner ${companyName}`}
                         />
                       </td>
                       <td className="px-4 py-3">
@@ -281,6 +290,8 @@ export function CompaniesPageClient({ initialCompanies, organizationId }: Compan
         isOpen={isImportModalOpen}
         onClose={() => setIsImportModalOpen(false)}
         onImport={handleImport}
+        fieldLabels={COMPANY_FIELD_LABELS}
+        title="Importer des entreprises"
       />
     </div>
   )

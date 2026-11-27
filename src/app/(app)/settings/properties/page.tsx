@@ -5,6 +5,7 @@ import { createClient } from '@/lib/supabase/client'
 import { PropertyEditor } from '@/components/properties/PropertyEditor'
 import { CreatePropertyModal } from '@/components/properties/CreatePropertyModal'
 import type { CustomProperty } from '@/components/properties/PropertyField'
+import { Loader } from '@/components/ui/Loader'
 
 import type { ReactNode } from 'react'
 
@@ -155,7 +156,7 @@ export default function PropertiesSettingsPage() {
   if (!organizationId) {
     return (
       <div className="flex items-center justify-center h-[60vh]">
-        <div className="animate-spin w-8 h-8 border-2 border-[#0066FF] border-t-transparent rounded-full" />
+        <Loader size="lg" />
       </div>
     )
   }
@@ -225,7 +226,7 @@ export default function PropertiesSettingsPage() {
       {/* Loading */}
       {isLoading ? (
         <div className="bg-white rounded-[14px] border border-[#E2E4E6] p-12 flex items-center justify-center">
-          <div className="animate-spin w-8 h-8 border-2 border-[#0066FF] border-t-transparent rounded-full" />
+          <Loader size="md" />
         </div>
       ) : (
         <PropertyEditor

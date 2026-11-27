@@ -123,43 +123,43 @@ export function TokenPicker({
   return (
     <div
       ref={containerRef}
-      className="bg-white rounded-xl shadow-xl border border-black/[0.08] w-80 max-h-[400px] overflow-hidden flex flex-col"
+      className="bg-white dark:bg-[#0D1117] rounded-xl shadow-xl border border-black/[0.08] dark:border-[#30363D] w-80 max-h-[400px] overflow-hidden flex flex-col"
       style={style}
     >
       {/* Header */}
-      <div className="p-3 border-b border-black/[0.06]">
+      <div className="p-3 border-b border-black/[0.06] dark:border-[#30363D]">
         <div className="flex items-center justify-between mb-3">
-          <span className="text-sm font-medium text-[#0D0F14]">Inserer un token</span>
+          <span className="text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3]">Inserer un token</span>
           <button
             onClick={onClose}
-            className="w-6 h-6 rounded-lg hover:bg-black/[0.04] flex items-center justify-center transition-colors"
+            className="w-6 h-6 rounded-lg hover:bg-black/[0.04] dark:hover:bg-white/[0.05] flex items-center justify-center transition-colors"
           >
-            <X className="w-4 h-4 text-[#4E525A]" />
+            <X className="w-4 h-4 text-[#4E525A] dark:text-[#8B949E]" />
           </button>
         </div>
 
         {/* Search */}
         <div className="relative">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#9BA0A6]" />
+          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#9BA0A6] dark:text-[#8B949E]" />
           <input
             ref={searchInputRef}
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Rechercher un token..."
-            className="w-full pl-9 pr-3 py-2 bg-[#F5F7F9] border-none rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#0066FF]/20"
+            className="w-full pl-9 pr-3 py-2 bg-[#F5F7F9] dark:bg-[#161B22] border-none rounded-lg text-sm text-[#0D0F14] dark:text-[#E6EDF3] placeholder:text-[#9BA0A6] dark:placeholder:text-[#8B949E] focus:outline-none focus:ring-2 focus:ring-[#0066FF]/20"
           />
         </div>
       </div>
 
       {/* Category tabs */}
-      <div className="flex gap-1 p-2 border-b border-black/[0.06] overflow-x-auto scrollbar-hide">
+      <div className="flex gap-1 p-2 border-b border-black/[0.06] dark:border-[#30363D] overflow-x-auto scrollbar-hide">
         <button
           onClick={() => setActiveCategory('all')}
           className={`px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-colors ${
             activeCategory === 'all'
               ? 'bg-[#0066FF] text-white'
-              : 'bg-[#F5F7F9] text-[#4E525A] hover:bg-black/[0.06]'
+              : 'bg-[#F5F7F9] dark:bg-[#21262D] text-[#4E525A] dark:text-[#8B949E] hover:bg-black/[0.06] dark:hover:bg-[#30363D]'
           }`}
         >
           Tous
@@ -171,7 +171,7 @@ export function TokenPicker({
             className={`px-3 py-1.5 rounded-lg text-xs font-medium whitespace-nowrap transition-colors flex items-center gap-1.5 ${
               activeCategory === category
                 ? 'bg-[#0066FF] text-white'
-                : 'bg-[#F5F7F9] text-[#4E525A] hover:bg-black/[0.06]'
+                : 'bg-[#F5F7F9] dark:bg-[#21262D] text-[#4E525A] dark:text-[#8B949E] hover:bg-black/[0.06] dark:hover:bg-[#30363D]'
             }`}
           >
             <CategoryIcon category={category} />
@@ -183,7 +183,7 @@ export function TokenPicker({
       {/* Token list */}
       <div className="flex-1 overflow-y-auto p-2">
         {filteredTokens.length === 0 ? (
-          <div className="text-center py-8 text-sm text-[#9BA0A6]">
+          <div className="text-center py-8 text-sm text-[#9BA0A6] dark:text-[#8B949E]">
             Aucun token trouve
           </div>
         ) : (
@@ -192,28 +192,28 @@ export function TokenPicker({
               <button
                 key={token.id}
                 onClick={() => handleSelect(token)}
-                className="w-full text-left p-2.5 rounded-lg hover:bg-[#F5F7F9] transition-colors group"
+                className="w-full text-left p-2.5 rounded-lg hover:bg-[#F5F7F9] dark:hover:bg-[#21262D] transition-colors group"
               >
                 <div className="flex items-start justify-between">
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">
-                      <span className="text-sm font-medium text-[#0D0F14]">
+                      <span className="text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3]">
                         {token.label}
                       </span>
-                      <span className="text-[10px] text-[#9BA0A6] bg-[#F5F7F9] px-1.5 py-0.5 rounded group-hover:bg-white">
+                      <span className="text-[10px] text-[#9BA0A6] dark:text-[#8B949E] bg-[#F5F7F9] dark:bg-[#21262D] px-1.5 py-0.5 rounded group-hover:bg-white dark:group-hover:bg-[#161B22]">
                         {TOKEN_CATEGORY_LABELS[token.category]}
                       </span>
                     </div>
-                    <p className="text-xs text-[#4E525A] mt-0.5 truncate">
+                    <p className="text-xs text-[#4E525A] dark:text-[#8B949E] mt-0.5 truncate">
                       {token.description}
                     </p>
                   </div>
-                  <code className="text-[10px] text-[#0066FF] bg-[#0066FF]/5 px-2 py-1 rounded ml-2 font-mono whitespace-nowrap">
+                  <code className="text-[10px] text-[#0066FF] bg-[#0066FF]/5 dark:bg-[#0066FF]/10 px-2 py-1 rounded ml-2 font-mono whitespace-nowrap">
                     {`{{${token.name}}}`}
                   </code>
                 </div>
-                <div className="mt-1.5 text-[11px] text-[#9BA0A6]">
-                  Exemple: <span className="text-[#4E525A]">{token.example}</span>
+                <div className="mt-1.5 text-[11px] text-[#9BA0A6] dark:text-[#8B949E]">
+                  Exemple: <span className="text-[#4E525A] dark:text-[#E6EDF3]">{token.example}</span>
                 </div>
               </button>
             ))}
@@ -222,9 +222,9 @@ export function TokenPicker({
       </div>
 
       {/* Footer hint */}
-      <div className="p-2 border-t border-black/[0.06] bg-[#FAFBFC]">
-        <p className="text-[10px] text-[#9BA0A6] text-center">
-          Tapez <code className="bg-white px-1 rounded">{'{'}</code> dans l'editeur pour ouvrir ce menu
+      <div className="p-2 border-t border-black/[0.06] dark:border-[#30363D] bg-[#FAFBFC] dark:bg-[#161B22]">
+        <p className="text-[10px] text-[#9BA0A6] dark:text-[#8B949E] text-center">
+          Tapez <code className="bg-white dark:bg-[#21262D] px-1 rounded">{'{'}</code> dans l'editeur pour ouvrir ce menu
         </p>
       </div>
     </div>

@@ -192,6 +192,12 @@ function TaskCard({ task, today }: { task: Task; today: string }) {
     low: 'bg-muted text-muted-foreground',
   }
 
+  const priorityLabels: Record<string, string> = {
+    high: 'Haute',
+    medium: 'Moyenne',
+    low: 'Basse',
+  }
+
   return (
     <Link
       href={`/tasks/${task.uuid}`}
@@ -203,7 +209,7 @@ function TaskCard({ task, today }: { task: Task; today: string }) {
         <p className="font-medium text-foreground text-sm">{task.title}</p>
         {task.priority && (
           <span className={`text-[10px] font-semibold uppercase px-1.5 py-0.5 rounded ${priorityColors[task.priority] || priorityColors.low}`}>
-            {task.priority}
+            {priorityLabels[task.priority] || 'Basse'}
           </span>
         )}
       </div>

@@ -4,6 +4,15 @@ import { notFound } from 'next/navigation'
 
 export const instant = false
 
+const ACTIVITY_TYPE_LABELS: Record<string, string> = {
+  note: 'Note',
+  call: 'Appel',
+  email: 'Email',
+  meeting: 'Reunion',
+  task: 'Tache',
+  other: 'Activite',
+}
+
 interface CompanyPageProps {
   params: Promise<{ id: string }>
 }
@@ -212,7 +221,7 @@ export default async function CompanyDetailPage({ params }: CompanyPageProps) {
                       </svg>
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-[#0D0F14]">{activity.subject || activity.activity_type}</p>
+                      <p className="text-sm font-medium text-[#0D0F14]">{activity.subject || ACTIVITY_TYPE_LABELS[activity.activity_type] || 'Activite'}</p>
                       {activity.body && (
                         <p className="text-xs text-[#4E525A] mt-1 line-clamp-2">{activity.body}</p>
                       )}
@@ -265,8 +274,8 @@ export default async function CompanyDetailPage({ params }: CompanyPageProps) {
             </h2>
             <div className="space-y-3">
               <div>
-                <p className="text-xs text-[#9BA0A6]">ID</p>
-                <p className="text-sm font-mono text-[#4E525A]">{company.uuid}</p>
+                <p className="text-xs text-[#9BA0A6]">Reference</p>
+                <p className="text-sm text-[#4E525A]">{company.uuid.slice(0, 8).toUpperCase()}</p>
               </div>
               <div>
                 <p className="text-xs text-[#9BA0A6]">SIRET</p>

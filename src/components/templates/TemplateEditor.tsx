@@ -200,8 +200,8 @@ Cordialement,
               key={`error-${i}`}
               className="flex items-start gap-2 p-3 bg-[#FDE8E5] dark:bg-[#B42318]/10 rounded-lg"
             >
-              <AlertCircle className="w-4 h-4 text-[#B42318] mt-0.5 flex-shrink-0" />
-              <span className="text-sm text-[#B42318]">{error}</span>
+              <AlertCircle className="w-4 h-4 text-[#B42318] dark:text-[#F87171] mt-0.5 flex-shrink-0" />
+              <span className="text-sm text-[#B42318] dark:text-[#F87171]">{error}</span>
             </div>
           ))}
           {validation.warnings.map((warning, i) => (

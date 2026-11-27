@@ -267,7 +267,7 @@ export function ImportCSVModal({ isOpen, onClose, onImport, fieldLabels, title =
 
             {step === 'importing' && (
               <div className="text-center py-12">
-                <div className="w-12 h-12 mx-auto mb-4 border-2 border-[#17191F] dark:border-[#E6EDF3] border-t-transparent rounded-full animate-spin" />
+                <div className="w-12 h-12 mx-auto mb-4 border-2 border-[#17191F] dark:border-[#E6EDF3] border-t-transparent dark:border-t-transparent rounded-full animate-spin" />
                 <p className="text-sm text-[#4E525A] dark:text-[#8B949E]">Import en cours...</p>
               </div>
             )}

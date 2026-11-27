@@ -5,6 +5,16 @@ import { TaskDetailClient } from './TaskDetailClient'
 
 export const instant = false
 
+const TASK_TYPE_LABELS: Record<string, string> = {
+  task: 'Tache',
+  call: 'Appel',
+  email: 'Email',
+  meeting: 'Reunion',
+  follow_up: 'Suivi',
+  reminder: 'Rappel',
+  other: 'Autre',
+}
+
 interface TaskOwner {
   id: string
   first_name: string
@@ -201,8 +211,8 @@ export default async function TaskDetailPage({ params }: { params: Promise<{ id:
             {/* Type */}
             <div>
               <p className="text-xs text-[#9BA0A6] dark:text-[#8B949E] mb-1">Type</p>
-              <p className="text-sm text-[#0D0F14] dark:text-[#E6EDF3] capitalize">
-                {task.task_type}
+              <p className="text-sm text-[#0D0F14] dark:text-[#E6EDF3]">
+                {TASK_TYPE_LABELS[task.task_type] || 'Tache'}
               </p>
             </div>
 

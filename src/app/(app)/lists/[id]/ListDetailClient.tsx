@@ -55,6 +55,16 @@ type AvailableLead = {
   status: string
 }
 
+const STATUS_LABELS: Record<string, string> = {
+  new: 'Nouveau',
+  contacted: 'Contacte',
+  qualified: 'Qualifie',
+  unqualified: 'Non qualifie',
+  nurturing: 'En maturation',
+  converted: 'Converti',
+  lost: 'Perdu',
+}
+
 type ListDetailClientProps = {
   list: List
   initialMembers: Member[]
@@ -341,7 +351,7 @@ export function ListDetailClient({ list, initialMembers, availableLeads, organiz
                   <td className="px-5 py-4 text-sm text-muted-foreground">{member.leads.email || '-'}</td>
                   <td className="px-5 py-4">
                     <span className={`inline-block px-2 py-1 rounded-md text-xs font-medium ${getStatusColor(member.leads.status)}`}>
-                      {member.leads.status}
+                      {STATUS_LABELS[member.leads.status] || 'Nouveau'}
                     </span>
                   </td>
                   <td className="px-5 py-4">
@@ -499,7 +509,7 @@ function AddLeadsModal({ isOpen, onClose, onAddLeads, availableLeads }: {
                       lead.status === 'contacted' ? 'bg-[#E3F2FD] text-[#1565C0]' :
                       'bg-[#F5F7F9] text-[#4E525A]'
                     }`}>
-                      {lead.status}
+                      {STATUS_LABELS[lead.status] || 'Nouveau'}
                     </span>
                   </button>
                 )

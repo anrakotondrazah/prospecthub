@@ -3,6 +3,7 @@
 import { useState, useCallback, useRef } from 'react'
 import { FillButton } from '@/components/ui/buttons'
 import { parseCSV, autoMapColumns, LEAD_FIELD_MAPPINGS } from '@/lib/utils/csv'
+import { Loader } from '@/components/ui/Loader'
 
 interface ImportCSVModalProps {
   isOpen: boolean
@@ -267,7 +268,9 @@ export function ImportCSVModal({ isOpen, onClose, onImport, fieldLabels, title =
 
             {step === 'importing' && (
               <div className="text-center py-12">
-                <div className="w-12 h-12 mx-auto mb-4 border-2 border-[#17191F] dark:border-[#E6EDF3] border-t-transparent dark:border-t-transparent rounded-full animate-spin" />
+                <div className="flex justify-center mb-4">
+                  <Loader size="lg" />
+                </div>
                 <p className="text-sm text-[#4E525A] dark:text-[#8B949E]">Import en cours...</p>
               </div>
             )}

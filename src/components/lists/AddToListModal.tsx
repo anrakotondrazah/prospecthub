@@ -3,6 +3,7 @@
 import { useState, useCallback, useEffect } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { FillButton } from '@/components/ui/buttons'
+import { Loader } from '@/components/ui/Loader'
 
 type Lead = {
   id: number
@@ -204,7 +205,7 @@ export function AddToListModal({
         <div className="flex-1 overflow-y-auto p-6">
           {isLoading ? (
             <div className="flex items-center justify-center py-8">
-              <div className="w-8 h-8 border-2 border-[#17191F] border-t-transparent rounded-full animate-spin" />
+              <Loader size="md" />
             </div>
           ) : filteredLists.length === 0 ? (
             <div className="text-center py-8">

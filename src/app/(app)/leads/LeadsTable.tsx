@@ -43,6 +43,16 @@ const STATUS_COLORS: Record<string, { bg: string; text: string }> = {
   lost: { bg: 'bg-[#F5F5F5]', text: 'text-[#616161]' },
 }
 
+const STATUS_LABELS: Record<string, string> = {
+  new: 'Nouveau',
+  contacted: 'Contacte',
+  qualified: 'Qualifie',
+  unqualified: 'Non qualifie',
+  nurturing: 'En maturation',
+  converted: 'Converti',
+  lost: 'Perdu',
+}
+
 const SCORE_COLORS: Record<string, { bg: string; text: string }> = {
   poor: { bg: 'bg-[#FFEBEE]', text: 'text-[#C62828]' },
   fair: { bg: 'bg-[#FFF3E0]', text: 'text-[#E65100]' },
@@ -110,7 +120,7 @@ function LeadDetailPanel({ lead, onClose }: { lead: Lead; onClose: () => void })
               )}
               <div className="flex items-center gap-2 mt-1">
                 <span className={`inline-flex px-2 py-0.5 text-xs font-medium rounded ${statusStyle.bg} ${statusStyle.text}`}>
-                  {lead.status.toUpperCase()}
+                  {STATUS_LABELS[lead.status] || 'Nouveau'}
                 </span>
                 {lead.is_hot && (
                   <span className="inline-flex items-center gap-1 px-2 py-0.5 text-xs font-medium rounded bg-[#FFEBEE] text-[#C62828]">
@@ -242,8 +252,8 @@ function LeadDetailPanel({ lead, onClose }: { lead: Lead; onClose: () => void })
                 <p className="text-sm font-medium text-foreground">{createdDate}</p>
               </div>
               <div className="p-3 bg-muted rounded-[10px]">
-                <p className="text-xs text-muted-foreground mb-1">ID</p>
-                <p className="text-sm font-mono text-muted-foreground truncate">{lead.uuid.slice(0, 8)}</p>
+                <p className="text-xs text-muted-foreground mb-1">Reference</p>
+                <p className="text-sm text-muted-foreground truncate">{lead.uuid.slice(0, 8).toUpperCase()}</p>
               </div>
             </div>
           </div>
@@ -503,7 +513,7 @@ export function LeadsTable({ leads }: LeadsTableProps) {
                         <span
                           className={`inline-flex px-2 py-1 text-xs font-medium rounded ${statusStyle.bg} ${statusStyle.text}`}
                         >
-                          {lead.status?.toUpperCase()}
+                          {STATUS_LABELS[lead.status] || 'Nouveau'}
                         </span>
                       </td>
                       <td className="px-4 py-3 hidden lg:table-cell">

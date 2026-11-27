@@ -3,6 +3,7 @@
 import { useState, useEffect, useCallback } from 'react'
 import { createClient } from '@/lib/supabase/client'
 import { FillButton, AnimatedCheckbox } from '@/components/ui/buttons'
+import { Loader } from '@/components/ui/Loader'
 
 interface SharedCompany {
   id: number
@@ -232,8 +233,8 @@ export default function BaseEntreprisesPage() {
 
       {loading ? (
         <div className="bg-card rounded-[14px] border border-border p-12">
-          <div className="text-center">
-            <div className="w-8 h-8 mx-auto mb-4 border-2 border-foreground border-t-transparent rounded-full animate-spin" />
+          <div className="flex flex-col items-center justify-center gap-4">
+            <Loader size="md" />
             <p className="text-sm text-muted-foreground">Chargement...</p>
           </div>
         </div>

@@ -46,3 +46,8 @@ next-env.d.ts
 # Local references and archives
 /00_ARCHIVE/
 /00_REFERENCES/
+!/00_REFERENCES/
+/00_REFERENCES/*
+!/00_REFERENCES/analysis/
+/00_REFERENCES/analysis/*
+!/00_REFERENCES/analysis/14_SPEC_MENU_COMPTE_ET_PARAMETRES.md

@@ -20,6 +20,16 @@ const STATUS_COLORS: Record<string, { bg: string; text: string }> = {
   lost: { bg: 'bg-[#F5F5F5]', text: 'text-[#616161]' },
 }
 
+const STATUS_LABELS: Record<string, string> = {
+  new: 'Nouveau',
+  contacted: 'Contacte',
+  qualified: 'Qualifie',
+  unqualified: 'Non qualifie',
+  nurturing: 'En maturation',
+  converted: 'Converti',
+  lost: 'Perdu',
+}
+
 const SCORE_COLORS: Record<string, { bg: string; text: string; label: string }> = {
   hot: { bg: 'bg-[#FFEBEE]', text: 'text-[#C62828]', label: 'Chaud' },
   warm: { bg: 'bg-[#FFF3E0]', text: 'text-[#E65100]', label: 'Tiede' },
@@ -123,7 +133,7 @@ export default async function LeadDetailPage({ params }: LeadPageProps) {
                   </div>
                   <div className="flex items-center gap-2 flex-shrink-0">
                     <span className={`inline-flex px-2.5 py-1 text-xs font-medium rounded ${statusStyle.bg} ${statusStyle.text}`}>
-                      {lead.status.toUpperCase()}
+                      {STATUS_LABELS[lead.status] || 'Nouveau'}
                     </span>
                     {lead.is_hot && (
                       <span className="inline-flex items-center gap-1 px-2.5 py-1 text-xs font-medium rounded bg-[#FFEBEE] text-[#C62828]">
@@ -208,8 +218,8 @@ export default async function LeadDetailPage({ params }: LeadPageProps) {
             </h2>
             <div className="space-y-3">
               <div>
-                <p className="text-xs text-[#9BA0A6]">ID</p>
-                <p className="text-sm font-mono text-[#4E525A]">{lead.uuid}</p>
+                <p className="text-xs text-[#9BA0A6]">Reference</p>
+                <p className="text-sm text-[#4E525A]">{lead.uuid.slice(0, 8).toUpperCase()}</p>
               </div>
               <div>
                 <p className="text-xs text-[#9BA0A6]">SIRET</p>
@@ -220,7 +230,7 @@ export default async function LeadDetailPage({ params }: LeadPageProps) {
                 <p className="text-sm text-[#0D0F14]">{createdDate}</p>
               </div>
               <div>
-                <p className="text-xs text-[#9BA0A6]">Derniere MAJ</p>
+                <p className="text-xs text-[#9BA0A6]">Derniere mise a jour</p>
                 <p className="text-sm text-[#0D0F14]">
                   {new Date(lead.updated_at).toLocaleDateString('fr-FR', {
                     day: 'numeric',

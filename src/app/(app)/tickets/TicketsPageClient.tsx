@@ -76,6 +76,15 @@ export function TicketsPageClient({
             <p className="text-sm text-muted-foreground">{error}</p>
           </div>
         </div>
+
+        {/* Create Ticket Modal - also needed in error state */}
+        <CreateTicketModal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          onTicketCreated={handleTicketCreated}
+          organizationId={organizationId}
+          userId={userId}
+        />
       </div>
     )
   }

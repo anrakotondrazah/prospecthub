@@ -336,7 +336,7 @@ export function TemplatesPageClient({
                       <button
                         onClick={() => handleDelete(template)}
                         disabled={isDeleting === template.id}
-                        className="w-full flex items-center gap-2 px-3 py-2 text-sm text-[#B42318] hover:bg-[#FDE8E5] dark:hover:bg-[#B42318]/10"
+                        className="w-full flex items-center gap-2 px-3 py-2 text-sm text-[#B42318] dark:text-[#F87171] hover:bg-[#FDE8E5] dark:hover:bg-[#B42318]/10"
                       >
                         {isDeleting === template.id ? (
                           <Loader2 className="w-4 h-4 animate-spin" />

@@ -298,7 +298,7 @@ export function ProductsPageClient({
                 </div>
                 <div className="flex items-center gap-1">
                   {product.is_recurring && (
-                    <span className="text-[10px] px-1.5 py-0.5 rounded bg-[#E3F2FD] dark:bg-[#1565C0]/10 text-[#1565C0] font-medium">
+                    <span className="text-[10px] px-1.5 py-0.5 rounded bg-[#E3F2FD] dark:bg-[#1565C0]/20 text-[#1565C0] dark:text-[#58A6FF] font-medium">
                       Recurrent
                     </span>
                   )}

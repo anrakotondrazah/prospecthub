@@ -1,7 +1,6 @@
 'use client'
 
 import type { ReactNode } from 'react'
-import Link from 'next/link'
 import { TicketStatusBadge, type TicketStatus } from './TicketStatusBadge'
 
 export interface TicketData {
@@ -76,9 +75,8 @@ export function TicketCard({ ticket }: TicketCardProps) {
   const timeAgo = getTimeAgo(createdDate)
 
   return (
-    <Link
-      href={`/tickets/${ticket.uuid}`}
-      className="block p-4 bg-white/80 dark:bg-[#161B22]/80 backdrop-blur-sm border border-black/[0.08] dark:border-[#30363D] rounded-xl hover:border-black/[0.12] dark:hover:border-[#30363D] transition-all duration-200 hover:shadow-sm"
+    <div
+      className="block p-4 bg-white/80 dark:bg-[#161B22]/80 backdrop-blur-sm border border-black/[0.08] dark:border-[#30363D] rounded-xl hover:border-black/[0.12] dark:hover:border-[#30363D] transition-all duration-200 hover:shadow-sm cursor-pointer"
     >
       <div className="flex items-start justify-between gap-3 mb-3">
         <div className="flex-1 min-w-0">
@@ -134,7 +132,7 @@ export function TicketCard({ ticket }: TicketCardProps) {
           <span>{timeAgo}</span>
         </div>
       </div>
-    </Link>
+    </div>
   )
 }
 

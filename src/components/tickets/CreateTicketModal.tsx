@@ -99,12 +99,15 @@ export function CreateTicketModal({
 
       {/* Modal */}
       <div
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="create-ticket-modal-title"
         className="relative bg-white/95 dark:bg-[#0D1117]/95 backdrop-blur-xl rounded-2xl shadow-lg max-w-lg w-full max-h-[90vh] overflow-y-auto"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-black/[0.06] dark:border-[#30363D] sticky top-0 bg-white/95 dark:bg-[#0D1117]/95 backdrop-blur-xl z-10">
-          <h2 className="text-xl font-semibold text-[#0D0F14] dark:text-[#E6EDF3]">
+          <h2 id="create-ticket-modal-title" className="text-xl font-semibold text-[#0D0F14] dark:text-[#E6EDF3]">
             Nouveau ticket
           </h2>
           <button
@@ -147,6 +150,7 @@ export function CreateTicketModal({
               className="w-full px-4 py-2.5 bg-white/80 dark:bg-[#161B22]/80 backdrop-blur-sm border border-black/[0.08] dark:border-[#30363D] rounded-xl text-sm text-[#0D0F14] dark:text-[#E6EDF3] focus:outline-none focus:border-[#0066FF] focus:ring-3 focus:ring-[#0066FF]/10 transition-all duration-200 shadow-sm hover:border-black/[0.12] dark:hover:border-[#30363D]"
               disabled={isLoading}
               maxLength={255}
+              autoFocus
             />
           </div>
 

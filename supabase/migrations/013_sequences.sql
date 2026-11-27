@@ -127,11 +127,17 @@ CREATE POLICY "sequence_enrollments_select" ON sequence_enrollments FOR SELECT
 
 DROP POLICY IF EXISTS "sequence_enrollments_insert" ON sequence_enrollments;
 CREATE POLICY "sequence_enrollments_insert" ON sequence_enrollments FOR INSERT
-  WITH CHECK (sequence_id IN (SELECT id FROM sequences WHERE organization_id IN (SELECT organization_id FROM profiles WHERE id = auth.uid())));
+  WITH CHECK (
+    sequence_id IN (SELECT id FROM sequences WHERE organization_id IN (SELECT organization_id FROM profiles WHERE id = auth.uid()))
+    AND (lead_id IS NULL OR lead_id IN (SELECT id FROM leads WHERE organization_id IN (SELECT organization_id FROM profiles WHERE id = auth.uid())))
+  );
 
 DROP POLICY IF EXISTS "sequence_enrollments_update" ON sequence_enrollments;
 CREATE POLICY "sequence_enrollments_update" ON sequence_enrollments FOR UPDATE
-  USING (sequence_id IN (SELECT id FROM sequences WHERE organization_id IN (SELECT organization_id FROM profiles WHERE id = auth.uid())));
+  USING (
+    sequence_id IN (SELECT id FROM sequences WHERE organization_id IN (SELECT organization_id FROM profiles WHERE id = auth.uid()))
+    AND (lead_id IS NULL OR lead_id IN (SELECT id FROM leads WHERE organization_id IN (SELECT organization_id FROM profiles WHERE id = auth.uid())))
+  );
 
 DROP POLICY IF EXISTS "sequence_enrollments_delete" ON sequence_enrollments;
 CREATE POLICY "sequence_enrollments_delete" ON sequence_enrollments FOR DELETE
@@ -166,20 +172,33 @@ CREATE TRIGGER trigger_sequences_updated_at
   FOR EACH ROW
   EXECUTE FUNCTION update_sequences_updated_at();
 
--- Function to update sequence stats
+-- Function to update sequence stats (handles INSERT, UPDATE, DELETE)
 CREATE OR REPLACE FUNCTION update_sequence_stats()
 RETURNS TRIGGER AS $$
 DECLARE
   seq_id INT;
+  enrollment_record RECORD;
   sent_count INT;
   opened_count INT;
   replied_count INT;
   bounced_count INT;
 BEGIN
-  -- Get sequence_id from enrollment
-  SELECT sequence_id INTO seq_id
-  FROM sequence_enrollments
-  WHERE id = NEW.enrollment_id;
+  -- Get sequence_id from enrollment (handle both NEW and OLD for DELETE)
+  IF TG_OP = 'DELETE' THEN
+    SELECT sequence_id INTO seq_id
+    FROM sequence_enrollments
+    WHERE id = OLD.enrollment_id;
+  ELSE
+    SELECT sequence_id INTO seq_id
+    FROM sequence_enrollments
+    WHERE id = NEW.enrollment_id;
+  END IF;
+
+  -- Lock the sequence row to prevent race conditions
+  SELECT * INTO enrollment_record
+  FROM sequences
+  WHERE id = seq_id
+  FOR UPDATE;
 
   -- Calculate stats
   SELECT
@@ -201,12 +220,24 @@ BEGIN
   )
   WHERE id = seq_id;
 
-  RETURN NEW;
+  -- Return appropriate record based on operation
+  IF TG_OP = 'DELETE' THEN
+    RETURN OLD;
+  ELSE
+    RETURN NEW;
+  END IF;
 END;
 $$ LANGUAGE plpgsql;
 
 DROP TRIGGER IF EXISTS trigger_update_sequence_stats ON sequence_execution_log;
 CREATE TRIGGER trigger_update_sequence_stats
   AFTER INSERT OR UPDATE ON sequence_execution_log
+  FOR EACH ROW
+  EXECUTE FUNCTION update_sequence_stats();
+
+-- Trigger for DELETE to refresh stats when logs are removed
+DROP TRIGGER IF EXISTS trigger_update_sequence_stats_delete ON sequence_execution_log;
+CREATE TRIGGER trigger_update_sequence_stats_delete
+  AFTER DELETE ON sequence_execution_log
   FOR EACH ROW
   EXECUTE FUNCTION update_sequence_stats();

@@ -139,7 +139,11 @@ export function CreateSequenceModal({
       />
 
       {/* Modal */}
-      <div className="relative w-full max-w-lg mx-4 bg-white dark:bg-[#161B22] rounded-2xl shadow-xl border border-black/[0.08] dark:border-[#30363D] overflow-hidden">
+      <div
+        role="dialog"
+        aria-modal="true"
+        className="relative w-full max-w-lg mx-4 max-h-[90vh] overflow-y-auto bg-white dark:bg-[#161B22] rounded-2xl shadow-xl border border-black/[0.08] dark:border-[#30363D]"
+      >
         {/* Header */}
         <div className="p-6 border-b border-black/[0.06] dark:border-[#30363D]">
           <div className="flex items-center justify-between">

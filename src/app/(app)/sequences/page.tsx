@@ -78,7 +78,7 @@ export default async function SequencesPage() {
     .eq('organization_id', orgId)
     .neq('status', 'archived')
     .order('created_at', { ascending: false })
-    .limit(100)
+    .limit(500)
 
   // Transform data to include counts
   const sequences = (sequencesRaw as unknown as SequenceRow[] || []).map((seq) => ({

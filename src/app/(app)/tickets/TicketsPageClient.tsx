@@ -37,6 +37,7 @@ export function TicketsPageClient({
     ? tickets
     : tickets.filter((t) => {
         if (filterStatus === 'active') return ['open', 'pending', 'in_progress'].includes(t.status)
+        if (filterStatus === 'resolved') return ['resolved', 'closed'].includes(t.status)
         return t.status === filterStatus
       })
 

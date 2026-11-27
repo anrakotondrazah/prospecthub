@@ -67,7 +67,7 @@ export default async function TicketsPage() {
     `)
     .eq('organization_id', orgId)
     .order('created_at', { ascending: false })
-    .limit(100)
+    .limit(500)
 
   if (ticketsError) {
     return (

@@ -94,3 +94,37 @@ CREATE TRIGGER trigger_tickets_updated_at
   BEFORE UPDATE ON tickets
   FOR EACH ROW
   EXECUTE FUNCTION update_tickets_updated_at();
+
+-- ============================================
+-- CONSTRAINT: Lead and Company must belong to same org
+-- ============================================
+CREATE OR REPLACE FUNCTION check_ticket_org_consistency()
+RETURNS TRIGGER AS $$
+BEGIN
+  -- Check lead belongs to same organization
+  IF NEW.lead_id IS NOT NULL THEN
+    IF NOT EXISTS (
+      SELECT 1 FROM leads WHERE id = NEW.lead_id AND organization_id = NEW.organization_id
+    ) THEN
+      RAISE EXCEPTION 'Lead does not belong to the ticket organization';
+    END IF;
+  END IF;
+
+  -- Check company belongs to same organization
+  IF NEW.company_id IS NOT NULL THEN
+    IF NOT EXISTS (
+      SELECT 1 FROM companies WHERE id = NEW.company_id AND organization_id = NEW.organization_id
+    ) THEN
+      RAISE EXCEPTION 'Company does not belong to the ticket organization';
+    END IF;
+  END IF;
+
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql;
+
+DROP TRIGGER IF EXISTS trigger_check_ticket_org_consistency ON tickets;
+CREATE TRIGGER trigger_check_ticket_org_consistency
+  BEFORE INSERT OR UPDATE ON tickets
+  FOR EACH ROW
+  EXECUTE FUNCTION check_ticket_org_consistency();

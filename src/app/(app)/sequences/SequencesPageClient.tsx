@@ -85,9 +85,9 @@ export function SequencesPageClient({
   }, [])
 
   const handleViewDetails = useCallback((sequence: SequenceData) => {
-    // For now, just log - will navigate to detail page when implemented
-    console.log('View details:', sequence.uuid)
+    // TODO: Navigate to detail page when implemented
     // window.location.href = `/sequences/${sequence.uuid}`
+    alert(`Details de la sequence "${sequence.name}" - Fonctionnalite bientot disponible`)
   }, [])
 
   if (error) {

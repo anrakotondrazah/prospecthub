@@ -1,36 +1,98 @@
-import { LifeBuoy } from 'lucide-react'
+import Link from 'next/link'
+import { createClient } from '@/lib/supabase/server'
+import { TicketsPageClient } from './TicketsPageClient'
 
 export const instant = false
 
-export default function TicketsPage() {
-  return (
-    <div>
-      <div className="mb-6">
-        <h1 className="text-[23.5px] font-semibold text-[#0D0F14] mb-1">Tickets</h1>
-        <p className="text-sm text-[#4E525A]">
-          Gerez les demandes de support client
-        </p>
-      </div>
+export default async function TicketsPage() {
+  const supabase = await createClient()
+  const { data: { user } } = await supabase.auth.getUser()
 
-      <div className="bg-white rounded-[14px] border border-[#E2E4E6] p-12 text-center">
-        <div className="w-20 h-20 mx-auto mb-5 rounded-[14px] bg-[#F5F7F9] flex items-center justify-center">
-          <LifeBuoy className="w-12 h-12 text-[#9BA0A6]" strokeWidth={1.5} />
+  if (!user) return null
+
+  // Get user's organization
+  const { data: profile, error: profileError } = await supabase
+    .from('profiles')
+    .select('organization_id')
+    .eq('id', user.id)
+    .single()
+
+  if (profileError) {
+    return (
+      <div className="flex items-center justify-center h-[60vh]">
+        <div className="text-center">
+          <div className="w-12 h-12 mx-auto mb-4 rounded-full bg-[#FDE8E5] dark:bg-[#B42318]/10 flex items-center justify-center">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#B42318" strokeWidth="2">
+              <circle cx="12" cy="12" r="10" />
+              <line x1="12" y1="8" x2="12" y2="12" />
+              <line x1="12" y1="16" x2="12.01" y2="16" />
+            </svg>
+          </div>
+          <h2 className="text-xl font-semibold text-[#0D0F14] dark:text-[#E6EDF3] mb-2">Erreur de chargement</h2>
+          <p className="text-[#4E525A] dark:text-[#8B949E] mb-4">Impossible de charger votre profil.</p>
+          <Link href="/tickets" className="text-[#17191F] dark:text-[#E6EDF3] font-medium hover:underline">Reessayer</Link>
         </div>
-        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FFF3E0] text-[#E65100] text-xs font-medium mb-4">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#E65100]"></span>
-          Bientot disponible
-        </div>
-        <h2 className="text-xl font-semibold text-[#0D0F14] mb-2">Support tickets</h2>
-        <p className="text-[#4E525A] max-w-md mx-auto mb-6">
-          Centralisez et traitez les demandes de support de vos clients efficacement.
-        </p>
-        <button
-          className="px-5 py-2.5 rounded-[10px] bg-[#F5F7F9] text-[#9BA0A6] text-sm font-medium cursor-not-allowed"
-          disabled
-        >
-          Etre notifie
-        </button>
       </div>
-    </div>
+    )
+  }
+
+  const orgId = profile?.organization_id as number | null
+  if (!orgId) {
+    return (
+      <div className="flex items-center justify-center h-[60vh]">
+        <div className="text-center">
+          <h2 className="text-xl font-semibold text-[#0D0F14] dark:text-[#E6EDF3] mb-2">Organisation non configuree</h2>
+          <p className="text-[#4E525A] dark:text-[#8B949E]">Completez votre onboarding pour acceder aux tickets.</p>
+        </div>
+      </div>
+    )
+  }
+
+  // Get tickets with related data
+  const { data: tickets, error: ticketsError } = await supabase
+    .from('tickets')
+    .select(`
+      id,
+      uuid,
+      subject,
+      description,
+      status,
+      priority,
+      category,
+      source,
+      created_at,
+      lead:leads(id, first_name, last_name),
+      company:companies(id, name),
+      assigned_to_profile:profiles!tickets_assigned_to_fkey(id, full_name)
+    `)
+    .eq('organization_id', orgId)
+    .order('created_at', { ascending: false })
+    .limit(100)
+
+  if (ticketsError) {
+    return (
+      <TicketsPageClient
+        initialTickets={[]}
+        organizationId={orgId}
+        userId={user.id}
+        error="Impossible de charger les tickets."
+      />
+    )
+  }
+
+  // Transform the data for the client component
+  const transformedTickets = (tickets || []).map((ticket: any) => ({
+    ...ticket,
+    lead: ticket.lead || null,
+    company: ticket.company || null,
+    assigned_to_profile: ticket.assigned_to_profile || null,
+  }))
+
+  return (
+    <TicketsPageClient
+      initialTickets={transformedTickets}
+      organizationId={orgId}
+      userId={user.id}
+    />
   )
 }

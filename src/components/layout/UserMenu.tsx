@@ -17,25 +17,70 @@ interface UserMenuProps {
 export function UserMenu({ user, organizationName }: UserMenuProps) {
   const [isOpen, setIsOpen] = useState(false)
   const [isLoggingOut, setIsLoggingOut] = useState(false)
+  const [focusedIndex, setFocusedIndex] = useState(-1)
   const menuRef = useRef<HTMLDivElement>(null)
   const buttonRef = useRef<HTMLButtonElement>(null)
+  const menuItemsRef = useRef<(HTMLAnchorElement | HTMLButtonElement | null)[]>([])
   const router = useRouter()
+
+  // Total interactive items: 2 links + 1 logout button = 3
+  const totalItems = 3
 
   const closeMenu = useCallback(() => {
     setIsOpen(false)
+    setFocusedIndex(-1)
     buttonRef.current?.focus()
   }, [])
 
-  // Close on Escape
+  // Focus first item when menu opens
+  useEffect(() => {
+    if (isOpen) {
+      setFocusedIndex(0)
+      setTimeout(() => menuItemsRef.current[0]?.focus(), 0)
+    }
+  }, [isOpen])
+
+  // Keyboard navigation
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && isOpen) {
-        closeMenu()
+      if (!isOpen) return
+
+      switch (e.key) {
+        case 'Escape':
+          e.preventDefault()
+          closeMenu()
+          break
+        case 'ArrowDown':
+          e.preventDefault()
+          setFocusedIndex(prev => {
+            const next = prev < totalItems - 1 ? prev + 1 : 0
+            menuItemsRef.current[next]?.focus()
+            return next
+          })
+          break
+        case 'ArrowUp':
+          e.preventDefault()
+          setFocusedIndex(prev => {
+            const next = prev > 0 ? prev - 1 : totalItems - 1
+            menuItemsRef.current[next]?.focus()
+            return next
+          })
+          break
+        case 'Home':
+          e.preventDefault()
+          setFocusedIndex(0)
+          menuItemsRef.current[0]?.focus()
+          break
+        case 'End':
+          e.preventDefault()
+          setFocusedIndex(totalItems - 1)
+          menuItemsRef.current[totalItems - 1]?.focus()
+          break
       }
     }
     document.addEventListener('keydown', handleKeyDown)
     return () => document.removeEventListener('keydown', handleKeyDown)
-  }, [isOpen, closeMenu])
+  }, [isOpen, closeMenu, totalItems])
 
   // Close on click outside
   useEffect(() => {
@@ -132,13 +177,15 @@ export function UserMenu({ user, organizationName }: UserMenuProps) {
 
           {/* Menu items */}
           <div className="py-1">
-            {menuItems.map((item) => (
+            {menuItems.map((item, index) => (
               <Link
                 key={item.href}
                 href={item.href}
+                ref={(el) => { menuItemsRef.current[index] = el }}
                 role="menuitem"
+                tabIndex={focusedIndex === index ? 0 : -1}
                 onClick={() => setIsOpen(false)}
-                className="flex items-center gap-3 px-4 py-2.5 text-sm text-[#4E525A] dark:text-[#8B949E] hover:bg-black/[0.03] dark:hover:bg-white/[0.05] hover:text-[#0D0F14] dark:hover:text-[#E6EDF3] transition-colors"
+                className="flex items-center gap-3 px-4 py-2.5 text-sm text-[#4E525A] dark:text-[#8B949E] hover:bg-black/[0.03] dark:hover:bg-white/[0.05] hover:text-[#0D0F14] dark:hover:text-[#E6EDF3] transition-colors focus:outline-none focus:bg-black/[0.03] dark:focus:bg-white/[0.05]"
               >
                 <svg
                   width="16"
@@ -161,10 +208,12 @@ export function UserMenu({ user, organizationName }: UserMenuProps) {
           {/* Logout */}
           <div className="border-t border-black/[0.06] dark:border-[#30363D] py-1">
             <button
+              ref={(el) => { menuItemsRef.current[2] = el }}
               role="menuitem"
+              tabIndex={focusedIndex === 2 ? 0 : -1}
               onClick={handleLogout}
               disabled={isLoggingOut}
-              className="flex items-center gap-3 w-full px-4 py-2.5 text-sm text-[#D93025] hover:bg-[#D93025]/[0.08] transition-colors disabled:opacity-50"
+              className="flex items-center gap-3 w-full px-4 py-2.5 text-sm text-[#D93025] hover:bg-[#D93025]/[0.08] transition-colors disabled:opacity-50 focus:outline-none focus:bg-[#D93025]/[0.08]"
             >
               <svg
                 width="16"

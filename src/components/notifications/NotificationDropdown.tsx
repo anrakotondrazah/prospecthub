@@ -62,7 +62,7 @@ export function NotificationDropdown({
   return (
     <div
       ref={dropdownRef}
-      className="absolute right-0 top-12 w-[380px] max-w-[calc(100vw-2rem)] max-h-[calc(100vh-5rem)] bg-white/95 dark:bg-[#0D1117]/95 backdrop-blur-xl border border-black/[0.08] dark:border-[#30363D] rounded-2xl shadow-xl overflow-hidden z-50 flex flex-col"
+      className="absolute right-0 top-12 w-[380px] bg-white/95 dark:bg-[#0D1117]/95 backdrop-blur-xl border border-black/[0.08] dark:border-[#30363D] rounded-2xl shadow-xl overflow-hidden z-50"
       role="dialog"
       aria-label="Notifications"
     >
@@ -82,7 +82,7 @@ export function NotificationDropdown({
       </div>
 
       {/* List */}
-      <div className="max-h-[min(400px,calc(100vh-12rem))] overflow-y-auto flex-1">
+      <div className="max-h-[400px] overflow-y-auto">
         {notifications.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-12 px-4">
             <div className="w-12 h-12 bg-black/[0.03] dark:bg-white/[0.05] rounded-full flex items-center justify-center mb-3">

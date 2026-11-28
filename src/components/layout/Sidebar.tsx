@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useTheme } from '@/components/providers/ThemeProvider'
+import { NotificationBell } from '@/components/notifications/NotificationBell'
 import { TrustBadge } from '@/components/ui/TrustBadge'
 import { UserMenu } from './UserMenu'
 
@@ -304,9 +305,12 @@ export function Sidebar({ user, organizationId, organizationName, plan = 'Free' 
           })}
         </ul>
 
-        {/* Dark Mode Toggle */}
+        {/* Notification Bell & Dark Mode */}
         {!isCollapsed && (
           <div className="flex items-center gap-2 px-3 py-2">
+            {user?.id && organizationId && (
+              <NotificationBell userId={user.id} organizationId={organizationId} />
+            )}
             <button
               onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}
               className="w-9 h-9 rounded-xl bg-black/[0.03] dark:bg-white/[0.05] hover:bg-black/[0.06] dark:hover:bg-white/[0.1] flex items-center justify-center transition-all duration-200 text-[#4E525A] dark:text-[#8B949E]"

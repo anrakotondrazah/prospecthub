@@ -165,23 +165,23 @@ export default function PropertiesSettingsPage() {
     <div>
       {/* Header */}
       <div className="mb-6">
-        <div className="flex items-center gap-2 text-sm text-[#4E525A] dark:text-[#8B949E] mb-2">
-          <a href="/settings" className="hover:text-[#0D0F14] dark:hover:text-[#E6EDF3] transition-colors">
+        <div className="flex items-center gap-2 text-sm text-[#4E525A] mb-2">
+          <a href="/settings" className="hover:text-[#0D0F14] transition-colors">
             Paramètres
           </a>
           <span>/</span>
-          <span className="text-[#0D0F14] dark:text-[#E6EDF3]">Proprietes</span>
+          <span className="text-[#0D0F14]">Proprietes</span>
         </div>
-        <h1 className="text-xl lg:text-[23.5px] font-semibold text-[#0D0F14] dark:text-[#E6EDF3] mb-1">
+        <h1 className="text-xl lg:text-[23.5px] font-semibold text-[#0D0F14] mb-1">
           Proprietes personnalisées
         </h1>
-        <p className="text-sm text-[#4E525A] dark:text-[#8B949E]">
+        <p className="text-sm text-[#4E525A]">
           Creez des champs personnalisés pour vos leads, entreprises, transactions et contacts
         </p>
       </div>
 
       {/* Entity Tabs */}
-      <div className="flex flex-wrap gap-2 mb-6 p-1 bg-[#F5F7F9] dark:bg-[#0D1117] rounded-xl">
+      <div className="flex flex-wrap gap-2 mb-6 p-1 bg-[#F5F7F9] rounded-xl">
         {ENTITY_TABS.map((tab) => (
           <button
             key={tab.type}
@@ -189,8 +189,8 @@ export default function PropertiesSettingsPage() {
             className={`
               flex items-center gap-2 px-4 py-2.5 rounded-lg text-sm font-medium transition-all
               ${activeTab === tab.type
-                ? 'bg-white dark:bg-[#161B22] text-[#0D0F14] dark:text-[#E6EDF3] shadow-sm'
-                : 'text-[#4E525A] dark:text-[#8B949E] hover:text-[#0D0F14] dark:hover:text-[#E6EDF3] hover:bg-white/50 dark:hover:bg-[#161B22]/50'
+                ? 'bg-white text-[#0D0F14] shadow-sm'
+                : 'text-[#4E525A] hover:text-[#0D0F14] hover:bg-white/50'
               }
             `}
           >
@@ -202,7 +202,7 @@ export default function PropertiesSettingsPage() {
               px-1.5 py-0.5 text-xs rounded
               ${activeTab === tab.type
                 ? 'bg-[#0066FF]/10 text-[#0066FF]'
-                : 'bg-[#E8EAED] dark:bg-[#30363D] text-[#9BA0A6] dark:text-[#8B949E]'
+                : 'bg-[#E8EAED] text-[#9BA0A6]'
               }
             `}>
               {properties[tab.type].length}
@@ -213,7 +213,7 @@ export default function PropertiesSettingsPage() {
 
       {/* Error */}
       {error && (
-        <div className="mb-6 p-4 bg-[#FDE8E5] dark:bg-[#B42318]/10 border border-[#B42318]/20 dark:border-[#B42318]/30 rounded-xl flex items-start gap-3">
+        <div className="mb-6 p-4 bg-[#FDE8E5] border border-[#B42318]/20 rounded-xl flex items-start gap-3">
           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B42318" strokeWidth="2">
             <circle cx="12" cy="12" r="10" />
             <line x1="12" y1="8" x2="12" y2="12" />
@@ -225,7 +225,7 @@ export default function PropertiesSettingsPage() {
 
       {/* Loading */}
       {isLoading ? (
-        <div className="bg-white dark:bg-[#161B22] rounded-[14px] border border-[#E2E4E6] dark:border-[#30363D] p-12 flex items-center justify-center">
+        <div className="bg-white rounded-[14px] border border-[#E2E4E6] p-12 flex items-center justify-center">
           <Loader size="md" />
         </div>
       ) : (

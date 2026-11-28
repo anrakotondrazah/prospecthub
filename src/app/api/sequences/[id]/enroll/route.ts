@@ -76,13 +76,21 @@ export async function POST(
     }
 
     // Get first step to calculate next_step_at
-    const { data: firstStep } = await supabase
+    const { data: firstStep, error: firstStepError } = await supabase
       .from('sequence_steps')
       .select('step_order, delay_days, delay_hours')
       .eq('sequence_id', id)
       .order('step_order', { ascending: true })
       .limit(1)
       .maybeSingle()
+
+    if (firstStepError) {
+      console.error('Error fetching first step:', firstStepError)
+      return NextResponse.json(
+        { success: false, message: 'Erreur lors de la recuperation des etapes' },
+        { status: 500 }
+      )
+    }
 
     // Calculate next_step_at
     const now = new Date()
@@ -138,12 +146,12 @@ export async function POST(
       next_step_at: nextStepAt.toISOString(),
     }))
 
-    // Insert enrollments (upsert to handle duplicates)
+    // Insert enrollments only for new leads (don't overwrite existing active enrollments)
     const { data: insertedEnrollments, error: insertError } = await supabase
       .from('sequence_enrollments')
       .upsert(enrollments, {
         onConflict: 'sequence_id,lead_id',
-        ignoreDuplicates: false,
+        ignoreDuplicates: true,
       })
       .select('*')
 

@@ -70,7 +70,7 @@ export const AVAILABLE_TOKENS: Token[] = [
   {
     id: 'lead_last_name',
     name: 'lead.last_name',
-    label: 'Nom',
+    label: 'Nom du lead',
     category: 'lead',
     description: 'Nom de famille du lead',
     example: 'Dupont',
@@ -135,7 +135,7 @@ export const AVAILABLE_TOKENS: Token[] = [
   {
     id: 'company_name',
     name: 'company.name',
-    label: 'Nom',
+    label: 'Nom société',
     category: 'company',
     description: 'Nom de l\'entreprise',
     example: 'Acme Corp',
@@ -182,7 +182,7 @@ export const AVAILABLE_TOKENS: Token[] = [
   {
     id: 'deal_name',
     name: 'deal.name',
-    label: 'Nom',
+    label: 'Nom du deal',
     category: 'deal',
     description: 'Nom du deal',
     example: 'Contrat annuel',
@@ -346,6 +346,8 @@ export const TOKEN_CATEGORY_ICONS: Record<TokenCategory, string> = {
 
 // Regex pour detecter les tokens dans un texte (format [Label])
 const TOKEN_REGEX = /\[([^\]]+)\]/g
+// Regex legacy pour compatibilite avec anciens templates (format {{token.name}})
+const LEGACY_TOKEN_REGEX = /\{\{([a-zA-Z_.]+)\}\}/g
 
 /**
  * Extraire tous les tokens utilises dans un texte
@@ -459,7 +461,8 @@ export function replaceTokens(
   context: TokenContext,
   fallback: 'keep' | 'empty' | 'placeholder' = 'placeholder'
 ): string {
-  return text.replace(TOKEN_REGEX, (match, tokenLabel) => {
+  // D'abord, remplacer les tokens au format [Label]
+  let result = text.replace(TOKEN_REGEX, (match, tokenLabel) => {
     // Trouver le token par son label
     const token = AVAILABLE_TOKENS.find(t => t.label === tokenLabel)
     if (!token) {
@@ -482,6 +485,31 @@ export function replaceTokens(
         return `[${token.label}]` // Retourne le placeholder lisible
     }
   })
+
+  // Ensuite, remplacer les tokens legacy au format {{token.name}} (compatibilite)
+  result = result.replace(LEGACY_TOKEN_REGEX, (match, tokenName) => {
+    const token = AVAILABLE_TOKENS.find(t => t.name === tokenName)
+    if (!token) {
+      return match // Token inconnu, garder tel quel
+    }
+
+    const value = getTokenValue(token.name, context)
+
+    if (value !== null) {
+      return value
+    }
+
+    switch (fallback) {
+      case 'keep':
+        return match
+      case 'empty':
+        return ''
+      case 'placeholder':
+        return `[${token.label}]` // Convertit en nouveau format
+    }
+  })
+
+  return result
 }
 
 /**
@@ -539,26 +567,48 @@ export function validateTemplate(template: { subject?: string; body: string }): 
 } {
   const errors: string[] = []
   const warnings: string[] = []
-  const usedTokenNames: string[] = []
-
-  // Extraire les tokens du sujet et du body
-  if (template.subject) {
-    usedTokenNames.push(...extractTokensFromText(template.subject))
-  }
-  usedTokenNames.push(...extractTokensFromText(template.body))
-
-  // Verifier chaque token
-  const uniqueTokenNames = [...new Set(usedTokenNames)]
   const usedTokens: Token[] = []
 
-  for (const tokenName of uniqueTokenNames) {
-    const token = AVAILABLE_TOKENS.find(t => t.name === tokenName)
-    if (token) {
-      usedTokens.push(token)
-    } else {
-      errors.push(`Token inconnu: [${tokenName}]`)
+  // Fonction pour extraire et valider les labels bruts
+  const validateLabels = (text: string) => {
+    const matches = text.match(TOKEN_REGEX)
+    if (!matches) return
+
+    for (const match of matches) {
+      const label = match.replace(/\[|\]/g, '')
+      const token = AVAILABLE_TOKENS.find(t => t.label === label)
+      if (token) {
+        if (!usedTokens.find(t => t.id === token.id)) {
+          usedTokens.push(token)
+        }
+      } else {
+        errors.push(`Token inconnu: [${label}]`)
+      }
+    }
+
+    // Verifier aussi les tokens legacy {{...}}
+    const legacyMatches = text.match(LEGACY_TOKEN_REGEX)
+    if (legacyMatches) {
+      for (const match of legacyMatches) {
+        const tokenName = match.replace(/\{\{|\}\}/g, '')
+        const token = AVAILABLE_TOKENS.find(t => t.name === tokenName)
+        if (token) {
+          if (!usedTokens.find(t => t.id === token.id)) {
+            usedTokens.push(token)
+          }
+          warnings.push(`Format legacy détecté: ${match} -> utilisez [${token.label}]`)
+        } else {
+          errors.push(`Token legacy inconnu: ${match}`)
+        }
+      }
     }
   }
+
+  // Valider le sujet et le body
+  if (template.subject) {
+    validateLabels(template.subject)
+  }
+  validateLabels(template.body)
 
   // Warnings pour les bonnes pratiques
   if (!template.body.trim()) {

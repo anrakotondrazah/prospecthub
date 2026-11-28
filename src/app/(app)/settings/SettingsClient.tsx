@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { TabBar } from '@/components/ui/TabBar'
 import { LogoutButton, AnimatedCheckbox, SaveButton } from '@/components/ui/buttons'
 import { createClient } from '@/lib/supabase/client'
+import { ProfileImageUpload } from '@/components/settings/ProfileImageUpload'
 
 interface SettingsClientProps {
   fullName: string
@@ -14,6 +15,8 @@ interface SettingsClientProps {
   lastName: string
   orgName: string
   orgIndustry: string
+  userId: string
+  avatarUrl: string | null
   children: ReactNode // ThemeSettings
 }
 
@@ -25,6 +28,8 @@ export function SettingsClient({
   lastName,
   orgName,
   orgIndustry,
+  userId,
+  avatarUrl,
   children,
 }: SettingsClientProps) {
   const router = useRouter()
@@ -32,6 +37,7 @@ export function SettingsClient({
   const [isLoggingOut, setIsLoggingOut] = useState(false)
   const [isSaving, setIsSaving] = useState(false)
   const [saveMessage, setSaveMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null)
+  const [currentAvatarUrl, setCurrentAvatarUrl] = useState<string | null>(avatarUrl)
 
   // Password change state
   const [passwordForm, setPasswordForm] = useState({
@@ -321,15 +327,22 @@ export function SettingsClient({
           {activeTab === 'profile' && (
             <>
               <div className="bg-white dark:bg-[#161B22] rounded-[14px] border border-[#E2E4E6] dark:border-[#30363D] p-4 lg:p-6 transition-colors duration-200">
-                <h2 className="text-lg font-semibold text-[#0D0F14] dark:text-[#E6EDF3] mb-4">Profil</h2>
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="w-14 lg:w-16 h-14 lg:h-16 rounded-full bg-[#17191F] dark:bg-[#58A6FF] flex items-center justify-center text-white text-lg lg:text-xl font-semibold flex-shrink-0">
-                    {initials}
-                  </div>
-                  <div className="min-w-0">
-                    <p className="font-medium text-[#0D0F14] dark:text-[#E6EDF3] truncate">{fullName}</p>
-                    <p className="text-sm text-[#4E525A] dark:text-[#8B949E] truncate">{email}</p>
-                  </div>
+                <h2 className="text-lg font-semibold text-[#0D0F14] dark:text-[#E6EDF3] mb-4">Photo de profil</h2>
+                <div className="mb-6">
+                  <ProfileImageUpload
+                    currentAvatarUrl={currentAvatarUrl}
+                    initials={initials}
+                    userId={userId}
+                    onUploadComplete={(newUrl) => {
+                      setCurrentAvatarUrl(newUrl || null)
+                      router.refresh()
+                    }}
+                  />
+                </div>
+                <h2 className="text-lg font-semibold text-[#0D0F14] dark:text-[#E6EDF3] mb-4">Informations</h2>
+                <div className="mb-4">
+                  <p className="font-medium text-[#0D0F14] dark:text-[#E6EDF3]">{fullName}</p>
+                  <p className="text-sm text-[#4E525A] dark:text-[#8B949E]">{email}</p>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
@@ -801,6 +814,35 @@ export function SettingsClient({
                     <path d="M12 3h7a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-7m0-18H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h7m0-18v18" />
                   </svg>
                   <span>Proprietes personnalisées</span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="ml-auto">
+                    <path d="M9 18l6-6-6-6" />
+                  </svg>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/settings/integrations"
+                  className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-[#4E525A] dark:text-[#8B949E] hover:bg-black/[0.03] dark:hover:bg-white/[0.05] hover:text-[#0D0F14] dark:hover:text-[#E6EDF3] transition-all"
+                >
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" />
+                  </svg>
+                  <span>Integrations</span>
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="ml-auto">
+                    <path d="M9 18l6-6-6-6" />
+                  </svg>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="/settings/brand"
+                  className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-[#4E525A] dark:text-[#8B949E] hover:bg-black/[0.03] dark:hover:bg-white/[0.05] hover:text-[#0D0F14] dark:hover:text-[#E6EDF3] transition-all"
+                >
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="M12 16v-4M12 8h.01" />
+                  </svg>
+                  <span>Identite de marque</span>
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="ml-auto">
                     <path d="M9 18l6-6-6-6" />
                   </svg>

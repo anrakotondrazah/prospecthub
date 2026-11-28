@@ -246,3 +246,164 @@ export async function POST(
     return NextResponse.json({ success: false, message: 'Erreur serveur' }, { status: 500 })
   }
 }
+
+// PUT - Batch reorder steps
+export async function PUT(
+  request: NextRequest,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    const { id } = await params
+    const supabase = await createClient()
+
+    // Auth check
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser()
+
+    if (authError || !user) {
+      return NextResponse.json({ success: false, message: 'Non authentifie' }, { status: 401 })
+    }
+
+    // Get organization_id
+    const { data: profile, error: profileError } = await supabase
+      .from('profiles')
+      .select('organization_id')
+      .eq('id', user.id)
+      .single()
+
+    if (profileError || !profile?.organization_id) {
+      return NextResponse.json(
+        { success: false, message: 'Organisation non trouvee' },
+        { status: 400 }
+      )
+    }
+
+    // Verify sequence belongs to organization
+    const { data: sequence, error: sequenceError } = await supabase
+      .from('sequences')
+      .select('id')
+      .eq('id', id)
+      .eq('organization_id', profile.organization_id)
+      .single()
+
+    if (sequenceError || !sequence) {
+      return NextResponse.json(
+        { success: false, message: 'Sequence non trouvee' },
+        { status: 404 }
+      )
+    }
+
+    // Parse request body - expects { stepIds: number[] }
+    const body = await request.json().catch(() => null)
+    if (!body || !Array.isArray(body.stepIds)) {
+      return NextResponse.json(
+        { success: false, message: 'stepIds array required' },
+        { status: 400 }
+      )
+    }
+
+    const { stepIds } = body as { stepIds: unknown[] }
+
+    // Validate: all values must be integers
+    if (!stepIds.every(id => Number.isInteger(id))) {
+      return NextResponse.json(
+        { success: false, message: 'stepIds must contain only integers' },
+        { status: 400 }
+      )
+    }
+
+    const validStepIds = stepIds as number[]
+
+    // Validate: no duplicates
+    if (new Set(validStepIds).size !== validStepIds.length) {
+      return NextResponse.json(
+        { success: false, message: 'stepIds must not contain duplicates' },
+        { status: 400 }
+      )
+    }
+
+    // Validate: must be exact permutation of existing step IDs
+    const { data: existingSteps, error: existingError } = await supabase
+      .from('sequence_steps')
+      .select('id')
+      .eq('sequence_id', parseInt(id))
+
+    if (existingError) {
+      console.error('Error fetching existing steps:', existingError)
+      return NextResponse.json(
+        { success: false, message: 'Erreur lors de la verification' },
+        { status: 500 }
+      )
+    }
+
+    const existingIds = new Set((existingSteps || []).map(s => s.id))
+    const providedIds = new Set(validStepIds)
+
+    if (existingIds.size !== providedIds.size ||
+        !validStepIds.every(id => existingIds.has(id))) {
+      return NextResponse.json(
+        { success: false, message: 'stepIds must be exact permutation of sequence steps' },
+        { status: 400 }
+      )
+    }
+
+    // Update each step with new order
+    // Use negative numbers first to avoid unique constraint violations
+    const tempOffset = -1000000
+
+    // First pass: set temporary negative values
+    for (let i = 0; i < validStepIds.length; i++) {
+      const { error } = await supabase
+        .from('sequence_steps')
+        .update({ step_order: tempOffset - i })
+        .eq('id', validStepIds[i])
+        .eq('sequence_id', parseInt(id))
+
+      if (error) {
+        console.error('Error updating step order (temp):', error)
+        return NextResponse.json(
+          { success: false, message: 'Erreur lors du reordonnancement' },
+          { status: 500 }
+        )
+      }
+    }
+
+    // Second pass: set final positive values
+    for (let i = 0; i < validStepIds.length; i++) {
+      const { error } = await supabase
+        .from('sequence_steps')
+        .update({ step_order: i + 1 })
+        .eq('id', validStepIds[i])
+        .eq('sequence_id', parseInt(id))
+
+      if (error) {
+        console.error('Error updating step order (final):', error)
+        return NextResponse.json(
+          { success: false, message: 'Erreur lors du reordonnancement' },
+          { status: 500 }
+        )
+      }
+    }
+
+    // Fetch updated steps
+    const { data: steps, error: fetchError } = await supabase
+      .from('sequence_steps')
+      .select('*')
+      .eq('sequence_id', id)
+      .order('step_order', { ascending: true })
+
+    if (fetchError) {
+      console.error('Error fetching updated steps:', fetchError)
+    }
+
+    return NextResponse.json({
+      success: true,
+      steps: steps || [],
+    })
+  } catch (error) {
+    console.error('Steps reorder API error:', error)
+    return NextResponse.json({ success: false, message: 'Erreur serveur' }, { status: 500 })
+  }
+}

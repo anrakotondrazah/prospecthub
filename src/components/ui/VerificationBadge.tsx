@@ -19,7 +19,7 @@ export function VerificationBadge({ type, date, source, className }: Verificatio
           <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
           <polyline points="22 4 12 14.01 9 11.01" />
         </svg>
-        Verifie le {formattedDate}
+        Vérifié le {formattedDate}
       </Badge>
     )
   }
@@ -47,7 +47,7 @@ export function VerificationBadge({ type, date, source, className }: Verificatio
           <path d="M9 11a3 3 0 1 0 6 0a3 3 0 0 0-6 0" />
           <path d="M17.657 16.657L13.414 20.9a1.998 1.998 0 0 1-2.827 0l-4.244-4.243a8 8 0 1 1 11.314 0z" />
         </svg>
-        Bloctel verifie
+        Bloctel vérifié
       </Badge>
     )
   }

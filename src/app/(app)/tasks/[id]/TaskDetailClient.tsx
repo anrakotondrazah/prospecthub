@@ -176,7 +176,7 @@ export function TaskDetailClient({ task, organizationId, userId }: TaskDetailCli
               }
               disabled:opacity-50 disabled:cursor-not-allowed`}
           >
-            A faire
+            À faire
           </button>
           <button
             onClick={() => handleQuickStatusChange('in_progress')}
@@ -200,7 +200,7 @@ export function TaskDetailClient({ task, organizationId, userId }: TaskDetailCli
               }
               disabled:opacity-50 disabled:cursor-not-allowed`}
           >
-            Termine
+            Terminé
           </button>
         </div>
 
@@ -277,16 +277,16 @@ export function TaskDetailClient({ task, organizationId, userId }: TaskDetailCli
             onChange={(e) => setStatus(e.target.value as typeof status)}
             className="w-full px-3 py-2.5 bg-[#F5F7F9] dark:bg-white/[0.05] border border-black/[0.08] dark:border-[#30363D] rounded-xl text-sm text-[#0D0F14] dark:text-[#E6EDF3] focus:outline-none focus:ring-2 focus:ring-[#0066FF]/20 focus:border-[#0066FF]"
           >
-            <option value="pending">A faire</option>
+            <option value="pending">À faire</option>
             <option value="in_progress">En cours</option>
-            <option value="completed">Termine</option>
+            <option value="completed">Terminé</option>
           </select>
         </div>
 
         {/* Priority */}
         <div>
           <label className="block text-xs text-[#9BA0A6] dark:text-[#8B949E] mb-1.5">
-            Priorite
+            Priorité
           </label>
           <select
             value={priority}
@@ -302,7 +302,7 @@ export function TaskDetailClient({ task, organizationId, userId }: TaskDetailCli
         {/* Due Date */}
         <div>
           <label className="block text-xs text-[#9BA0A6] dark:text-[#8B949E] mb-1.5">
-            Echeance
+            Échéance
           </label>
           <input
             type="date"

@@ -137,7 +137,7 @@ export function CreateProductModal({
       >
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-black/[0.06] dark:border-[#30363D] sticky top-0 bg-white/95 dark:bg-[#0D1117]/95 backdrop-blur-xl">
-          <h2 className="text-xl font-semibold text-[#0D0F14] dark:text-[#E6EDF3]">Creer un produit</h2>
+          <h2 className="text-xl font-semibold text-[#0D0F14] dark:text-[#E6EDF3]">Créer un produit</h2>
           <button
             onClick={onClose}
             className="w-8 h-8 rounded-xl hover:bg-black/[0.04] dark:hover:bg-white/[0.05] flex items-center justify-center transition-all duration-200 active:scale-95"
@@ -199,7 +199,7 @@ export function CreateProductModal({
             </div>
             <div>
               <label htmlFor="product-category" className="block text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3] mb-2">
-                Categorie
+                Catégorie
               </label>
               <input
                 id="product-category"
@@ -333,10 +333,10 @@ export function CreateProductModal({
                   <svg className="animate-spin" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <path d="M21 12a9 9 0 11-6.219-8.56" />
                   </svg>
-                  Creation...
+                  Création...
                 </span>
               ) : (
-                'Creer le produit'
+                'Créer le produit'
               )}
             </FillButton>
           </div>

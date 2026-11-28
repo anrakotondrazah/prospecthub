@@ -20,8 +20,8 @@ const FILTER_OPTIONS: Array<{
   { type: 'call', label: 'Appels', icon: Phone, color: '#147A3A' },
   { type: 'email', label: 'Emails', icon: Mail, color: '#E65100' },
   { type: 'note', label: 'Notes', icon: FileText, color: '#1565C0' },
-  { type: 'meeting', label: 'Reunions', icon: Calendar, color: '#3949AB' },
-  { type: 'task', label: 'Taches', icon: CheckSquare, color: '#616161' },
+  { type: 'meeting', label: 'Réunions', icon: Calendar, color: '#3949AB' },
+  { type: 'task', label: 'Tâches', icon: CheckSquare, color: '#616161' },
 ]
 
 export function ActivityFilters({ selectedType, onTypeChange, counts }: ActivityFiltersProps) {

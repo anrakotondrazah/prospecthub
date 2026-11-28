@@ -267,7 +267,7 @@ export function downloadAsFile(data: string, filename: string, type: string) {
 }
 
 export function exportMembersToCSV(members: Member[]): string {
-  const headers = ['Prenom', 'Nom', 'Email', 'Telephone', 'Entreprise', 'Poste', 'Statut', 'Ajoute le']
+  const headers = ['Prenom', 'Nom', 'Email', 'Téléphone', 'Entreprise', 'Poste', 'Statut', 'Ajoute le']
   const rows = members.map(m => [
     m.leads.first_name || '',
     m.leads.last_name || '',

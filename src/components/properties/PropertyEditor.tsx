@@ -22,7 +22,7 @@ const FIELD_TYPE_LABELS: Record<PropertyType, string> = {
   checkbox: 'Case a cocher',
   url: 'URL',
   email: 'Email',
-  phone: 'Telephone',
+  phone: 'Téléphone',
 }
 
 export function PropertyEditor({
@@ -45,7 +45,7 @@ export function PropertyEditor({
 
   const handleSaveEdit = async (property: CustomProperty) => {
     if (!editLabel.trim()) {
-      setError('Le nom ne peut pas etre vide')
+      setError('Le nom ne peut pas être vide')
       return
     }
 
@@ -134,7 +134,7 @@ export function PropertyEditor({
           </div>
           <div>
             <h3 className="text-lg font-semibold text-[#0D0F14] dark:text-[#E6EDF3]">
-              Proprietes personnalisees
+              Proprietes personnalisées
             </h3>
             <p className="text-sm text-[#4E525A] dark:text-[#8B949E]">
               {entityLabels[entityType]} - {properties.length} champ{properties.length > 1 ? 's' : ''}
@@ -170,13 +170,13 @@ export function PropertyEditor({
               <Settings className="w-6 h-6 text-[#9BA0A6]" />
             </div>
             <p className="text-sm text-[#4E525A] mb-4">
-              Aucune propriete personnalisee
+              Aucune propriete personnalisée
             </p>
             <button
               onClick={onCreateProperty}
               className="text-sm text-[#0066FF] font-medium hover:underline"
             >
-              Creer votre premiere propriete
+              Créer votre première propriete
             </button>
           </div>
         ) : (

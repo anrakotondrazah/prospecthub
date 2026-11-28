@@ -210,7 +210,7 @@ export function QuoteDetailClient({
   }
 
   const handleGeneratePdf = async (): Promise<string> => {
-    // Call PDF generation API
+    // Call PDF génération API
     const response = await fetch(`/api/quotes/${initialQuote.uuid}/pdf`, {
       method: 'POST',
     })

@@ -25,7 +25,7 @@ const TABS = [
   { id: 'all', label: 'Tous', count: DEMO_LEADS.length },
   { id: 'new', label: 'Nouveaux', count: DEMO_LEADS.filter(l => l.status === 'new').length },
   { id: 'hot', label: 'Chauds', count: DEMO_LEADS.filter(l => l.is_hot).length },
-  { id: 'qualified', label: 'Qualifies', count: DEMO_LEADS.filter(l => l.status === 'qualified').length },
+  { id: 'qualified', label: 'Qualifiés', count: DEMO_LEADS.filter(l => l.status === 'qualified').length },
 ]
 
 const STATUS_COLORS: Record<string, { bg: string; text: string }> = {
@@ -37,8 +37,8 @@ const STATUS_COLORS: Record<string, { bg: string; text: string }> = {
 
 const STATUS_LABELS: Record<string, string> = {
   new: 'Nouveau',
-  contacted: 'Contacte',
-  qualified: 'Qualifie',
+  contacted: 'Contacté',
+  qualified: 'Qualifié',
   nurturing: 'En maturation',
 }
 
@@ -46,7 +46,7 @@ const NAV_ITEMS = [
   { label: 'Dashboard', href: '#', icon: 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6', active: false },
   { label: 'Leads', href: '#', icon: 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z', active: true },
   { label: 'Entreprises', href: '#', icon: 'M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4', active: false },
-  { label: 'Taches', href: '#', icon: 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4', active: false },
+  { label: 'Tâches', href: '#', icon: 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4', active: false },
 ]
 
 export default function DemoPage() {
@@ -62,13 +62,13 @@ export default function DemoPage() {
 
   return (
     <div className="min-h-screen bg-[#F5F7F9]">
-      {/* Demo Banner */}
+      {/* Démo Banner */}
       <div className="bg-[#1565C0] text-white py-2 px-4 text-center text-sm">
-        <span className="font-medium">Mode Demo</span>
+        <span className="font-medium">Mode Démo</span>
         <span className="mx-2">-</span>
-        <span>Donnees fictives pour demonstration.</span>
+        <span>Données fictives pour demonstration.</span>
         <Link href="/auth/register" className="ml-3 underline font-medium hover:no-underline">
-          Creer un compte gratuit
+          Créer un compte gratuit
         </Link>
       </div>
 
@@ -86,7 +86,7 @@ export default function DemoPage() {
               </div>
               <span className="text-lg font-semibold text-[#0D0F14]">ProspectHub</span>
               <span className="ml-auto text-[10px] font-semibold uppercase px-1.5 py-0.5 rounded bg-[#E3F2FD] text-[#1565C0]">
-                Demo
+                Démo
               </span>
             </Link>
           </div>
@@ -116,12 +116,12 @@ export default function DemoPage() {
           <div className="absolute bottom-4 left-4 right-4">
             <div className="p-4 bg-[#F5F7F9] rounded-[12px]">
               <p className="text-sm font-medium text-[#0D0F14] mb-2">Passer en production ?</p>
-              <p className="text-xs text-[#4E525A] mb-3">Creez votre compte pour sauvegarder vos donnees.</p>
+              <p className="text-xs text-[#4E525A] mb-3">Creez votre compte pour sauvegarder vos données.</p>
               <Link
                 href="/auth/register"
                 className="block w-full py-2 text-center text-sm font-medium text-white bg-[#17191F] rounded-[8px] hover:bg-[#2D3039]"
               >
-                Creer un compte
+                Créer un compte
               </Link>
             </div>
           </div>
@@ -134,7 +134,7 @@ export default function DemoPage() {
             {[
               { label: 'Total leads', value: DEMO_STATS.total },
               { label: 'Nouveaux', value: DEMO_STATS.new },
-              { label: 'Qualifies', value: DEMO_STATS.qualified },
+              { label: 'Qualifiés', value: DEMO_STATS.qualified },
               { label: 'Chauds', value: DEMO_STATS.hot },
             ].map((stat, i) => (
               <div key={i} className="bg-white rounded-[14px] border border-[#E2E4E6] p-4 lg:p-5">
@@ -150,7 +150,7 @@ export default function DemoPage() {
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
             <div>
               <h1 className="text-xl lg:text-[23.5px] font-semibold text-[#0D0F14] mb-1">Leads</h1>
-              <p className="text-sm text-[#4E525A]">Gerez et suivez vos prospects</p>
+              <p className="text-sm text-[#4E525A]">Gérez et suivez vos prospects</p>
             </div>
             <button
               className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-white bg-[#17191F] rounded-[10px] opacity-60 cursor-not-allowed"
@@ -288,7 +288,7 @@ export default function DemoPage() {
               <p className="text-sm text-[#4E525A]">{filteredLeads.length} leads</p>
               <div className="flex items-center gap-2">
                 <button disabled className="px-3 py-1.5 text-sm text-[#9BA0A6] border border-[#E2E4E6] rounded-[8px] cursor-not-allowed">
-                  Precedent
+                  Précédent
                 </button>
                 <button disabled className="px-3 py-1.5 text-sm text-[#9BA0A6] border border-[#E2E4E6] rounded-[8px] cursor-not-allowed">
                   Suivant

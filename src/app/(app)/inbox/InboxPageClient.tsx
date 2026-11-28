@@ -51,7 +51,7 @@ export function InboxPageClient({ initialActivities }: InboxPageClientProps) {
             Boite de reception
           </h1>
           <p className="text-sm text-muted-foreground">
-            {filteredActivities.length} activite{filteredActivities.length !== 1 ? 's' : ''}
+            {filteredActivities.length} activité{filteredActivities.length !== 1 ? 's' : ''}
             {selectedType !== 'all' && ' filtrees'}
           </p>
         </div>
@@ -61,7 +61,7 @@ export function InboxPageClient({ initialActivities }: InboxPageClientProps) {
               <line x1="12" y1="5" x2="12" y2="19" />
               <line x1="5" y1="12" x2="19" y2="12" />
             </svg>
-            Nouvelle activite
+            Nouvelle activité
           </span>
         </FillButton>
       </div>

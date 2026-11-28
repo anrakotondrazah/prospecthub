@@ -44,7 +44,7 @@ export function TokenPreview({ subject, body, showToggle = true }: TokenPreviewP
       <div className="flex items-center justify-between px-4 py-3 bg-[#FAFBFC] border-b border-black/[0.06]">
         <div className="flex items-center gap-2">
           <Eye className="w-4 h-4 text-[#4E525A]" />
-          <span className="text-sm font-medium text-[#0D0F14]">Apercu</span>
+          <span className="text-sm font-medium text-[#0D0F14]">Aperçu</span>
           {invalidTokens.length > 0 && (
             <span className="flex items-center gap-1 text-xs text-[#B42318] bg-[#FDE8E5] px-2 py-0.5 rounded-full">
               <AlertCircle className="w-3 h-3" />
@@ -86,12 +86,12 @@ export function TokenPreview({ subject, body, showToggle = true }: TokenPreviewP
               <p className="text-sm text-[#B42318] font-medium mb-1">Tokens non reconnus:</p>
               <div className="flex flex-wrap gap-1.5">
                 {invalidTokens.map((token) => (
-                  <code
+                  <span
                     key={token}
-                    className="text-xs bg-white/80 text-[#B42318] px-2 py-1 rounded font-mono"
+                    className="text-xs bg-white/80 text-[#B42318] px-2 py-1 rounded font-medium"
                   >
-                    {`{{${token}}}`}
-                  </code>
+                    [{token}]
+                  </span>
                 ))}
               </div>
             </div>
@@ -117,10 +117,10 @@ export function TokenPreview({ subject, body, showToggle = true }: TokenPreviewP
                   __html: DOMPurify.sanitize(
                     previewBody
                       .replace(/\n/g, '<br />')
-                      // Highlight tokens that couldn't be replaced (kept as {{...}})
+                      // Highlight tokens that couldn't be replaced
                       .replace(
                         /\{\{([^}]+)\}\}/g,
-                        '<span class="bg-[#FEF3C7] text-[#92400E] px-1 rounded font-mono text-xs">{{$1}}</span>'
+                        '<span class="bg-[#FEF3C7] text-[#92400E] px-1 rounded font-medium text-xs">[$1]</span>'
                       ),
                     { ALLOWED_TAGS: ['br', 'span'], ALLOWED_ATTR: ['class'] }
                   ),
@@ -132,7 +132,7 @@ export function TokenPreview({ subject, body, showToggle = true }: TokenPreviewP
           {/* Token legend */}
           {validTokens.length > 0 && (
             <div className="mt-4 pt-4 border-t border-black/[0.06]">
-              <p className="text-xs font-medium text-[#4E525A] mb-2">Tokens utilises:</p>
+              <p className="text-xs font-medium text-[#4E525A] mb-2">Tokens utilisés:</p>
               <div className="flex flex-wrap gap-1.5">
                 {validTokens.map((token) => (
                   <div
@@ -140,7 +140,7 @@ export function TokenPreview({ subject, body, showToggle = true }: TokenPreviewP
                     className="flex items-center gap-1 text-xs bg-[#F5F7F9] px-2 py-1 rounded"
                     title={token.description}
                   >
-                    <code className="text-[#0066FF] font-mono">{`{{${token.name}}}`}</code>
+                    <span className="text-[#0066FF] font-medium">[{token.label}]</span>
                     <span className="text-[#9BA0A6]">=</span>
                     <span className="text-[#4E525A]">{token.example}</span>
                   </div>

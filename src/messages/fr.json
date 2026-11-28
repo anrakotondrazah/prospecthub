@@ -1,16 +1,16 @@
 {
   "meta": {
     "title": "ProspectHub - CRM B2B",
-    "description": "Prospectez plus intelligemment avec des donnees fraichement verifiees"
+    "description": "Prospectez plus intelligemment avec des données fraîchement vérifiées"
   },
   "nav": {
-    "features": "Fonctionnalites",
-    "testimonials": "Temoignages",
+    "features": "Fonctionnalités",
+    "testimonials": "Témoignages",
     "pricing": "Tarifs",
-    "demo": "Demo",
+    "demo": "Démo",
     "login": "Connexion",
     "signup": "Commencer",
-    "logout": "Deconnexion"
+    "logout": "Déconnexion"
   },
   "sidebar": {
     "dashboard": "Dashboard",
@@ -20,21 +20,22 @@
     "baseB2B": "Base B2B",
     "companies": "Entreprises",
     "deals": "Affaires",
-    "tasks": "Taches",
+    "tasks": "Tâches",
     "reports": "Rapports",
-    "settings": "Parametres",
-    "sequences": "Sequences",
+    "settings": "Paramètres",
+    "sequences": "Séquences",
     "campaigns": "Campagnes",
     "quotes": "Devis",
-    "templates": "Modeles",
+    "templates": "Modèles",
     "automations": "Automatisations",
     "products": "Produits",
     "tickets": "Tickets",
     "forms": "Formulaires",
     "knowledgeBase": "Base de connaissances",
-    "comingSoon": "Bientot disponible",
-    "collapse": "Reduire la sidebar",
-    "expand": "Agrandir la sidebar"
+    "comingSoon": "Bientôt disponible",
+    "collapse": "Réduire la sidebar",
+    "expand": "Agrandir la sidebar",
+    "meetings": "Réunions"
   },
   "common": {
     "search": "Rechercher",
@@ -42,71 +43,72 @@
     "cancel": "Annuler",
     "delete": "Supprimer",
     "edit": "Modifier",
-    "create": "Creer",
+    "create": "Créer",
     "add": "Ajouter",
     "remove": "Retirer",
     "close": "Fermer",
     "open": "Ouvrir",
     "loading": "Chargement...",
     "error": "Erreur",
-    "success": "Succes",
+    "success": "Succès",
     "confirm": "Confirmer",
     "back": "Retour",
     "next": "Suivant",
-    "previous": "Precedent",
+    "previous": "Précédent",
     "submit": "Soumettre",
-    "reset": "Reinitialiser",
+    "reset": "Réinitialiser",
     "filter": "Filtrer",
     "sort": "Trier",
     "export": "Exporter",
     "import": "Importer",
-    "download": "Telecharger",
+    "download": "Télécharger",
     "upload": "Envoyer",
     "view": "Voir",
     "viewAll": "Voir tout",
     "showMore": "Voir plus",
     "showLess": "Voir moins",
-    "noResults": "Aucun resultat",
-    "allRightsReserved": "Tous droits reserves"
+    "noResults": "Aucun résultat",
+    "allRightsReserved": "Tous droits réservés",
+    "retry": "Réessayer"
   },
   "auth": {
     "email": "Email",
     "password": "Mot de passe",
     "confirmPassword": "Confirmer le mot de passe",
-    "forgotPassword": "Mot de passe oublie ?",
-    "resetPassword": "Reinitialiser le mot de passe",
+    "forgotPassword": "Mot de passe oublié ?",
+    "resetPassword": "Réinitialiser le mot de passe",
     "signInWith": "Se connecter avec {provider}",
     "signUpWith": "S'inscrire avec {provider}",
     "orContinueWith": "Ou continuer avec",
-    "alreadyHaveAccount": "Deja un compte ?",
+    "alreadyHaveAccount": "Déjà un compte ?",
     "dontHaveAccount": "Pas encore de compte ?",
     "signIn": "Se connecter",
     "signUp": "S'inscrire",
-    "signOut": "Se deconnecter"
+    "signOut": "Se déconnecter"
   },
   "landing": {
     "hero": {
-      "title": "Le CRM B2B nouvelle generation",
-      "subtitle": "Prospectez plus intelligemment avec des donnees fraichement verifiees",
+      "title": "Le CRM B2B nouvelle génération",
+      "subtitle": "Prospectez plus intelligemment avec des données fraîchement vérifiées",
       "cta": "Commencer gratuitement"
     },
     "features": {
       "title": "Pourquoi choisir ProspectHub ?",
-      "personalizedTracking": "Suivi personnalise",
+      "personalizedTracking": "Suivi personnalisé",
       "automatedEnrichment": "Enrichissement automatique",
-      "verifiedCompanies": "Entreprises verifiees",
-      "freshData": "Donnees fraiches",
+      "verifiedCompanies": "Entreprises vérifiées",
+      "freshData": "Données fraîches",
       "transparency": "Transparence totale",
-      "simplicity": "Simplicite d'utilisation"
+      "simplicity": "Simplicité d'utilisation"
     },
     "howItWorks": {
-      "title": "Comment ca marche",
+      "title": "Comment ça marche",
       "step1": "Recherchez",
       "step1Desc": "Trouvez des entreprises par secteur, taille ou localisation",
-      "step2": "Revelez",
-      "step2Desc": "Debloquez les coordonnees completes",
+      "step2": "Révélez",
+      "step2Desc": "Débloquez les coordonnées complètes",
       "step3": "Contactez",
-      "step3Desc": "Lancez vos sequences d'emails"
+      "step3Desc": "Lancez vos séquences d'emails"
     },
     "pricing": {
       "title": "Tarifs simples et transparents",
@@ -125,13 +127,13 @@
   },
   "dashboard": {
     "welcome": "Bienvenue, {name}",
-    "recentActivity": "Activite recente",
+    "recentActivity": "Activité récente",
     "stats": {
       "leads": "Leads",
       "companies": "Entreprises",
       "deals": "Affaires",
-      "tasks": "Taches",
-      "credits": "Credits"
+      "tasks": "Tâches",
+      "credits": "Crédits"
     }
   },
   "leads": {
@@ -143,16 +145,16 @@
       "name": "Nom",
       "company": "Entreprise",
       "email": "Email",
-      "phone": "Telephone",
+      "phone": "Téléphone",
       "status": "Statut",
       "source": "Source",
-      "createdAt": "Cree le",
-      "updatedAt": "Mis a jour le"
+      "createdAt": "Créé le",
+      "updatedAt": "Mis à jour le"
     },
     "status": {
       "new": "Nouveau",
-      "contacted": "Contacte",
-      "qualified": "Qualifie",
+      "contacted": "Contacté",
+      "qualified": "Qualifié",
       "converted": "Converti",
       "lost": "Perdu"
     }
@@ -166,7 +168,7 @@
       "size": "Taille",
       "location": "Localisation",
       "website": "Site web",
-      "createdAt": "Cree le"
+      "createdAt": "Créé le"
     }
   },
   "deals": {
@@ -176,29 +178,29 @@
       "name": "Nom",
       "company": "Entreprise",
       "value": "Valeur",
-      "stage": "Etape",
-      "probability": "Probabilite",
-      "closeDate": "Date de cloture",
+      "stage": "Étape",
+      "probability": "Probabilité",
+      "closeDate": "Date de clôture",
       "owner": "Responsable"
     },
     "stages": {
       "qualification": "Qualification",
       "proposal": "Proposition",
-      "negotiation": "Negociation",
-      "closed_won": "Gagne",
+      "negotiation": "Négociation",
+      "closed_won": "Gagné",
       "closed_lost": "Perdu"
     }
   },
   "tasks": {
-    "title": "Taches",
-    "newTask": "Nouvelle tache",
+    "title": "Tâches",
+    "newTask": "Nouvelle tâche",
     "columns": {
       "title": "Titre",
       "description": "Description",
-      "dueDate": "Echeance",
-      "priority": "Priorite",
+      "dueDate": "Échéance",
+      "priority": "Priorité",
       "status": "Statut",
-      "assignee": "Assigne a"
+      "assignee": "Assigné à"
     },
     "priority": {
       "low": "Basse",
@@ -207,57 +209,57 @@
       "urgent": "Urgente"
     },
     "status": {
-      "todo": "A faire",
+      "todo": "À faire",
       "inProgress": "En cours",
-      "done": "Termine",
-      "cancelled": "Annule"
+      "done": "Terminé",
+      "cancelled": "Annulé"
     }
   },
   "quotes": {
     "title": "Devis",
     "newQuote": "Nouveau devis",
     "columns": {
-      "number": "Numero",
+      "number": "Numéro",
       "client": "Client",
       "total": "Total",
       "status": "Statut",
       "validUntil": "Valide jusqu'au",
-      "createdAt": "Cree le"
+      "createdAt": "Créé le"
     },
     "status": {
       "draft": "Brouillon",
-      "sent": "Envoye",
-      "accepted": "Accepte",
-      "rejected": "Refuse",
-      "expired": "Expire"
+      "sent": "Envoyé",
+      "accepted": "Accepté",
+      "rejected": "Refusé",
+      "expired": "Expiré"
     }
   },
   "settings": {
-    "title": "Parametres",
+    "title": "Paramètres",
     "profile": "Profil",
     "account": "Compte",
     "billing": "Facturation",
-    "team": "Equipe",
-    "integrations": "Integrations",
+    "team": "Équipe",
+    "integrations": "Intégrations",
     "notifications": "Notifications",
-    "security": "Securite",
+    "security": "Sécurité",
     "appearance": "Apparence",
     "language": "Langue",
     "timezone": "Fuseau horaire",
     "deleteAccount": "Supprimer le compte"
   },
   "legal": {
-    "terms": "Conditions generales",
-    "privacy": "Politique de confidentialite",
+    "terms": "Conditions générales",
+    "privacy": "Politique de confidentialité",
     "contact": "Contact"
   },
   "errors": {
     "generic": "Une erreur est survenue",
-    "notFound": "Page non trouvee",
-    "unauthorized": "Non autorise",
-    "forbidden": "Acces interdit",
+    "notFound": "Page non trouvée",
+    "unauthorized": "Non autorisé",
+    "forbidden": "Accès interdit",
     "serverError": "Erreur serveur",
-    "networkError": "Erreur reseau",
+    "networkError": "Erreur réseau",
     "validationError": "Erreur de validation"
   },
   "dates": {
@@ -265,8 +267,47 @@
     "yesterday": "Hier",
     "tomorrow": "Demain",
     "thisWeek": "Cette semaine",
-    "lastWeek": "Semaine derniere",
+    "lastWeek": "Semaine dernière",
     "thisMonth": "Ce mois-ci",
     "lastMonth": "Mois dernier"
+  },
+  "templates": {
+    "title": "Templates",
+    "newTemplate": "Nouveau template",
+    "createTemplate": "Créer un template",
+    "editTemplate": "Modifier le template",
+    "deleteTemplate": "Supprimer le template",
+    "category": "Catégorie",
+    "noCategory": "Aucune catégorie",
+    "categories": {
+      "prospection": "Prospection",
+      "followUp": "Suivi",
+      "reminder": "Relance",
+      "closing": "Clôture"
+    },
+    "subject": "Objet",
+    "body": "Corps du message",
+    "bodyRequired": "Le corps du message ne peut pas être vide",
+    "insertToken": "Insérer un token",
+    "characters": "caractères",
+    "typeToInsertToken": "Tapez { pour insérer un token"
+  },
+  "tickets": {
+    "title": "Tickets",
+    "newTicket": "Nouveau ticket",
+    "createTicket": "Créer un ticket",
+    "manageTickets": "Gérez les demandes de support client",
+    "status": {
+      "open": "Ouvert",
+      "inProgress": "En cours",
+      "resolved": "Résolu",
+      "closed": "Fermé"
+    }
+  },
+  "activities": {
+    "title": "Activités",
+    "recentActivity": "Activité récente",
+    "noActivity": "Aucune activité récente",
+    "history": "Historique des activités"
   }
 }

@@ -174,7 +174,7 @@ export function CreateTicketModal({
           {/* Priority */}
           <div>
             <label className="block text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3] mb-3">
-              Priorite
+              Priorité
             </label>
             <div className="grid grid-cols-2 gap-2">
               {priorities.map((option) => (
@@ -198,7 +198,7 @@ export function CreateTicketModal({
           {/* Category */}
           <div>
             <label htmlFor="ticket-category" className="block text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3] mb-2">
-              Categorie
+              Catégorie
             </label>
             <select
               id="ticket-category"
@@ -207,7 +207,7 @@ export function CreateTicketModal({
               className="w-full px-4 py-2.5 bg-white/80 dark:bg-[#161B22]/80 backdrop-blur-sm border border-black/[0.08] dark:border-[#30363D] rounded-xl text-sm text-[#0D0F14] dark:text-[#E6EDF3] focus:outline-none focus:border-[#0066FF] focus:ring-3 focus:ring-[#0066FF]/10 transition-all duration-200 shadow-sm hover:border-black/[0.12] dark:hover:border-[#30363D]"
               disabled={isLoading}
             >
-              <option value="">Selectionner une categorie</option>
+              <option value="">Selectionner une catégorie</option>
               {categories.map((cat) => (
                 <option key={cat} value={cat}>
                   {cat}
@@ -235,10 +235,10 @@ export function CreateTicketModal({
                   <svg className="animate-spin" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <path d="M21 12a9 9 0 11-6.219-8.56" />
                   </svg>
-                  Creation...
+                  Création...
                 </span>
               ) : (
-                'Creer le ticket'
+                'Créer le ticket'
               )}
             </FillButton>
           </div>

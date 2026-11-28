@@ -31,8 +31,8 @@ const EMPTY_STATE_CONFIG = {
       </svg>
     ),
     title: "Aucune activité... pour l'instant",
-    description: "Lancez votre première séquence pour commencer à interagir avec vos prospects.",
-    defaultAction: "Créer une séquence",
+    description: "Lancez votre première sequence pour commencer à interagir avec vos prospects.",
+    defaultAction: "Créer une sequence",
     defaultHref: "/sequences"
   },
   leads: {

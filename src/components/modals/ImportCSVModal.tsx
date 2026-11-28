@@ -19,7 +19,7 @@ const DEFAULT_LEAD_FIELDS: Record<string, string> = {
   first_name: 'Prenom',
   last_name: 'Nom',
   email: 'Email',
-  phone: 'Telephone',
+  phone: 'Téléphone',
   company_name: 'Entreprise',
   company_siret: 'SIRET',
   address_city: 'Ville',
@@ -32,7 +32,7 @@ export const COMPANY_FIELD_LABELS: Record<string, string> = {
   website: 'Site web',
   industry: 'Secteur',
   employees_count: 'Effectif',
-  phone: 'Telephone',
+  phone: 'Téléphone',
   email: 'Email',
   address_street: 'Adresse',
   address_city: 'Ville',
@@ -168,7 +168,7 @@ export function ImportCSVModal({ isOpen, onClose, onImport, fieldLabels, title =
                   </svg>
                 </div>
                 <h3 className="text-lg font-medium text-[#0D0F14] dark:text-[#E6EDF3] mb-2">
-                  Selectionnez un fichier CSV
+                  Sélectionnez un fichier CSV
                 </h3>
                 <p className="text-sm text-[#4E525A] dark:text-[#8B949E] mb-6">
                   Formats acceptes: .csv (separateur virgule ou point-virgule)
@@ -232,7 +232,7 @@ export function ImportCSVModal({ isOpen, onClose, onImport, fieldLabels, title =
             {step === 'preview' && (
               <div>
                 <p className="text-sm text-[#4E525A] dark:text-[#8B949E] mb-4">
-                  Apercu des {Math.min(5, rows.length)} premieres lignes
+                  Apercu des {Math.min(5, rows.length)} premières lignes
                 </p>
 
                 <div className="overflow-x-auto border border-[#E2E4E6] dark:border-[#30363D] rounded-[10px]">

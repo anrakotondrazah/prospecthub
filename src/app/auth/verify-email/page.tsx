@@ -72,7 +72,7 @@ function VerifyEmailContent() {
     })
 
     if (verifyError) {
-      setError('Code invalide ou expire. Veuillez reessayer.')
+      setError('Code invalide ou expiré. Veuillez réessayer.')
       setIsLoading(false)
       return
     }
@@ -121,10 +121,10 @@ function VerifyEmailContent() {
           </div>
 
           <h1 className="text-[23.5px] font-semibold text-[#0D0F14] text-center mb-2">
-            Verifiez votre email
+            Vérifiez votre email
           </h1>
           <p className="text-sm text-[#4E525A] text-center mb-8">
-            Nous avons envoye un code a 6 chiffres a<br />
+            Nous avons envoyé un code a 6 chiffres a<br />
             <span className="font-medium text-[#0D0F14]">{email}</span>
           </p>
 
@@ -159,7 +159,7 @@ function VerifyEmailContent() {
             isLoading={isLoading}
             onClick={() => handleVerify(code.join(''))}
           >
-            Verifier
+            Vérifiér
           </Button>
 
           <p className="text-sm text-[#4E525A] text-center">

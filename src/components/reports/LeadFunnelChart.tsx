@@ -30,7 +30,7 @@ export function LeadFunnelChart({
 }: LeadFunnelChartProps) {
   const data = [
     { name: 'Total leads', value: totalLeads, fill: COLORS.total },
-    { name: 'Qualifies', value: qualifiedLeads, fill: COLORS.qualified },
+    { name: 'Qualifiés', value: qualifiedLeads, fill: COLORS.qualified },
     { name: 'Convertis', value: convertedLeads, fill: COLORS.converted },
   ]
 
@@ -109,7 +109,7 @@ export function LeadFunnelChart({
         </div>
         <div className="flex items-center gap-2">
           <div className="w-3 h-3 rounded" style={{ backgroundColor: COLORS.qualified }} />
-          <span className="text-xs text-muted-foreground">Qualifies</span>
+          <span className="text-xs text-muted-foreground">Qualifiés</span>
         </div>
         <div className="flex items-center gap-2">
           <div className="w-3 h-3 rounded" style={{ backgroundColor: COLORS.converted }} />

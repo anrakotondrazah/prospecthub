@@ -5,10 +5,10 @@ export type QuoteStatus = 'draft' | 'pending' | 'sent' | 'approved' | 'rejected'
 const statusConfig: Record<QuoteStatus, { bg: string; text: string; label: string }> = {
   draft: { bg: 'bg-[#F5F7F9]', text: 'text-[#4E525A]', label: 'Brouillon' },
   pending: { bg: 'bg-[#FFF9E6]', text: 'text-[#F59E0B]', label: 'En attente' },
-  sent: { bg: 'bg-[#E3F2FD]', text: 'text-[#1565C0]', label: 'Envoye' },
+  sent: { bg: 'bg-[#E3F2FD]', text: 'text-[#1565C0]', label: 'Envoyé' },
   approved: { bg: 'bg-[#E8F5E9]', text: 'text-[#147A3A]', label: 'Approuve' },
-  rejected: { bg: 'bg-[#FDE8E5]', text: 'text-[#B42318]', label: 'Refuse' },
-  expired: { bg: 'bg-[#F3E5F5]', text: 'text-[#7B1FA2]', label: 'Expire' },
+  rejected: { bg: 'bg-[#FDE8E5]', text: 'text-[#B42318]', label: 'Refusé' },
+  expired: { bg: 'bg-[#F3E5F5]', text: 'text-[#7B1FA2]', label: 'Expiré' },
 }
 
 interface QuoteStatusBadgeProps {

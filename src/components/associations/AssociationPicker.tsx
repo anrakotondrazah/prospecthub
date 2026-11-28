@@ -241,7 +241,7 @@ export function AssociationPicker({
       {isOpen && query.length >= 2 && !isLoading && results.length === 0 && (
         <div className="absolute z-50 mt-1 w-full bg-white dark:bg-[#0D1117] border border-black/[0.08] dark:border-[#30363D] rounded-xl shadow-lg p-4">
           <p className="text-sm text-[#9BA0A6] dark:text-[#8B949E] text-center">
-            Aucun resultat pour "{query}"
+            Aucun résultat pour "{query}"
           </p>
         </div>
       )}

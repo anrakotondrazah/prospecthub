@@ -57,9 +57,9 @@ type AvailableLead = {
 
 const STATUS_LABELS: Record<string, string> = {
   new: 'Nouveau',
-  contacted: 'Contacte',
-  qualified: 'Qualifie',
-  unqualified: 'Non qualifie',
+  contacted: 'Contacté',
+  qualified: 'Qualifié',
+  unqualified: 'Non qualifié',
   nurturing: 'En maturation',
   converted: 'Converti',
   lost: 'Perdu',
@@ -273,13 +273,13 @@ export function ListDetailClient({ list, initialMembers, availableLeads, organiz
               <circle cx="12" cy="12" r="10" />
               <path d="M12 6v6l4 2" />
             </svg>
-            Cree le {formatDate(list.created_at)}
+            Créé le {formatDate(list.created_at)}
           </div>
           <div className="flex items-center gap-2">
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
             </svg>
-            Mis a jour le {formatDate(list.updated_at)}
+            Mis à jour le {formatDate(list.updated_at)}
           </div>
         </div>
       </div>
@@ -471,7 +471,7 @@ function AddLeadsModal({ isOpen, onClose, onAddLeads, availableLeads }: {
           {filteredLeads.length === 0 ? (
             <div className="text-center py-8">
               <p className="text-muted-foreground">
-                {searchQuery ? 'Aucun lead trouve' : 'Tous les leads sont deja dans cette liste'}
+                {searchQuery ? 'Aucun lead trouvé' : 'Tous les leads sont deja dans cette liste'}
               </p>
             </div>
           ) : (

@@ -70,7 +70,7 @@ export function MeetingsPageClient({
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
           <div>
             <h1 className="text-xl lg:text-[23.5px] font-semibold text-[#0D0F14] dark:text-[#E6EDF3] mb-1">
-              Reunions
+              Réunions
             </h1>
             <p className="text-sm text-[#4E525A] dark:text-[#8B949E]">
               Planifiez et gerez vos rendez-vous
@@ -100,7 +100,7 @@ export function MeetingsPageClient({
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
         <div>
           <h1 className="text-xl lg:text-[23.5px] font-semibold text-[#0D0F14] dark:text-[#E6EDF3] mb-1">
-            Reunions
+            Réunions
           </h1>
           <p className="text-sm text-[#4E525A] dark:text-[#8B949E]">
             Planifiez et gerez vos rendez-vous
@@ -154,7 +154,7 @@ export function MeetingsPageClient({
                     Aucune reunion planifiee
                   </p>
                   <p className="text-sm text-[#4E525A] dark:text-[#8B949E] mb-4">
-                    Commencez par planifier votre premiere reunion
+                    Commencez par planifier votre première reunion
                   </p>
                   <button
                     onClick={handleOpenModal}

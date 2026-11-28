@@ -18,11 +18,11 @@ export default function KnowledgeBasePage() {
         </div>
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FFF3E0] text-[#E65100] text-xs font-medium mb-4">
           <span className="w-1.5 h-1.5 rounded-full bg-[#E65100]"></span>
-          Bientot disponible
+          Bientôt disponible
         </div>
         <h2 className="text-xl font-semibold text-[#0D0F14] mb-2">Base de connaissances</h2>
         <p className="text-[#4E525A] max-w-md mx-auto mb-6">
-          Creez une bibliotheque de ressources pour aider vos equipes et vos clients.
+          Creez une bibliothèque de ressources pour aider vos équipes et vos clients.
         </p>
         <button
           className="px-5 py-2.5 rounded-[10px] bg-[#F5F7F9] text-[#9BA0A6] text-sm font-medium cursor-not-allowed"

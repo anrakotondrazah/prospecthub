@@ -1,8 +1,8 @@
 /**
  * Token Utils - Gestion des tokens de personnalisation
  *
- * Les tokens permettent de personnaliser les templates avec des donnees dynamiques
- * Format: {{token.path}} ou {{token_name}}
+ * Les tokens permettent de personnaliser les templates avec des données dynamiques
+ * Format: [Label du token] (ex: [Prénom], [Entreprise], [Votre nom])
  */
 
 export type TokenCategory = 'lead' | 'company' | 'deal' | 'user' | 'organization' | 'date'
@@ -61,16 +61,16 @@ export const AVAILABLE_TOKENS: Token[] = [
   {
     id: 'lead_first_name',
     name: 'lead.first_name',
-    label: 'Prenom',
+    label: 'Prénom',
     category: 'lead',
-    description: 'Prenom du lead',
+    description: 'Prénom du lead',
     example: 'Jean',
     path: 'lead.first_name',
   },
   {
     id: 'lead_last_name',
     name: 'lead.last_name',
-    label: 'Nom',
+    label: 'Nom du lead',
     category: 'lead',
     description: 'Nom de famille du lead',
     example: 'Dupont',
@@ -97,9 +97,9 @@ export const AVAILABLE_TOKENS: Token[] = [
   {
     id: 'lead_phone',
     name: 'lead.phone',
-    label: 'Telephone',
+    label: 'Téléphone',
     category: 'lead',
-    description: 'Numero de telephone du lead',
+    description: 'Numéro de téléphone du lead',
     example: '01 23 45 67 89',
     path: 'lead.phone',
   },
@@ -108,7 +108,7 @@ export const AVAILABLE_TOKENS: Token[] = [
     name: 'lead.job_title',
     label: 'Poste',
     category: 'lead',
-    description: 'Intitule de poste du lead',
+    description: 'Intitulé de poste du lead',
     example: 'Directeur Commercial',
     path: 'lead.job_title',
   },
@@ -135,7 +135,7 @@ export const AVAILABLE_TOKENS: Token[] = [
   {
     id: 'company_name',
     name: 'company.name',
-    label: 'Nom',
+    label: 'Nom société',
     category: 'company',
     description: 'Nom de l\'entreprise',
     example: 'Acme Corp',
@@ -162,7 +162,7 @@ export const AVAILABLE_TOKENS: Token[] = [
   {
     id: 'company_phone',
     name: 'company.phone',
-    label: 'Telephone',
+    label: 'Téléphone',
     category: 'company',
     description: 'Numero de telephone de l\'entreprise',
     example: '01 98 76 54 32',
@@ -182,7 +182,7 @@ export const AVAILABLE_TOKENS: Token[] = [
   {
     id: 'deal_name',
     name: 'deal.name',
-    label: 'Nom',
+    label: 'Nom du deal',
     category: 'deal',
     description: 'Nom du deal',
     example: 'Contrat annuel',
@@ -200,9 +200,9 @@ export const AVAILABLE_TOKENS: Token[] = [
   {
     id: 'deal_close_date',
     name: 'deal.expected_close_date',
-    label: 'Date de cloture',
+    label: 'Date de clôture',
     category: 'deal',
-    description: 'Date de cloture prevue',
+    description: 'Date de clôture prevue',
     example: '15/12/2026',
     path: 'deal.expected_close_date',
   },
@@ -211,9 +211,9 @@ export const AVAILABLE_TOKENS: Token[] = [
   {
     id: 'user_first_name',
     name: 'user.first_name',
-    label: 'Mon prenom',
+    label: 'Mon prénom',
     category: 'user',
-    description: 'Votre prenom',
+    description: 'Votre prénom',
     example: 'Marie',
     path: 'user.first_name',
   },
@@ -247,9 +247,9 @@ export const AVAILABLE_TOKENS: Token[] = [
   {
     id: 'user_phone',
     name: 'user.phone',
-    label: 'Mon telephone',
+    label: 'Mon téléphone',
     category: 'user',
-    description: 'Votre numero de telephone',
+    description: 'Votre numéro de téléphone',
     example: '06 12 34 56 78',
     path: 'user.phone',
   },
@@ -258,7 +258,7 @@ export const AVAILABLE_TOKENS: Token[] = [
     name: 'user.job_title',
     label: 'Mon poste',
     category: 'user',
-    description: 'Votre intitule de poste',
+    description: 'Votre intitulé de poste',
     example: 'Commercial',
     path: 'user.job_title',
   },
@@ -329,7 +329,7 @@ export const TOKEN_CATEGORY_LABELS: Record<TokenCategory, string> = {
   lead: 'Lead',
   company: 'Entreprise',
   deal: 'Deal',
-  user: 'Expediteur',
+  user: 'Expéditeur',
   organization: 'Mon organisation',
   date: 'Dates',
 }
@@ -344,8 +344,10 @@ export const TOKEN_CATEGORY_ICONS: Record<TokenCategory, string> = {
   date: 'Calendar',
 }
 
-// Regex pour detecter les tokens dans un texte
-const TOKEN_REGEX = /\{\{([a-zA-Z_.]+)\}\}/g
+// Regex pour detecter les tokens dans un texte (format [Label])
+const TOKEN_REGEX = /\[([^\]]+)\]/g
+// Regex legacy pour compatibilite avec anciens templates (format {{token.name}})
+const LEGACY_TOKEN_REGEX = /\{\{([a-zA-Z_.]+)\}\}/g
 
 /**
  * Extraire tous les tokens utilises dans un texte
@@ -354,14 +356,18 @@ export function extractTokensFromText(text: string): string[] {
   const matches = text.match(TOKEN_REGEX)
   if (!matches) return []
 
-  return [...new Set(matches.map(m => m.replace(/\{\{|\}\}/g, '')))]
+  // Extraire les labels et trouver les noms de tokens correspondants
+  const labels = [...new Set(matches.map(m => m.replace(/\[|\]/g, '')))]
+  return labels
+    .map(label => AVAILABLE_TOKENS.find(t => t.label === label)?.name)
+    .filter((name): name is string => name !== undefined)
 }
 
 /**
- * Verifier si un token existe
+ * Verifier si un token existe (par label ou par nom)
  */
-export function isValidToken(tokenName: string): boolean {
-  return AVAILABLE_TOKENS.some(t => t.name === tokenName)
+export function isValidToken(tokenLabelOrName: string): boolean {
+  return AVAILABLE_TOKENS.some(t => t.label === tokenLabelOrName || t.name === tokenLabelOrName)
 }
 
 /**
@@ -455,8 +461,15 @@ export function replaceTokens(
   context: TokenContext,
   fallback: 'keep' | 'empty' | 'placeholder' = 'placeholder'
 ): string {
-  return text.replace(TOKEN_REGEX, (match, tokenName) => {
-    const value = getTokenValue(tokenName, context)
+  // D'abord, remplacer les tokens au format [Label]
+  let result = text.replace(TOKEN_REGEX, (match, tokenLabel) => {
+    // Trouver le token par son label
+    const token = AVAILABLE_TOKENS.find(t => t.label === tokenLabel)
+    if (!token) {
+      return match // Label inconnu, garder tel quel
+    }
+
+    const value = getTokenValue(token.name, context)
 
     if (value !== null) {
       return value
@@ -469,11 +482,34 @@ export function replaceTokens(
       case 'empty':
         return '' // Remplace par une chaine vide
       case 'placeholder':
-        // Retourne un placeholder lisible
-        const token = AVAILABLE_TOKENS.find(t => t.name === tokenName)
-        return token ? `[${token.label}]` : match
+        return `[${token.label}]` // Retourne le placeholder lisible
     }
   })
+
+  // Ensuite, remplacer les tokens legacy au format {{token.name}} (compatibilite)
+  result = result.replace(LEGACY_TOKEN_REGEX, (match, tokenName) => {
+    const token = AVAILABLE_TOKENS.find(t => t.name === tokenName)
+    if (!token) {
+      return match // Token inconnu, garder tel quel
+    }
+
+    const value = getTokenValue(token.name, context)
+
+    if (value !== null) {
+      return value
+    }
+
+    switch (fallback) {
+      case 'keep':
+        return match
+      case 'empty':
+        return ''
+      case 'placeholder':
+        return `[${token.label}]` // Convertit en nouveau format
+    }
+  })
+
+  return result
 }
 
 /**
@@ -531,39 +567,61 @@ export function validateTemplate(template: { subject?: string; body: string }): 
 } {
   const errors: string[] = []
   const warnings: string[] = []
-  const usedTokenNames: string[] = []
-
-  // Extraire les tokens du sujet et du body
-  if (template.subject) {
-    usedTokenNames.push(...extractTokensFromText(template.subject))
-  }
-  usedTokenNames.push(...extractTokensFromText(template.body))
-
-  // Verifier chaque token
-  const uniqueTokenNames = [...new Set(usedTokenNames)]
   const usedTokens: Token[] = []
 
-  for (const tokenName of uniqueTokenNames) {
-    const token = AVAILABLE_TOKENS.find(t => t.name === tokenName)
-    if (token) {
-      usedTokens.push(token)
-    } else {
-      errors.push(`Token inconnu: {{${tokenName}}}`)
+  // Fonction pour extraire et valider les labels bruts
+  const validateLabels = (text: string) => {
+    const matches = text.match(TOKEN_REGEX)
+    if (!matches) return
+
+    for (const match of matches) {
+      const label = match.replace(/\[|\]/g, '')
+      const token = AVAILABLE_TOKENS.find(t => t.label === label)
+      if (token) {
+        if (!usedTokens.find(t => t.id === token.id)) {
+          usedTokens.push(token)
+        }
+      } else {
+        errors.push(`Token inconnu: [${label}]`)
+      }
+    }
+
+    // Verifier aussi les tokens legacy {{...}}
+    const legacyMatches = text.match(LEGACY_TOKEN_REGEX)
+    if (legacyMatches) {
+      for (const match of legacyMatches) {
+        const tokenName = match.replace(/\{\{|\}\}/g, '')
+        const token = AVAILABLE_TOKENS.find(t => t.name === tokenName)
+        if (token) {
+          if (!usedTokens.find(t => t.id === token.id)) {
+            usedTokens.push(token)
+          }
+          warnings.push(`Format legacy détecté: ${match} -> utilisez [${token.label}]`)
+        } else {
+          errors.push(`Token legacy inconnu: ${match}`)
+        }
+      }
     }
   }
 
+  // Valider le sujet et le body
+  if (template.subject) {
+    validateLabels(template.subject)
+  }
+  validateLabels(template.body)
+
   // Warnings pour les bonnes pratiques
   if (!template.body.trim()) {
-    errors.push('Le corps du message ne peut pas etre vide')
+    errors.push('Le corps du message ne peut pas être vide')
   }
 
   if (template.body.length > 10000) {
-    warnings.push('Le message est tres long (> 10 000 caracteres)')
+    warnings.push('Le message est très long (> 10 000 caractères)')
   }
 
   // Verifier qu'on a au moins un token de personnalisation (optionnel mais recommande)
   if (usedTokens.length === 0 && template.body.length > 50) {
-    warnings.push('Conseil: Ajoutez des tokens de personnalisation pour un meilleur taux de reponse')
+    warnings.push('Conseil: Ajoutez des tokens de personnalisation pour un meilleur taux de réponse')
   }
 
   return {
@@ -582,7 +640,7 @@ export function insertTokenAtCursor(
   cursorPosition: number,
   token: Token
 ): { newText: string; newCursorPosition: number } {
-  const tokenText = `{{${token.name}}}`
+  const tokenText = `[${token.label}]`
   const before = text.slice(0, cursorPosition)
   const after = text.slice(cursorPosition)
 

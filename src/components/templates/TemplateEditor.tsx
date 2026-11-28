@@ -142,7 +142,7 @@ export function TemplateEditor({
           onChange={(e) => onSubjectChange(e.target.value)}
           onSelect={() => handleSelectionChange('subject')}
           onClick={() => handleSelectionChange('subject')}
-          placeholder="Ex: Bonjour {{lead.first_name}}, decouvrez notre solution"
+          placeholder="Ex: Bonjour [Prénom], découvrez notre solution"
           disabled={disabled}
           className="w-full px-4 py-2.5 bg-white/80 dark:bg-[#161B22]/80 border border-black/[0.08] dark:border-[#30363D] rounded-xl text-sm text-[#0D0F14] dark:text-[#E6EDF3] focus:outline-none focus:border-[#0066FF] focus:ring-3 focus:ring-[#0066FF]/10 transition-all duration-200 disabled:bg-[#F5F7F9] dark:disabled:bg-[#21262D] disabled:cursor-not-allowed"
         />
@@ -171,24 +171,24 @@ export function TemplateEditor({
           onChange={(e) => onBodyChange(e.target.value)}
           onSelect={() => handleSelectionChange('body')}
           onClick={() => handleSelectionChange('body')}
-          placeholder={`Bonjour {{lead.first_name}},
+          placeholder={`Bonjour [Prénom],
 
 Je me permets de vous contacter concernant...
 
-{{lead.company_name}} pourrait beneficier de notre solution...
+[Entreprise] pourrait bénéficier de notre solution...
 
 Cordialement,
-{{user.full_name}}
-{{organization.name}}`}
+[Votre nom]
+[Votre société]`}
           rows={12}
           disabled={disabled}
           className="w-full px-4 py-3 bg-white/80 dark:bg-[#161B22]/80 border border-black/[0.08] dark:border-[#30363D] rounded-xl text-sm text-[#0D0F14] dark:text-[#E6EDF3] focus:outline-none focus:border-[#0066FF] focus:ring-3 focus:ring-[#0066FF]/10 transition-all duration-200 resize-y min-h-[200px] disabled:bg-[#F5F7F9] dark:disabled:bg-[#21262D] disabled:cursor-not-allowed font-mono"
         />
         <div className="flex items-center justify-between mt-2 text-xs text-[#9BA0A6] dark:text-[#8B949E]">
           <span>
-            Tapez <code className="bg-[#F5F7F9] dark:bg-[#21262D] px-1 rounded">{'{'}</code> pour inserer un token
+            Tapez <code className="bg-[#F5F7F9] dark:bg-[#21262D] px-1 rounded">{'{'}</code> pour insérer un token
           </span>
-          <span>{body.length} caracteres</span>
+          <span>{body.length} caractères</span>
         </div>
       </div>
 

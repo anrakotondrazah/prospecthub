@@ -68,7 +68,7 @@ export default function LoginPage() {
             Connexion
           </h1>
           <p className="text-sm text-muted-foreground text-center mb-8">
-            Entrez vos identifiants pour acceder a votre compte
+            Entrez vos identifiants pour accéder a votre compte
           </p>
 
           {/* Google OAuth */}
@@ -132,7 +132,7 @@ export default function LoginPage() {
                   href="/auth/forgot-password"
                   className="text-sm text-foreground hover:underline"
                 >
-                  Mot de passe oublie ?
+                  Mot de passe oublié ?
                 </Link>
               </div>
               <Input
@@ -153,7 +153,7 @@ export default function LoginPage() {
           <p className="text-sm text-muted-foreground text-center mt-6">
             Pas encore de compte ?{' '}
             <Link href="/auth/register" className="text-foreground font-medium hover:underline">
-              Creer un compte
+              Créer un compte
             </Link>
           </p>
         </div>
@@ -162,7 +162,7 @@ export default function LoginPage() {
           En vous connectant, vous acceptez nos{' '}
           <Link href="/terms" className="underline">CGU</Link>
           {' '}et notre{' '}
-          <Link href="/privacy" className="underline">Politique de confidentialite</Link>
+          <Link href="/privacy" className="underline">Politique de confidentialité</Link>
         </p>
       </div>
     </div>

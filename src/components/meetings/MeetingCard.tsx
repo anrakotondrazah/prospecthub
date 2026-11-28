@@ -52,8 +52,8 @@ const STATUS_CONFIG: Record<string, { label: string; bg: string; text: string }>
   scheduled: { label: 'Planifie', bg: 'bg-[#F5F7F9]', text: 'text-[#9BA0A6]' },
   confirmed: { label: 'Confirme', bg: 'bg-[#DCFCE7]', text: 'text-[#16A34A]' },
   in_progress: { label: 'En cours', bg: 'bg-[#DBEAFE]', text: 'text-[#2563EB]' },
-  completed: { label: 'Termine', bg: 'bg-[#F3F4F6]', text: 'text-[#6B7280]' },
-  cancelled: { label: 'Annule', bg: 'bg-[#FDE8E5]', text: 'text-[#B42318]' },
+  completed: { label: 'Terminé', bg: 'bg-[#F3F4F6]', text: 'text-[#6B7280]' },
+  cancelled: { label: 'Annulé', bg: 'bg-[#FDE8E5]', text: 'text-[#B42318]' },
   no_show: { label: 'No-show', bg: 'bg-[#FFF3E0]', text: 'text-[#E65100]' },
 }
 

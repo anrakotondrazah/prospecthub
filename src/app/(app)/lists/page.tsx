@@ -36,7 +36,7 @@ export default async function ListsPage() {
             Impossible de charger votre profil.
           </p>
           <Link href="/lists" className="text-foreground font-medium hover:underline">
-            Reessayer
+            Réessayer
           </Link>
         </div>
       </div>
@@ -49,10 +49,10 @@ export default async function ListsPage() {
       <div className="flex items-center justify-center h-[60vh]">
         <div className="text-center">
           <h2 className="text-xl font-semibold text-foreground mb-2">
-            Organisation non configuree
+            Organisation non configurée
           </h2>
           <p className="text-muted-foreground">
-            Completez votre onboarding pour acceder aux listes.
+            Complétez votre onboarding pour accéder aux listes.
           </p>
         </div>
       </div>
@@ -88,7 +88,7 @@ export default async function ListsPage() {
             <p className="font-medium text-foreground mb-2">Erreur de chargement</p>
             <p className="text-sm text-muted-foreground mb-4">Impossible de charger les listes.</p>
             <Link href="/lists" className="text-foreground font-medium hover:underline">
-              Reessayer
+              Réessayer
             </Link>
           </div>
         </div>

@@ -34,10 +34,10 @@ type QuotesPageClientProps = {
 const statusFilters = [
   { value: 'all', label: 'Tous' },
   { value: 'draft', label: 'Brouillons' },
-  { value: 'sent', label: 'Envoyes' },
+  { value: 'sent', label: 'Envoyés' },
   { value: 'approved', label: 'Approuves' },
-  { value: 'rejected', label: 'Refuses' },
-  { value: 'expired', label: 'Expires' },
+  { value: 'rejected', label: 'Refusés' },
+  { value: 'expired', label: 'Expirés' },
 ]
 
 export function QuotesPageClient({
@@ -124,7 +124,7 @@ export function QuotesPageClient({
               <line x1="12" y1="5" x2="12" y2="19" />
               <line x1="5" y1="12" x2="19" y2="12" />
             </svg>
-            Creer un devis
+            Créer un devis
           </span>
         </FillButton>
       </div>
@@ -244,7 +244,7 @@ export function QuotesPageClient({
               </svg>
             </div>
             <h3 className="text-lg font-semibold text-[#0D0F14] dark:text-[#E6EDF3] mb-2">
-              {searchQuery || statusFilter !== 'all' ? 'Aucun devis trouve' : 'Aucun devis'}
+              {searchQuery || statusFilter !== 'all' ? 'Aucun devis trouvé' : 'Aucun devis'}
             </h3>
             <p className="text-sm text-[#4E525A] dark:text-[#8B949E] mb-6 max-w-md mx-auto">
               {searchQuery || statusFilter !== 'all'
@@ -258,7 +258,7 @@ export function QuotesPageClient({
                     <line x1="12" y1="5" x2="12" y2="19" />
                     <line x1="5" y1="12" x2="19" y2="12" />
                   </svg>
-                  Creer un devis
+                  Créer un devis
                 </span>
               </FillButton>
             )}
@@ -270,7 +270,7 @@ export function QuotesPageClient({
             <thead>
               <tr className="border-b border-[#EFF1F3] dark:border-[#30363D]">
                 <th className="text-left px-5 py-3.5 text-xs font-semibold text-[#4E525A] dark:text-[#8B949E] uppercase tracking-wide">
-                  Numero
+                  Numéro
                 </th>
                 <th className="text-left px-5 py-3.5 text-xs font-semibold text-[#4E525A] dark:text-[#8B949E] uppercase tracking-wide">
                   Nom

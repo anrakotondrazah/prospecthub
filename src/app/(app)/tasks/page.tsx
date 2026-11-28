@@ -30,7 +30,7 @@ export default async function TasksPage() {
           </div>
           <h2 className="text-xl font-semibold text-[#0D0F14] dark:text-[#E6EDF3] mb-2">Erreur de chargement</h2>
           <p className="text-[#4E525A] dark:text-[#8B949E] mb-4">Impossible de charger votre profil.</p>
-          <Link href="/tasks" className="text-[#17191F] dark:text-[#E6EDF3] font-medium hover:underline">Reessayer</Link>
+          <Link href="/tasks" className="text-[#17191F] dark:text-[#E6EDF3] font-medium hover:underline">Réessayer</Link>
         </div>
       </div>
     )
@@ -41,8 +41,8 @@ export default async function TasksPage() {
     return (
       <div className="flex items-center justify-center h-[60vh]">
         <div className="text-center">
-          <h2 className="text-xl font-semibold text-[#0D0F14] dark:text-[#E6EDF3] mb-2">Organisation non configuree</h2>
-          <p className="text-[#4E525A] dark:text-[#8B949E]">Completez votre onboarding pour acceder aux taches.</p>
+          <h2 className="text-xl font-semibold text-[#0D0F14] dark:text-[#E6EDF3] mb-2">Organisation non configurée</h2>
+          <p className="text-[#4E525A] dark:text-[#8B949E]">Complétez votre onboarding pour accéder aux taches.</p>
         </div>
       </div>
     )
@@ -61,8 +61,8 @@ export default async function TasksPage() {
       <div>
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
           <div>
-            <h1 className="text-xl lg:text-[23.5px] font-semibold text-[#0D0F14] dark:text-[#E6EDF3] mb-1">Taches</h1>
-            <p className="text-sm text-[#4E525A] dark:text-[#8B949E]">Gerez vos taches et suivis</p>
+            <h1 className="text-xl lg:text-[23.5px] font-semibold text-[#0D0F14] dark:text-[#E6EDF3] mb-1">Tâches</h1>
+            <p className="text-sm text-[#4E525A] dark:text-[#8B949E]">Gérez vos taches et suivis</p>
           </div>
         </div>
         <div className="bg-card rounded-[14px] border border-border p-12">
@@ -76,7 +76,7 @@ export default async function TasksPage() {
             </div>
             <p className="font-medium text-foreground mb-2">Erreur de chargement</p>
             <p className="text-sm text-muted-foreground mb-4">Impossible de charger les taches.</p>
-            <Link href="/tasks" className="text-foreground font-medium hover:underline">Reessayer</Link>
+            <Link href="/tasks" className="text-foreground font-medium hover:underline">Réessayer</Link>
           </div>
         </div>
       </div>
@@ -96,9 +96,9 @@ export default async function TasksPage() {
       {/* Header - Responsive */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
         <div>
-          <h1 className="text-xl lg:text-[23.5px] font-semibold text-foreground mb-1">Taches</h1>
+          <h1 className="text-xl lg:text-[23.5px] font-semibold text-foreground mb-1">Tâches</h1>
           <p className="text-sm text-muted-foreground">
-            Gerez vos taches et suivis
+            Gérez vos taches et suivis
           </p>
         </div>
         <NewTaskButton />
@@ -111,7 +111,7 @@ export default async function TasksPage() {
           <div className="flex items-center justify-between p-4 border-b border-border">
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 rounded-full bg-[#9BA0A6]" aria-hidden="true" />
-              <h3 className="font-semibold text-foreground">A faire</h3>
+              <h3 className="font-semibold text-foreground">À faire</h3>
               <span className="text-sm text-muted-foreground">{pendingTasks.length}</span>
             </div>
           </div>
@@ -151,7 +151,7 @@ export default async function TasksPage() {
           <div className="flex items-center justify-between p-4 border-b border-border">
             <div className="flex items-center gap-2">
               <div className="w-2 h-2 rounded-full bg-[#147A3A]" aria-hidden="true" />
-              <h3 className="font-semibold text-foreground">Termine</h3>
+              <h3 className="font-semibold text-foreground">Terminé</h3>
               <span className="text-sm text-muted-foreground">{completedTasks.length}</span>
             </div>
           </div>

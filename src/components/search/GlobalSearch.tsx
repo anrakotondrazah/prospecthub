@@ -194,11 +194,11 @@ export function GlobalSearch({ organizationId }: GlobalSearchProps) {
           <div className="max-h-80 overflow-y-auto">
             {query.length < 2 ? (
               <div className="px-4 py-8 text-center">
-                <p className="text-sm text-[#9BA0A6] dark:text-[#8B949E]">Tapez au moins 2 caracteres</p>
+                <p className="text-sm text-[#9BA0A6] dark:text-[#8B949E]">Tapez au moins 2 caractères</p>
               </div>
             ) : results.length === 0 && !isLoading ? (
               <div className="px-4 py-8 text-center">
-                <p className="text-sm text-[#9BA0A6] dark:text-[#8B949E]">Aucun resultat pour "{query}"</p>
+                <p className="text-sm text-[#9BA0A6] dark:text-[#8B949E]">Aucun résultat pour "{query}"</p>
               </div>
             ) : (
               <div className="py-2">

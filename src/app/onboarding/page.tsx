@@ -50,20 +50,20 @@ const EMAIL_TEMPLATES = [
   {
     id: 'intro',
     name: 'Introduction simple',
-    subject: 'Bonjour {{prenom}}',
-    preview: 'Bonjour {{prenom}},\n\nJe me permets de vous contacter car...'
+    subject: 'Bonjour [Prénom]',
+    preview: 'Bonjour [Prénom],\n\nJe me permets de vous contacter car...'
   },
   {
     id: 'value',
     name: 'Proposition de valeur',
-    subject: '{{entreprise}} : augmentez votre chiffre d\'affaires',
-    preview: 'Bonjour {{prenom}},\n\nNous aidons des entreprises comme {{entreprise}} a...'
+    subject: '[Entreprise] : augmentez votre chiffre d\'affaires',
+    preview: 'Bonjour [Prénom],\n\nNous aidons des entreprises comme [Entreprise] à...'
   },
   {
     id: 'question',
     name: 'Question ouverte',
-    subject: 'Question rapide pour {{entreprise}}',
-    preview: 'Bonjour {{prenom}},\n\nAvez-vous deja envisage de...'
+    subject: 'Question rapide pour [Entreprise]',
+    preview: 'Bonjour [Prénom],\n\nAvez-vous déjà envisagé de...'
   },
 ]
 
@@ -174,7 +174,7 @@ export default function OnboardingPage() {
         .single()
 
       if (orgError) {
-        setError('Erreur lors de la creation de l\'organisation. Veuillez reessayer.')
+        setError('Erreur lors de la creation de l\'organisation. Veuillez réessayer.')
         setIsLoading(false)
         isSubmittingRef.current = false
         return
@@ -191,7 +191,7 @@ export default function OnboardingPage() {
         .select()
 
       if (profileError) {
-        setError('Erreur lors de la mise a jour du profil. Veuillez reessayer.')
+        setError('Erreur lors de la mise a jour du profil. Veuillez réessayer.')
         setIsLoading(false)
         isSubmittingRef.current = false
         return
@@ -201,7 +201,7 @@ export default function OnboardingPage() {
       router.push('/dashboard')
     } catch (err) {
       console.error('Erreur onboarding completion:', err)
-      setError('Une erreur inattendue s\'est produite. Veuillez reessayer.')
+      setError('Une erreur inattendue s\'est produite. Veuillez réessayer.')
     } finally {
       setIsLoading(false)
       isSubmittingRef.current = false
@@ -215,7 +215,7 @@ export default function OnboardingPage() {
           <OnboardingStep
             step={1}
             title="Bienvenue! Configurons votre espace en 2 minutes."
-            description="Parlez-nous de votre activite pour personnaliser vos suggestions."
+            description="Parlez-nous de votre activité pour personnaliser vos suggestions."
           >
             {error && (
               <div className="p-3 mb-6 rounded-[10px] bg-[#FDE8E5] text-[#B42318] text-sm">
@@ -236,7 +236,7 @@ export default function OnboardingPage() {
               </div>
 
               <div>
-                <Label>Secteur d&apos;activite</Label>
+                <Label>Secteur d&apos;activité</Label>
                 <div className="grid grid-cols-1 gap-2 mt-2">
                   {INDUSTRIES.slice(0, 6).map((item) => (
                     <button
@@ -301,7 +301,7 @@ export default function OnboardingPage() {
           <OnboardingStep
             step={2}
             title="Qui prospectez-vous?"
-            description="Selectionnez vos secteurs et zones pour des leads pertinents."
+            description="Sélectionnez vos secteurs et zones pour des leads pertinents."
           >
             <div className="space-y-6">
               <div>
@@ -363,7 +363,7 @@ export default function OnboardingPage() {
           <OnboardingStep
             step={3}
             title="Votre premier lead vous attend!"
-            description={`Voici ${mockLeads.length} entreprises qui correspondent. Revelez-en une pour tester.`}
+            description={`Voici ${mockLeads.length} entreprises qui correspondent. Révélez-en une pour tester.`}
           >
             {showCelebration && (
               <div className="fixed inset-0 pointer-events-none flex items-center justify-center z-50">
@@ -384,7 +384,7 @@ export default function OnboardingPage() {
                       </svg>
                     </div>
                     <span className="text-xs bg-[#E8F5E9] text-[#147A3A] px-2 py-1 rounded-full font-medium">
-                      Verifie
+                      Vérifié
                     </span>
                   </div>
                   <h3 className="font-semibold text-[#0D0F14] mb-2">{lead.name}</h3>
@@ -416,7 +416,7 @@ export default function OnboardingPage() {
             ) : (
               <div className="text-center space-y-4">
                 <div className="p-4 rounded-[12px] bg-[#E8F5E9] text-[#147A3A] font-medium">
-                  Lead revele! Vous pouvez maintenant voir toutes les coordonnees.
+                  Lead révélé! Vous pouvez maintenant voir toutes les coordonnées.
                 </div>
                 <div className="flex justify-center gap-3">
                   <Button variant="outline" onClick={() => setStep(2)}>
@@ -446,8 +446,8 @@ export default function OnboardingPage() {
         return (
           <OnboardingStep
             step={4}
-            title="Pret a contacter?"
-            description="Choisissez un modele et envoyez votre premier email."
+            title="Prêt à contacter?"
+            description="Choisissez un modèle et envoyez votre premier email."
           >
             <div className="space-y-4 mb-8">
               {EMAIL_TEMPLATES.map((template) => (
@@ -493,7 +493,7 @@ export default function OnboardingPage() {
                 onClick={handleComplete}
                 className="text-sm text-[#9BA0A6] hover:text-[#4E525A] transition-colors"
               >
-                Terminer plus tard
+                Terminér plus tard
               </button>
             </div>
           </OnboardingStep>
@@ -527,7 +527,7 @@ export default function OnboardingPage() {
 
       {/* Footer info */}
       <div className="text-center pb-8 text-sm text-[#9BA0A6]">
-        Etape {step} sur 4
+        Étape {step} sur 4
       </div>
     </div>
   )

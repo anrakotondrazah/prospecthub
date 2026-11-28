@@ -43,9 +43,9 @@ const FIELD_OPTIONS = [
 
 const STATUS_OPTIONS = [
   { value: 'new', label: 'Nouveau' },
-  { value: 'contacted', label: 'Contacte' },
-  { value: 'qualified', label: 'Qualifie' },
-  { value: 'unqualified', label: 'Non qualifie' },
+  { value: 'contacted', label: 'Contacté' },
+  { value: 'qualified', label: 'Qualifié' },
+  { value: 'unqualified', label: 'Non qualifié' },
   { value: 'nurturing', label: 'En nurturing' },
   { value: 'converted', label: 'Converti' },
   { value: 'lost', label: 'Perdu' },

@@ -215,7 +215,7 @@ export function AddToListModal({
                 </svg>
               </div>
               <p className="text-[#4E525A]">
-                {searchQuery ? 'Aucune liste trouvee' : 'Aucune liste statique disponible'}
+                {searchQuery ? 'Aucune liste trouvée' : 'Aucune liste statique disponible'}
               </p>
             </div>
           ) : (

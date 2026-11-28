@@ -61,7 +61,7 @@ export function AssociateRecordModal({
 
   const handleSubmit = async () => {
     if (selectedEntities.length === 0) {
-      setError('Selectionnez au moins un element a associer')
+      setError('Sélectionnez au moins un element a associer')
       return
     }
 

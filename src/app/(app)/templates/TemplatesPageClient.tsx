@@ -259,13 +259,13 @@ export function TemplatesPageClient({
               <FillButton onClick={() => setShowCreateModal(true)}>
                 <span className="flex items-center gap-2">
                   <Plus className="w-4 h-4" />
-                  Creer un template
+                  Créer un template
                 </span>
               </FillButton>
             </>
           ) : (
             <>
-              <h2 className="text-xl font-semibold text-[#0D0F14] dark:text-[#E6EDF3] mb-2">Aucun resultat</h2>
+              <h2 className="text-xl font-semibold text-[#0D0F14] dark:text-[#E6EDF3] mb-2">Aucun résultat</h2>
               <p className="text-[#4E525A] dark:text-[#8B949E] max-w-md mx-auto">
                 Aucun template ne correspond a vos criteres de recherche.
               </p>

@@ -31,8 +31,8 @@ const DEFAULT_STAGES = [
   { id: 1, name: 'Prospection', code: 'prospection', color: '#6B7280', probability: 10 },
   { id: 2, name: 'Qualification', code: 'qualification', color: '#3B82F6', probability: 25 },
   { id: 3, name: 'Proposition', code: 'proposition', color: '#8B5CF6', probability: 50 },
-  { id: 4, name: 'Negociation', code: 'negociation', color: '#F59E0B', probability: 75 },
-  { id: 5, name: 'Gagne', code: 'won', color: '#10B981', probability: 100 },
+  { id: 4, name: 'Négociation', code: 'negociation', color: '#F59E0B', probability: 75 },
+  { id: 5, name: 'Gagné', code: 'won', color: '#10B981', probability: 100 },
 ]
 
 function getRelativeTime(date: string): string {
@@ -87,7 +87,7 @@ export default async function DashboardPage() {
           </div>
           <h2 className="text-xl font-semibold text-foreground mb-2">Erreur de chargement</h2>
           <p className="text-muted-foreground mb-4">Impossible de charger votre profil.</p>
-          <a href="/dashboard" className="text-[#17191F] font-medium hover:underline">Reessayer</a>
+          <a href="/dashboard" className="text-[#17191F] font-medium hover:underline">Réessayer</a>
         </div>
       </div>
     )
@@ -234,7 +234,7 @@ export default async function DashboardPage() {
             Bonjour, {firstName}
           </h1>
           <p className="text-sm text-muted-foreground">
-            Voici un apercu de vos performances
+            Voici un aperçu de vos performances
           </p>
         </div>
         <div className="flex gap-2">
@@ -243,7 +243,7 @@ export default async function DashboardPage() {
               <circle cx="12" cy="12" r="10" />
               <path d="M12 6v6l4 2" />
             </svg>
-            <span className="text-sm font-medium text-foreground">{creditsBalance} credits</span>
+            <span className="text-sm font-medium text-foreground">{creditsBalance} crédits</span>
           </div>
           <FindLeadsButton />
         </div>
@@ -290,7 +290,7 @@ export default async function DashboardPage() {
             </div>
           </div>
           <span className="text-3xl font-semibold text-foreground">{leadStats.hot}</span>
-          <p className="text-xs text-[#E65100] mt-1">A traiter en priorite</p>
+          <p className="text-xs text-[#E65100] mt-1">À traiter en priorité</p>
         </div>
 
         <div className="bg-card rounded-[14px] border border-border p-5">
@@ -310,7 +310,7 @@ export default async function DashboardPage() {
 
         <div className="bg-card rounded-[14px] border border-border p-5">
           <div className="flex items-center justify-between mb-3">
-            <span className="text-sm text-muted-foreground">Taches</span>
+            <span className="text-sm text-muted-foreground">Tâches</span>
             <div className="w-8 h-8 rounded-lg bg-[#F3E8FF] flex items-center justify-center relative">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" strokeWidth="2">
                 <path d="M9 5H7a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2h-2" />
@@ -329,7 +329,7 @@ export default async function DashboardPage() {
           ) : taskStats.today > 0 ? (
             <p className="text-xs text-[#E65100] mt-1">{taskStats.today} aujourd'hui</p>
           ) : (
-            <p className="text-xs text-[#147A3A] mt-1">A jour</p>
+            <p className="text-xs text-[#147A3A] mt-1">À jour</p>
           )}
         </div>
       </div>
@@ -337,7 +337,7 @@ export default async function DashboardPage() {
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2 bg-card rounded-[14px] border border-border p-6">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-lg font-semibold text-foreground">Activite des 7 derniers jours</h2>
+            <h2 className="text-lg font-semibold text-foreground">Activité des 7 derniers jours</h2>
             <Link href="/activities" className="text-sm text-muted-foreground hover:text-foreground">
               Voir tout
             </Link>
@@ -349,7 +349,7 @@ export default async function DashboardPage() {
                   <path d="M12 20h9M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z" />
                 </svg>
               </div>
-              <p className="text-sm text-muted-foreground">Aucune activite recente</p>
+              <p className="text-sm text-muted-foreground">Aucune activité récente</p>
             </div>
           ) : (
             <div className="space-y-6">
@@ -380,7 +380,7 @@ export default async function DashboardPage() {
                           <div
                             className="w-full bg-[#8B5CF6] transition-all hover:opacity-80"
                             style={{ height: `${(day.meetings / total) * heightPercent}%` }}
-                            title={`${day.meetings} reunions`}
+                            title={`${day.meetings} réunions`}
                           />
                         )}
                         {day.notes > 0 && (
@@ -410,7 +410,7 @@ export default async function DashboardPage() {
                 </div>
                 <div className="flex items-center gap-1.5">
                   <div className="w-3 h-3 rounded bg-[#8B5CF6]" />
-                  <span className="text-xs text-muted-foreground">Reunions</span>
+                  <span className="text-xs text-muted-foreground">Réunions</span>
                 </div>
                 <div className="flex items-center gap-1.5">
                   <div className="w-3 h-3 rounded bg-[#F59E0B]" />
@@ -423,7 +423,7 @@ export default async function DashboardPage() {
 
         <div className="bg-card rounded-[14px] border border-border p-6">
           <div className="flex items-center justify-between mb-6">
-            <h2 className="text-lg font-semibold text-foreground">Credits restants</h2>
+            <h2 className="text-lg font-semibold text-foreground">Crédits restants</h2>
             <Link href="/settings/credits" className="text-sm text-muted-foreground hover:text-foreground">
               Recharger
             </Link>
@@ -436,7 +436,7 @@ export default async function DashboardPage() {
               </svg>
             </div>
             <div className="text-4xl font-bold text-foreground mb-1">{creditsBalance}</div>
-            <p className="text-sm text-muted-foreground">credits disponibles</p>
+            <p className="text-sm text-muted-foreground">crédits disponibles</p>
           </div>
           <div className="pt-4 border-t border-border">
             <p className="text-xs text-muted-foreground text-center">1 credit = 1 enrichissement entreprise</p>
@@ -461,7 +461,7 @@ export default async function DashboardPage() {
               </div>
               <p className="text-sm text-muted-foreground">Aucune affaire en cours</p>
               <Link href="/deals" className="text-xs text-[#1565C0] hover:underline mt-1 inline-block">
-                Creer une affaire
+                Créer une affaire
               </Link>
             </div>
           ) : (
@@ -491,14 +491,14 @@ export default async function DashboardPage() {
 
         <div className="bg-card rounded-[14px] border border-border p-6">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold text-foreground">Taches a venir</h2>
+            <h2 className="text-lg font-semibold text-foreground">Tâches à venir</h2>
             <Link href="/tasks" className="text-sm text-muted-foreground hover:text-foreground">
               Voir tout
             </Link>
           </div>
           {upcomingTasks.length === 0 ? (
             <div className="text-center py-8 bg-muted rounded-[10px]">
-              <p className="text-sm text-muted-foreground">Aucune tache</p>
+              <p className="text-sm text-muted-foreground">Aucune tâche</p>
             </div>
           ) : (
             <div className="space-y-3">
@@ -550,7 +550,7 @@ export default async function DashboardPage() {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="bg-card rounded-[14px] border border-border p-6">
           <div className="flex items-center justify-between mb-4">
-            <h2 className="text-lg font-semibold text-foreground">Leads recents</h2>
+            <h2 className="text-lg font-semibold text-foreground">Leads récents</h2>
             <Link href="/leads" className="text-sm text-muted-foreground hover:text-foreground">
               Voir tout
             </Link>
@@ -605,7 +605,7 @@ export default async function DashboardPage() {
           </div>
           <div className="grid grid-cols-2 gap-4">
             <div className="p-4 bg-muted rounded-[10px]">
-              <p className="text-xs text-muted-foreground mb-1">Leads qualifies</p>
+              <p className="text-xs text-muted-foreground mb-1">Leads qualifiés</p>
               <p className="text-2xl font-semibold text-foreground">{leadStats.qualified}</p>
             </div>
             <div className="p-4 bg-muted rounded-[10px]">
@@ -615,11 +615,11 @@ export default async function DashboardPage() {
               </p>
             </div>
             <div className="p-4 bg-muted rounded-[10px]">
-              <p className="text-xs text-muted-foreground mb-1">Credits restants</p>
+              <p className="text-xs text-muted-foreground mb-1">Crédits restants</p>
               <p className="text-2xl font-semibold text-foreground">{creditsBalance}</p>
             </div>
             <div className="p-4 bg-muted rounded-[10px]">
-              <p className="text-xs text-muted-foreground mb-1">Taches aujourd'hui</p>
+              <p className="text-xs text-muted-foreground mb-1">Tâches aujourd'hui</p>
               <p className="text-2xl font-semibold text-foreground">{taskStats.today}</p>
             </div>
           </div>

@@ -167,16 +167,16 @@ export default function PropertiesSettingsPage() {
       <div className="mb-6">
         <div className="flex items-center gap-2 text-sm text-[#4E525A] mb-2">
           <a href="/settings" className="hover:text-[#0D0F14] transition-colors">
-            Parametres
+            Paramètres
           </a>
           <span>/</span>
           <span className="text-[#0D0F14]">Proprietes</span>
         </div>
         <h1 className="text-xl lg:text-[23.5px] font-semibold text-[#0D0F14] mb-1">
-          Proprietes personnalisees
+          Proprietes personnalisées
         </h1>
         <p className="text-sm text-[#4E525A]">
-          Creez des champs personnalises pour vos leads, entreprises, transactions et contacts
+          Creez des champs personnalisés pour vos leads, entreprises, transactions et contacts
         </p>
       </div>
 

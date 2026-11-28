@@ -138,7 +138,7 @@ export function SequencesPageClient({
               <line x1="12" y1="5" x2="12" y2="19" />
               <line x1="5" y1="12" x2="19" y2="12" />
             </svg>
-            Creer une sequence
+            Créer une sequence
           </span>
         </FillButton>
       </div>
@@ -232,7 +232,7 @@ export function SequencesPageClient({
             </p>
             <p className="text-sm text-[#4E525A] dark:text-[#8B949E] mb-4">
               {filter === 'all'
-                ? 'Creez votre premiere sequence pour automatiser vos emails de prospection'
+                ? 'Creez votre première sequence pour automatiser vos emails de prospection'
                 : 'Modifiez le filtre ou creez une nouvelle sequence'
               }
             </p>
@@ -245,7 +245,7 @@ export function SequencesPageClient({
                   <line x1="12" y1="5" x2="12" y2="19" />
                   <line x1="5" y1="12" x2="19" y2="12" />
                 </svg>
-                Creer une sequence
+                Créer une sequence
               </button>
             )}
           </div>

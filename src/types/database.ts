@@ -597,6 +597,71 @@ export type Database = {
         Insert: Omit<Database['public']['Tables']['quote_lines']['Row'], 'id' | 'uuid' | 'discount_amount' | 'tax_amount' | 'subtotal' | 'total' | 'created_at' | 'updated_at'>
         Update: Partial<Database['public']['Tables']['quote_lines']['Insert']>
       }
+      sequences: {
+        Row: {
+          id: number
+          uuid: string
+          organization_id: number
+          created_by: string | null
+          name: string
+          description: string | null
+          status: 'draft' | 'active' | 'paused' | 'archived'
+          trigger_type: 'manual' | 'lead_created' | 'deal_stage_changed'
+          settings: Json
+          stats: Json
+          created_at: string
+          updated_at: string
+        }
+        Insert: Omit<Database['public']['Tables']['sequences']['Row'], 'id' | 'uuid' | 'created_at' | 'updated_at'>
+        Update: Partial<Database['public']['Tables']['sequences']['Insert']>
+      }
+      sequence_steps: {
+        Row: {
+          id: number
+          sequence_id: number
+          step_order: number
+          step_type: 'email' | 'task' | 'delay'
+          delay_days: number
+          delay_hours: number
+          template_id: number | null
+          subject: string | null
+          body: string | null
+          task_title: string | null
+          task_description: string | null
+          created_at: string
+        }
+        Insert: Omit<Database['public']['Tables']['sequence_steps']['Row'], 'id' | 'created_at'>
+        Update: Partial<Database['public']['Tables']['sequence_steps']['Insert']>
+      }
+      sequence_enrollments: {
+        Row: {
+          id: number
+          sequence_id: number
+          lead_id: number | null
+          status: 'active' | 'completed' | 'paused' | 'unenrolled' | 'bounced'
+          current_step: number
+          next_step_at: string | null
+          enrolled_at: string
+          completed_at: string | null
+          unenrolled_at: string | null
+          unenroll_reason: string | null
+        }
+        Insert: Omit<Database['public']['Tables']['sequence_enrollments']['Row'], 'id' | 'enrolled_at'>
+        Update: Partial<Database['public']['Tables']['sequence_enrollments']['Insert']>
+      }
+      sequence_execution_log: {
+        Row: {
+          id: number
+          enrollment_id: number
+          step_id: number
+          executed_at: string
+          status: 'sent' | 'opened' | 'clicked' | 'replied' | 'bounced' | 'failed'
+          error_message: string | null
+          metadata: Json
+        }
+        Insert: Omit<Database['public']['Tables']['sequence_execution_log']['Row'], 'id' | 'executed_at'>
+        Update: Partial<Database['public']['Tables']['sequence_execution_log']['Insert']>
+      }
     }
     Views: {
       [_ in never]: never

@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useCallback } from 'react'
+import { useRouter } from 'next/navigation'
 import { SequenceCard, type SequenceData } from '@/components/sequences/SequenceCard'
 import { CreateSequenceModal, type CreatedSequence } from '@/components/sequences/CreateSequenceModal'
 import { FillButton } from '@/components/ui/buttons'
@@ -25,6 +26,7 @@ export function SequencesPageClient({
   userId,
   error,
 }: SequencesPageClientProps) {
+  const router = useRouter()
   const [sequences, setSequences] = useState<SequenceData[]>(initialSequences)
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [filter, setFilter] = useState<'all' | 'active' | 'paused' | 'draft'>('all')
@@ -85,10 +87,8 @@ export function SequencesPageClient({
   }, [])
 
   const handleViewDetails = useCallback((sequence: SequenceData) => {
-    // TODO: Navigate to detail page when implemented
-    // window.location.href = `/sequences/${sequence.uuid}`
-    alert(`Details de la sequence "${sequence.name}" - Fonctionnalite bientot disponible`)
-  }, [])
+    router.push(`/sequences/${sequence.uuid}`)
+  }, [router])
 
   if (error) {
     return (

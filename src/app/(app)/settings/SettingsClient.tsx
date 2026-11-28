@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, ReactNode } from 'react'
+import { useState, useEffect, ReactNode } from 'react'
 import { useRouter } from 'next/navigation'
 import { TabBar } from '@/components/ui/TabBar'
 import { LogoutButton, AnimatedCheckbox, SaveButton } from '@/components/ui/buttons'
@@ -30,14 +30,39 @@ export function SettingsClient({
   const router = useRouter()
   const [activeTab, setActiveTab] = useState('profile')
   const [isLoggingOut, setIsLoggingOut] = useState(false)
+  const [isSaving, setIsSaving] = useState(false)
+  const [saveMessage, setSaveMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null)
 
-  // Notification preferences (stored locally for now)
+  // Notification preferences
   const [notifications, setNotifications] = useState({
     emailNewLead: true,
     emailWeeklyReport: false,
     emailTaskReminder: true,
     browserNotifications: false,
   })
+
+  // Load preferences on mount
+  useEffect(() => {
+    async function loadPreferences() {
+      try {
+        const response = await fetch('/api/settings/preferences')
+        if (response.ok) {
+          const data = await response.json()
+          if (data.success && data.settings?.notifications) {
+            setNotifications({
+              emailNewLead: data.settings.notifications.email_new_lead ?? true,
+              emailWeeklyReport: data.settings.notifications.email_weekly_report ?? false,
+              emailTaskReminder: data.settings.notifications.email_task_reminder ?? true,
+              browserNotifications: data.settings.notifications.browser ?? false,
+            })
+          }
+        }
+      } catch (error) {
+        console.error('Failed to load preferences:', error)
+      }
+    }
+    loadPreferences()
+  }, [])
 
   const tabs = [
     {
@@ -83,9 +108,35 @@ export function SettingsClient({
     }
   }
 
-  const handleSaveNotifications = () => {
-    // TODO: Save to database when backend is ready
-    console.log('Saving notifications:', notifications)
+  const handleSaveNotifications = async () => {
+    setIsSaving(true)
+    setSaveMessage(null)
+    try {
+      const response = await fetch('/api/settings/preferences', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          notifications: {
+            email_new_lead: notifications.emailNewLead,
+            email_weekly_report: notifications.emailWeeklyReport,
+            email_task_reminder: notifications.emailTaskReminder,
+            browser: notifications.browserNotifications,
+          },
+        }),
+      })
+      const data = await response.json()
+      if (data.success) {
+        setSaveMessage({ type: 'success', text: 'Preferences enregistrees' })
+      } else {
+        setSaveMessage({ type: 'error', text: data.message || 'Erreur lors de la sauvegarde' })
+      }
+    } catch (error) {
+      console.error('Save error:', error)
+      setSaveMessage({ type: 'error', text: 'Erreur de connexion' })
+    } finally {
+      setIsSaving(false)
+      setTimeout(() => setSaveMessage(null), 3000)
+    }
   }
 
   return (
@@ -192,7 +243,16 @@ export function SettingsClient({
               <div className="bg-white dark:bg-[#161B22] rounded-[14px] border border-[#E2E4E6] dark:border-[#30363D] p-4 lg:p-6 transition-colors duration-200">
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="text-lg font-semibold text-[#0D0F14] dark:text-[#E6EDF3]">Notifications</h2>
-                  <SaveButton onClick={handleSaveNotifications}>Enregistrer</SaveButton>
+                  <div className="flex items-center gap-3">
+                    {saveMessage && (
+                      <span className={`text-sm ${saveMessage.type === 'success' ? 'text-[#147A3A]' : 'text-[#B42318]'}`}>
+                        {saveMessage.text}
+                      </span>
+                    )}
+                    <SaveButton onClick={handleSaveNotifications} disabled={isSaving}>
+                      {isSaving ? 'Enregistrement...' : 'Enregistrer'}
+                    </SaveButton>
+                  </div>
                 </div>
                 <p className="text-sm text-[#4E525A] dark:text-[#8B949E] mb-6">
                   Configurez vos preferences de notification

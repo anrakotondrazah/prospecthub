@@ -31,12 +31,16 @@ LogoutButton.displayName = 'LogoutButton'
 export const SaveButton = forwardRef<HTMLButtonElement, {
   onClick?: () => void
   children?: React.ReactNode
+  disabled?: boolean
 }>(
-  ({ onClick, children = 'Save' }, ref) => (
+  ({ onClick, children = 'Save', disabled = false }, ref) => (
     <button
       ref={ref}
       onClick={onClick}
-      className="group font-inherit text-lg bg-foreground dark:bg-[#212121] text-background dark:text-white fill-muted-foreground h-[42px] px-4 pl-3.5 flex items-center cursor-pointer border-none rounded-[15px] font-bold hover:bg-foreground/90 dark:hover:bg-black active:scale-95 transition-all duration-200"
+      disabled={disabled}
+      className={`group font-inherit text-lg bg-foreground dark:bg-[#212121] text-background dark:text-white fill-muted-foreground h-[42px] px-4 pl-3.5 flex items-center border-none rounded-[15px] font-bold transition-all duration-200 ${
+        disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer hover:bg-foreground/90 dark:hover:bg-black active:scale-95'
+      }`}
     >
       <div className="flex items-center justify-center transition-transform duration-300 group-hover:translate-x-5 group-hover:scale-110">
         <svg

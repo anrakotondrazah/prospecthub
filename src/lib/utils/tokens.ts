@@ -1,8 +1,8 @@
 /**
  * Token Utils - Gestion des tokens de personnalisation
  *
- * Les tokens permettent de personnaliser les templates avec des donnees dynamiques
- * Format: {{token.path}} ou {{token_name}}
+ * Les tokens permettent de personnaliser les templates avec des données dynamiques
+ * Format: [Label du token] (ex: [Prénom], [Entreprise], [Votre nom])
  */
 
 export type TokenCategory = 'lead' | 'company' | 'deal' | 'user' | 'organization' | 'date'
@@ -344,8 +344,8 @@ export const TOKEN_CATEGORY_ICONS: Record<TokenCategory, string> = {
   date: 'Calendar',
 }
 
-// Regex pour detecter les tokens dans un texte
-const TOKEN_REGEX = /\{\{([a-zA-Z_.]+)\}\}/g
+// Regex pour detecter les tokens dans un texte (format [Label])
+const TOKEN_REGEX = /\[([^\]]+)\]/g
 
 /**
  * Extraire tous les tokens utilises dans un texte
@@ -354,14 +354,18 @@ export function extractTokensFromText(text: string): string[] {
   const matches = text.match(TOKEN_REGEX)
   if (!matches) return []
 
-  return [...new Set(matches.map(m => m.replace(/\{\{|\}\}/g, '')))]
+  // Extraire les labels et trouver les noms de tokens correspondants
+  const labels = [...new Set(matches.map(m => m.replace(/\[|\]/g, '')))]
+  return labels
+    .map(label => AVAILABLE_TOKENS.find(t => t.label === label)?.name)
+    .filter((name): name is string => name !== undefined)
 }
 
 /**
- * Verifier si un token existe
+ * Verifier si un token existe (par label ou par nom)
  */
-export function isValidToken(tokenName: string): boolean {
-  return AVAILABLE_TOKENS.some(t => t.name === tokenName)
+export function isValidToken(tokenLabelOrName: string): boolean {
+  return AVAILABLE_TOKENS.some(t => t.label === tokenLabelOrName || t.name === tokenLabelOrName)
 }
 
 /**
@@ -455,8 +459,14 @@ export function replaceTokens(
   context: TokenContext,
   fallback: 'keep' | 'empty' | 'placeholder' = 'placeholder'
 ): string {
-  return text.replace(TOKEN_REGEX, (match, tokenName) => {
-    const value = getTokenValue(tokenName, context)
+  return text.replace(TOKEN_REGEX, (match, tokenLabel) => {
+    // Trouver le token par son label
+    const token = AVAILABLE_TOKENS.find(t => t.label === tokenLabel)
+    if (!token) {
+      return match // Label inconnu, garder tel quel
+    }
+
+    const value = getTokenValue(token.name, context)
 
     if (value !== null) {
       return value
@@ -469,9 +479,7 @@ export function replaceTokens(
       case 'empty':
         return '' // Remplace par une chaine vide
       case 'placeholder':
-        // Retourne un placeholder lisible
-        const token = AVAILABLE_TOKENS.find(t => t.name === tokenName)
-        return token ? `[${token.label}]` : match
+        return `[${token.label}]` // Retourne le placeholder lisible
     }
   })
 }
@@ -582,7 +590,7 @@ export function insertTokenAtCursor(
   cursorPosition: number,
   token: Token
 ): { newText: string; newCursorPosition: number } {
-  const tokenText = `{{${token.name}}}`
+  const tokenText = `[${token.label}]`
   const before = text.slice(0, cursorPosition)
   const after = text.slice(cursorPosition)
 

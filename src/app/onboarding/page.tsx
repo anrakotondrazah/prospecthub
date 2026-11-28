@@ -50,20 +50,20 @@ const EMAIL_TEMPLATES = [
   {
     id: 'intro',
     name: 'Introduction simple',
-    subject: 'Bonjour {{prenom}}',
-    preview: 'Bonjour {{prenom}},\n\nJe me permets de vous contacter car...'
+    subject: 'Bonjour [Prénom]',
+    preview: 'Bonjour [Prénom],\n\nJe me permets de vous contacter car...'
   },
   {
     id: 'value',
     name: 'Proposition de valeur',
-    subject: '{{entreprise}} : augmentez votre chiffre d\'affaires',
-    preview: 'Bonjour {{prenom}},\n\nNous aidons des entreprises comme {{entreprise}} a...'
+    subject: '[Entreprise] : augmentez votre chiffre d\'affaires',
+    preview: 'Bonjour [Prénom],\n\nNous aidons des entreprises comme [Entreprise] à...'
   },
   {
     id: 'question',
     name: 'Question ouverte',
-    subject: 'Question rapide pour {{entreprise}}',
-    preview: 'Bonjour {{prenom}},\n\nAvez-vous deja envisage de...'
+    subject: 'Question rapide pour [Entreprise]',
+    preview: 'Bonjour [Prénom],\n\nAvez-vous déjà envisagé de...'
   },
 ]
 

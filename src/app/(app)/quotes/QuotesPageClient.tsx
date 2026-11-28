@@ -37,7 +37,7 @@ const statusFilters = [
   { value: 'sent', label: 'Envoyés' },
   { value: 'approved', label: 'Approuves' },
   { value: 'rejected', label: 'Refusés' },
-  { value: 'expiréd', label: 'Expirés' },
+  { value: 'expired', label: 'Expirés' },
 ]
 
 export function QuotesPageClient({

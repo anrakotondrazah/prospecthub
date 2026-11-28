@@ -89,7 +89,7 @@ export function TokenPicker({
   if (!isOpen) return null
 
   const tokensByCategory = getTokensByCategory()
-  const catégories = Object.keys(tokensByCategory) as TokenCategory[]
+  const categories = Object.keys(tokensByCategory) as TokenCategory[]
 
   // Filter tokens based on search and category
   let filteredTokens = activeCategory === 'all'
@@ -164,7 +164,7 @@ export function TokenPicker({
         >
           Tous
         </button>
-        {catégories.map((category) => (
+        {categories.map((category) => (
           <button
             key={category}
             onClick={() => setActiveCategory(category)}

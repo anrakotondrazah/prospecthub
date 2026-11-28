@@ -13,7 +13,7 @@ interface CreateTicketModalProps {
   userId: string
 }
 
-const catégories = [
+const categories = [
   'Support technique',
   'Facturation',
   'Demande de fonctionnalite',
@@ -208,7 +208,7 @@ export function CreateTicketModal({
               disabled={isLoading}
             >
               <option value="">Selectionner une catégorie</option>
-              {catégories.map((cat) => (
+              {categories.map((cat) => (
                 <option key={cat} value={cat}>
                   {cat}
                 </option>

@@ -1,6 +1,6 @@
 'use client'
 
-export type QuoteStatus = 'draft' | 'pending' | 'sent' | 'approved' | 'rejected' | 'expiréd'
+export type QuoteStatus = 'draft' | 'pending' | 'sent' | 'approved' | 'rejected' | 'expired'
 
 const statusConfig: Record<QuoteStatus, { bg: string; text: string; label: string }> = {
   draft: { bg: 'bg-[#F5F7F9]', text: 'text-[#4E525A]', label: 'Brouillon' },
@@ -8,7 +8,7 @@ const statusConfig: Record<QuoteStatus, { bg: string; text: string; label: strin
   sent: { bg: 'bg-[#E3F2FD]', text: 'text-[#1565C0]', label: 'Envoyé' },
   approved: { bg: 'bg-[#E8F5E9]', text: 'text-[#147A3A]', label: 'Approuve' },
   rejected: { bg: 'bg-[#FDE8E5]', text: 'text-[#B42318]', label: 'Refusé' },
-  expiréd: { bg: 'bg-[#F3E5F5]', text: 'text-[#7B1FA2]', label: 'Expiré' },
+  expired: { bg: 'bg-[#F3E5F5]', text: 'text-[#7B1FA2]', label: 'Expiré' },
 }
 
 interface QuoteStatusBadgeProps {

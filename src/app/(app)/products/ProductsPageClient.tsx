@@ -48,7 +48,7 @@ export function ProductsPageClient({
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
   const [showInactive, setShowInactive] = useState(false)
 
-  const catégories = useMemo(() => {
+  const categories = useMemo(() => {
     const cats = new Set<string>()
     products.forEach((p) => {
       if (p.category) cats.add(p.category)
@@ -105,7 +105,7 @@ export function ProductsPageClient({
     total: products.length,
     active: products.filter((p) => p.is_active).length,
     recurring: products.filter((p) => p.is_recurring).length,
-    catégories: catégories.length,
+    categories: categories.length,
   }
 
   return (
@@ -182,7 +182,7 @@ export function ProductsPageClient({
               </svg>
             </div>
             <div>
-              <p className="text-2xl font-semibold text-[#0D0F14] dark:text-[#E6EDF3]">{stats.catégories}</p>
+              <p className="text-2xl font-semibold text-[#0D0F14] dark:text-[#E6EDF3]">{stats.categories}</p>
               <p className="text-sm text-[#4E525A] dark:text-[#8B949E]">Catégories</p>
             </div>
           </div>
@@ -213,7 +213,7 @@ export function ProductsPageClient({
           />
         </div>
 
-        {catégories.length > 0 && (
+        {categories.length > 0 && (
           <div className="flex gap-2 p-1">
             <button
               onClick={() => setSelectedCategory(null)}
@@ -225,7 +225,7 @@ export function ProductsPageClient({
             >
               Tous
             </button>
-            {catégories.map((cat) => (
+            {categories.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setSelectedCategory(cat)}

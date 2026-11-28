@@ -48,7 +48,7 @@ export function TemplatesPageClient({
   userId,
 }: TemplatesPageClientProps) {
   const [templates, setTemplates] = useState<MessageTemplate[]>(initialTemplates)
-  const [catégories] = useState(initialCatégories)
+  const [categories] = useState(initialCatégories)
   const [search, setSearch] = useState('')
   const [filterType, setFilterType] = useState<TemplateType | 'all'>('all')
   const [filterCategory, setFilterCategory] = useState<string>('all')
@@ -158,7 +158,7 @@ export function TemplatesPageClient({
     return () => document.removeEventListener('click', handleClick)
   }, [])
 
-  // Extract unique catégories from templates
+  // Extract unique categories from templates
   const templateCatégories = [...new Set(templates.map((t) => t.category).filter(Boolean))]
 
   return (
@@ -232,7 +232,7 @@ export function TemplatesPageClient({
               onChange={(e) => setFilterCategory(e.target.value)}
               className="appearance-none pl-9 pr-8 py-2.5 bg-white dark:bg-[#161B22] border border-black/[0.08] dark:border-white/[0.08] rounded-xl text-sm text-[#0D0F14] dark:text-[#E6EDF3] focus:outline-none focus:border-[#0066FF] focus:ring-3 focus:ring-[#0066FF]/10 cursor-pointer"
             >
-              <option value="all">Toutes catégories</option>
+              <option value="all">Toutes categories</option>
               {templateCatégories.map((cat) => (
                 <option key={cat} value={cat as string}>
                   {cat}
@@ -396,7 +396,7 @@ export function TemplatesPageClient({
         onTemplateCreated={handleTemplateCreated}
         organizationId={organizationId}
         userId={userId}
-        catégories={catégories}
+        categories={categories}
         editTemplate={editingTemplate}
       />
     </div>

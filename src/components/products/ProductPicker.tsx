@@ -35,7 +35,7 @@ export function ProductPicker({
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
 
-  const catégories = useMemo(() => {
+  const categories = useMemo(() => {
     const cats = new Set<string>()
     products.forEach((p) => {
       if (p.category) cats.add(p.category)
@@ -125,7 +125,7 @@ export function ProductPicker({
             />
           </div>
 
-          {catégories.length > 0 && (
+          {categories.length > 0 && (
             <div className="flex gap-2 flex-wrap">
               <button
                 onClick={() => setSelectedCategory(null)}
@@ -137,7 +137,7 @@ export function ProductPicker({
               >
                 Tous
               </button>
-              {catégories.map((cat) => (
+              {categories.map((cat) => (
                 <button
                   key={cat}
                   onClick={() => setSelectedCategory(cat)}

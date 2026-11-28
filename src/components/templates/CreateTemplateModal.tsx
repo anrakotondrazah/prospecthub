@@ -15,7 +15,7 @@ type CreateTemplateModalProps = {
   onTemplateCreated: (template: MessageTemplate) => void
   organizationId: number
   userId: string
-  catégories?: { id: number; name: string; color: string }[]
+  categories?: { id: number; name: string; color: string }[]
   editTemplate?: MessageTemplate | null
 }
 
@@ -50,7 +50,7 @@ export function CreateTemplateModal({
   onTemplateCreated,
   organizationId,
   userId,
-  catégories = [],
+  categories = [],
   editTemplate = null,
 }: CreateTemplateModalProps) {
   const [name, setName] = useState('')
@@ -273,7 +273,7 @@ export function CreateTemplateModal({
               <label htmlFor="template-category" className="block text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3] mb-2">
                 Catégorie (optionnel)
               </label>
-              {catégories.length > 0 ? (
+              {categories.length > 0 ? (
                 <select
                   id="template-category"
                   value={category}
@@ -282,7 +282,7 @@ export function CreateTemplateModal({
                   disabled={isLoading}
                 >
                   <option value="">Aucune catégorie</option>
-                  {catégories.map((cat) => (
+                  {categories.map((cat) => (
                     <option key={cat.id} value={cat.name}>
                       {cat.name}
                     </option>

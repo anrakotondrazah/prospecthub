@@ -12,7 +12,7 @@ export default async function SettingsPage() {
 
   const { data: profile, error: profileError } = await supabase
     .from('profiles')
-    .select('first_name, last_name, organization_id')
+    .select('first_name, last_name, organization_id, avatar_url')
     .eq('id', user.id)
     .single()
 
@@ -62,6 +62,8 @@ export default async function SettingsPage() {
       lastName={profile?.last_name || ''}
       orgName={organization?.name || ''}
       orgIndustry={organization?.industry || ''}
+      userId={user.id}
+      avatarUrl={profile?.avatar_url || null}
     >
       <ThemeSettings />
     </SettingsClient>

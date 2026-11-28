@@ -92,10 +92,10 @@ export function PropertyField({
 
   const renderField = () => {
     const baseInputClasses = `
-      w-full px-3 py-2 bg-white/80 backdrop-blur-sm border rounded-lg text-sm
+      w-full px-3 py-2 bg-white/80 dark:bg-[#0D1117]/80 backdrop-blur-sm border rounded-lg text-sm text-[#0D0F14] dark:text-[#E6EDF3]
       focus:outline-none focus:border-[#0066FF] focus:ring-2 focus:ring-[#0066FF]/10
       transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed
-      ${error ? 'border-[#B42318] focus:border-[#B42318] focus:ring-[#B42318]/10' : 'border-black/[0.08] hover:border-black/[0.12]'}
+      ${error ? 'border-[#B42318] focus:border-[#B42318] focus:ring-[#B42318]/10' : 'border-black/[0.08] dark:border-[#30363D] hover:border-black/[0.12] dark:hover:border-[#484F58]'}
     `
 
     switch (property.field_type) {
@@ -113,14 +113,14 @@ export function PropertyField({
               <div className={`w-5 h-5 rounded border-2 transition-all flex items-center justify-center ${
                 getCurrentValue()
                   ? 'bg-[#0066FF] border-[#0066FF]'
-                  : 'border-black/[0.2] hover:border-black/[0.3]'
+                  : 'border-black/[0.2] dark:border-[#484F58] hover:border-black/[0.3] dark:hover:border-[#6E7681]'
               } ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}>
                 {getCurrentValue() && (
                   <Check className="w-3.5 h-3.5 text-white" />
                 )}
               </div>
             </div>
-            <span className="text-sm text-[#0D0F14]">{property.field_label}</span>
+            <span className="text-sm text-[#0D0F14] dark:text-[#E6EDF3]">{property.field_label}</span>
           </label>
         )
 
@@ -133,13 +133,13 @@ export function PropertyField({
               disabled={disabled}
               className={`${baseInputClasses} flex items-center justify-between text-left`}
             >
-              <span className={getCurrentValue() ? 'text-[#0D0F14]' : 'text-[#9BA0A6]'}>
+              <span className={getCurrentValue() ? 'text-[#0D0F14] dark:text-[#E6EDF3]' : 'text-[#9BA0A6] dark:text-[#8B949E]'}>
                 {property.options?.find(o => o.value === getCurrentValue())?.label || 'Selectionner...'}
               </span>
-              <ChevronDown className={`w-4 h-4 text-[#9BA0A6] transition-transform ${isSelectOpen ? 'rotate-180' : ''}`} />
+              <ChevronDown className={`w-4 h-4 text-[#9BA0A6] dark:text-[#8B949E] transition-transform ${isSelectOpen ? 'rotate-180' : ''}`} />
             </button>
             {isSelectOpen && (
-              <div className="absolute top-full left-0 right-0 mt-1 bg-white rounded-lg border border-black/[0.08] shadow-lg z-10 max-h-48 overflow-y-auto">
+              <div className="absolute top-full left-0 right-0 mt-1 bg-white dark:bg-[#161B22] rounded-lg border border-black/[0.08] dark:border-[#30363D] shadow-lg z-10 max-h-48 overflow-y-auto">
                 {property.options?.map((option) => (
                   <button
                     key={option.value}
@@ -148,8 +148,8 @@ export function PropertyField({
                       handleChange(option.value)
                       setIsSelectOpen(false)
                     }}
-                    className={`w-full px-3 py-2 text-sm text-left hover:bg-[#F5F7F9] flex items-center justify-between ${
-                      getCurrentValue() === option.value ? 'bg-[#0066FF]/5 text-[#0066FF]' : 'text-[#0D0F14]'
+                    className={`w-full px-3 py-2 text-sm text-left hover:bg-[#F5F7F9] dark:hover:bg-[#0D1117] flex items-center justify-between ${
+                      getCurrentValue() === option.value ? 'bg-[#0066FF]/5 text-[#0066FF]' : 'text-[#0D0F14] dark:text-[#E6EDF3]'
                     }`}
                   >
                     {option.label}
@@ -165,7 +165,7 @@ export function PropertyField({
         const selectedValues = (getCurrentValue() as string[]) || []
         return (
           <div className="space-y-2">
-            <div className="flex flex-wrap gap-1.5 min-h-[38px] p-2 bg-white/80 border border-black/[0.08] rounded-lg">
+            <div className="flex flex-wrap gap-1.5 min-h-[38px] p-2 bg-white/80 dark:bg-[#0D1117]/80 border border-black/[0.08] dark:border-[#30363D] rounded-lg">
               {selectedValues.length > 0 ? (
                 selectedValues.map((val) => {
                   const option = property.options?.find(o => o.value === val)
@@ -188,7 +188,7 @@ export function PropertyField({
                   )
                 })
               ) : (
-                <span className="text-sm text-[#9BA0A6]">Aucune selection</span>
+                <span className="text-sm text-[#9BA0A6] dark:text-[#8B949E]">Aucune selection</span>
               )}
             </div>
             <div className="grid grid-cols-2 gap-1">
@@ -198,7 +198,7 @@ export function PropertyField({
                   className={`flex items-center gap-2 px-2 py-1.5 rounded cursor-pointer transition-colors ${
                     selectedValues.includes(option.value)
                       ? 'bg-[#0066FF]/10'
-                      : 'hover:bg-[#F5F7F9]'
+                      : 'hover:bg-[#F5F7F9] dark:hover:bg-[#0D1117]'
                   } ${disabled ? 'opacity-50 cursor-not-allowed' : ''}`}
                 >
                   <input
@@ -211,13 +211,13 @@ export function PropertyField({
                   <div className={`w-4 h-4 rounded border transition-all flex items-center justify-center ${
                     selectedValues.includes(option.value)
                       ? 'bg-[#0066FF] border-[#0066FF]'
-                      : 'border-black/[0.2]'
+                      : 'border-black/[0.2] dark:border-[#484F58]'
                   }`}>
                     {selectedValues.includes(option.value) && (
                       <Check className="w-3 h-3 text-white" />
                     )}
                   </div>
-                  <span className="text-sm text-[#0D0F14]">{option.label}</span>
+                  <span className="text-sm text-[#0D0F14] dark:text-[#E6EDF3]">{option.label}</span>
                 </label>
               ))}
             </div>
@@ -309,7 +309,7 @@ export function PropertyField({
 
   return (
     <div>
-      <label className="block text-sm font-medium text-[#0D0F14] mb-2">
+      <label className="block text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3] mb-2">
         {property.field_label}
         {property.is_required && <span className="text-[#B42318] ml-1">*</span>}
       </label>

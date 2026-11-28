@@ -520,7 +520,7 @@ function AddLeadsModal({ isOpen, onClose, onAddLeads, availableLeads }: {
 
         <div className="flex items-center gap-3 p-6 border-t border-border">
           <button onClick={onClose} className="flex-1 px-4 py-2.5 bg-card border border-border text-foreground rounded-[10px] font-medium hover:bg-muted transition-colors">
-            Annulér
+            Annuler
           </button>
           <button
             onClick={handleSubmit}

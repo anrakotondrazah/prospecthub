@@ -296,7 +296,7 @@ export function CreateViewModal({
               disabled={isLoading}
               className="flex-1 px-4 py-2.5 bg-transparent border border-black/[0.08] text-[#4E525A] rounded-xl font-medium hover:bg-black/[0.03] transition-all duration-200 disabled:opacity-50 active:scale-[0.98]"
             >
-              Annulér
+              Annuler
             </button>
             <FillButton
               disabled={isLoading || !name.trim() || selectedColumns.length === 0}

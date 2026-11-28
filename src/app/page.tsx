@@ -57,7 +57,7 @@ const plans = [
     price: '79',
     description: 'Pour les entreprises établies',
     features: ['Leads illimités', 'Utilisateurs illimités', 'SSO & SAML', 'API dédiée', 'Account manager'],
-    cta: 'Contactér les ventes',
+    cta: 'Contacter les ventes',
     highlighted: false,
   },
 ]

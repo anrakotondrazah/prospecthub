@@ -99,7 +99,7 @@ export function ActivityForm({
           id="activity-body"
           value={body}
           onChange={(e) => setBody(e.target.value)}
-          placeholder={isCallType ? 'Résuméz la conversation...' : 'Ecrivez votre note...'}
+          placeholder={isCallType ? 'Résumez la conversation...' : 'Ecrivez votre note...'}
           rows={4}
           className="w-full px-4 py-2.5 bg-white/80 dark:bg-[#161B22]/80 backdrop-blur-sm border border-black/[0.08] dark:border-[#30363D] rounded-xl text-sm text-[#0D0F14] dark:text-[#E6EDF3] focus:outline-none focus:border-[#0066FF] focus:ring-3 focus:ring-[#0066FF]/10 transition-all duration-200 shadow-sm hover:border-black/[0.12] dark:hover:border-[#30363D] resize-none"
           disabled={isLoading}
@@ -158,7 +158,7 @@ export function ActivityForm({
           disabled={isLoading}
           className="flex-1 px-4 py-2.5 bg-transparent border border-black/[0.08] dark:border-[#30363D] text-[#4E525A] dark:text-[#8B949E] rounded-xl font-medium hover:bg-black/[0.03] dark:hover:bg-white/[0.03] transition-all duration-200 disabled:opacity-50 active:scale-[0.98]"
         >
-          Annulér
+          Annuler
         </button>
         <button
           type="submit"

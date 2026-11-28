@@ -220,7 +220,7 @@ export function AssociateRecordModal({
             onClick={handleClose}
             className="flex-1 px-4 py-2.5 bg-black/[0.03] dark:bg-white/[0.03] border border-black/[0.08] dark:border-[#30363D] text-[#0D0F14] dark:text-[#E6EDF3] rounded-xl text-sm font-medium hover:bg-black/[0.06] dark:hover:bg-white/[0.06] transition-colors"
           >
-            Annulér
+            Annuler
           </button>
           <FillButton
             onClick={handleSubmit}

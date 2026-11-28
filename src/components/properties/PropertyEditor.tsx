@@ -227,7 +227,7 @@ export function PropertyEditor({
                           }}
                           className="px-2 py-1 text-xs text-[#4E525A] hover:bg-black/[0.05] rounded"
                         >
-                          Annulér
+                          Annuler
                         </button>
                       </div>
                     ) : (

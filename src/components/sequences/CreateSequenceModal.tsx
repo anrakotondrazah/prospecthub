@@ -278,7 +278,7 @@ export function CreateSequenceModal({
               disabled={isSubmitting}
               className="px-4 py-2.5 text-sm font-medium text-[#4E525A] dark:text-[#8B949E] hover:text-[#0D0F14] dark:hover:text-[#E6EDF3] transition-colors"
             >
-              Annulér
+              Annuler
             </button>
             <FillButton
               disabled={isSubmitting || !name.trim()}

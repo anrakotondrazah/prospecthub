@@ -215,7 +215,7 @@ export default function OnboardingPage() {
           <OnboardingStep
             step={1}
             title="Bienvenue! Configurons votre espace en 2 minutes."
-            description="Parlez-nous de votre activité pour personnalisér vos suggestions."
+            description="Parlez-nous de votre activité pour personnaliser vos suggestions."
           >
             {error && (
               <div className="p-3 mb-6 rounded-[10px] bg-[#FDE8E5] text-[#B42318] text-sm">
@@ -447,7 +447,7 @@ export default function OnboardingPage() {
           <OnboardingStep
             step={4}
             title="Prêt à contacter?"
-            description="Choisissez un modèle et envoyéz votre premier email."
+            description="Choisissez un modèle et envoyez votre premier email."
           >
             <div className="space-y-4 mb-8">
               {EMAIL_TEMPLATES.map((template) => (
@@ -484,7 +484,7 @@ export default function OnboardingPage() {
                 isLoading={isLoading}
                 className="px-8"
               >
-                Envoyér
+                Envoyer
               </Button>
             </div>
 

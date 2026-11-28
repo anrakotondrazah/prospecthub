@@ -197,7 +197,7 @@ export function QuoteEditor({
           )}
           {onSend && quote.status === 'draft' && (
             <PayButton onClick={() => onSend(quote)}>
-              Envoyér
+              Envoyer
             </PayButton>
           )}
           <SaveButton onClick={handleSave}>

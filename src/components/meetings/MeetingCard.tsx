@@ -259,7 +259,7 @@ export function MeetingCard({ meeting, compact = false, onJoin, onReschedule, on
                 <button
                   onClick={() => onCancel(meeting)}
                   className="p-1.5 rounded-lg hover:bg-[#FDE8E5] transition-colors"
-                  title="Annulér"
+                  title="Annuler"
                 >
                   <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#B42318" strokeWidth="2">
                     <line x1="18" y1="6" x2="6" y2="18" />

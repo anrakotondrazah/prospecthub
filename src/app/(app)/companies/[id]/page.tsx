@@ -198,7 +198,7 @@ export default async function CompanyDetailPage({ params }: CompanyPageProps) {
 
           <div className="bg-white rounded-[14px] border border-[#E2E4E6] p-6">
             <h2 className="text-sm font-semibold text-[#0D0F14] uppercase tracking-wider mb-4">
-              Historique des activities
+              Historique des activités
             </h2>
             {(!activities || activities.length === 0) ? (
               <div className="text-center py-8 bg-[#F5F7F9] rounded-[10px]">

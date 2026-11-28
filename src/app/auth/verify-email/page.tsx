@@ -121,7 +121,7 @@ function VerifyEmailContent() {
           </div>
 
           <h1 className="text-[23.5px] font-semibold text-[#0D0F14] text-center mb-2">
-            Vérifiéz votre email
+            Vérifiez votre email
           </h1>
           <p className="text-sm text-[#4E525A] text-center mb-8">
             Nous avons envoyé un code a 6 chiffres a<br />
@@ -165,14 +165,14 @@ function VerifyEmailContent() {
           <p className="text-sm text-[#4E525A] text-center">
             Vous n&apos;avez pas recu le code ?{' '}
             {resendCooldown > 0 ? (
-              <span className="text-[#9BA0A6]">Renvoyér dans {resendCooldown}s</span>
+              <span className="text-[#9BA0A6]">Renvoyer dans {resendCooldown}s</span>
             ) : (
               <button
                 type="button"
                 onClick={handleResend}
                 className="text-[#17191F] font-medium hover:underline"
               >
-                Renvoyér
+                Renvoyer
               </button>
             )}
           </p>

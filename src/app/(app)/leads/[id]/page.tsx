@@ -172,7 +172,7 @@ export default async function LeadDetailPage({ params }: LeadPageProps) {
 
           <div className="bg-white rounded-[14px] border border-[#E2E4E6] p-6">
             <h2 className="text-sm font-semibold text-[#0D0F14] uppercase tracking-wider mb-4">
-              Historique des activities
+              Historique des activités
             </h2>
             <ActivityTimeline
               activities={(activities || []).map((a) => ({

@@ -115,7 +115,7 @@ export function QuotesPageClient({
         <div>
           <h1 className="text-[23.5px] font-semibold text-[#0D0F14] dark:text-[#E6EDF3] mb-1">Devis</h1>
           <p className="text-sm text-[#4E525A] dark:text-[#8B949E]">
-            Creez et envoyéz des devis professionnels
+            Creez et envoyez des devis professionnels
           </p>
         </div>
         <FillButton onClick={() => setIsCreateModalOpen(true)}>

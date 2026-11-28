@@ -40,7 +40,7 @@
   "common": {
     "search": "Rechercher",
     "save": "Enregistrer",
-    "cancel": "Annulér",
+    "cancel": "Annuler",
     "delete": "Supprimer",
     "edit": "Modifier",
     "create": "Créer",
@@ -62,7 +62,7 @@
     "export": "Exporter",
     "import": "Importer",
     "download": "Télécharger",
-    "upload": "Envoyér",
+    "upload": "Envoyer",
     "view": "Voir",
     "viewAll": "Voir tout",
     "showMore": "Voir plus",

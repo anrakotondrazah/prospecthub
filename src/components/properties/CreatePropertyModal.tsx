@@ -147,20 +147,20 @@ export function CreatePropertyModal({
 
       {/* Modal */}
       <div
-        className="relative bg-white/95 backdrop-blur-xl rounded-2xl shadow-lg max-w-lg w-full max-h-[90vh] overflow-hidden flex flex-col"
+        className="relative bg-white/95 dark:bg-[#161B22]/95 backdrop-blur-xl rounded-2xl shadow-lg max-w-lg w-full max-h-[90vh] overflow-hidden flex flex-col"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-center justify-between p-6 border-b border-black/[0.06]">
+        <div className="flex items-center justify-between p-6 border-b border-black/[0.06] dark:border-[#30363D]">
           <div>
-            <h2 className="text-xl font-semibold text-[#0D0F14]">Créer une propriete</h2>
-            <p className="text-sm text-[#4E525A] mt-1">
+            <h2 className="text-xl font-semibold text-[#0D0F14] dark:text-[#E6EDF3]">Créer une propriete</h2>
+            <p className="text-sm text-[#4E525A] dark:text-[#8B949E] mt-1">
               {entityLabels[entityType] || entityType}
             </p>
           </div>
           <button
             onClick={onClose}
-            className="w-8 h-8 rounded-xl hover:bg-black/[0.04] flex items-center justify-center transition-all duration-200 active:scale-95"
+            className="w-8 h-8 rounded-xl hover:bg-black/[0.04] dark:hover:bg-white/[0.05] flex items-center justify-center transition-all duration-200 active:scale-95"
             aria-label="Fermer"
           >
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#4E525A" strokeWidth="2">
@@ -175,7 +175,7 @@ export function CreatePropertyModal({
           <div className="p-6 space-y-5">
             {/* Error Message */}
             {error && (
-              <div className="p-4 bg-[#FDE8E5] border border-[#B42318]/20 rounded-xl flex items-start gap-3 shadow-sm">
+              <div className="p-4 bg-[#FDE8E5] dark:bg-[#B42318]/10 border border-[#B42318]/20 dark:border-[#B42318]/30 rounded-xl flex items-start gap-3 shadow-sm">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#B42318" strokeWidth="2" className="flex-shrink-0 mt-0.5">
                   <circle cx="12" cy="12" r="10" />
                   <line x1="12" y1="8" x2="12" y2="12" />
@@ -187,7 +187,7 @@ export function CreatePropertyModal({
 
             {/* Field Label */}
             <div>
-              <label htmlFor="field-label" className="block text-sm font-medium text-[#0D0F14] mb-2">
+              <label htmlFor="field-label" className="block text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3] mb-2">
                 Nom du champ <span className="text-[#B42318]">*</span>
               </label>
               <input
@@ -196,12 +196,12 @@ export function CreatePropertyModal({
                 value={fieldLabel}
                 onChange={(e) => setFieldLabel(e.target.value)}
                 placeholder="Ex: Secteur d'activité"
-                className="w-full px-4 py-2.5 bg-white/80 backdrop-blur-sm border border-black/[0.08] rounded-xl text-sm focus:outline-none focus:border-[#0066FF] focus:ring-3 focus:ring-[#0066FF]/10 transition-all duration-200 shadow-sm hover:border-black/[0.12]"
+                className="w-full px-4 py-2.5 bg-white/80 dark:bg-[#0D1117]/80 backdrop-blur-sm border border-black/[0.08] dark:border-[#30363D] rounded-xl text-sm text-[#0D0F14] dark:text-[#E6EDF3] focus:outline-none focus:border-[#0066FF] focus:ring-3 focus:ring-[#0066FF]/10 transition-all duration-200 shadow-sm hover:border-black/[0.12] dark:hover:border-[#484F58]"
                 disabled={isLoading}
                 maxLength={255}
               />
               {fieldLabel && (
-                <p className="text-xs text-[#9BA0A6] mt-1">
+                <p className="text-xs text-[#9BA0A6] dark:text-[#8B949E] mt-1">
                   Identifiant: {generateFieldName(fieldLabel)}
                 </p>
               )}
@@ -209,7 +209,7 @@ export function CreatePropertyModal({
 
             {/* Field Type */}
             <div>
-              <label className="block text-sm font-medium text-[#0D0F14] mb-3">
+              <label className="block text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3] mb-3">
                 Type de champ
               </label>
               <div className="grid grid-cols-3 gap-2">
@@ -228,11 +228,11 @@ export function CreatePropertyModal({
                     className={`p-3 rounded-xl border transition-all duration-200 text-left ${
                       fieldType === type.value
                         ? 'border-[#0066FF] bg-[#0066FF]/5 shadow-sm'
-                        : 'border-black/[0.08] hover:border-black/[0.12] hover:bg-black/[0.02]'
+                        : 'border-black/[0.08] dark:border-[#30363D] hover:border-black/[0.12] dark:hover:border-[#484F58] hover:bg-black/[0.02] dark:hover:bg-white/[0.03]'
                     }`}
                   >
-                    <span className="block text-sm font-medium text-[#0D0F14]">{type.label}</span>
-                    <span className="block text-xs text-[#4E525A] mt-0.5">{type.description}</span>
+                    <span className="block text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3]">{type.label}</span>
+                    <span className="block text-xs text-[#4E525A] dark:text-[#8B949E] mt-0.5">{type.description}</span>
                   </button>
                 ))}
               </div>
@@ -241,7 +241,7 @@ export function CreatePropertyModal({
             {/* Options for select/multiselect */}
             {needsOptions && (
               <div>
-                <label className="block text-sm font-medium text-[#0D0F14] mb-3">
+                <label className="block text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3] mb-3">
                   Options
                 </label>
                 <div className="space-y-2">
@@ -249,15 +249,15 @@ export function CreatePropertyModal({
                   {options.map((option, index) => (
                     <div
                       key={option.value}
-                      className="flex items-center gap-2 px-3 py-2 bg-[#F5F7F9] rounded-lg"
+                      className="flex items-center gap-2 px-3 py-2 bg-[#F5F7F9] dark:bg-[#0D1117] rounded-lg"
                     >
-                      <GripVertical className="w-4 h-4 text-[#9BA0A6]" />
-                      <span className="flex-1 text-sm text-[#0D0F14]">{option.label}</span>
-                      <span className="text-xs text-[#9BA0A6]">{option.value}</span>
+                      <GripVertical className="w-4 h-4 text-[#9BA0A6] dark:text-[#8B949E]" />
+                      <span className="flex-1 text-sm text-[#0D0F14] dark:text-[#E6EDF3]">{option.label}</span>
+                      <span className="text-xs text-[#9BA0A6] dark:text-[#8B949E]">{option.value}</span>
                       <button
                         type="button"
                         onClick={() => removeOption(option.value)}
-                        className="p-1 hover:bg-[#FDE8E5] rounded transition-colors"
+                        className="p-1 hover:bg-[#FDE8E5] dark:hover:bg-[#B42318]/10 rounded transition-colors"
                       >
                         <X className="w-3.5 h-3.5 text-[#B42318]" />
                       </button>
@@ -277,7 +277,7 @@ export function CreatePropertyModal({
                         }
                       }}
                       placeholder="Ajouter une option..."
-                      className="flex-1 px-3 py-2 bg-white border border-black/[0.08] rounded-lg text-sm focus:outline-none focus:border-[#0066FF] focus:ring-2 focus:ring-[#0066FF]/10"
+                      className="flex-1 px-3 py-2 bg-white dark:bg-[#0D1117] border border-black/[0.08] dark:border-[#30363D] rounded-lg text-sm text-[#0D0F14] dark:text-[#E6EDF3] focus:outline-none focus:border-[#0066FF] focus:ring-2 focus:ring-[#0066FF]/10"
                       disabled={isLoading}
                     />
                     <button
@@ -296,7 +296,7 @@ export function CreatePropertyModal({
             {/* Default Value (for text/number) */}
             {(fieldType === 'text' || fieldType === 'number') && (
               <div>
-                <label htmlFor="default-value" className="block text-sm font-medium text-[#0D0F14] mb-2">
+                <label htmlFor="default-value" className="block text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3] mb-2">
                   Valeur par defaut (optionnel)
                 </label>
                 <input
@@ -305,7 +305,7 @@ export function CreatePropertyModal({
                   value={defaultValue}
                   onChange={(e) => setDefaultValue(e.target.value)}
                   placeholder="Laisser vide si aucune"
-                  className="w-full px-4 py-2.5 bg-white/80 backdrop-blur-sm border border-black/[0.08] rounded-xl text-sm focus:outline-none focus:border-[#0066FF] focus:ring-3 focus:ring-[#0066FF]/10 transition-all duration-200"
+                  className="w-full px-4 py-2.5 bg-white/80 dark:bg-[#0D1117]/80 backdrop-blur-sm border border-black/[0.08] dark:border-[#30363D] rounded-xl text-sm text-[#0D0F14] dark:text-[#E6EDF3] focus:outline-none focus:border-[#0066FF] focus:ring-3 focus:ring-[#0066FF]/10 transition-all duration-200"
                   disabled={isLoading}
                 />
               </div>
@@ -319,19 +319,19 @@ export function CreatePropertyModal({
                 onChange={setIsRequired}
               />
               <div>
-                <span className="text-sm font-medium text-[#0D0F14]">Champ obligatoire</span>
-                <p className="text-xs text-[#4E525A]">Ce champ doit etre renseigne</p>
+                <span className="text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3]">Champ obligatoire</span>
+                <p className="text-xs text-[#4E525A] dark:text-[#8B949E]">Ce champ doit etre renseigne</p>
               </div>
             </div>
           </div>
 
           {/* Actions */}
-          <div className="flex items-center gap-3 p-6 border-t border-black/[0.06]">
+          <div className="flex items-center gap-3 p-6 border-t border-black/[0.06] dark:border-[#30363D]">
             <button
               type="button"
               onClick={onClose}
               disabled={isLoading}
-              className="flex-1 px-4 py-2.5 bg-transparent border border-black/[0.08] text-[#4E525A] rounded-xl font-medium hover:bg-black/[0.03] transition-all duration-200 disabled:opacity-50 active:scale-[0.98]"
+              className="flex-1 px-4 py-2.5 bg-transparent border border-black/[0.08] dark:border-[#30363D] text-[#4E525A] dark:text-[#8B949E] rounded-xl font-medium hover:bg-black/[0.03] dark:hover:bg-white/[0.05] transition-all duration-200 disabled:opacity-50 active:scale-[0.98]"
             >
               Annuler
             </button>

@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation'
 import { useTheme } from '@/components/providers/ThemeProvider'
 import { NotificationBell } from '@/components/notifications/NotificationBell'
 import { TrustBadge } from '@/components/ui/TrustBadge'
+import { UserMenu } from './UserMenu'
 
 const navItems = [
   {
@@ -118,10 +119,11 @@ interface SidebarProps {
     full_name?: string
   }
   organizationId?: number
+  organizationName?: string
   plan?: string
 }
 
-export function Sidebar({ user, organizationId, plan = 'Free' }: SidebarProps) {
+export function Sidebar({ user, organizationId, organizationName, plan = 'Free' }: SidebarProps) {
   const pathname = usePathname()
   const [isCollapsed, setIsCollapsed] = useState(false)
   const { theme, setTheme, resolvedTheme } = useTheme()
@@ -344,24 +346,9 @@ export function Sidebar({ user, organizationId, plan = 'Free' }: SidebarProps) {
           </div>
         )}
 
-        {/* User */}
+        {/* User Menu */}
         {!isCollapsed && user && (
-          <div
-            className="flex items-center gap-3 px-3 py-3 mt-2 rounded-xl hover:bg-black/[0.03] dark:hover:bg-white/[0.05] cursor-pointer transition-all duration-200 active:scale-[0.98]"
-            role="button"
-            tabIndex={0}
-            aria-label={`Profil de ${user.full_name || user.email}`}
-          >
-            <div className="w-8 h-8 rounded-full bg-gradient-to-br from-[#0066FF] to-[#0052CC] dark:from-[#58A6FF] dark:to-[#1F6FEB] flex items-center justify-center text-white text-sm font-medium shadow-sm">
-              {user.full_name?.[0] || user.email?.[0]?.toUpperCase() || 'U'}
-            </div>
-            <div className="flex-1 min-w-0">
-              <p className="text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3] truncate">
-                {user.full_name || user.email?.split('@')[0]}
-              </p>
-              <p className="text-xs text-[#9BA0A6] dark:text-[#8B949E] truncate">{user.email}</p>
-            </div>
-          </div>
+          <UserMenu user={user} organizationName={organizationName} />
         )}
       </div>
 

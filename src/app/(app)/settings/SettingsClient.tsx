@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, ReactNode } from 'react'
+import { useState, useEffect, ReactNode } from 'react'
 import { useRouter } from 'next/navigation'
 import { TabBar } from '@/components/ui/TabBar'
 import { LogoutButton, AnimatedCheckbox, SaveButton } from '@/components/ui/buttons'
@@ -30,14 +30,134 @@ export function SettingsClient({
   const router = useRouter()
   const [activeTab, setActiveTab] = useState('profile')
   const [isLoggingOut, setIsLoggingOut] = useState(false)
+  const [isSaving, setIsSaving] = useState(false)
+  const [saveMessage, setSaveMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null)
 
-  // Notification preferences (stored locally for now)
+  // Password change state
+  const [passwordForm, setPasswordForm] = useState({
+    currentPassword: '',
+    newPassword: '',
+    confirmPassword: '',
+  })
+  const [isChangingPassword, setIsChangingPassword] = useState(false)
+  const [passwordMessage, setPasswordMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null)
+
+  // Notification preferences
   const [notifications, setNotifications] = useState({
     emailNewLead: true,
     emailWeeklyReport: false,
     emailTaskReminder: true,
     browserNotifications: false,
   })
+  const [isLoadingPreferences, setIsLoadingPreferences] = useState(true)
+  const [preferencesError, setPreferencesError] = useState<string | null>(null)
+
+  // Team members state
+  interface Member {
+    id: string
+    first_name: string | null
+    last_name: string | null
+    avatar_url: string | null
+    job_title: string | null
+    is_owner: boolean
+    is_active: boolean
+    role: { id: number; code: string; name: string } | null
+  }
+  interface Team {
+    id: number
+    name: string
+    description: string | null
+    members_count: number
+    manager: { id: string; first_name: string | null; last_name: string | null } | null
+  }
+  const [members, setMembers] = useState<Member[]>([])
+  const [teams, setTeams] = useState<Team[]>([])
+  const [isLoadingTeam, setIsLoadingTeam] = useState(false)
+  const [isOwner, setIsOwner] = useState(false)
+
+  // Load preferences on mount
+  useEffect(() => {
+    async function loadPreferences() {
+      setIsLoadingPreferences(true)
+      setPreferencesError(null)
+      try {
+        const response = await fetch('/api/settings/preferences')
+        if (response.ok) {
+          const data = await response.json()
+          if (data.success && data.settings?.notifications) {
+            setNotifications({
+              emailNewLead: data.settings.notifications.email_new_lead ?? true,
+              emailWeeklyReport: data.settings.notifications.email_weekly_report ?? false,
+              emailTaskReminder: data.settings.notifications.email_task_reminder ?? true,
+              browserNotifications: data.settings.notifications.browser ?? false,
+            })
+          }
+        } else {
+          setPreferencesError('Erreur lors du chargement des preferences')
+        }
+      } catch (error) {
+        console.error('Failed to load preferences:', error)
+        setPreferencesError('Erreur de connexion')
+      } finally {
+        setIsLoadingPreferences(false)
+      }
+    }
+    loadPreferences()
+  }, [])
+
+  const retryLoadPreferences = () => {
+    setIsLoadingPreferences(true)
+    setPreferencesError(null)
+    fetch('/api/settings/preferences')
+      .then(res => res.json())
+      .then(data => {
+        if (data.success && data.settings?.notifications) {
+          setNotifications({
+            emailNewLead: data.settings.notifications.email_new_lead ?? true,
+            emailWeeklyReport: data.settings.notifications.email_weekly_report ?? false,
+            emailTaskReminder: data.settings.notifications.email_task_reminder ?? true,
+            browserNotifications: data.settings.notifications.browser ?? false,
+          })
+        }
+      })
+      .catch(() => setPreferencesError('Erreur de connexion'))
+      .finally(() => setIsLoadingPreferences(false))
+  }
+
+  // Load team data when switching to team tab
+  useEffect(() => {
+    if (activeTab !== 'team') return
+
+    async function loadTeamData() {
+      setIsLoadingTeam(true)
+      try {
+        const [membersRes, teamsRes] = await Promise.all([
+          fetch('/api/members'),
+          fetch('/api/teams'),
+        ])
+
+        if (membersRes.ok) {
+          const membersData = await membersRes.json()
+          if (membersData.success) {
+            setMembers(membersData.members || [])
+            setIsOwner(membersData.currentUserIsOwner || false)
+          }
+        }
+
+        if (teamsRes.ok) {
+          const teamsData = await teamsRes.json()
+          if (teamsData.success) {
+            setTeams(teamsData.teams || [])
+          }
+        }
+      } catch (error) {
+        console.error('Failed to load team data:', error)
+      } finally {
+        setIsLoadingTeam(false)
+      }
+    }
+    loadTeamData()
+  }, [activeTab])
 
   const tabs = [
     {
@@ -61,6 +181,27 @@ export function SettingsClient({
       ),
     },
     {
+      id: 'security',
+      label: 'Securite',
+      icon: (
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+        </svg>
+      ),
+    },
+    {
+      id: 'team',
+      label: 'Equipe',
+      icon: (
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+          <circle cx="9" cy="7" r="4" />
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+          <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+        </svg>
+      ),
+    },
+    {
       id: 'account',
       label: 'Compte',
       icon: (
@@ -77,15 +218,79 @@ export function SettingsClient({
     try {
       const supabase = createClient()
       await supabase.auth.signOut()
-      router.push('/login')
+      router.push('/auth/login')
     } catch {
       setIsLoggingOut(false)
     }
   }
 
-  const handleSaveNotifications = () => {
-    // TODO: Save to database when backend is ready
-    console.log('Saving notifications:', notifications)
+  const handleSaveNotifications = async () => {
+    setIsSaving(true)
+    setSaveMessage(null)
+    try {
+      const response = await fetch('/api/settings/preferences', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          notifications: {
+            email_new_lead: notifications.emailNewLead,
+            email_weekly_report: notifications.emailWeeklyReport,
+            email_task_reminder: notifications.emailTaskReminder,
+            browser: notifications.browserNotifications,
+          },
+        }),
+      })
+      const data = await response.json()
+      if (data.success) {
+        setSaveMessage({ type: 'success', text: 'Preferences enregistrees' })
+      } else {
+        setSaveMessage({ type: 'error', text: data.message || 'Erreur lors de la sauvegarde' })
+      }
+    } catch (error) {
+      console.error('Save error:', error)
+      setSaveMessage({ type: 'error', text: 'Erreur de connexion' })
+    } finally {
+      setIsSaving(false)
+      setTimeout(() => setSaveMessage(null), 3000)
+    }
+  }
+
+  const handleChangePassword = async () => {
+    if (passwordForm.newPassword !== passwordForm.confirmPassword) {
+      setPasswordMessage({ type: 'error', text: 'Les mots de passe ne correspondent pas' })
+      return
+    }
+    if (passwordForm.newPassword.length < 8) {
+      setPasswordMessage({ type: 'error', text: 'Le mot de passe doit contenir au moins 8 caracteres' })
+      return
+    }
+
+    setIsChangingPassword(true)
+    setPasswordMessage(null)
+    try {
+      const response = await fetch('/api/settings/security', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'change_password',
+          currentPassword: passwordForm.currentPassword,
+          newPassword: passwordForm.newPassword,
+        }),
+      })
+      const data = await response.json()
+      if (data.success) {
+        setPasswordMessage({ type: 'success', text: 'Mot de passe modifie avec succes' })
+        setPasswordForm({ currentPassword: '', newPassword: '', confirmPassword: '' })
+      } else {
+        setPasswordMessage({ type: 'error', text: data.message || 'Erreur lors du changement' })
+      }
+    } catch (error) {
+      console.error('Password change error:', error)
+      setPasswordMessage({ type: 'error', text: 'Erreur de connexion' })
+    } finally {
+      setIsChangingPassword(false)
+      setTimeout(() => setPasswordMessage(null), 5000)
+    }
   }
 
   return (
@@ -192,62 +397,323 @@ export function SettingsClient({
               <div className="bg-white dark:bg-[#161B22] rounded-[14px] border border-[#E2E4E6] dark:border-[#30363D] p-4 lg:p-6 transition-colors duration-200">
                 <div className="flex items-center justify-between mb-4">
                   <h2 className="text-lg font-semibold text-[#0D0F14] dark:text-[#E6EDF3]">Notifications</h2>
-                  <SaveButton onClick={handleSaveNotifications}>Enregistrer</SaveButton>
+                  <div className="flex items-center gap-3">
+                    {saveMessage && (
+                      <span className={`text-sm ${saveMessage.type === 'success' ? 'text-[#147A3A]' : 'text-[#B42318]'}`}>
+                        {saveMessage.text}
+                      </span>
+                    )}
+                    <SaveButton onClick={handleSaveNotifications} disabled={isSaving || isLoadingPreferences || !!preferencesError}>
+                      {isSaving ? 'Enregistrement...' : 'Enregistrer'}
+                    </SaveButton>
+                  </div>
                 </div>
                 <p className="text-sm text-[#4E525A] dark:text-[#8B949E] mb-6">
                   Configurez vos preferences de notification
                 </p>
 
-                <div className="space-y-5">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3]">Nouveaux leads</p>
-                      <p className="text-xs text-[#4E525A] dark:text-[#8B949E]">Recevez un email pour chaque nouveau lead</p>
+                {isLoadingPreferences ? (
+                  <div className="flex items-center justify-center py-8">
+                    <div className="animate-spin w-6 h-6 border-2 border-[#0066FF] border-t-transparent rounded-full" />
+                  </div>
+                ) : preferencesError ? (
+                  <div className="text-center py-6">
+                    <p className="text-sm text-[#B42318] dark:text-red-400 mb-3">{preferencesError}</p>
+                    <button
+                      onClick={retryLoadPreferences}
+                      className="h-9 px-4 text-sm font-medium text-[#0066FF] border border-[#0066FF] rounded-lg hover:bg-[#0066FF]/10 transition-colors"
+                    >
+                      Reessayer
+                    </button>
+                  </div>
+                ) : (
+                  <div className="space-y-5">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3]">Nouveaux leads</p>
+                        <p className="text-xs text-[#4E525A] dark:text-[#8B949E]">Recevez un email pour chaque nouveau lead</p>
+                      </div>
+                      <AnimatedCheckbox
+                        id="notif-new-lead"
+                        checked={notifications.emailNewLead}
+                        onChange={(checked) => setNotifications(prev => ({ ...prev, emailNewLead: checked }))}
+                      />
                     </div>
-                    <AnimatedCheckbox
-                      id="notif-new-lead"
-                      checked={notifications.emailNewLead}
-                      onChange={(checked) => setNotifications(prev => ({ ...prev, emailNewLead: checked }))}
+
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3]">Rapport hebdomadaire</p>
+                        <p className="text-xs text-[#4E525A] dark:text-[#8B949E]">Resume de votre activite chaque lundi</p>
+                      </div>
+                      <AnimatedCheckbox
+                        id="notif-weekly"
+                        checked={notifications.emailWeeklyReport}
+                        onChange={(checked) => setNotifications(prev => ({ ...prev, emailWeeklyReport: checked }))}
+                      />
+                    </div>
+
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3]">Rappels de taches</p>
+                        <p className="text-xs text-[#4E525A] dark:text-[#8B949E]">Notifications pour les taches a venir</p>
+                      </div>
+                      <AnimatedCheckbox
+                        id="notif-tasks"
+                        checked={notifications.emailTaskReminder}
+                        onChange={(checked) => setNotifications(prev => ({ ...prev, emailTaskReminder: checked }))}
+                      />
+                    </div>
+
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3]">Notifications navigateur</p>
+                        <p className="text-xs text-[#4E525A] dark:text-[#8B949E]">Alertes en temps reel dans votre navigateur</p>
+                      </div>
+                      <AnimatedCheckbox
+                        id="notif-browser"
+                        checked={notifications.browserNotifications}
+                        onChange={(checked) => setNotifications(prev => ({ ...prev, browserNotifications: checked }))}
+                      />
+                    </div>
+                  </div>
+                )}
+              </div>
+            </>
+          )}
+
+          {/* Security Tab */}
+          {activeTab === 'security' && (
+            <>
+              <div className="bg-white dark:bg-[#161B22] rounded-[14px] border border-[#E2E4E6] dark:border-[#30363D] p-4 lg:p-6 transition-colors duration-200">
+                <h2 className="text-lg font-semibold text-[#0D0F14] dark:text-[#E6EDF3] mb-4">Changer le mot de passe</h2>
+                {passwordMessage && (
+                  <div className={`mb-4 p-3 rounded-lg text-sm ${
+                    passwordMessage.type === 'success'
+                      ? 'bg-[#E8F5E9] text-[#147A3A] dark:bg-[#147A3A]/20 dark:text-[#4ADE80]'
+                      : 'bg-red-50 text-[#B42318] dark:bg-red-900/20 dark:text-red-400'
+                  }`}>
+                    {passwordMessage.text}
+                  </div>
+                )}
+                <div className="space-y-4">
+                  <div>
+                    <label htmlFor="currentPassword" className="block text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3] mb-2">
+                      Mot de passe actuel
+                    </label>
+                    <input
+                      id="currentPassword"
+                      type="password"
+                      value={passwordForm.currentPassword}
+                      onChange={(e) => setPasswordForm(prev => ({ ...prev, currentPassword: e.target.value }))}
+                      className="w-full h-10 px-3 border border-[#E2E4E6] dark:border-[#30363D] rounded-[10px] text-sm bg-white dark:bg-[#0D1117] text-[#0D0F14] dark:text-[#E6EDF3] focus:outline-none focus:ring-2 focus:ring-[#0066FF] focus:border-transparent"
+                      autoComplete="current-password"
                     />
                   </div>
-
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3]">Rapport hebdomadaire</p>
-                      <p className="text-xs text-[#4E525A] dark:text-[#8B949E]">Résumé de votre activité chaque lundi</p>
-                    </div>
-                    <AnimatedCheckbox
-                      id="notif-weekly"
-                      checked={notifications.emailWeeklyReport}
-                      onChange={(checked) => setNotifications(prev => ({ ...prev, emailWeeklyReport: checked }))}
+                  <div>
+                    <label htmlFor="newPassword" className="block text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3] mb-2">
+                      Nouveau mot de passe
+                    </label>
+                    <input
+                      id="newPassword"
+                      type="password"
+                      value={passwordForm.newPassword}
+                      onChange={(e) => setPasswordForm(prev => ({ ...prev, newPassword: e.target.value }))}
+                      className="w-full h-10 px-3 border border-[#E2E4E6] dark:border-[#30363D] rounded-[10px] text-sm bg-white dark:bg-[#0D1117] text-[#0D0F14] dark:text-[#E6EDF3] focus:outline-none focus:ring-2 focus:ring-[#0066FF] focus:border-transparent"
+                      autoComplete="new-password"
+                      minLength={8}
+                    />
+                    <p className="mt-1 text-xs text-[#9BA0A6] dark:text-[#8B949E]">Minimum 8 caracteres</p>
+                  </div>
+                  <div>
+                    <label htmlFor="confirmPassword" className="block text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3] mb-2">
+                      Confirmer le mot de passe
+                    </label>
+                    <input
+                      id="confirmPassword"
+                      type="password"
+                      value={passwordForm.confirmPassword}
+                      onChange={(e) => setPasswordForm(prev => ({ ...prev, confirmPassword: e.target.value }))}
+                      className="w-full h-10 px-3 border border-[#E2E4E6] dark:border-[#30363D] rounded-[10px] text-sm bg-white dark:bg-[#0D1117] text-[#0D0F14] dark:text-[#E6EDF3] focus:outline-none focus:ring-2 focus:ring-[#0066FF] focus:border-transparent"
+                      autoComplete="new-password"
                     />
                   </div>
+                  <button
+                    onClick={handleChangePassword}
+                    disabled={isChangingPassword || !passwordForm.currentPassword || !passwordForm.newPassword || !passwordForm.confirmPassword}
+                    className="h-10 px-4 text-sm font-medium text-white bg-[#0066FF] hover:bg-[#0052CC] rounded-[10px] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {isChangingPassword ? 'Modification...' : 'Modifier le mot de passe'}
+                  </button>
+                </div>
+              </div>
 
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3]">Rappels de taches</p>
-                      <p className="text-xs text-[#4E525A] dark:text-[#8B949E]">Notifications pour les taches a venir</p>
+              <div className="bg-white dark:bg-[#161B22] rounded-[14px] border border-[#E2E4E6] dark:border-[#30363D] p-4 lg:p-6 transition-colors duration-200">
+                <h2 className="text-lg font-semibold text-[#0D0F14] dark:text-[#E6EDF3] mb-4">Authentification a deux facteurs</h2>
+                <p className="text-sm text-[#4E525A] dark:text-[#8B949E] mb-4">
+                  Renforcez la securite de votre compte avec la verification en deux etapes.
+                </p>
+                <div className="flex items-center justify-between p-4 bg-[#F5F7F9] dark:bg-[#0D1117] rounded-xl">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-[#FFF3E0] dark:bg-[#E65100]/20 flex items-center justify-center">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E65100" strokeWidth="2">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                      </svg>
                     </div>
-                    <AnimatedCheckbox
-                      id="notif-tasks"
-                      checked={notifications.emailTaskReminder}
-                      onChange={(checked) => setNotifications(prev => ({ ...prev, emailTaskReminder: checked }))}
-                    />
+                    <div>
+                      <p className="text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3]">2FA non active</p>
+                      <p className="text-xs text-[#9BA0A6] dark:text-[#8B949E]">Application TOTP recommandee</p>
+                    </div>
                   </div>
+                  <button
+                    className="h-9 px-4 text-sm font-medium text-[#9BA0A6] border border-[#E2E4E6] dark:border-[#30363D] rounded-lg cursor-not-allowed"
+                    disabled
+                    title="Bientot disponible"
+                  >
+                    Configurer
+                  </button>
+                </div>
+              </div>
 
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3]">Notifications navigateur</p>
-                      <p className="text-xs text-[#4E525A] dark:text-[#8B949E]">Alertes en temps réel dans votre navigateur</p>
+              <div className="bg-white dark:bg-[#161B22] rounded-[14px] border border-[#E2E4E6] dark:border-[#30363D] p-4 lg:p-6 transition-colors duration-200">
+                <h2 className="text-lg font-semibold text-[#0D0F14] dark:text-[#E6EDF3] mb-4">Sessions actives</h2>
+                <p className="text-sm text-[#4E525A] dark:text-[#8B949E] mb-4">
+                  Gerez les appareils connectes a votre compte.
+                </p>
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between p-3 bg-[#F5F7F9] dark:bg-[#0D1117] rounded-xl">
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-lg bg-[#E8F5E9] dark:bg-[#147A3A]/20 flex items-center justify-center">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#147A3A" strokeWidth="2">
+                          <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+                          <line x1="8" y1="21" x2="16" y2="21" />
+                          <line x1="12" y1="17" x2="12" y2="21" />
+                        </svg>
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3]">Session actuelle</p>
+                        <p className="text-xs text-[#9BA0A6] dark:text-[#8B949E]">Navigateur - En ligne</p>
+                      </div>
                     </div>
-                    <AnimatedCheckbox
-                      id="notif-browser"
-                      checked={notifications.browserNotifications}
-                      onChange={(checked) => setNotifications(prev => ({ ...prev, browserNotifications: checked }))}
-                    />
+                    <span className="px-2 py-1 text-xs font-medium bg-[#E8F5E9] dark:bg-[#147A3A]/20 text-[#147A3A] dark:text-[#4ADE80] rounded-md">
+                      Active
+                    </span>
                   </div>
                 </div>
               </div>
+            </>
+          )}
+
+          {/* Team Tab */}
+          {activeTab === 'team' && (
+            <>
+              {isLoadingTeam ? (
+                <div className="bg-white dark:bg-[#161B22] rounded-[14px] border border-[#E2E4E6] dark:border-[#30363D] p-8 flex items-center justify-center">
+                  <div className="animate-spin w-6 h-6 border-2 border-[#0066FF] border-t-transparent rounded-full" />
+                </div>
+              ) : (
+                <>
+                  {/* Members */}
+                  <div className="bg-white dark:bg-[#161B22] rounded-[14px] border border-[#E2E4E6] dark:border-[#30363D] p-4 lg:p-6 transition-colors duration-200">
+                    <div className="flex items-center justify-between mb-4">
+                      <h2 className="text-lg font-semibold text-[#0D0F14] dark:text-[#E6EDF3]">Membres ({members.length})</h2>
+                      {isOwner && (
+                        <button
+                          className="h-9 px-4 text-sm font-medium text-[#9BA0A6] border border-[#E2E4E6] dark:border-[#30363D] rounded-lg cursor-not-allowed"
+                          disabled
+                          title="Bientot disponible"
+                        >
+                          Inviter
+                        </button>
+                      )}
+                    </div>
+                    {members.length === 0 ? (
+                      <p className="text-sm text-[#9BA0A6] dark:text-[#8B949E]">Aucun membre dans l'organisation.</p>
+                    ) : (
+                      <div className="space-y-3">
+                        {members.map((member) => (
+                          <div
+                            key={member.id}
+                            className="flex items-center gap-3 p-3 bg-[#F5F7F9] dark:bg-[#0D1117] rounded-xl"
+                          >
+                            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#0066FF] to-[#0052CC] flex items-center justify-center text-white text-sm font-medium">
+                              {member.first_name?.[0] || member.last_name?.[0] || '?'}
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <p className="text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3] truncate">
+                                {member.first_name || ''} {member.last_name || ''}
+                                {member.is_owner && (
+                                  <span className="ml-2 px-1.5 py-0.5 text-[10px] font-semibold bg-[#E8F5E9] dark:bg-[#147A3A]/20 text-[#147A3A] dark:text-[#4ADE80] rounded">
+                                    Proprietaire
+                                  </span>
+                                )}
+                              </p>
+                              <p className="text-xs text-[#9BA0A6] dark:text-[#8B949E] truncate">
+                                {member.job_title || member.role?.name || 'Membre'}
+                              </p>
+                            </div>
+                            {!member.is_active && (
+                              <span className="px-2 py-1 text-xs font-medium bg-red-50 dark:bg-red-900/20 text-[#B42318] dark:text-red-400 rounded">
+                                Inactif
+                              </span>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Teams */}
+                  <div className="bg-white dark:bg-[#161B22] rounded-[14px] border border-[#E2E4E6] dark:border-[#30363D] p-4 lg:p-6 transition-colors duration-200">
+                    <div className="flex items-center justify-between mb-4">
+                      <h2 className="text-lg font-semibold text-[#0D0F14] dark:text-[#E6EDF3]">Equipes ({teams.length})</h2>
+                      <button
+                        className="h-9 px-4 text-sm font-medium text-[#9BA0A6] border border-[#E2E4E6] dark:border-[#30363D] rounded-lg cursor-not-allowed"
+                        disabled
+                        title="Bientot disponible"
+                      >
+                        Creer une equipe
+                      </button>
+                    </div>
+                    {teams.length === 0 ? (
+                      <div className="text-center py-8">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="mx-auto mb-3 text-[#9BA0A6] dark:text-[#8B949E]">
+                          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                          <circle cx="9" cy="7" r="4" />
+                          <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                          <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                        </svg>
+                        <p className="text-sm text-[#9BA0A6] dark:text-[#8B949E]">Aucune equipe creee.</p>
+                        <p className="text-xs text-[#9BA0A6] dark:text-[#8B949E] mt-1">Les equipes permettent d'organiser vos membres.</p>
+                      </div>
+                    ) : (
+                      <div className="space-y-3">
+                        {teams.map((team) => (
+                          <div
+                            key={team.id}
+                            className="flex items-center gap-3 p-3 bg-[#F5F7F9] dark:bg-[#0D1117] rounded-xl"
+                          >
+                            <div className="w-10 h-10 rounded-lg bg-[#0066FF]/10 dark:bg-[#58A6FF]/10 flex items-center justify-center">
+                              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0066FF" strokeWidth="2" className="dark:stroke-[#58A6FF]">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                                <circle cx="9" cy="7" r="4" />
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                              </svg>
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <p className="text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3] truncate">{team.name}</p>
+                              <p className="text-xs text-[#9BA0A6] dark:text-[#8B949E] truncate">
+                                {team.members_count} membre{team.members_count !== 1 ? 's' : ''}
+                                {team.manager && ` - Manager: ${team.manager.first_name || ''} ${team.manager.last_name || ''}`}
+                              </p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </>
+              )}
             </>
           )}
 

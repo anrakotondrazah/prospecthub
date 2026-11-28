@@ -1,0 +1,183 @@
+import { createClient } from '@/lib/supabase/server'
+import { NextRequest, NextResponse } from 'next/server'
+
+interface NotificationSettings {
+  email_new_lead?: boolean
+  email_weekly_report?: boolean
+  email_task_reminder?: boolean
+  browser?: boolean
+}
+
+interface UserSettings {
+  notifications?: NotificationSettings
+  locale?: string
+  theme?: 'light' | 'dark' | 'system'
+}
+
+// GET - Fetch current user preferences
+export async function GET() {
+  try {
+    const supabase = await createClient()
+
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser()
+
+    if (authError || !user) {
+      return NextResponse.json({ success: false, message: 'Non authentifie' }, { status: 401 })
+    }
+
+    const { data: profile, error: profileError } = await supabase
+      .from('profiles')
+      .select('settings')
+      .eq('id', user.id)
+      .single()
+
+    if (profileError) {
+      return NextResponse.json(
+        { success: false, message: 'Erreur lors de la recuperation des preferences' },
+        { status: 500 }
+      )
+    }
+
+    // Default settings if none exist
+    const defaultSettings: UserSettings = {
+      notifications: {
+        email_new_lead: true,
+        email_weekly_report: false,
+        email_task_reminder: true,
+        browser: false,
+      },
+      locale: 'fr_FR',
+      theme: 'system',
+    }
+
+    const settings = profile?.settings || defaultSettings
+
+    return NextResponse.json({
+      success: true,
+      settings,
+    })
+  } catch (error) {
+    console.error('Settings API error:', error)
+    return NextResponse.json({ success: false, message: 'Erreur serveur' }, { status: 500 })
+  }
+}
+
+// PATCH - Update user preferences
+export async function PATCH(request: NextRequest) {
+  try {
+    const supabase = await createClient()
+
+    const {
+      data: { user },
+      error: authError,
+    } = await supabase.auth.getUser()
+
+    if (authError || !user) {
+      return NextResponse.json({ success: false, message: 'Non authentifie' }, { status: 401 })
+    }
+
+    const body = await request.json().catch(() => null)
+    if (!body || typeof body !== 'object') {
+      return NextResponse.json(
+        { success: false, message: 'Corps de requete invalide' },
+        { status: 400 }
+      )
+    }
+
+    // Get current settings
+    const { data: profile, error: fetchError } = await supabase
+      .from('profiles')
+      .select('settings')
+      .eq('id', user.id)
+      .single()
+
+    if (fetchError) {
+      console.error('Settings fetch error:', fetchError)
+      return NextResponse.json(
+        { success: false, message: 'Erreur lors de la recuperation des preferences' },
+        { status: 500 }
+      )
+    }
+
+    const currentSettings = (profile?.settings || {}) as UserSettings
+
+    // Merge new settings with current
+    const updatedSettings: UserSettings = {
+      ...currentSettings,
+    }
+
+    // Update notifications if provided (validate boolean types strictly)
+    if (body.notifications && typeof body.notifications === 'object') {
+      const validNotificationKeys = ['email_new_lead', 'email_weekly_report', 'email_task_reminder', 'browser'] as const
+      const validatedNotifications: Partial<NotificationSettings> = {}
+
+      for (const key of validNotificationKeys) {
+        if (key in body.notifications) {
+          // Strict boolean validation - reject non-boolean values
+          if (typeof body.notifications[key] !== 'boolean') {
+            return NextResponse.json(
+              { success: false, message: `Valeur invalide pour ${key}: doit etre un booleen` },
+              { status: 400 }
+            )
+          }
+          validatedNotifications[key] = body.notifications[key]
+        }
+      }
+
+      // Check for unknown keys
+      const unknownKeys = Object.keys(body.notifications).filter(
+        k => !validNotificationKeys.includes(k as typeof validNotificationKeys[number])
+      )
+      if (unknownKeys.length > 0) {
+        return NextResponse.json(
+          { success: false, message: `Cles de notification inconnues: ${unknownKeys.join(', ')}` },
+          { status: 400 }
+        )
+      }
+
+      updatedSettings.notifications = {
+        ...currentSettings.notifications,
+        ...validatedNotifications,
+      }
+    }
+
+    // Update locale if provided (whitelist valid locales)
+    const validLocales = ['fr_FR', 'en_US', 'en_GB', 'es_ES', 'pt_PT', 'it_IT', 'nl_NL', 'de_DE']
+    if (typeof body.locale === 'string' && validLocales.includes(body.locale)) {
+      updatedSettings.locale = body.locale
+    }
+
+    // Update theme if provided
+    if (body.theme && ['light', 'dark', 'system'].includes(body.theme)) {
+      updatedSettings.theme = body.theme
+    }
+
+    // Save to database
+    const { error: updateError } = await supabase
+      .from('profiles')
+      .update({
+        settings: updatedSettings,
+        updated_at: new Date().toISOString(),
+      })
+      .eq('id', user.id)
+
+    if (updateError) {
+      console.error('Error updating settings:', updateError)
+      return NextResponse.json(
+        { success: false, message: 'Erreur lors de la sauvegarde des preferences' },
+        { status: 500 }
+      )
+    }
+
+    return NextResponse.json({
+      success: true,
+      settings: updatedSettings,
+    })
+  } catch (error) {
+    console.error('Settings API error:', error)
+    return NextResponse.json({ success: false, message: 'Erreur serveur' }, { status: 500 })
+  }
+}

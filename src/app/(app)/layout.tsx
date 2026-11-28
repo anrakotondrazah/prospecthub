@@ -17,10 +17,16 @@ export default async function AppLayout({
     redirect('/auth/login')
   }
 
-  // Check if onboarding is completed
+  // Check if onboarding is completed and get organization
   const { data: profile } = await supabase
     .from('profiles')
-    .select('first_name, last_name, organization_id, onboarding_completed')
+    .select(`
+      first_name,
+      last_name,
+      organization_id,
+      onboarding_completed,
+      organization:organizations(name)
+    `)
     .eq('id', user.id)
     .single()
 
@@ -30,14 +36,19 @@ export default async function AppLayout({
   }
 
   const fullName = profile ? `${profile.first_name || ''} ${profile.last_name || ''}`.trim() : null
+  const orgData = profile.organization as { name: string } | { name: string }[] | null
+  const organizationName = Array.isArray(orgData) ? orgData[0]?.name : orgData?.name
 
   return (
     <div className="min-h-screen bg-muted">
       <Sidebar
         user={{
+          id: user.id,
           email: user.email,
           full_name: fullName || user.user_metadata?.full_name,
         }}
+        organizationId={profile.organization_id}
+        organizationName={organizationName || undefined}
         plan="Free"
       />
       <main className="lg:ml-[260px] p-4 lg:p-6">

@@ -1,6 +1,48 @@
 import { createClient } from '@/lib/supabase/server'
 import { NextRequest, NextResponse } from 'next/server'
 
+// Allowed values for sequence fields (match database constraints)
+const ALLOWED_STATUS = ['draft', 'active', 'paused', 'archived'] as const
+const ALLOWED_TRIGGER_TYPE = ['manual', 'enrollment', 'workflow'] as const
+
+// Validation helper
+function validateSequenceFields(
+  data: Record<string, unknown>,
+  isCreate: boolean
+): { valid: true } | { valid: false; message: string } {
+  // Name validation
+  if (isCreate) {
+    if (typeof data.name !== 'string' || data.name.trim() === '') {
+      return { valid: false, message: 'Nom de la sequence obligatoire (string non vide)' }
+    }
+  } else if (data.name !== undefined) {
+    if (typeof data.name !== 'string' || data.name.trim() === '') {
+      return { valid: false, message: 'Nom invalide (doit etre une string non vide)' }
+    }
+  }
+
+  // Status validation
+  if (data.status !== undefined) {
+    if (!ALLOWED_STATUS.includes(data.status as typeof ALLOWED_STATUS[number])) {
+      return { valid: false, message: `Status invalide (valeurs autorisees: ${ALLOWED_STATUS.join(', ')})` }
+    }
+  }
+
+  // Trigger type validation
+  if (data.trigger_type !== undefined) {
+    if (!ALLOWED_TRIGGER_TYPE.includes(data.trigger_type as typeof ALLOWED_TRIGGER_TYPE[number])) {
+      return { valid: false, message: `Type de declencheur invalide (valeurs autorisees: ${ALLOWED_TRIGGER_TYPE.join(', ')})` }
+    }
+  }
+
+  // Description validation (must be string or null/undefined)
+  if (data.description !== undefined && data.description !== null && typeof data.description !== 'string') {
+    return { valid: false, message: 'Description invalide (doit etre une string ou null)' }
+  }
+
+  return { valid: true }
+}
+
 // GET - Fetch all sequences for the organization
 export async function GET() {
   try {
@@ -106,10 +148,11 @@ export async function POST(request: NextRequest) {
 
     const { name, description, trigger_type, status } = body
 
-    // Validation
-    if (!name) {
+    // Validation using shared schema
+    const validation = validateSequenceFields(body, true)
+    if (!validation.valid) {
       return NextResponse.json(
-        { success: false, message: 'Nom de la sequence obligatoire' },
+        { success: false, message: validation.message },
         { status: 400 }
       )
     }

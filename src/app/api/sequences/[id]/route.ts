@@ -1,6 +1,43 @@
 import { createClient } from '@/lib/supabase/server'
 import { NextRequest, NextResponse } from 'next/server'
 
+// Allowed values for sequence fields (match database constraints)
+const ALLOWED_STATUS = ['draft', 'active', 'paused', 'archived'] as const
+const ALLOWED_TRIGGER_TYPE = ['manual', 'enrollment', 'workflow'] as const
+
+// Validation helper for PATCH (partial update)
+function validateSequenceUpdate(
+  data: Record<string, unknown>
+): { valid: true } | { valid: false; message: string } {
+  // Name validation (if supplied)
+  if (data.name !== undefined) {
+    if (typeof data.name !== 'string' || data.name.trim() === '') {
+      return { valid: false, message: 'Nom invalide (doit etre une string non vide)' }
+    }
+  }
+
+  // Status validation (if supplied)
+  if (data.status !== undefined) {
+    if (!ALLOWED_STATUS.includes(data.status as typeof ALLOWED_STATUS[number])) {
+      return { valid: false, message: `Status invalide (valeurs autorisees: ${ALLOWED_STATUS.join(', ')})` }
+    }
+  }
+
+  // Trigger type validation (if supplied)
+  if (data.trigger_type !== undefined) {
+    if (!ALLOWED_TRIGGER_TYPE.includes(data.trigger_type as typeof ALLOWED_TRIGGER_TYPE[number])) {
+      return { valid: false, message: `Type de declencheur invalide (valeurs autorisees: ${ALLOWED_TRIGGER_TYPE.join(', ')})` }
+    }
+  }
+
+  // Description validation (if supplied, must be string or null)
+  if (data.description !== undefined && data.description !== null && typeof data.description !== 'string') {
+    return { valid: false, message: 'Description invalide (doit etre une string ou null)' }
+  }
+
+  return { valid: true }
+}
+
 // GET - Fetch sequence by ID with steps
 export async function GET(
   request: NextRequest,
@@ -108,6 +145,15 @@ export async function PATCH(
     }
 
     const { name, description, trigger_type, status, settings } = body
+
+    // Validation using shared schema (partial update)
+    const validation = validateSequenceUpdate(body)
+    if (!validation.valid) {
+      return NextResponse.json(
+        { success: false, message: validation.message },
+        { status: 400 }
+      )
+    }
 
     // Build update object
     const updateData: Record<string, unknown> = {}

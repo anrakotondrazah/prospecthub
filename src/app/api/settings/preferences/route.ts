@@ -88,11 +88,19 @@ export async function PATCH(request: NextRequest) {
     }
 
     // Get current settings
-    const { data: profile } = await supabase
+    const { data: profile, error: fetchError } = await supabase
       .from('profiles')
       .select('settings')
       .eq('id', user.id)
       .single()
+
+    if (fetchError) {
+      console.error('Settings fetch error:', fetchError)
+      return NextResponse.json(
+        { success: false, message: 'Erreur lors de la recuperation des preferences' },
+        { status: 500 }
+      )
+    }
 
     const currentSettings = (profile?.settings || {}) as UserSettings
 
@@ -101,16 +109,26 @@ export async function PATCH(request: NextRequest) {
       ...currentSettings,
     }
 
-    // Update notifications if provided
+    // Update notifications if provided (validate boolean types)
     if (body.notifications && typeof body.notifications === 'object') {
+      const validNotificationKeys = ['email_new_lead', 'email_weekly_report', 'email_task_reminder', 'browser'] as const
+      const validatedNotifications: Partial<NotificationSettings> = {}
+
+      for (const key of validNotificationKeys) {
+        if (key in body.notifications && typeof body.notifications[key] === 'boolean') {
+          validatedNotifications[key] = body.notifications[key]
+        }
+      }
+
       updatedSettings.notifications = {
         ...currentSettings.notifications,
-        ...body.notifications,
+        ...validatedNotifications,
       }
     }
 
-    // Update locale if provided
-    if (typeof body.locale === 'string') {
+    // Update locale if provided (whitelist valid locales)
+    const validLocales = ['fr_FR', 'en_US', 'en_GB', 'es_ES', 'pt_PT', 'it_IT', 'nl_NL', 'de_DE']
+    if (typeof body.locale === 'string' && validLocales.includes(body.locale)) {
       updatedSettings.locale = body.locale
     }
 

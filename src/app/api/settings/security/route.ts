@@ -43,9 +43,18 @@ export async function POST(request: NextRequest) {
         )
       }
 
+      // Verify user has email
+      if (!user.email) {
+        console.error('User has no email:', user.id)
+        return NextResponse.json(
+          { success: false, message: 'Email utilisateur introuvable' },
+          { status: 500 }
+        )
+      }
+
       // Verify current password by re-authenticating
       const { error: signInError } = await supabase.auth.signInWithPassword({
-        email: user.email!,
+        email: user.email,
         password: currentPassword,
       })
 
@@ -76,35 +85,19 @@ export async function POST(request: NextRequest) {
     }
 
     if (action === 'get_sessions') {
-      // Note: Supabase doesn't expose session listing in the client SDK
-      // This would require admin API or custom session tracking
-      return NextResponse.json({
-        success: true,
-        sessions: [
-          {
-            id: 'current',
-            device: 'Navigateur actuel',
-            location: 'Session en cours',
-            lastActive: new Date().toISOString(),
-            isCurrent: true,
-          },
-        ],
-      })
+      // Not implemented - requires Supabase Admin API or custom session tracking
+      return NextResponse.json(
+        { success: false, message: 'Fonctionnalite non disponible actuellement' },
+        { status: 501 }
+      )
     }
 
     if (action === 'revoke_session') {
-      const { sessionId } = body
-      if (sessionId === 'current') {
-        return NextResponse.json(
-          { success: false, message: 'Impossible de revoquer la session en cours' },
-          { status: 400 }
-        )
-      }
-      // Would need admin API to revoke other sessions
-      return NextResponse.json({
-        success: true,
-        message: 'Session revoquee',
-      })
+      // Not implemented - requires Supabase Admin API
+      return NextResponse.json(
+        { success: false, message: 'Fonctionnalite non disponible actuellement' },
+        { status: 501 }
+      )
     }
 
     return NextResponse.json(

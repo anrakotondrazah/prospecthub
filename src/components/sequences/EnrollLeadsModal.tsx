@@ -123,27 +123,26 @@ export function EnrollLeadsModal({
     setError(null)
 
     try {
-      const supabase = createClient()
+      // Use API endpoint for proper validation and next_step_at calculation
+      const response = await fetch(`/api/sequences/${sequenceId}/enroll`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          lead_ids: Array.from(selectedLeadIds),
+        }),
+      })
 
-      const enrollments = Array.from(selectedLeadIds).map((leadId) => ({
-        sequence_id: sequenceId,
-        lead_id: leadId,
-        status: 'active',
-        current_step: 1,
-        next_step_at: new Date().toISOString(),
-      }))
+      const data = await response.json()
 
-      const { error: insertError } = await supabase
-        .from('sequence_enrollments')
-        .insert(enrollments)
-
-      if (insertError) throw insertError
+      if (!response.ok || !data.success) {
+        throw new Error(data.message || 'Erreur lors de l\'inscription')
+      }
 
       onLeadsEnrolled()
       handleClose()
     } catch (err) {
       console.error('Error enrolling leads:', err)
-      setError('Erreur lors de l\'inscription des leads')
+      setError(err instanceof Error ? err.message : 'Erreur lors de l\'inscription des leads')
     } finally {
       setIsSubmitting(false)
     }

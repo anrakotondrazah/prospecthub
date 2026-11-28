@@ -68,7 +68,40 @@ export async function POST(
       )
     }
 
-    // Update enrollments to unenrolled status
+    // Deduplicate and validate lead_ids
+    const validLeadIds = [...new Set(lead_ids.filter((id: unknown) => typeof id === 'number' && id > 0))]
+
+    if (validLeadIds.length === 0) {
+      return NextResponse.json(
+        { success: false, message: 'Aucun lead valide fourni' },
+        { status: 400 }
+      )
+    }
+
+    // SECURITY: Verify all leads belong to the user's organization
+    const { data: validLeads, error: leadsError } = await supabase
+      .from('leads')
+      .select('id')
+      .in('id', validLeadIds)
+      .eq('organization_id', profile.organization_id)
+
+    if (leadsError) {
+      console.error('Error verifying leads:', leadsError)
+      return NextResponse.json(
+        { success: false, message: 'Erreur lors de la verification des leads' },
+        { status: 500 }
+      )
+    }
+
+    const verifiedLeadIds = validLeads?.map(l => l.id) || []
+    if (verifiedLeadIds.length === 0) {
+      return NextResponse.json(
+        { success: false, message: 'Aucun lead valide dans votre organisation' },
+        { status: 400 }
+      )
+    }
+
+    // Update enrollments to unenrolled status (only for verified leads)
     const { data: unenrolledLeads, error: updateError } = await supabase
       .from('sequence_enrollments')
       .update({
@@ -77,7 +110,7 @@ export async function POST(
         unenroll_reason: reason || null,
       })
       .eq('sequence_id', id)
-      .in('lead_id', lead_ids)
+      .in('lead_id', verifiedLeadIds)
       .select('*')
 
     if (updateError) {

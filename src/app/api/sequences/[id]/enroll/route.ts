@@ -95,8 +95,42 @@ export async function POST(
     // Deduplicate and validate lead_ids
     const uniqueLeadIds = [...new Set(lead_ids.filter((id: unknown) => typeof id === 'number' && id > 0))]
 
-    // Prepare enrollments
-    const enrollments = uniqueLeadIds.map(lead_id => ({
+    if (uniqueLeadIds.length === 0) {
+      return NextResponse.json(
+        { success: false, message: 'Aucun lead valide fourni' },
+        { status: 400 }
+      )
+    }
+
+    // SECURITY: Verify all leads belong to the user's organization
+    const { data: validLeads, error: leadsError } = await supabase
+      .from('leads')
+      .select('id')
+      .in('id', uniqueLeadIds)
+      .eq('organization_id', profile.organization_id)
+
+    if (leadsError) {
+      console.error('Error verifying leads:', leadsError)
+      return NextResponse.json(
+        { success: false, message: 'Erreur lors de la verification des leads' },
+        { status: 500 }
+      )
+    }
+
+    const validLeadIds = validLeads?.map(l => l.id) || []
+    if (validLeadIds.length === 0) {
+      return NextResponse.json(
+        { success: false, message: 'Aucun lead valide dans votre organisation' },
+        { status: 400 }
+      )
+    }
+
+    if (validLeadIds.length !== uniqueLeadIds.length) {
+      console.warn(`Some leads not found in org: requested ${uniqueLeadIds.length}, found ${validLeadIds.length}`)
+    }
+
+    // Prepare enrollments (only with validated leads)
+    const enrollments = validLeadIds.map(lead_id => ({
       sequence_id: parseInt(id),
       lead_id,
       status: 'active',

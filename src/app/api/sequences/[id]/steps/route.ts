@@ -151,39 +151,85 @@ export async function POST(
       )
     }
 
-    // Get max step_order if not provided
+    // SECURITY: Verify template_id belongs to user's organization if provided
+    if (template_id) {
+      const { data: template, error: templateError } = await supabase
+        .from('message_templates')
+        .select('id')
+        .eq('id', template_id)
+        .eq('organization_id', profile.organization_id)
+        .maybeSingle()
+
+      if (templateError || !template) {
+        return NextResponse.json(
+          { success: false, message: 'Template non trouve ou non autorise' },
+          { status: 400 }
+        )
+      }
+    }
+
+    // Get max step_order if not provided (with proper error handling)
     let finalStepOrder = step_order
     if (!finalStepOrder) {
-      const { data: maxStep } = await supabase
+      const { data: maxStep, error: maxStepError } = await supabase
         .from('sequence_steps')
         .select('step_order')
         .eq('sequence_id', id)
         .order('step_order', { ascending: false })
         .limit(1)
-        .single()
+        .maybeSingle()
+
+      if (maxStepError) {
+        console.error('Error getting max step order:', maxStepError)
+        return NextResponse.json(
+          { success: false, message: 'Erreur lors de la recuperation de l\'ordre' },
+          { status: 500 }
+        )
+      }
 
       finalStepOrder = (maxStep?.step_order || 0) + 1
     }
 
-    // Insert step
-    const { data: step, error: insertError } = await supabase
-      .from('sequence_steps')
-      .insert({
-        sequence_id: parseInt(id),
-        step_type,
-        step_order: finalStepOrder,
-        delay_days: delay_days || 0,
-        delay_hours: delay_hours || 0,
-        template_id: template_id || null,
-        subject: subject || null,
-        body: stepBody || null,
-        task_title: task_title || null,
-        task_description: task_description || null,
-      })
-      .select('*')
-      .single()
+    // Insert step with retry on unique violation (race condition handling)
+    let step = null
+    let insertError = null
+    let retries = 3
 
-    if (insertError) {
+    while (retries > 0) {
+      const result = await supabase
+        .from('sequence_steps')
+        .insert({
+          sequence_id: parseInt(id),
+          step_type,
+          step_order: finalStepOrder,
+          delay_days: delay_days || 0,
+          delay_hours: delay_hours || 0,
+          template_id: template_id || null,
+          subject: subject || null,
+          body: stepBody || null,
+          task_title: task_title || null,
+          task_description: task_description || null,
+        })
+        .select('*')
+        .single()
+
+      if (!result.error) {
+        step = result.data
+        break
+      }
+
+      // Check for unique violation (step_order conflict)
+      if (result.error.code === '23505') {
+        retries--
+        finalStepOrder++
+        continue
+      }
+
+      insertError = result.error
+      break
+    }
+
+    if (insertError || !step) {
       console.error('Error creating step:', insertError)
       return NextResponse.json(
         { success: false, message: 'Erreur lors de la creation de l\'etape' },

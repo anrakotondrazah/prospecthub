@@ -440,7 +440,6 @@ export function SequenceDetailClient({
           isOpen={showAddStepModal}
           onClose={() => setShowAddStepModal(false)}
           sequenceId={sequence.id}
-          currentStepsCount={sequence.steps.length}
           onStepAdded={() => {
             router.refresh()
             setShowAddStepModal(false)

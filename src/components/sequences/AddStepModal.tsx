@@ -1,14 +1,12 @@
 'use client'
 
 import { useState, useCallback } from 'react'
-import { createClient } from '@/lib/supabase/client'
 import { FillButton } from '@/components/ui/buttons'
 
 interface AddStepModalProps {
   isOpen: boolean
   onClose: () => void
   sequenceId: number
-  currentStepsCount: number
   onStepAdded: () => void
 }
 
@@ -54,7 +52,6 @@ export function AddStepModal({
   isOpen,
   onClose,
   sequenceId,
-  currentStepsCount,
   onStepAdded,
 }: AddStepModalProps) {
   const [stepType, setStepType] = useState<StepType>('email')
@@ -89,11 +86,8 @@ export function AddStepModal({
     setError(null)
 
     try {
-      const supabase = createClient()
-
-      const stepData: any = {
-        sequence_id: sequenceId,
-        step_order: currentStepsCount + 1,
+      // Use API endpoint for proper validation and step_order calculation
+      const stepData: Record<string, unknown> = {
         step_type: stepType,
         delay_days: delayDays,
         delay_hours: delayHours,
@@ -107,11 +101,17 @@ export function AddStepModal({
         stepData.task_description = taskDescription.trim() || null
       }
 
-      const { error: insertError } = await supabase
-        .from('sequence_steps')
-        .insert(stepData)
+      const response = await fetch(`/api/sequences/${sequenceId}/steps`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(stepData),
+      })
 
-      if (insertError) throw insertError
+      const data = await response.json()
+
+      if (!response.ok || !data.success) {
+        throw new Error(data.message || 'Erreur lors de l\'ajout')
+      }
 
       onStepAdded()
       handleClose()
@@ -123,7 +123,6 @@ export function AddStepModal({
     }
   }, [
     sequenceId,
-    currentStepsCount,
     stepType,
     delayDays,
     delayHours,
@@ -177,7 +176,7 @@ export function AddStepModal({
                   Ajouter une étape
                 </h2>
                 <p className="text-sm text-[#4E525A] dark:text-[#8B949E]">
-                  Étape {currentStepsCount + 1}
+                  Configurez le type et les parametres
                 </p>
               </div>
             </div>

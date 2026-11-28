@@ -1,14 +1,14 @@
 import { Badge } from './Badge'
 
 interface VerificationBadgeProps {
-  type: 'vérifiéd' | 'source' | 'bloctel'
+  type: 'verified' | 'source' | 'bloctel'
   date?: Date | string
   source?: string
   className?: string
 }
 
 export function VerificationBadge({ type, date, source, className }: VerificationBadgeProps) {
-  if (type === 'vérifiéd' && date) {
+  if (type === 'verified' && date) {
     const formattedDate = typeof date === 'string'
       ? new Date(date).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' })
       : date.toLocaleDateString('fr-FR', { day: 'numeric', month: 'short', year: 'numeric' })

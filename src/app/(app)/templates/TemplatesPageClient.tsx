@@ -20,7 +20,7 @@ import {
 
 type TemplatesPageClientProps = {
   initialTemplates: MessageTemplate[]
-  initialCatégories: { id: number; name: string; color: string }[]
+  initialCategories: { id: number; name: string; color: string }[]
   organizationId: number
   userId: string
 }
@@ -43,12 +43,12 @@ const TYPE_LABELS: Record<TemplateType, string> = {
 
 export function TemplatesPageClient({
   initialTemplates,
-  initialCatégories,
+  initialCategories,
   organizationId,
   userId,
 }: TemplatesPageClientProps) {
   const [templates, setTemplates] = useState<MessageTemplate[]>(initialTemplates)
-  const [categories] = useState(initialCatégories)
+  const [categories] = useState(initialCategories)
   const [search, setSearch] = useState('')
   const [filterType, setFilterType] = useState<TemplateType | 'all'>('all')
   const [filterCategory, setFilterCategory] = useState<string>('all')
@@ -159,7 +159,7 @@ export function TemplatesPageClient({
   }, [])
 
   // Extract unique categories from templates
-  const templateCatégories = [...new Set(templates.map((t) => t.category).filter(Boolean))]
+  const templateCategories = [...new Set(templates.map((t) => t.category).filter(Boolean))]
 
   return (
     <div>
@@ -225,7 +225,7 @@ export function TemplatesPageClient({
         </div>
 
         {/* Category filter */}
-        {templateCatégories.length > 0 && (
+        {templateCategories.length > 0 && (
           <div className="relative">
             <select
               value={filterCategory}
@@ -233,7 +233,7 @@ export function TemplatesPageClient({
               className="appearance-none pl-9 pr-8 py-2.5 bg-white dark:bg-[#161B22] border border-black/[0.08] dark:border-white/[0.08] rounded-xl text-sm text-[#0D0F14] dark:text-[#E6EDF3] focus:outline-none focus:border-[#0066FF] focus:ring-3 focus:ring-[#0066FF]/10 cursor-pointer"
             >
               <option value="all">Toutes categories</option>
-              {templateCatégories.map((cat) => (
+              {templateCategories.map((cat) => (
                 <option key={cat} value={cat as string}>
                   {cat}
                 </option>

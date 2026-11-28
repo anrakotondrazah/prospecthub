@@ -228,7 +228,7 @@ function LeadDetailPanel({ lead, onClose }: { lead: Lead; onClose: () => void })
 
             {/* Badges de verification */}
             <div className="flex flex-wrap gap-2 mb-4">
-              <VerificationBadge type="vérifiéd" date={lead.created_at} />
+              <VerificationBadge type="verified" date={lead.created_at} />
               <VerificationBadge type="source" source={lead.source || undefined} />
             </div>
 

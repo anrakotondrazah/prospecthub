@@ -2,15 +2,15 @@
 
 import { useEffect, useState } from 'react'
 
-export type SuccèssMessageType =
+export type SuccessMessageType =
   | 'lead_revealed'
   | 'first_email'
   | 'deal_won'
   | 'list_created'
   | 'import_completed'
 
-interface SuccèssMessageProps {
-  type: SuccèssMessageType
+interface SuccessMessageProps {
+  type: SuccessMessageType
   message?: string
   details?: string
   duration?: number
@@ -71,13 +71,13 @@ const SUCCESS_CONFIG = {
   }
 }
 
-export function SuccèssMessage({
+export function SuccessMessage({
   type,
   message,
   details,
   duration = 3000,
   onClose
-}: SuccèssMessageProps) {
+}: SuccessMessageProps) {
   const [isVisible, setIsVisible] = useState(false)
   const [isExiting, setIsExiting] = useState(false)
 
@@ -146,10 +146,10 @@ export function SuccèssMessage({
 }
 
 // Hook pour faciliter l'utilisation
-export function useSuccèssMessage() {
-  const [message, setMessage] = useState<SuccèssMessageProps | null>(null)
+export function useSuccessMessage() {
+  const [message, setMessage] = useState<SuccessMessageProps | null>(null)
 
-  const show = (props: Omit<SuccèssMessageProps, 'onClose'>) => {
+  const show = (props: Omit<SuccessMessageProps, 'onClose'>) => {
     setMessage(props)
   }
 
@@ -160,8 +160,8 @@ export function useSuccèssMessage() {
   return {
     show,
     hide,
-    SuccèssMessageComponent: message ? (
-      <SuccèssMessage {...message} onClose={hide} />
+    SuccessMessageComponent: message ? (
+      <SuccessMessage {...message} onClose={hide} />
     ) : null
   }
 }

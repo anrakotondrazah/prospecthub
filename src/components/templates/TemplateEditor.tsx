@@ -216,7 +216,7 @@ Cordialement,
         </div>
       )}
 
-      {/* Succèss indicator */}
+      {/* Success indicator */}
       {validation.isValid && validation.usedTokens.length > 0 && (
         <div className="flex items-center gap-2 p-3 bg-[#ECFDF5] dark:bg-[#059669]/10 rounded-lg">
           <CheckCircle className="w-4 h-4 text-[#059669]" />

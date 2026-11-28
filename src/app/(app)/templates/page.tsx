@@ -51,7 +51,7 @@ export default async function TemplatesPage() {
   return (
     <TemplatesPageClient
       initialTemplates={templates || []}
-      initialCatégories={categories || []}
+      initialCategories={categories || []}
       organizationId={profile.organization_id}
       userId={user.id}
     />

@@ -28,7 +28,7 @@ type AddToListModalProps = {
   leads: Lead[]
   organizationId: number
   userId: string
-  onSuccèss?: (addedCount: number) => void
+  onSuccess?: (addedCount: number) => void
 }
 
 export function AddToListModal({
@@ -37,7 +37,7 @@ export function AddToListModal({
   leads,
   organizationId,
   userId,
-  onSuccèss,
+  onSuccess,
 }: AddToListModalProps) {
   const [lists, setLists] = useState<List[]>([])
   const [selectedListId, setSelectedListId] = useState<number | null>(null)
@@ -115,7 +115,7 @@ export function AddToListModal({
 
       if (insertError) throw insertError
 
-      onSuccèss?.(leadsToAdd.length)
+      onSuccess?.(leadsToAdd.length)
       onClose()
     } catch (err: unknown) {
       console.error('Error adding to list:', err)
@@ -123,7 +123,7 @@ export function AddToListModal({
     } finally {
       setIsAdding(false)
     }
-  }, [selectedListId, leads, userId, onSuccèss, onClose])
+  }, [selectedListId, leads, userId, onSuccess, onClose])
 
   const filteredLists = lists.filter(list =>
     list.name.toLowerCase().includes(searchQuery.toLowerCase())

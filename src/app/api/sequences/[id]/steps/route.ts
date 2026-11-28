@@ -304,18 +304,61 @@ export async function PUT(
       )
     }
 
-    const { stepIds } = body as { stepIds: number[] }
+    const { stepIds } = body as { stepIds: unknown[] }
+
+    // Validate: all values must be integers
+    if (!stepIds.every(id => Number.isInteger(id))) {
+      return NextResponse.json(
+        { success: false, message: 'stepIds must contain only integers' },
+        { status: 400 }
+      )
+    }
+
+    const validStepIds = stepIds as number[]
+
+    // Validate: no duplicates
+    if (new Set(validStepIds).size !== validStepIds.length) {
+      return NextResponse.json(
+        { success: false, message: 'stepIds must not contain duplicates' },
+        { status: 400 }
+      )
+    }
+
+    // Validate: must be exact permutation of existing step IDs
+    const { data: existingSteps, error: existingError } = await supabase
+      .from('sequence_steps')
+      .select('id')
+      .eq('sequence_id', parseInt(id))
+
+    if (existingError) {
+      console.error('Error fetching existing steps:', existingError)
+      return NextResponse.json(
+        { success: false, message: 'Erreur lors de la verification' },
+        { status: 500 }
+      )
+    }
+
+    const existingIds = new Set((existingSteps || []).map(s => s.id))
+    const providedIds = new Set(validStepIds)
+
+    if (existingIds.size !== providedIds.size ||
+        !validStepIds.every(id => existingIds.has(id))) {
+      return NextResponse.json(
+        { success: false, message: 'stepIds must be exact permutation of sequence steps' },
+        { status: 400 }
+      )
+    }
 
     // Update each step with new order
     // Use negative numbers first to avoid unique constraint violations
     const tempOffset = -1000000
 
     // First pass: set temporary negative values
-    for (let i = 0; i < stepIds.length; i++) {
+    for (let i = 0; i < validStepIds.length; i++) {
       const { error } = await supabase
         .from('sequence_steps')
         .update({ step_order: tempOffset - i })
-        .eq('id', stepIds[i])
+        .eq('id', validStepIds[i])
         .eq('sequence_id', parseInt(id))
 
       if (error) {
@@ -328,11 +371,11 @@ export async function PUT(
     }
 
     // Second pass: set final positive values
-    for (let i = 0; i < stepIds.length; i++) {
+    for (let i = 0; i < validStepIds.length; i++) {
       const { error } = await supabase
         .from('sequence_steps')
         .update({ step_order: i + 1 })
-        .eq('id', stepIds[i])
+        .eq('id', validStepIds[i])
         .eq('sequence_id', parseInt(id))
 
       if (error) {

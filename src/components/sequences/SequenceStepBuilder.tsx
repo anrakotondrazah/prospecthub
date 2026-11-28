@@ -406,9 +406,9 @@ export function SequenceStepBuilder({
         </button>
       </div>
 
-      {/* Drag-drop context */}
+      {/* Drag-drop context - disabled while reordering */}
       <DndContext
-        sensors={sensors}
+        sensors={isReordering ? [] : sensors}
         collisionDetection={closestCenter}
         onDragEnd={handleDragEnd}
       >

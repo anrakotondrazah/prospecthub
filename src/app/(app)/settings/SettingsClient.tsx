@@ -33,6 +33,15 @@ export function SettingsClient({
   const [isSaving, setIsSaving] = useState(false)
   const [saveMessage, setSaveMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null)
 
+  // Password change state
+  const [passwordForm, setPasswordForm] = useState({
+    currentPassword: '',
+    newPassword: '',
+    confirmPassword: '',
+  })
+  const [isChangingPassword, setIsChangingPassword] = useState(false)
+  const [passwordMessage, setPasswordMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null)
+
   // Notification preferences
   const [notifications, setNotifications] = useState({
     emailNewLead: true,
@@ -82,6 +91,15 @@ export function SettingsClient({
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
           <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
           <circle cx="12" cy="12" r="3" />
+        </svg>
+      ),
+    },
+    {
+      id: 'security',
+      label: 'Securite',
+      icon: (
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
         </svg>
       ),
     },
@@ -136,6 +154,44 @@ export function SettingsClient({
     } finally {
       setIsSaving(false)
       setTimeout(() => setSaveMessage(null), 3000)
+    }
+  }
+
+  const handleChangePassword = async () => {
+    if (passwordForm.newPassword !== passwordForm.confirmPassword) {
+      setPasswordMessage({ type: 'error', text: 'Les mots de passe ne correspondent pas' })
+      return
+    }
+    if (passwordForm.newPassword.length < 8) {
+      setPasswordMessage({ type: 'error', text: 'Le mot de passe doit contenir au moins 8 caracteres' })
+      return
+    }
+
+    setIsChangingPassword(true)
+    setPasswordMessage(null)
+    try {
+      const response = await fetch('/api/settings/security', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'change_password',
+          currentPassword: passwordForm.currentPassword,
+          newPassword: passwordForm.newPassword,
+        }),
+      })
+      const data = await response.json()
+      if (data.success) {
+        setPasswordMessage({ type: 'success', text: 'Mot de passe modifie avec succes' })
+        setPasswordForm({ currentPassword: '', newPassword: '', confirmPassword: '' })
+      } else {
+        setPasswordMessage({ type: 'error', text: data.message || 'Erreur lors du changement' })
+      }
+    } catch (error) {
+      console.error('Password change error:', error)
+      setPasswordMessage({ type: 'error', text: 'Erreur de connexion' })
+    } finally {
+      setIsChangingPassword(false)
+      setTimeout(() => setPasswordMessage(null), 5000)
     }
   }
 
@@ -305,6 +361,128 @@ export function SettingsClient({
                       checked={notifications.browserNotifications}
                       onChange={(checked) => setNotifications(prev => ({ ...prev, browserNotifications: checked }))}
                     />
+                  </div>
+                </div>
+              </div>
+            </>
+          )}
+
+          {/* Security Tab */}
+          {activeTab === 'security' && (
+            <>
+              <div className="bg-white dark:bg-[#161B22] rounded-[14px] border border-[#E2E4E6] dark:border-[#30363D] p-4 lg:p-6 transition-colors duration-200">
+                <h2 className="text-lg font-semibold text-[#0D0F14] dark:text-[#E6EDF3] mb-4">Changer le mot de passe</h2>
+                {passwordMessage && (
+                  <div className={`mb-4 p-3 rounded-lg text-sm ${
+                    passwordMessage.type === 'success'
+                      ? 'bg-[#E8F5E9] text-[#147A3A] dark:bg-[#147A3A]/20 dark:text-[#4ADE80]'
+                      : 'bg-red-50 text-[#B42318] dark:bg-red-900/20 dark:text-red-400'
+                  }`}>
+                    {passwordMessage.text}
+                  </div>
+                )}
+                <div className="space-y-4">
+                  <div>
+                    <label htmlFor="currentPassword" className="block text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3] mb-2">
+                      Mot de passe actuel
+                    </label>
+                    <input
+                      id="currentPassword"
+                      type="password"
+                      value={passwordForm.currentPassword}
+                      onChange={(e) => setPasswordForm(prev => ({ ...prev, currentPassword: e.target.value }))}
+                      className="w-full h-10 px-3 border border-[#E2E4E6] dark:border-[#30363D] rounded-[10px] text-sm bg-white dark:bg-[#0D1117] text-[#0D0F14] dark:text-[#E6EDF3] focus:outline-none focus:ring-2 focus:ring-[#0066FF] focus:border-transparent"
+                      autoComplete="current-password"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="newPassword" className="block text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3] mb-2">
+                      Nouveau mot de passe
+                    </label>
+                    <input
+                      id="newPassword"
+                      type="password"
+                      value={passwordForm.newPassword}
+                      onChange={(e) => setPasswordForm(prev => ({ ...prev, newPassword: e.target.value }))}
+                      className="w-full h-10 px-3 border border-[#E2E4E6] dark:border-[#30363D] rounded-[10px] text-sm bg-white dark:bg-[#0D1117] text-[#0D0F14] dark:text-[#E6EDF3] focus:outline-none focus:ring-2 focus:ring-[#0066FF] focus:border-transparent"
+                      autoComplete="new-password"
+                      minLength={8}
+                    />
+                    <p className="mt-1 text-xs text-[#9BA0A6] dark:text-[#8B949E]">Minimum 8 caracteres</p>
+                  </div>
+                  <div>
+                    <label htmlFor="confirmPassword" className="block text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3] mb-2">
+                      Confirmer le mot de passe
+                    </label>
+                    <input
+                      id="confirmPassword"
+                      type="password"
+                      value={passwordForm.confirmPassword}
+                      onChange={(e) => setPasswordForm(prev => ({ ...prev, confirmPassword: e.target.value }))}
+                      className="w-full h-10 px-3 border border-[#E2E4E6] dark:border-[#30363D] rounded-[10px] text-sm bg-white dark:bg-[#0D1117] text-[#0D0F14] dark:text-[#E6EDF3] focus:outline-none focus:ring-2 focus:ring-[#0066FF] focus:border-transparent"
+                      autoComplete="new-password"
+                    />
+                  </div>
+                  <button
+                    onClick={handleChangePassword}
+                    disabled={isChangingPassword || !passwordForm.currentPassword || !passwordForm.newPassword || !passwordForm.confirmPassword}
+                    className="h-10 px-4 text-sm font-medium text-white bg-[#0066FF] hover:bg-[#0052CC] rounded-[10px] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    {isChangingPassword ? 'Modification...' : 'Modifier le mot de passe'}
+                  </button>
+                </div>
+              </div>
+
+              <div className="bg-white dark:bg-[#161B22] rounded-[14px] border border-[#E2E4E6] dark:border-[#30363D] p-4 lg:p-6 transition-colors duration-200">
+                <h2 className="text-lg font-semibold text-[#0D0F14] dark:text-[#E6EDF3] mb-4">Authentification a deux facteurs</h2>
+                <p className="text-sm text-[#4E525A] dark:text-[#8B949E] mb-4">
+                  Renforcez la securite de votre compte avec la verification en deux etapes.
+                </p>
+                <div className="flex items-center justify-between p-4 bg-[#F5F7F9] dark:bg-[#0D1117] rounded-xl">
+                  <div className="flex items-center gap-3">
+                    <div className="w-10 h-10 rounded-full bg-[#FFF3E0] dark:bg-[#E65100]/20 flex items-center justify-center">
+                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#E65100" strokeWidth="2">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+                      </svg>
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3]">2FA non active</p>
+                      <p className="text-xs text-[#9BA0A6] dark:text-[#8B949E]">Application TOTP recommandee</p>
+                    </div>
+                  </div>
+                  <button
+                    className="h-9 px-4 text-sm font-medium text-[#9BA0A6] border border-[#E2E4E6] dark:border-[#30363D] rounded-lg cursor-not-allowed"
+                    disabled
+                    title="Bientot disponible"
+                  >
+                    Configurer
+                  </button>
+                </div>
+              </div>
+
+              <div className="bg-white dark:bg-[#161B22] rounded-[14px] border border-[#E2E4E6] dark:border-[#30363D] p-4 lg:p-6 transition-colors duration-200">
+                <h2 className="text-lg font-semibold text-[#0D0F14] dark:text-[#E6EDF3] mb-4">Sessions actives</h2>
+                <p className="text-sm text-[#4E525A] dark:text-[#8B949E] mb-4">
+                  Gerez les appareils connectes a votre compte.
+                </p>
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between p-3 bg-[#F5F7F9] dark:bg-[#0D1117] rounded-xl">
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-lg bg-[#E8F5E9] dark:bg-[#147A3A]/20 flex items-center justify-center">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#147A3A" strokeWidth="2">
+                          <rect x="2" y="3" width="20" height="14" rx="2" ry="2" />
+                          <line x1="8" y1="21" x2="16" y2="21" />
+                          <line x1="12" y1="17" x2="12" y2="21" />
+                        </svg>
+                      </div>
+                      <div>
+                        <p className="text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3]">Session actuelle</p>
+                        <p className="text-xs text-[#9BA0A6] dark:text-[#8B949E]">Navigateur - En ligne</p>
+                      </div>
+                    </div>
+                    <span className="px-2 py-1 text-xs font-medium bg-[#E8F5E9] dark:bg-[#147A3A]/20 text-[#147A3A] dark:text-[#4ADE80] rounded-md">
+                      Active
+                    </span>
                   </div>
                 </div>
               </div>

@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { createClient } from '@/lib/supabase/client'
 
 interface ProfileImageUploadProps {
@@ -19,7 +19,24 @@ export function ProfileImageUpload({
   const [isUploading, setIsUploading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [previewUrl, setPreviewUrl] = useState<string | null>(currentAvatarUrl)
+  const [blobUrl, setBlobUrl] = useState<string | null>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
+
+  // Sync previewUrl with currentAvatarUrl prop changes
+  useEffect(() => {
+    if (!isUploading) {
+      setPreviewUrl(currentAvatarUrl)
+    }
+  }, [currentAvatarUrl, isUploading])
+
+  // Cleanup blob URL on unmount or when replaced
+  useEffect(() => {
+    return () => {
+      if (blobUrl) {
+        URL.revokeObjectURL(blobUrl)
+      }
+    }
+  }, [blobUrl])
 
   const handleFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0]
@@ -43,8 +60,14 @@ export function ProfileImageUpload({
     try {
       const supabase = createClient()
 
+      // Revoke previous blob URL if exists
+      if (blobUrl) {
+        URL.revokeObjectURL(blobUrl)
+      }
+
       // Create preview
       const objectUrl = URL.createObjectURL(file)
+      setBlobUrl(objectUrl)
       setPreviewUrl(objectUrl)
 
       // Generate unique filename
@@ -80,11 +103,23 @@ export function ProfileImageUpload({
         throw new Error(result.message)
       }
 
+      // Revoke blob URL since we now use the real URL
+      if (blobUrl) {
+        URL.revokeObjectURL(blobUrl)
+        setBlobUrl(null)
+      }
+
       onUploadComplete(publicUrl)
       setPreviewUrl(publicUrl)
     } catch (err: unknown) {
       console.error('Upload error:', err)
       setError(err instanceof Error ? err.message : 'Erreur lors du telechargement')
+
+      // Revoke blob URL on error
+      if (blobUrl) {
+        URL.revokeObjectURL(blobUrl)
+        setBlobUrl(null)
+      }
       setPreviewUrl(currentAvatarUrl)
     } finally {
       setIsUploading(false)

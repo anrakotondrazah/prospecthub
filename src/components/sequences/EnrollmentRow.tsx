@@ -82,16 +82,28 @@ export function EnrollmentRow({
     if (isUpdating) return
     setIsUpdating(true)
 
+    const currentStatus = enrollment.status
+    const newStatus = currentStatus === 'active' ? 'paused' : 'active'
+
     try {
       const supabase = createClient()
-      const newStatus = enrollment.status === 'active' ? 'paused' : 'active'
 
-      const { error } = await supabase
+      // Optimistic locking: only update if status matches expected
+      const { data, error } = await supabase
         .from('sequence_enrollments')
         .update({ status: newStatus })
         .eq('id', enrollment.id)
+        .eq('status', currentStatus)
+        .select('id')
+        .maybeSingle()
 
       if (error) throw error
+
+      if (!data) {
+        alert('Le statut a ete modifie par ailleurs. Veuillez rafraichir.')
+        onStatusChange()
+        return
+      }
 
       onStatusChange()
     } catch (err) {

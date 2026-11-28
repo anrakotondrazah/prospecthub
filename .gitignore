@@ -51,3 +51,4 @@ next-env.d.ts
 !/00_REFERENCES/analysis/
 /00_REFERENCES/analysis/*
 !/00_REFERENCES/analysis/14_SPEC_MENU_COMPTE_ET_PARAMETRES.md
+graphify-out/cache/

@@ -307,14 +307,13 @@ export function SequenceStepBuilder({
     setIsReordering(true)
 
     try {
-      // Update step_order for the moved step
-      const movedStep = reorderedSteps[newIndex]
-      const newStepOrder = newIndex + 1
+      // Send all step IDs in new order to batch reorder endpoint
+      const stepIds = reorderedSteps.map(s => s.id)
 
-      const response = await fetch(`/api/sequences/${sequenceId}/steps/${movedStep.id}`, {
-        method: 'PATCH',
+      const response = await fetch(`/api/sequences/${sequenceId}/steps`, {
+        method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ step_order: newStepOrder }),
+        body: JSON.stringify({ stepIds }),
       })
 
       if (!response.ok) {

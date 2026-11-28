@@ -167,11 +167,18 @@ export default function BrandSettingsPage() {
     try {
       const supabase = createClient()
 
-      const { data: org } = await supabase
+      const { data: org, error: readError } = await supabase
         .from('organizations')
         .select('settings')
         .eq('id', organizationId)
         .single()
+
+      if (readError) {
+        console.error('Error reading settings:', readError)
+        setMessage({ type: 'error', text: 'Erreur de lecture des parametres' })
+        setIsSaving(false)
+        return
+      }
 
       const currentSettings = (org?.settings as Record<string, unknown>) || {}
 

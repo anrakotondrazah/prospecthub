@@ -597,3 +597,68 @@ body {
 .transition-smooth {
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
+
+/* ============================================
+   AVATAR ANIMATIONS - GPU-accelerated, low-power
+   ============================================ */
+
+/* Subtle pulse for online status - uses opacity only (GPU) */
+@keyframes pulse-subtle {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+.animate-pulse-subtle {
+  animation: pulse-subtle 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* Recording blink - crisp on/off */
+@keyframes blink {
+  0%, 50%, 100% { opacity: 1; }
+  25%, 75% { opacity: 0.3; }
+}
+
+.animate-blink {
+  animation: blink 1.5s ease-in-out infinite;
+}
+
+/* Typing dots - staggered bounce */
+@keyframes typing-dot {
+  0%, 60%, 100% { transform: translateY(0); }
+  30% { transform: translateY(-2px); }
+}
+
+.animate-typing-dot-1 {
+  animation: typing-dot 1.4s ease-in-out infinite;
+}
+
+.animate-typing-dot-2 {
+  animation: typing-dot 1.4s ease-in-out infinite;
+  animation-delay: 0.2s;
+}
+
+.animate-typing-dot-3 {
+  animation: typing-dot 1.4s ease-in-out infinite;
+  animation-delay: 0.4s;
+}
+
+/* Slow spin for loading ring */
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.animate-spin-slow {
+  animation: spin-slow 2s linear infinite;
+}
+
+/* In-call pulse ring */
+@keyframes ring-pulse {
+  0% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.05); opacity: 0.8; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.animate-ring-pulse {
+  animation: ring-pulse 1.5s ease-in-out infinite;
+}

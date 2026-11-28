@@ -28,10 +28,10 @@ export default async function MeetingsPage() {
             </svg>
           </div>
           <h2 className="text-xl font-semibold text-[#0D0F14] dark:text-[#E6EDF3] mb-2">
-            {profileError ? 'Erreur de chargement' : 'Organisation non configuree'}
+            {profileError ? 'Erreur de chargement' : 'Organisation non configurée'}
           </h2>
           <p className="text-[#4E525A] dark:text-[#8B949E]">
-            {profileError ? 'Impossible de charger votre profil.' : 'Completez votre onboarding pour acceder aux reunions.'}
+            {profileError ? 'Impossible de charger votre profil.' : 'Complétez votre onboarding pour accéder aux reunions.'}
           </p>
         </div>
       </div>

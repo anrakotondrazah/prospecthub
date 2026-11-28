@@ -29,7 +29,7 @@ export default async function InboxPage() {
           </div>
           <h2 className="text-xl font-semibold text-[#0D0F14] mb-2">Erreur de chargement</h2>
           <p className="text-[#4E525A] mb-4">Impossible de charger votre profil.</p>
-          <a href="/inbox" className="text-[#17191F] font-medium hover:underline">Reessayer</a>
+          <a href="/inbox" className="text-[#17191F] font-medium hover:underline">Réessayer</a>
         </div>
       </div>
     )
@@ -40,8 +40,8 @@ export default async function InboxPage() {
     return (
       <div className="flex items-center justify-center h-[60vh]">
         <div className="text-center">
-          <h2 className="text-xl font-semibold text-[#0D0F14] mb-2">Organisation non configuree</h2>
-          <p className="text-[#4E525A]">Completez votre onboarding pour acceder a la boite de reception.</p>
+          <h2 className="text-xl font-semibold text-[#0D0F14] mb-2">Organisation non configurée</h2>
+          <p className="text-[#4E525A]">Complétez votre onboarding pour accéder a la boite de reception.</p>
         </div>
       </div>
     )

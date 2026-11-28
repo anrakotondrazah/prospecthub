@@ -217,7 +217,7 @@
     "title": "Cotizaciones",
     "newQuote": "Nueva cotizacion",
     "columns": {
-      "number": "Numero",
+      "number": "Numéro",
       "client": "Cliente",
       "total": "Total",
       "status": "Estado",

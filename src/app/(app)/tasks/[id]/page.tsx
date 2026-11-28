@@ -126,9 +126,9 @@ export default async function TaskDetailPage({ params }: { params: Promise<{ id:
   }
 
   const statusConfig: Record<string, { bg: string; text: string; label: string }> = {
-    pending: { bg: 'bg-[#F5F7F9]', text: 'text-[#9BA0A6]', label: 'A faire' },
+    pending: { bg: 'bg-[#F5F7F9]', text: 'text-[#9BA0A6]', label: 'À faire' },
     in_progress: { bg: 'bg-[#E3F2FD]', text: 'text-[#1565C0]', label: 'En cours' },
-    completed: { bg: 'bg-[#E8F5E9]', text: 'text-[#147A3A]', label: 'Termine' },
+    completed: { bg: 'bg-[#E8F5E9]', text: 'text-[#147A3A]', label: 'Terminé' },
   }
 
   const priority = priorityConfig[task.priority] || priorityConfig.medium
@@ -219,7 +219,7 @@ export default async function TaskDetailPage({ params }: { params: Promise<{ id:
             {/* Due Date */}
             {task.due_date && (
               <div>
-                <p className="text-xs text-[#9BA0A6] dark:text-[#8B949E] mb-1">Echeance</p>
+                <p className="text-xs text-[#9BA0A6] dark:text-[#8B949E] mb-1">Échéance</p>
                 <p className={`text-sm ${isOverdue ? 'text-[#B42318]' : 'text-[#0D0F14] dark:text-[#E6EDF3]'}`}>
                   {new Date(task.due_date).toLocaleDateString('fr-FR', {
                     day: 'numeric',
@@ -230,10 +230,10 @@ export default async function TaskDetailPage({ params }: { params: Promise<{ id:
               </div>
             )}
 
-            {/* Assigned To */}
+            {/* Assignéd To */}
             {assignedTo && (
               <div>
-                <p className="text-xs text-[#9BA0A6] dark:text-[#8B949E] mb-1">Assigne a</p>
+                <p className="text-xs text-[#9BA0A6] dark:text-[#8B949E] mb-1">Assigné à</p>
                 <p className="text-sm text-[#0D0F14] dark:text-[#E6EDF3]">
                   {assignedTo.first_name} {assignedTo.last_name}
                 </p>
@@ -265,7 +265,7 @@ export default async function TaskDetailPage({ params }: { params: Promise<{ id:
             {/* Completed At */}
             {task.completed_at && (
               <div>
-                <p className="text-xs text-[#9BA0A6] dark:text-[#8B949E] mb-1">Terminee le</p>
+                <p className="text-xs text-[#9BA0A6] dark:text-[#8B949E] mb-1">Terminée le</p>
                 <p className="text-sm text-[#0D0F14] dark:text-[#E6EDF3]">
                   {new Date(task.completed_at).toLocaleDateString('fr-FR', {
                     day: 'numeric',

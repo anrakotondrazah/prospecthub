@@ -114,7 +114,7 @@ export function CreateListModal({ isOpen, onClose, onListCreated, organizationId
       >
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-black/[0.06] dark:border-[#30363D]">
-          <h2 className="text-xl font-semibold text-[#0D0F14] dark:text-[#E6EDF3]">Creer une liste</h2>
+          <h2 className="text-xl font-semibold text-[#0D0F14] dark:text-[#E6EDF3]">Créer une liste</h2>
           <button
             onClick={handleClose}
             className="w-8 h-8 rounded-xl hover:bg-black/[0.04] dark:hover:bg-white/[0.05] flex items-center justify-center transition-all duration-200 active:scale-95"
@@ -257,7 +257,7 @@ export function CreateListModal({ isOpen, onClose, onListCreated, organizationId
               disabled={isLoading}
               className="flex-1 px-4 py-2.5 bg-transparent border border-black/[0.08] dark:border-[#30363D] text-[#4E525A] dark:text-[#8B949E] rounded-xl font-medium hover:bg-black/[0.03] dark:hover:bg-white/[0.03] transition-all duration-200 disabled:opacity-50 active:scale-[0.98]"
             >
-              Annuler
+              Annulér
             </button>
             <FillButton
               disabled={isLoading || !name.trim()}
@@ -268,10 +268,10 @@ export function CreateListModal({ isOpen, onClose, onListCreated, organizationId
                   <svg className="animate-spin" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <path d="M21 12a9 9 0 11-6.219-8.56" />
                   </svg>
-                  Creation...
+                  Création...
                 </span>
               ) : (
-                'Creer la liste'
+                'Créer la liste'
               )}
             </FillButton>
           </div>

@@ -6,32 +6,32 @@ const features = [
   {
     icon: 'M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z',
     title: 'Gestion des Leads',
-    description: 'Centralisez tous vos prospects avec scoring automatique et suivi personnalise.',
+    description: 'Centralisez tous vos prospects avec scoring automatique et suivi personnalisé.',
   },
   {
     icon: 'M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4',
     title: 'Base Entreprises',
-    description: 'Enrichissement automatique des donnees entreprises via SIRET et APIs France.',
+    description: 'Enrichissement automatique des données entreprises via SIRET et APIs France.',
   },
   {
     icon: 'M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z',
     title: 'Tableaux de Bord',
-    description: 'Visualisez vos KPIs en temps reel: leads, conversions, performances.',
+    description: 'Visualisez vos KPIs en temps réel : leads, conversions, performances.',
   },
   {
     icon: 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4',
-    title: 'Gestion des Taches',
-    description: 'Organisez vos suivis avec un Kanban integre et des rappels automatiques.',
+    title: 'Gestion des Tâches',
+    description: 'Organisez vos suivis avec un Kanban intégré et des rappels automatiques.',
   },
   {
     icon: 'M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z',
-    title: 'Multi-tenant Securise',
-    description: 'Isolation complete des donnees par organisation avec RLS PostgreSQL.',
+    title: 'Multi-tenant Sécurisé',
+    description: 'Isolation complète des données par organisation avec RLS PostgreSQL.',
   },
   {
     icon: 'M13 10V3L4 14h7v7l9-11h-7z',
-    title: 'API & Integrations',
-    description: 'Connectez vos outils existants: Zapier, n8n, webhooks personnalises.',
+    title: 'API & Intégrations',
+    description: 'Connectez vos outils existants: Zapier, n8n, webhooks personnalisés.',
   },
 ]
 
@@ -39,7 +39,7 @@ const plans = [
   {
     name: 'Free',
     price: '0',
-    description: 'Pour demarrer et tester',
+    description: 'Pour démarrer et tester',
     features: ['50 leads/mois', '1 utilisateur', 'Dashboard basique', 'Export CSV'],
     cta: 'Commencer gratuitement',
     highlighted: false,
@@ -47,17 +47,17 @@ const plans = [
   {
     name: 'Pro',
     price: '29',
-    description: 'Pour les equipes en croissance',
-    features: ['1,000 leads/mois', '5 utilisateurs', 'Enrichissement auto', 'Integrations API', 'Support prioritaire'],
+    description: 'Pour les équipes en croissance',
+    features: ['1,000 leads/mois', '5 utilisateurs', 'Enrichissement auto', 'Intégrations API', 'Support prioritaire'],
     cta: 'Essai gratuit 14 jours',
     highlighted: true,
   },
   {
     name: 'Business',
     price: '79',
-    description: 'Pour les entreprises etablies',
-    features: ['Leads illimites', 'Utilisateurs illimites', 'SSO & SAML', 'API dedicee', 'Account manager'],
-    cta: 'Contacter les ventes',
+    description: 'Pour les entreprises établies',
+    features: ['Leads illimités', 'Utilisateurs illimités', 'SSO & SAML', 'API dédiée', 'Account manager'],
+    cta: 'Contactér les ventes',
     highlighted: false,
   },
 ]
@@ -70,13 +70,13 @@ const testimonials = [
     company: 'TechStartup SAS',
   },
   {
-    quote: 'Enfin un CRM adapte aux PME francaises. Les donnees SIRET et Pappers integrees nous font gagner un temps fou.',
+    quote: 'Enfin un CRM adapté aux PME françaises. Les données SIRET et Pappers intégrées nous font gagner un temps fou.',
     author: 'Pierre Martin',
     role: 'CEO',
     company: 'ConseilPro',
   },
   {
-    quote: 'Migration depuis HubSpot en 2 jours. Prix divise par 5 pour les memes fonctionnalites essentielles.',
+    quote: 'Migration depuis HubSpot en 2 jours. Prix divisé par 5 pour les mêmes fonctionnalités essentielles.',
     author: 'Sophie Leroy',
     role: 'Growth Manager',
     company: 'AgenceDigitale',
@@ -102,13 +102,13 @@ export default function LandingPage() {
 
           <div className="hidden md:flex items-center gap-1">
             <a href="#features" className="px-3 py-2 text-muted-foreground font-medium hover:text-foreground hover:bg-muted rounded-[10px] transition-colors">
-              Fonctionnalites
+              Fonctionnalités
             </a>
             <a href="#pricing" className="px-3 py-2 text-muted-foreground font-medium hover:text-foreground hover:bg-muted rounded-[10px] transition-colors">
               Tarifs
             </a>
             <a href="#testimonials" className="px-3 py-2 text-muted-foreground font-medium hover:text-foreground hover:bg-muted rounded-[10px] transition-colors">
-              Temoignages
+              Témoignages
             </a>
           </div>
 
@@ -117,7 +117,7 @@ export default function LandingPage() {
               href="/demo"
               className="hidden sm:flex px-4 py-2 text-sm font-medium text-muted-foreground hover:text-foreground transition-colors"
             >
-              Demo
+              Démo
             </Link>
             <Link
               href="/auth/login"
@@ -142,19 +142,19 @@ export default function LandingPage() {
             <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
               <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
             </svg>
-            Nouveau: 500+ entreprises ajoutees cette semaine
+            Nouveau: 500+ entreprises ajoutées cette semaine
           </div>
 
           <h1 className="text-[48px] md:text-[56px] font-bold text-foreground leading-[1.1] tracking-[-0.02em] mb-6">
-            Des leads a jour.
+            Des leads à jour.
             <br />
             <span className="text-[#0066FF]">Un CRM pour les travailler.</span>
           </h1>
 
           <p className="text-xl text-muted-foreground mb-10 max-w-2xl mx-auto leading-relaxed">
-            Acces a +50 000 entreprises francaises verifiees.
+            Accès à +50 000 entreprises françaises vérifiées.
             <br />
-            Revelez-les avec vos credits.
+            Révélez-les avec vos crédits.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -162,7 +162,7 @@ export default function LandingPage() {
               href="/auth/register"
               className="relative w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-white bg-[#0066FF] rounded-[12px] shadow-lg shadow-[#0066FF]/20 overflow-hidden z-[1] transition-all duration-[250ms] ease-out before:content-[''] before:absolute before:top-0 before:left-0 before:h-full before:w-0 before:rounded-[12px] before:bg-white before:z-[-1] before:transition-all before:duration-[250ms] before:ease-out hover:before:w-full hover:text-[#0066FF] active:scale-95"
             >
-              Commencer gratuitement - 10 credits offerts
+              Commencer gratuitement - 10 crédits offerts
             </Link>
             <Link
               href="/demo"
@@ -204,7 +204,7 @@ export default function LandingPage() {
           <h2 className="text-[36px] md:text-[42px] font-bold text-foreground mb-6 leading-tight">
             Prospecter prend trop de temps
             <br />
-            pour des resultats incertains
+            pour des résultats incertains
           </h2>
           <div className="grid md:grid-cols-3 gap-6 mt-12">
             <div className="p-6 bg-card/80 backdrop-blur-sm border border-border rounded-[16px]">
@@ -213,8 +213,8 @@ export default function LandingPage() {
                   <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" />
                 </svg>
               </div>
-              <h3 className="font-semibold text-foreground mb-2">Fichiers perimes</h3>
-              <p className="text-sm text-muted-foreground">Donnees obsoletes sans date de verification</p>
+              <h3 className="font-semibold text-foreground mb-2">Fichiers périmés</h3>
+              <p className="text-sm text-muted-foreground">Données obsolètes sans date de vérification</p>
             </div>
             <div className="p-6 bg-card/80 backdrop-blur-sm border border-border rounded-[16px]">
               <div className="w-12 h-12 mb-4 mx-auto rounded-[12px] bg-[#FEF2F2] flex items-center justify-center">
@@ -223,8 +223,8 @@ export default function LandingPage() {
                   <line x1="23" y1="1" x2="1" y2="23" />
                 </svg>
               </div>
-              <h3 className="font-semibold text-foreground mb-2">Numeros qui ne repondent plus</h3>
-              <p className="text-sm text-muted-foreground">Contacts non a jour, temps perdu</p>
+              <h3 className="font-semibold text-foreground mb-2">Numéros qui ne répondent plus</h3>
+              <p className="text-sm text-muted-foreground">Contacts non à jour, temps perdu</p>
             </div>
             <div className="p-6 bg-card/80 backdrop-blur-sm border border-border rounded-[16px]">
               <div className="w-12 h-12 mb-4 mx-auto rounded-[12px] bg-[#FEF2F2] flex items-center justify-center">
@@ -233,8 +233,8 @@ export default function LandingPage() {
                   <line x1="9" y1="22" x2="15" y2="22" />
                 </svg>
               </div>
-              <h3 className="font-semibold text-foreground mb-2">Entreprises fermees</h3>
-              <p className="text-sm text-muted-foreground">Aucune verification de statut</p>
+              <h3 className="font-semibold text-foreground mb-2">Entreprises fermées</h3>
+              <p className="text-sm text-muted-foreground">Aucune vérification de statut</p>
             </div>
           </div>
         </div>
@@ -264,10 +264,10 @@ export default function LandingPage() {
                 </svg>
               </div>
               <h3 className="text-xl font-bold text-foreground mb-3">
-                Fraicheur
+                Fraîcheur
               </h3>
               <p className="text-muted-foreground leading-relaxed">
-                Date de verification affichee sur chaque fiche. Vous savez toujours si votre lead est a jour.
+                Date de vérification affichée sur chaque fiche. Vous savez toujours si votre lead est à jour.
               </p>
             </div>
 
@@ -285,7 +285,7 @@ export default function LandingPage() {
                 Transparence
               </h3>
               <p className="text-muted-foreground leading-relaxed">
-                Source documentee pour chaque donnee. Registre public, partenaire verifie, ou signalement.
+                Source documentée pour chaque donnée. Registre public, partenaire vérifié, ou signalement.
               </p>
             </div>
 
@@ -299,10 +299,10 @@ export default function LandingPage() {
                 </svg>
               </div>
               <h3 className="text-xl font-bold text-foreground mb-3">
-                Simplicite
+                Simplicité
               </h3>
               <p className="text-muted-foreground leading-relaxed">
-                De la recherche au premier email dans le meme outil. Pas de copier-coller entre plateformes.
+                De la recherche au premier email dans le même outil. Pas de copier-coller entre plateformes.
               </p>
             </div>
           </div>
@@ -314,10 +314,10 @@ export default function LandingPage() {
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-[36px] font-bold text-foreground mb-4">
-              Comment ca marche
+              Comment ça marche
             </h2>
             <p className="text-lg text-muted-foreground">
-              De la recherche au contact en 3 etapes
+              De la recherche au contact en 3 étapes
             </p>
           </div>
 
@@ -331,7 +331,7 @@ export default function LandingPage() {
                   Recherchez
                 </h3>
                 <p className="text-muted-foreground leading-relaxed">
-                  Filtrez par secteur d'activite, taille d'entreprise, et localisation. Notre catalogue de +50 000 entreprises francaises verifiees.
+                  Filtrez par secteur d'activité, taille d'entreprise, et localisation. Notre catalogue de +50 000 entreprises françaises vérifiées.
                 </p>
               </div>
             </div>
@@ -342,10 +342,10 @@ export default function LandingPage() {
               </div>
               <div className="flex-1 p-6 bg-card/80 backdrop-blur-sm border border-border rounded-[16px]">
                 <h3 className="text-xl font-bold text-foreground mb-2">
-                  Revelez
+                  Révélez
                 </h3>
                 <p className="text-muted-foreground leading-relaxed">
-                  Debloquez les coordonnees completes avec vos credits. Email, telephone, dirigeants - toutes les infos pour contacter.
+                  Débloquez les coordonnées complètes avec vos crédits. Email, téléphone, dirigeants - toutes les infos pour contacter.
                 </p>
               </div>
             </div>
@@ -375,7 +375,7 @@ export default function LandingPage() {
               Tout ce dont vous avez besoin
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Un CRM complet, sans la complexite. Concentrez-vous sur vos ventes, pas sur votre outil.
+              Un CRM complet, sans la complexité. Concentrez-vous sur vos ventes, pas sur votre outil.
             </p>
           </div>
 
@@ -410,7 +410,7 @@ export default function LandingPage() {
               Tarifs simples et transparents
             </h2>
             <p className="text-lg text-muted-foreground">
-              Commencez gratuitement, evoluez selon vos besoins.
+              Commencez gratuitement, évoluez selon vos besoins.
             </p>
           </div>
 
@@ -520,14 +520,14 @@ export default function LandingPage() {
             commence par un lead
           </h2>
           <p className="text-lg text-white/90 mb-10 max-w-xl mx-auto">
-            Rejoignez 150+ commerciaux qui prospectent avec des donnees a jour
+            Rejoignez 150+ commerciaux qui prospectent avec des données à jour
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
             <Link
               href="/auth/register"
               className="relative w-full sm:w-auto inline-flex items-center justify-center px-8 py-4 text-base font-semibold text-[#0066FF] bg-white rounded-[12px] shadow-xl overflow-hidden z-[1] transition-all duration-[250ms] ease-out before:content-[''] before:absolute before:top-0 before:left-0 before:h-full before:w-0 before:rounded-[12px] before:bg-[#0066FF] before:z-[-1] before:transition-all before:duration-[250ms] before:ease-out hover:before:w-full hover:text-white hover:shadow-2xl active:scale-95"
             >
-              Creer mon compte gratuit
+              Créer mon compte gratuit
             </Link>
             <Link
               href="/demo"
@@ -537,7 +537,7 @@ export default function LandingPage() {
             </Link>
           </div>
           <p className="mt-6 text-sm text-white/80">
-            10 credits offerts. Aucune carte bancaire requise.
+            10 crédits offerts. Aucune carte bancaire requise.
           </p>
         </div>
       </section>
@@ -558,13 +558,13 @@ export default function LandingPage() {
             </div>
 
             <div className="flex items-center gap-6 text-sm text-muted-foreground">
-              <Link href="/privacy" className="hover:text-foreground">Confidentialite</Link>
+              <Link href="/privacy" className="hover:text-foreground">Confidentialité</Link>
               <Link href="/terms" className="hover:text-foreground">CGU</Link>
               <Link href="/contact" className="hover:text-foreground">Contact</Link>
             </div>
 
             <p className="text-sm text-muted-foreground/70">
-              2026 ProspectHub. Tous droits reserves.
+              2026 ProspectHub. Tous droits réservés.
             </p>
           </div>
         </div>

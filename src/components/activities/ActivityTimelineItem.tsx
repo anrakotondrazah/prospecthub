@@ -54,7 +54,7 @@ export function ActivityTimelineItem({ activity, isLast = false }: ActivityTimel
 
   const Icon = ICONS[activity.activity_type] || ICONS.other
   const colors = TYPE_COLORS[activity.activity_type] || TYPE_COLORS.other
-  const typeLabel = TYPE_LABELS[activity.activity_type] || 'Activite'
+  const typeLabel = TYPE_LABELS[activity.activity_type] || 'Activité'
 
   const relativeDate = formatDistanceToNow(new Date(activity.activity_date), {
     addSuffix: true,

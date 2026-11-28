@@ -110,7 +110,7 @@ export default function TermsPage() {
                 L&apos;utilisation du Service nécessite la création d&apos;un compte. Vous vous engagez à fournir des informations exactes et à les maintenir à jour.
               </p>
               <p className="text-[#4E525A] dark:text-[#9BA0A6] leading-relaxed">
-                Vous êtes responsable de la confidentialité de vos identifiants de connexion et de toutes les activités effectuées depuis votre compte.
+                Vous êtes responsable de la confidentialité de vos identifiants de connexion et de toutes les activities effectuées depuis votre compte.
               </p>
             </div>
 
@@ -138,7 +138,7 @@ export default function TermsPage() {
                     <line x1="18" y1="6" x2="6" y2="18" />
                     <line x1="6" y1="6" x2="18" y2="18" />
                   </svg>
-                  <span className="text-[#4E525A] dark:text-[#9BA0A6]">Contacter des personnes inscrites sur Bloctel sans base légale</span>
+                  <span className="text-[#4E525A] dark:text-[#9BA0A6]">Contactér des personnes inscrites sur Bloctel sans base légale</span>
                 </li>
                 <li className="flex items-start gap-3">
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="flex-shrink-0 mt-0.5 text-red-500">
@@ -235,7 +235,7 @@ export default function TermsPage() {
                 href="/contact"
                 className="inline-flex items-center gap-2 px-8 py-4 text-base font-semibold text-[#0066FF] bg-white rounded-[12px] hover:bg-[#F5F7F9] transition-all shadow-lg"
               >
-                Contactez-nous
+                Contactéz-nous
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <line x1="5" y1="12" x2="19" y2="12" />
                   <polyline points="12 5 19 12 12 19" />

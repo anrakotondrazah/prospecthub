@@ -56,7 +56,7 @@ export function CreateViewModal({
     }
 
     if (selectedColumns.length === 0) {
-      setError('Selectionnez au moins une colonne')
+      setError('Sélectionnez au moins une colonne')
       return
     }
 
@@ -128,7 +128,7 @@ export function CreateViewModal({
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-black/[0.06]">
           <div>
-            <h2 className="text-xl font-semibold text-[#0D0F14]">Creer une vue</h2>
+            <h2 className="text-xl font-semibold text-[#0D0F14]">Créer une vue</h2>
             <p className="text-sm text-[#4E525A] mt-1">
               {entityLabels[entityType] || entityType}
             </p>
@@ -170,7 +170,7 @@ export function CreateViewModal({
                 type="text"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
-                placeholder="Ex: Leads qualifies Q4"
+                placeholder="Ex: Leads qualifiés Q4"
                 className="w-full px-4 py-2.5 bg-white/80 backdrop-blur-sm border border-black/[0.08] rounded-xl text-sm focus:outline-none focus:border-[#0066FF] focus:ring-3 focus:ring-[#0066FF]/10 transition-all duration-200 shadow-sm hover:border-black/[0.12]"
                 disabled={isLoading}
                 maxLength={255}
@@ -296,7 +296,7 @@ export function CreateViewModal({
               disabled={isLoading}
               className="flex-1 px-4 py-2.5 bg-transparent border border-black/[0.08] text-[#4E525A] rounded-xl font-medium hover:bg-black/[0.03] transition-all duration-200 disabled:opacity-50 active:scale-[0.98]"
             >
-              Annuler
+              Annulér
             </button>
             <FillButton
               disabled={isLoading || !name.trim() || selectedColumns.length === 0}
@@ -307,10 +307,10 @@ export function CreateViewModal({
                   <svg className="animate-spin" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <path d="M21 12a9 9 0 11-6.219-8.56" />
                   </svg>
-                  Creation...
+                  Création...
                 </span>
               ) : (
-                'Creer la vue'
+                'Créer la vue'
               )}
             </FillButton>
           </div>

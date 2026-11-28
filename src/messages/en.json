@@ -23,7 +23,7 @@
     "tasks": "Tasks",
     "reports": "Reports",
     "settings": "Settings",
-    "sequences": "Sequences",
+    "sequences": "Séquences",
     "campaigns": "Campaigns",
     "quotes": "Quotes",
     "templates": "Templates",
@@ -227,9 +227,9 @@
     "status": {
       "draft": "Draft",
       "sent": "Sent",
-      "accepted": "Accepted",
+      "accepted": "Acceptéd",
       "rejected": "Rejected",
-      "expired": "Expired"
+      "expired": "Expiréd"
     }
   },
   "settings": {
@@ -238,7 +238,7 @@
     "account": "Account",
     "billing": "Billing",
     "team": "Team",
-    "integrations": "Integrations",
+    "integrations": "Intégrations",
     "notifications": "Notifications",
     "security": "Security",
     "appearance": "Appearance",

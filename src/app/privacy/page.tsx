@@ -400,13 +400,13 @@ export default function PrivacyPage() {
                 Questions sur vos données ?
               </h2>
               <p className="text-lg text-white/90 mb-8 max-w-2xl mx-auto">
-                Contactez notre DPO pour toute question relative à la protection de vos données.
+                Contactéz notre DPO pour toute question relative à la protection de vos données.
               </p>
               <Link
                 href="/contact"
                 className="inline-flex items-center gap-2 px-8 py-4 text-base font-semibold text-[#0066FF] bg-white rounded-[12px] hover:bg-[#F5F7F9] transition-all shadow-lg"
               >
-                Contacter le DPO
+                Contactér le DPO
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                   <line x1="5" y1="12" x2="19" y2="12" />
                   <polyline points="12 5 19 12 12 19" />

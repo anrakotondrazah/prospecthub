@@ -24,7 +24,7 @@ const FIELD_TYPES: Array<{ value: PropertyType; label: string; description: stri
   { value: 'checkbox', label: 'Case a cocher', description: 'Oui ou Non' },
   { value: 'url', label: 'URL', description: 'Lien web' },
   { value: 'email', label: 'Email', description: 'Adresse email' },
-  { value: 'phone', label: 'Telephone', description: 'Numero de telephone' },
+  { value: 'phone', label: 'Téléphone', description: 'Numéro de téléphone' },
 ]
 
 export function CreatePropertyModal({
@@ -153,7 +153,7 @@ export function CreatePropertyModal({
         {/* Header */}
         <div className="flex items-center justify-between p-6 border-b border-black/[0.06]">
           <div>
-            <h2 className="text-xl font-semibold text-[#0D0F14]">Creer une propriete</h2>
+            <h2 className="text-xl font-semibold text-[#0D0F14]">Créer une propriete</h2>
             <p className="text-sm text-[#4E525A] mt-1">
               {entityLabels[entityType] || entityType}
             </p>
@@ -195,7 +195,7 @@ export function CreatePropertyModal({
                 type="text"
                 value={fieldLabel}
                 onChange={(e) => setFieldLabel(e.target.value)}
-                placeholder="Ex: Secteur d'activite"
+                placeholder="Ex: Secteur d'activité"
                 className="w-full px-4 py-2.5 bg-white/80 backdrop-blur-sm border border-black/[0.08] rounded-xl text-sm focus:outline-none focus:border-[#0066FF] focus:ring-3 focus:ring-[#0066FF]/10 transition-all duration-200 shadow-sm hover:border-black/[0.12]"
                 disabled={isLoading}
                 maxLength={255}
@@ -333,7 +333,7 @@ export function CreatePropertyModal({
               disabled={isLoading}
               className="flex-1 px-4 py-2.5 bg-transparent border border-black/[0.08] text-[#4E525A] rounded-xl font-medium hover:bg-black/[0.03] transition-all duration-200 disabled:opacity-50 active:scale-[0.98]"
             >
-              Annuler
+              Annulér
             </button>
             <FillButton
               disabled={isLoading || !fieldLabel.trim() || (needsOptions && options.length === 0)}
@@ -344,10 +344,10 @@ export function CreatePropertyModal({
                   <svg className="animate-spin" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <path d="M21 12a9 9 0 11-6.219-8.56" />
                   </svg>
-                  Creation...
+                  Création...
                 </span>
               ) : (
-                'Creer la propriete'
+                'Créer la propriete'
               )}
             </FillButton>
           </div>

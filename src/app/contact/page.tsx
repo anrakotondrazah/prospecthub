@@ -2,7 +2,7 @@ import Link from 'next/link'
 
 export const metadata = {
   title: 'Contact | ProspectHub',
-  description: 'Contactez l\'équipe ProspectHub pour toute question, demande de support ou suggestion.',
+  description: 'Contactéz l\'équipe ProspectHub pour toute question, demande de support ou suggestion.',
 }
 
 export default function ContactPage() {
@@ -43,7 +43,7 @@ export default function ContactPage() {
       <section className="pt-20 pb-16 px-6">
         <div className="max-w-4xl mx-auto text-center">
           <h1 className="text-[48px] md:text-[56px] font-bold text-[#0D0F14] dark:text-white leading-[1.1] tracking-[-0.02em] mb-6">
-            Contactez-nous
+            Contactéz-nous
           </h1>
           <p className="text-xl text-[#4E525A] dark:text-[#9BA0A6] max-w-2xl mx-auto leading-relaxed">
             Notre équipe est là pour répondre à toutes vos questions

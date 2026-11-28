@@ -48,7 +48,7 @@ export function ProductsPageClient({
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
   const [showInactive, setShowInactive] = useState(false)
 
-  const categories = useMemo(() => {
+  const catégories = useMemo(() => {
     const cats = new Set<string>()
     products.forEach((p) => {
       if (p.category) cats.add(p.category)
@@ -105,7 +105,7 @@ export function ProductsPageClient({
     total: products.length,
     active: products.filter((p) => p.is_active).length,
     recurring: products.filter((p) => p.is_recurring).length,
-    categories: categories.length,
+    catégories: catégories.length,
   }
 
   return (
@@ -115,7 +115,7 @@ export function ProductsPageClient({
         <div>
           <h1 className="text-[23.5px] font-semibold text-[#0D0F14] dark:text-[#E6EDF3] mb-1">Produits</h1>
           <p className="text-sm text-[#4E525A] dark:text-[#8B949E]">
-            Gerez votre catalogue produits et services
+            Gérez votre catalogue produits et services
           </p>
         </div>
         <FillButton onClick={() => setIsCreateModalOpen(true)}>
@@ -124,7 +124,7 @@ export function ProductsPageClient({
               <line x1="12" y1="5" x2="12" y2="19" />
               <line x1="5" y1="12" x2="19" y2="12" />
             </svg>
-            Creer un produit
+            Créer un produit
           </span>
         </FillButton>
       </div>
@@ -182,8 +182,8 @@ export function ProductsPageClient({
               </svg>
             </div>
             <div>
-              <p className="text-2xl font-semibold text-[#0D0F14] dark:text-[#E6EDF3]">{stats.categories}</p>
-              <p className="text-sm text-[#4E525A] dark:text-[#8B949E]">Categories</p>
+              <p className="text-2xl font-semibold text-[#0D0F14] dark:text-[#E6EDF3]">{stats.catégories}</p>
+              <p className="text-sm text-[#4E525A] dark:text-[#8B949E]">Catégories</p>
             </div>
           </div>
         </div>
@@ -213,7 +213,7 @@ export function ProductsPageClient({
           />
         </div>
 
-        {categories.length > 0 && (
+        {catégories.length > 0 && (
           <div className="flex gap-2 p-1">
             <button
               onClick={() => setSelectedCategory(null)}
@@ -225,7 +225,7 @@ export function ProductsPageClient({
             >
               Tous
             </button>
-            {categories.map((cat) => (
+            {catégories.map((cat) => (
               <button
                 key={cat}
                 onClick={() => setSelectedCategory(cat)}
@@ -259,7 +259,7 @@ export function ProductsPageClient({
               </svg>
             </div>
             <h3 className="text-lg font-semibold text-[#0D0F14] dark:text-[#E6EDF3] mb-2">
-              {searchQuery || selectedCategory ? 'Aucun produit trouve' : 'Aucun produit'}
+              {searchQuery || selectedCategory ? 'Aucun produit trouvé' : 'Aucun produit'}
             </h3>
             <p className="text-sm text-[#4E525A] dark:text-[#8B949E] mb-6 max-w-md mx-auto">
               {searchQuery || selectedCategory
@@ -273,7 +273,7 @@ export function ProductsPageClient({
                     <line x1="12" y1="5" x2="12" y2="19" />
                     <line x1="5" y1="12" x2="19" y2="12" />
                   </svg>
-                  Creer un produit
+                  Créer un produit
                 </span>
               </FillButton>
             )}

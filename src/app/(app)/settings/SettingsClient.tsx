@@ -91,9 +91,9 @@ export function SettingsClient({
   return (
     <div>
       <div className="mb-6">
-        <h1 className="text-xl lg:text-[23.5px] font-semibold text-[#0D0F14] dark:text-[#E6EDF3] mb-1">Parametres</h1>
+        <h1 className="text-xl lg:text-[23.5px] font-semibold text-[#0D0F14] dark:text-[#E6EDF3] mb-1">Paramètres</h1>
         <p className="text-sm text-[#4E525A] dark:text-[#8B949E]">
-          Gerez votre compte et vos preferences
+          Gérez votre compte et vos preferences
         </p>
       </div>
 
@@ -214,7 +214,7 @@ export function SettingsClient({
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3]">Rapport hebdomadaire</p>
-                      <p className="text-xs text-[#4E525A] dark:text-[#8B949E]">Resume de votre activite chaque lundi</p>
+                      <p className="text-xs text-[#4E525A] dark:text-[#8B949E]">Résumé de votre activité chaque lundi</p>
                     </div>
                     <AnimatedCheckbox
                       id="notif-weekly"
@@ -238,7 +238,7 @@ export function SettingsClient({
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3]">Notifications navigateur</p>
-                      <p className="text-xs text-[#4E525A] dark:text-[#8B949E]">Alertes en temps reel dans votre navigateur</p>
+                      <p className="text-xs text-[#4E525A] dark:text-[#8B949E]">Alertes en temps réel dans votre navigateur</p>
                     </div>
                     <AnimatedCheckbox
                       id="notif-browser"
@@ -285,7 +285,7 @@ export function SettingsClient({
                 <button
                   className="w-full h-10 text-sm font-medium text-white/60 bg-[#17191F]/60 dark:bg-white/10 rounded-[10px] cursor-not-allowed"
                   disabled
-                  title="Bientot disponible"
+                  title="Bientôt disponible"
                 >
                   Passer a Pro
                 </button>
@@ -299,7 +299,7 @@ export function SettingsClient({
                 <div className="flex items-center gap-4">
                   <LogoutButton onClick={handleLogout} />
                   {isLoggingOut && (
-                    <span className="text-sm text-[#4E525A] dark:text-[#8B949E]">Deconnexion...</span>
+                    <span className="text-sm text-[#4E525A] dark:text-[#8B949E]">Déconnexion...</span>
                   )}
                 </div>
               </div>
@@ -312,7 +312,7 @@ export function SettingsClient({
                 <button
                   className="w-full h-10 text-sm font-medium text-[#B42318]/60 dark:text-red-400/60 border border-[#B42318]/60 dark:border-red-400/60 rounded-[10px] cursor-not-allowed"
                   disabled
-                  title="Bientot disponible"
+                  title="Bientôt disponible"
                 >
                   Supprimer le compte
                 </button>
@@ -334,7 +334,7 @@ export function SettingsClient({
                   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                     <path d="M12 3h7a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-7m0-18H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h7m0-18v18" />
                   </svg>
-                  <span>Proprietes personnalisees</span>
+                  <span>Proprietes personnalisées</span>
                   <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="ml-auto">
                     <path d="M9 18l6-6-6-6" />
                   </svg>

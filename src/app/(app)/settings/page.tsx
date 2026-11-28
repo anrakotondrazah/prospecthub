@@ -29,7 +29,7 @@ export default async function SettingsPage() {
           </div>
           <h2 className="text-xl font-semibold text-[#0D0F14] dark:text-[#E6EDF3] mb-2">Erreur de chargement</h2>
           <p className="text-[#4E525A] dark:text-[#8B949E] mb-4">Impossible de charger votre profil.</p>
-          <a href="/settings" className="text-[#17191F] dark:text-[#58A6FF] font-medium hover:underline">Reessayer</a>
+          <a href="/settings" className="text-[#17191F] dark:text-[#58A6FF] font-medium hover:underline">Réessayer</a>
         </div>
       </div>
     )

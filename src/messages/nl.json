@@ -39,7 +39,7 @@
   "common": {
     "search": "Zoeken",
     "save": "Opslaan",
-    "cancel": "Annuleren",
+    "cancel": "Annuléren",
     "delete": "Verwijderen",
     "edit": "Bewerken",
     "create": "Maken",
@@ -196,7 +196,7 @@
       "title": "Titel",
       "description": "Beschrijving",
       "dueDate": "Deadline",
-      "priority": "Prioriteit",
+      "priority": "Prioritéit",
       "status": "Status",
       "assignee": "Toegewezen aan"
     },

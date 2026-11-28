@@ -80,7 +80,7 @@ export default function BaseEntreprisesPage() {
         .single()
 
       if (!profile?.organization_id) {
-        setError('Organisation non configuree')
+        setError('Organisation non configurée')
         setLoading(false)
         return
       }
@@ -168,7 +168,7 @@ export default function BaseEntreprisesPage() {
       }
     } catch (err) {
       console.error('Erreur deblocage lead:', err)
-      alert('Erreur reseau')
+      alert('Erreur réseau')
     }
 
     setUnlocking(null)
@@ -246,7 +246,7 @@ export default function BaseEntreprisesPage() {
                 <path d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5" />
               </svg>
             </div>
-            <p className="font-medium text-foreground mb-1">Aucune entreprise trouvee</p>
+            <p className="font-medium text-foreground mb-1">Aucune entreprise trouvée</p>
             <p className="text-sm text-muted-foreground">Modifiez vos filtres ou attendez le prochain enrichissement</p>
           </div>
         </div>

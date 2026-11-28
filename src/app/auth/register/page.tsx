@@ -133,7 +133,7 @@ export default function RegisterPage() {
 
         <div className="flex-1 flex flex-col justify-center max-w-[400px] mx-auto w-full">
           <div className="mb-6">
-            <h1 className="text-[28px] font-bold text-foreground mb-2">Creer votre compte</h1>
+            <h1 className="text-[28px] font-bold text-foreground mb-2">Créer votre compte</h1>
             <p className="text-lg text-muted-foreground">Commencez a prospecter en 5 minutes</p>
           </div>
 
@@ -250,7 +250,7 @@ export default function RegisterPage() {
                     ))}
                   </div>
                   <div className="space-y-1">
-                    <PasswordRequirement met={strength.hasLength} label="12 caracteres minimum" />
+                    <PasswordRequirement met={strength.hasLength} label="12 caractères minimum" />
                     <PasswordRequirement met={strength.hasUpper} label="Une majuscule" />
                     <PasswordRequirement met={strength.hasLower} label="Une minuscule" />
                     <PasswordRequirement met={strength.hasSymbol} label="Un symbole (!@#$...)" />
@@ -275,7 +275,7 @@ export default function RegisterPage() {
                 </Link>{' '}
                 et la{' '}
                 <Link href="/privacy" className="text-foreground font-medium hover:underline">
-                  Politique de confidentialite
+                  Politique de confidentialité
                 </Link>
               </label>
             </div>
@@ -286,13 +286,13 @@ export default function RegisterPage() {
               disabled={!isFormValid}
               isLoading={isLoading}
             >
-              Creer mon compte
+              Créer mon compte
             </Button>
           </form>
 
           <div className="text-center mt-6 pt-6 border-t border-border">
             <p className="text-muted-foreground">
-              Deja un compte ?{' '}
+              Déjà un compte ?{' '}
               <Link href="/auth/login" className="text-foreground font-medium hover:underline">
                 Se connecter
               </Link>
@@ -335,7 +335,7 @@ export default function RegisterPage() {
               <div>
                 <h4 className="font-semibold mb-1">50 leads gratuits/mois</h4>
                 <p className="text-sm text-[#9BA0A6] leading-relaxed">
-                  Testez sans engagement. Passez au payant uniquement si ca fonctionne pour vous.
+                  Testez sans engagement. Passez au payant uniquement si ça fonctionne pour vous.
                 </p>
               </div>
             </div>
@@ -349,7 +349,7 @@ export default function RegisterPage() {
               <div>
                 <h4 className="font-semibold mb-1">RGPD compliant</h4>
                 <p className="text-sm text-[#9BA0A6] leading-relaxed">
-                  Donnees hebergees en France. Votre conformite est notre priorite.
+                  Données hébergées en France. Votre conformite est notre priorité.
                 </p>
               </div>
             </div>
@@ -364,7 +364,7 @@ export default function RegisterPage() {
               <div>
                 <h4 className="font-semibold mb-1">Support reactif</h4>
                 <p className="text-sm text-[#9BA0A6] leading-relaxed">
-                  Une question? Notre equipe repond en moins de 2h en semaine.
+                  Une question? Notre équipe répond en moins de 2h en semaine.
                 </p>
               </div>
             </div>

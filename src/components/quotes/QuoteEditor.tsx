@@ -192,12 +192,12 @@ export function QuoteEditor({
           {onGeneratePdf && (
             <DownloadButton
               onClick={() => onGeneratePdf(quote)}
-              tooltip="Telecharger PDF"
+              tooltip="Télécharger PDF"
             />
           )}
           {onSend && quote.status === 'draft' && (
             <PayButton onClick={() => onSend(quote)}>
-              Envoyer
+              Envoyér
             </PayButton>
           )}
           <SaveButton onClick={handleSave}>
@@ -292,7 +292,7 @@ export function QuoteEditor({
                       disabled={disabled}
                       className="w-full px-3 py-2.5 bg-[#F5F7F9] border border-transparent rounded-lg text-sm focus:outline-none focus:border-[#17191F] focus:bg-white transition-colors disabled:opacity-50"
                     >
-                      <option value="">Selectionnez...</option>
+                      <option value="">Sélectionnez...</option>
                       {companies.map((company) => (
                         <option key={company.id} value={company.id}>{company.name}</option>
                       ))}
@@ -322,7 +322,7 @@ export function QuoteEditor({
                   />
                 </div>
                 <div>
-                  <label className="block text-xs font-medium text-[#4E525A] mb-1.5">Telephone</label>
+                  <label className="block text-xs font-medium text-[#4E525A] mb-1.5">Téléphone</label>
                   <input
                     type="tel"
                     value={quote.recipient_phone}

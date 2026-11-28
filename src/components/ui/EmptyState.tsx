@@ -31,8 +31,8 @@ const EMPTY_STATE_CONFIG = {
       </svg>
     ),
     title: "Aucune activité... pour l'instant",
-    description: "Lancez votre première séquence pour commencer à interagir avec vos prospects.",
-    defaultAction: "Créer une séquence",
+    description: "Lancez votre première sequence pour commencer à interagir avec vos prospects.",
+    defaultAction: "Créer une sequence",
     defaultHref: "/sequences"
   },
   leads: {
@@ -42,7 +42,7 @@ const EMPTY_STATE_CONFIG = {
         <path d="M6 21v-2a4 4 0 0 1 4-4h4a4 4 0 0 1 4 4v2" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
       </svg>
     ),
-    title: "Explorez le catalogue pour trouver vos premiers leads",
+    title: "Explorez le catalogue pour trouvér vos premiers leads",
     description: "Des milliers d'entreprises françaises vérifiées vous attendent.",
     defaultAction: "Voir le catalogue",
     defaultHref: "/base-entreprises"

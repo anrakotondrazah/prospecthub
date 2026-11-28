@@ -89,7 +89,7 @@ export function TokenPicker({
   if (!isOpen) return null
 
   const tokensByCategory = getTokensByCategory()
-  const categories = Object.keys(tokensByCategory) as TokenCategory[]
+  const catégories = Object.keys(tokensByCategory) as TokenCategory[]
 
   // Filter tokens based on search and category
   let filteredTokens = activeCategory === 'all'
@@ -129,7 +129,7 @@ export function TokenPicker({
       {/* Header */}
       <div className="p-3 border-b border-black/[0.06] dark:border-[#30363D]">
         <div className="flex items-center justify-between mb-3">
-          <span className="text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3]">Inserer un token</span>
+          <span className="text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3]">Insérer un token</span>
           <button
             onClick={onClose}
             className="w-6 h-6 rounded-lg hover:bg-black/[0.04] dark:hover:bg-white/[0.05] flex items-center justify-center transition-colors"
@@ -164,7 +164,7 @@ export function TokenPicker({
         >
           Tous
         </button>
-        {categories.map((category) => (
+        {catégories.map((category) => (
           <button
             key={category}
             onClick={() => setActiveCategory(category)}
@@ -184,7 +184,7 @@ export function TokenPicker({
       <div className="flex-1 overflow-y-auto p-2">
         {filteredTokens.length === 0 ? (
           <div className="text-center py-8 text-sm text-[#9BA0A6] dark:text-[#8B949E]">
-            Aucun token trouve
+            Aucun token trouvé
           </div>
         ) : (
           <div className="space-y-1">
@@ -208,9 +208,9 @@ export function TokenPicker({
                       {token.description}
                     </p>
                   </div>
-                  <code className="text-[10px] text-[#0066FF] dark:text-[#58A6FF] bg-[#0066FF]/5 dark:bg-[#58A6FF]/15 px-2 py-1 rounded ml-2 font-mono whitespace-nowrap">
-                    {`{{${token.name}}}`}
-                  </code>
+                  <span className="text-[10px] text-[#0066FF] dark:text-[#58A6FF] bg-[#0066FF]/5 dark:bg-[#58A6FF]/15 px-2 py-1 rounded ml-2 font-medium whitespace-nowrap">
+                    [{token.label}]
+                  </span>
                 </div>
                 <div className="mt-1.5 text-[11px] text-[#9BA0A6] dark:text-[#8B949E]">
                   Exemple: <span className="text-[#4E525A] dark:text-[#E6EDF3]">{token.example}</span>
@@ -224,7 +224,7 @@ export function TokenPicker({
       {/* Footer hint */}
       <div className="p-2 border-t border-black/[0.06] dark:border-[#30363D] bg-[#FAFBFC] dark:bg-[#161B22]">
         <p className="text-[10px] text-[#9BA0A6] dark:text-[#8B949E] text-center">
-          Tapez <code className="bg-white dark:bg-[#21262D] px-1 rounded">{'{'}</code> dans l'editeur pour ouvrir ce menu
+          Tapez <code className="bg-white dark:bg-[#21262D] px-1 rounded">{'{'}</code> dans l'éditeur pour ouvrir ce menu
         </p>
       </div>
     </div>

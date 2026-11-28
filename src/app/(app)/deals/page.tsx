@@ -31,8 +31,8 @@ const DEFAULT_STAGES: PipelineStage[] = [
   { id: 1, name: 'Prospection', code: 'prospection', color: '#6B7280', probability: 10, is_won: false, is_lost: false, display_order: 1 },
   { id: 2, name: 'Qualification', code: 'qualification', color: '#3B82F6', probability: 25, is_won: false, is_lost: false, display_order: 2 },
   { id: 3, name: 'Proposition', code: 'proposition', color: '#8B5CF6', probability: 50, is_won: false, is_lost: false, display_order: 3 },
-  { id: 4, name: 'Negociation', code: 'negociation', color: '#F59E0B', probability: 75, is_won: false, is_lost: false, display_order: 4 },
-  { id: 5, name: 'Gagne', code: 'won', color: '#10B981', probability: 100, is_won: true, is_lost: false, display_order: 5 },
+  { id: 4, name: 'Négociation', code: 'negociation', color: '#F59E0B', probability: 75, is_won: false, is_lost: false, display_order: 4 },
+  { id: 5, name: 'Gagné', code: 'won', color: '#10B981', probability: 100, is_won: true, is_lost: false, display_order: 5 },
   { id: 6, name: 'Perdu', code: 'lost', color: '#EF4444', probability: 0, is_won: false, is_lost: true, display_order: 6 },
 ]
 
@@ -61,7 +61,7 @@ export default async function DealsPage() {
           </div>
           <h2 className="text-xl font-semibold text-[#0D0F14] dark:text-[#E6EDF3] mb-2">Erreur de chargement</h2>
           <p className="text-[#4E525A] dark:text-[#8B949E] mb-4">Impossible de charger votre profil.</p>
-          <Link href="/deals" className="text-[#17191F] dark:text-[#E6EDF3] font-medium hover:underline">Reessayer</Link>
+          <Link href="/deals" className="text-[#17191F] dark:text-[#E6EDF3] font-medium hover:underline">Réessayer</Link>
         </div>
       </div>
     )
@@ -72,8 +72,8 @@ export default async function DealsPage() {
     return (
       <div className="flex items-center justify-center h-[60vh]">
         <div className="text-center">
-          <h2 className="text-xl font-semibold text-[#0D0F14] dark:text-[#E6EDF3] mb-2">Organisation non configuree</h2>
-          <p className="text-[#4E525A] dark:text-[#8B949E]">Completez votre onboarding pour acceder aux affaires.</p>
+          <h2 className="text-xl font-semibold text-[#0D0F14] dark:text-[#E6EDF3] mb-2">Organisation non configurée</h2>
+          <p className="text-[#4E525A] dark:text-[#8B949E]">Complétez votre onboarding pour accéder aux affaires.</p>
         </div>
       </div>
     )
@@ -100,7 +100,7 @@ export default async function DealsPage() {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
           <div>
             <h1 className="text-xl lg:text-[23.5px] font-semibold text-[#0D0F14] dark:text-[#E6EDF3] mb-1">Affaires</h1>
-            <p className="text-sm text-[#4E525A] dark:text-[#8B949E]">Gerez votre pipeline commercial</p>
+            <p className="text-sm text-[#4E525A] dark:text-[#8B949E]">Gérez votre pipeline commercial</p>
           </div>
         </div>
         <div className="bg-white dark:bg-[#0D1117] rounded-2xl border border-[#E2E4E6] dark:border-[#30363D] p-12">
@@ -114,7 +114,7 @@ export default async function DealsPage() {
             </div>
             <p className="font-medium text-[#0D0F14] dark:text-[#E6EDF3] mb-2">Erreur de chargement</p>
             <p className="text-sm text-[#4E525A] dark:text-[#8B949E] mb-4">Impossible de charger les affaires.</p>
-            <Link href="/deals" className="text-[#17191F] dark:text-[#E6EDF3] font-medium hover:underline">Reessayer</Link>
+            <Link href="/deals" className="text-[#17191F] dark:text-[#E6EDF3] font-medium hover:underline">Réessayer</Link>
           </div>
         </div>
       </div>

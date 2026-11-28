@@ -35,7 +35,7 @@ export function ProductPicker({
   const [searchQuery, setSearchQuery] = useState('')
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null)
 
-  const categories = useMemo(() => {
+  const catégories = useMemo(() => {
     const cats = new Set<string>()
     products.forEach((p) => {
       if (p.category) cats.add(p.category)
@@ -125,7 +125,7 @@ export function ProductPicker({
             />
           </div>
 
-          {categories.length > 0 && (
+          {catégories.length > 0 && (
             <div className="flex gap-2 flex-wrap">
               <button
                 onClick={() => setSelectedCategory(null)}
@@ -137,7 +137,7 @@ export function ProductPicker({
               >
                 Tous
               </button>
-              {categories.map((cat) => (
+              {catégories.map((cat) => (
                 <button
                   key={cat}
                   onClick={() => setSelectedCategory(cat)}
@@ -219,7 +219,7 @@ export function ProductPicker({
               <line x1="12" y1="5" x2="12" y2="19" />
               <line x1="5" y1="12" x2="19" y2="12" />
             </svg>
-            Ajouter une ligne personnalisee
+            Ajouter une ligne personnalisée
           </button>
         </div>
       </div>

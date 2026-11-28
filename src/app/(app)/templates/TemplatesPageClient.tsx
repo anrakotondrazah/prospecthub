@@ -20,7 +20,7 @@ import {
 
 type TemplatesPageClientProps = {
   initialTemplates: MessageTemplate[]
-  initialCategories: { id: number; name: string; color: string }[]
+  initialCatégories: { id: number; name: string; color: string }[]
   organizationId: number
   userId: string
 }
@@ -43,12 +43,12 @@ const TYPE_LABELS: Record<TemplateType, string> = {
 
 export function TemplatesPageClient({
   initialTemplates,
-  initialCategories,
+  initialCatégories,
   organizationId,
   userId,
 }: TemplatesPageClientProps) {
   const [templates, setTemplates] = useState<MessageTemplate[]>(initialTemplates)
-  const [categories] = useState(initialCategories)
+  const [catégories] = useState(initialCatégories)
   const [search, setSearch] = useState('')
   const [filterType, setFilterType] = useState<TemplateType | 'all'>('all')
   const [filterCategory, setFilterCategory] = useState<string>('all')
@@ -158,8 +158,8 @@ export function TemplatesPageClient({
     return () => document.removeEventListener('click', handleClick)
   }, [])
 
-  // Extract unique categories from templates
-  const templateCategories = [...new Set(templates.map((t) => t.category).filter(Boolean))]
+  // Extract unique catégories from templates
+  const templateCatégories = [...new Set(templates.map((t) => t.category).filter(Boolean))]
 
   return (
     <div>
@@ -225,15 +225,15 @@ export function TemplatesPageClient({
         </div>
 
         {/* Category filter */}
-        {templateCategories.length > 0 && (
+        {templateCatégories.length > 0 && (
           <div className="relative">
             <select
               value={filterCategory}
               onChange={(e) => setFilterCategory(e.target.value)}
               className="appearance-none pl-9 pr-8 py-2.5 bg-white dark:bg-[#161B22] border border-black/[0.08] dark:border-white/[0.08] rounded-xl text-sm text-[#0D0F14] dark:text-[#E6EDF3] focus:outline-none focus:border-[#0066FF] focus:ring-3 focus:ring-[#0066FF]/10 cursor-pointer"
             >
-              <option value="all">Toutes categories</option>
-              {templateCategories.map((cat) => (
+              <option value="all">Toutes catégories</option>
+              {templateCatégories.map((cat) => (
                 <option key={cat} value={cat as string}>
                   {cat}
                 </option>
@@ -259,13 +259,13 @@ export function TemplatesPageClient({
               <FillButton onClick={() => setShowCreateModal(true)}>
                 <span className="flex items-center gap-2">
                   <Plus className="w-4 h-4" />
-                  Creer un template
+                  Créer un template
                 </span>
               </FillButton>
             </>
           ) : (
             <>
-              <h2 className="text-xl font-semibold text-[#0D0F14] dark:text-[#E6EDF3] mb-2">Aucun resultat</h2>
+              <h2 className="text-xl font-semibold text-[#0D0F14] dark:text-[#E6EDF3] mb-2">Aucun résultat</h2>
               <p className="text-[#4E525A] dark:text-[#8B949E] max-w-md mx-auto">
                 Aucun template ne correspond a vos criteres de recherche.
               </p>
@@ -396,7 +396,7 @@ export function TemplatesPageClient({
         onTemplateCreated={handleTemplateCreated}
         organizationId={organizationId}
         userId={userId}
-        categories={categories}
+        catégories={catégories}
         editTemplate={editingTemplate}
       />
     </div>

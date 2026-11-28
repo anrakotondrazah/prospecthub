@@ -22,9 +22,9 @@ const STATUS_COLORS: Record<string, { bg: string; text: string }> = {
 
 const STATUS_LABELS: Record<string, string> = {
   new: 'Nouveau',
-  contacted: 'Contacte',
-  qualified: 'Qualifie',
-  unqualified: 'Non qualifie',
+  contacted: 'Contacté',
+  qualified: 'Qualifié',
+  unqualified: 'Non qualifié',
   nurturing: 'En maturation',
   converted: 'Converti',
   lost: 'Perdu',
@@ -65,8 +65,8 @@ export default async function LeadDetailPage({ params }: LeadPageProps) {
     return (
       <div className="flex items-center justify-center h-[60vh]">
         <div className="text-center">
-          <h2 className="text-xl font-semibold text-[#0D0F14] mb-2">Organisation non configuree</h2>
-          <p className="text-[#4E525A]">Completez votre onboarding.</p>
+          <h2 className="text-xl font-semibold text-[#0D0F14] mb-2">Organisation non configurée</h2>
+          <p className="text-[#4E525A]">Complétez votre onboarding.</p>
         </div>
       </div>
     )
@@ -153,7 +153,7 @@ export default async function LeadDetailPage({ params }: LeadPageProps) {
                 <p className="text-sm font-medium text-[#0D0F14]">{lead.email || '-'}</p>
               </div>
               <div className="p-4 bg-[#F5F7F9] rounded-[10px]">
-                <p className="text-xs text-[#9BA0A6] mb-1">Telephone</p>
+                <p className="text-xs text-[#9BA0A6] mb-1">Téléphone</p>
                 <p className="text-sm font-medium text-[#0D0F14]">{lead.phone || '-'}</p>
               </div>
               <div className="p-4 bg-[#F5F7F9] rounded-[10px]">
@@ -172,7 +172,7 @@ export default async function LeadDetailPage({ params }: LeadPageProps) {
 
           <div className="bg-white rounded-[14px] border border-[#E2E4E6] p-6">
             <h2 className="text-sm font-semibold text-[#0D0F14] uppercase tracking-wider mb-4">
-              Historique des activites
+              Historique des activities
             </h2>
             <ActivityTimeline
               activities={(activities || []).map((a) => ({
@@ -183,7 +183,7 @@ export default async function LeadDetailPage({ params }: LeadPageProps) {
                 activity_date: a.activity_date,
                 created_at: a.created_at,
               }))}
-              emptyMessage="Aucune activite"
+              emptyMessage="Aucune activité"
             />
           </div>
         </div>
@@ -226,11 +226,11 @@ export default async function LeadDetailPage({ params }: LeadPageProps) {
                 <p className="text-sm text-[#0D0F14]">{lead.company_siret || '-'}</p>
               </div>
               <div>
-                <p className="text-xs text-[#9BA0A6]">Cree le</p>
+                <p className="text-xs text-[#9BA0A6]">Créé le</p>
                 <p className="text-sm text-[#0D0F14]">{createdDate}</p>
               </div>
               <div>
-                <p className="text-xs text-[#9BA0A6]">Derniere mise a jour</p>
+                <p className="text-xs text-[#9BA0A6]">Dernière mise a jour</p>
                 <p className="text-sm text-[#0D0F14]">
                   {new Date(lead.updated_at).toLocaleDateString('fr-FR', {
                     day: 'numeric',

@@ -278,7 +278,7 @@ export function CreateSequenceModal({
               disabled={isSubmitting}
               className="px-4 py-2.5 text-sm font-medium text-[#4E525A] dark:text-[#8B949E] hover:text-[#0D0F14] dark:hover:text-[#E6EDF3] transition-colors"
             >
-              Annuler
+              Annulér
             </button>
             <FillButton
               disabled={isSubmitting || !name.trim()}
@@ -289,10 +289,10 @@ export function CreateSequenceModal({
                     <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" fill="none" />
                     <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
                   </svg>
-                  Creation...
+                  Création...
                 </span>
               ) : (
-                'Creer la sequence'
+                'Créer la sequence'
               )}
             </FillButton>
           </div>

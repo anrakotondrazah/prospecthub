@@ -29,7 +29,7 @@ export default async function CompaniesPage() {
           </div>
           <h2 className="text-xl font-semibold text-foreground mb-2">Erreur de chargement</h2>
           <p className="text-muted-foreground mb-4">Impossible de charger votre profil.</p>
-          <Link href="/companies" className="text-foreground font-medium hover:underline">Reessayer</Link>
+          <Link href="/companies" className="text-foreground font-medium hover:underline">Réessayer</Link>
         </div>
       </div>
     )
@@ -40,8 +40,8 @@ export default async function CompaniesPage() {
     return (
       <div className="flex items-center justify-center h-[60vh]">
         <div className="text-center">
-          <h2 className="text-xl font-semibold text-foreground mb-2">Organisation non configuree</h2>
-          <p className="text-muted-foreground">Completez votre onboarding pour acceder aux entreprises.</p>
+          <h2 className="text-xl font-semibold text-foreground mb-2">Organisation non configurée</h2>
+          <p className="text-muted-foreground">Complétez votre onboarding pour accéder aux entreprises.</p>
         </div>
       </div>
     )
@@ -60,7 +60,7 @@ export default async function CompaniesPage() {
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-6">
           <div>
             <h1 className="text-xl lg:text-[23.5px] font-semibold text-foreground mb-1">Entreprises</h1>
-            <p className="text-sm text-muted-foreground">Base de donnees de vos entreprises</p>
+            <p className="text-sm text-muted-foreground">Base de données de vos entreprises</p>
           </div>
         </div>
         <div className="bg-card rounded-[14px] border border-border p-12">
@@ -74,7 +74,7 @@ export default async function CompaniesPage() {
             </div>
             <p className="font-medium text-foreground mb-2">Erreur de chargement</p>
             <p className="text-sm text-muted-foreground mb-4">Impossible de charger les entreprises.</p>
-            <Link href="/companies" className="text-foreground font-medium hover:underline">Reessayer</Link>
+            <Link href="/companies" className="text-foreground font-medium hover:underline">Réessayer</Link>
           </div>
         </div>
       </div>

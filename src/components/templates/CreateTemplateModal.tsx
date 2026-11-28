@@ -15,7 +15,7 @@ type CreateTemplateModalProps = {
   onTemplateCreated: (template: MessageTemplate) => void
   organizationId: number
   userId: string
-  categories?: { id: number; name: string; color: string }[]
+  catégories?: { id: number; name: string; color: string }[]
   editTemplate?: MessageTemplate | null
 }
 
@@ -50,7 +50,7 @@ export function CreateTemplateModal({
   onTemplateCreated,
   organizationId,
   userId,
-  categories = [],
+  catégories = [],
   editTemplate = null,
 }: CreateTemplateModalProps) {
   const [name, setName] = useState('')
@@ -187,10 +187,10 @@ export function CreateTemplateModal({
         <div className="flex items-center justify-between p-6 border-b border-black/[0.06] dark:border-[#30363D]">
           <div>
             <h2 className="text-xl font-semibold text-[#0D0F14] dark:text-[#E6EDF3]">
-              {isEditing ? 'Modifier le template' : 'Creer un template'}
+              {isEditing ? 'Modifier le template' : 'Créer un template'}
             </h2>
             <p className="text-sm text-[#4E525A] dark:text-[#8B949E] mt-0.5">
-              Utilisez des tokens pour personnaliser vos messages
+              Utilisez des tokens pour personnalisér vos messages
             </p>
           </div>
           <button
@@ -271,9 +271,9 @@ export function CreateTemplateModal({
             {/* Category */}
             <div>
               <label htmlFor="template-category" className="block text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3] mb-2">
-                Categorie (optionnel)
+                Catégorie (optionnel)
               </label>
-              {categories.length > 0 ? (
+              {catégories.length > 0 ? (
                 <select
                   id="template-category"
                   value={category}
@@ -281,8 +281,8 @@ export function CreateTemplateModal({
                   className="w-full px-4 py-2.5 bg-white/80 dark:bg-[#161B22]/80 border border-black/[0.08] dark:border-[#30363D] rounded-xl text-sm text-[#0D0F14] dark:text-[#E6EDF3] focus:outline-none focus:border-[#0066FF] focus:ring-3 focus:ring-[#0066FF]/10 transition-all duration-200"
                   disabled={isLoading}
                 >
-                  <option value="">Aucune categorie</option>
-                  {categories.map((cat) => (
+                  <option value="">Aucune catégorie</option>
+                  {catégories.map((cat) => (
                     <option key={cat.id} value={cat.name}>
                       {cat.name}
                     </option>
@@ -321,7 +321,7 @@ export function CreateTemplateModal({
               disabled={isLoading}
               className="px-5 py-2.5 bg-transparent border border-black/[0.08] dark:border-[#30363D] text-[#4E525A] dark:text-[#8B949E] rounded-xl font-medium hover:bg-black/[0.03] dark:hover:bg-white/[0.03] transition-all duration-200 disabled:opacity-50 active:scale-[0.98]"
             >
-              Annuler
+              Annulér
             </button>
             <FillButton
               disabled={isLoading || !name.trim() || !body.trim()}
@@ -329,12 +329,12 @@ export function CreateTemplateModal({
               {isLoading ? (
                 <span className="flex items-center gap-2">
                   <Loader2 className="w-4 h-4 animate-spin" />
-                  {isEditing ? 'Mise a jour...' : 'Creation...'}
+                  {isEditing ? 'Mise à jour...' : 'Création...'}
                 </span>
               ) : isEditing ? (
-                'Mettre a jour'
+                'Mettre à jour'
               ) : (
-                'Creer le template'
+                'Créer le template'
               )}
             </FillButton>
           </div>

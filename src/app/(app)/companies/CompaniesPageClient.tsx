@@ -83,7 +83,7 @@ export function CompaniesPageClient({ initialCompanies, organizationId }: Compan
 
       if (error) {
         console.error('Erreur export entreprises:', error)
-        alert('Erreur lors de l\'export. Veuillez reessayer.')
+        alert('Erreur lors de l\'export. Veuillez réessayer.')
         return
       }
 
@@ -95,7 +95,7 @@ export function CompaniesPageClient({ initialCompanies, organizationId }: Compan
       }
     } catch (err) {
       console.error('Erreur export entreprises:', err)
-      alert('Erreur lors de l\'export. Veuillez reessayer.')
+      alert('Erreur lors de l\'export. Veuillez réessayer.')
     } finally {
       setIsExporting(false)
     }
@@ -127,7 +127,7 @@ export function CompaniesPageClient({ initialCompanies, organizationId }: Compan
         <div>
           <h1 className="text-xl lg:text-[23.5px] font-semibold text-foreground mb-1">Entreprises</h1>
           <p className="text-sm text-muted-foreground">
-            Base de donnees de vos entreprises clientes et prospects
+            Base de données de vos entreprises clientes et prospects
           </p>
         </div>
         <div className="flex items-center gap-3">
@@ -140,7 +140,7 @@ export function CompaniesPageClient({ initialCompanies, organizationId }: Compan
             tooltip="Exporter CSV"
             disabled={isExporting || companies.length === 0}
           />
-          <FillButton disabled title="Bientot disponible">
+          <FillButton disabled title="Bientôt disponible">
             <span className="flex items-center gap-2">
               <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <line x1="12" y1="5" x2="12" y2="19" />
@@ -214,7 +214,7 @@ export function CompaniesPageClient({ initialCompanies, organizationId }: Compan
                         </svg>
                       </div>
                       <p className="font-medium text-foreground mb-1">Aucune entreprise</p>
-                      <p className="text-sm">Commencez par importer ou creer votre premiere entreprise.</p>
+                      <p className="text-sm">Commencez par importer ou creer votre première entreprise.</p>
                     </div>
                   </td>
                 </tr>
@@ -276,7 +276,7 @@ export function CompaniesPageClient({ initialCompanies, organizationId }: Compan
             </p>
             <div className="flex items-center gap-2">
               <FillButton disabled className="h-9 px-4 text-sm">
-                Precedent
+                Précédent
               </FillButton>
               <FillButton disabled className="h-9 px-4 text-sm">
                 Suivant

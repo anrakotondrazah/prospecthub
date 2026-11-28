@@ -53,7 +53,7 @@
     "confirm": "Conferma",
     "back": "Indietro",
     "next": "Avanti",
-    "previous": "Precedente",
+    "previous": "Précédente",
     "submit": "Invia",
     "reset": "Reimposta",
     "filter": "Filtra",
@@ -217,7 +217,7 @@
     "title": "Preventivi",
     "newQuote": "Nuovo preventivo",
     "columns": {
-      "number": "Numero",
+      "number": "Numéro",
       "client": "Cliente",
       "total": "Totale",
       "status": "Stato",

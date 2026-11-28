@@ -27,13 +27,13 @@ export function LeadActions({ leadId }: LeadActionsProps) {
         <button
           className="flex items-center justify-center gap-2 px-4 py-2.5 text-sm font-medium text-white/60 bg-[#17191F]/60 rounded-[10px] cursor-not-allowed"
           disabled
-          title="Bientot disponible"
+          title="Bientôt disponible"
         >
           <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
             <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
             <polyline points="22,6 12,13 2,6" />
           </svg>
-          Envoyer email
+          Envoyér email
         </button>
         <button
           onClick={() => setCallModalOpen(true)}

@@ -10,7 +10,7 @@ const ACTIVITY_TYPE_LABELS: Record<string, string> = {
   email: 'Email',
   meeting: 'Reunion',
   task: 'Tache',
-  other: 'Activite',
+  other: 'Activité',
 }
 
 interface CompanyPageProps {
@@ -40,8 +40,8 @@ export default async function CompanyDetailPage({ params }: CompanyPageProps) {
     return (
       <div className="flex items-center justify-center h-[60vh]">
         <div className="text-center">
-          <h2 className="text-xl font-semibold text-[#0D0F14] mb-2">Organisation non configuree</h2>
-          <p className="text-[#4E525A]">Completez votre onboarding.</p>
+          <h2 className="text-xl font-semibold text-[#0D0F14] mb-2">Organisation non configurée</h2>
+          <p className="text-[#4E525A]">Complétez votre onboarding.</p>
         </div>
       </div>
     )
@@ -134,7 +134,7 @@ export default async function CompanyDetailPage({ params }: CompanyPageProps) {
                 <p className="text-sm font-medium text-[#0D0F14]">{company.email || '-'}</p>
               </div>
               <div className="p-4 bg-[#F5F7F9] rounded-[10px]">
-                <p className="text-xs text-[#9BA0A6] mb-1">Telephone</p>
+                <p className="text-xs text-[#9BA0A6] mb-1">Téléphone</p>
                 <p className="text-sm font-medium text-[#0D0F14]">{company.phone || '-'}</p>
               </div>
               <div className="p-4 bg-[#F5F7F9] rounded-[10px]">
@@ -198,7 +198,7 @@ export default async function CompanyDetailPage({ params }: CompanyPageProps) {
 
           <div className="bg-white rounded-[14px] border border-[#E2E4E6] p-6">
             <h2 className="text-sm font-semibold text-[#0D0F14] uppercase tracking-wider mb-4">
-              Historique des activites
+              Historique des activities
             </h2>
             {(!activities || activities.length === 0) ? (
               <div className="text-center py-8 bg-[#F5F7F9] rounded-[10px]">
@@ -208,7 +208,7 @@ export default async function CompanyDetailPage({ params }: CompanyPageProps) {
                     <polyline points="12 6 12 12 16 14" />
                   </svg>
                 </div>
-                <p className="text-sm text-[#4E525A]">Aucune activite</p>
+                <p className="text-sm text-[#4E525A]">Aucune activité</p>
               </div>
             ) : (
               <div className="space-y-4">
@@ -221,7 +221,7 @@ export default async function CompanyDetailPage({ params }: CompanyPageProps) {
                       </svg>
                     </div>
                     <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-[#0D0F14]">{activity.subject || ACTIVITY_TYPE_LABELS[activity.activity_type] || 'Activite'}</p>
+                      <p className="text-sm font-medium text-[#0D0F14]">{activity.subject || ACTIVITY_TYPE_LABELS[activity.activity_type] || 'Activité'}</p>
                       {activity.body && (
                         <p className="text-xs text-[#4E525A] mt-1 line-clamp-2">{activity.body}</p>
                       )}
@@ -286,7 +286,7 @@ export default async function CompanyDetailPage({ params }: CompanyPageProps) {
                 <p className="text-sm text-[#0D0F14]">{company.naf_code || '-'}</p>
               </div>
               <div>
-                <p className="text-xs text-[#9BA0A6]">Cree le</p>
+                <p className="text-xs text-[#9BA0A6]">Créé le</p>
                 <p className="text-sm text-[#0D0F14]">{createdDate}</p>
               </div>
             </div>

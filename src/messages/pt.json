@@ -217,7 +217,7 @@
     "title": "Orcamentos",
     "newQuote": "Novo orcamento",
     "columns": {
-      "number": "Numero",
+      "number": "Numéro",
       "client": "Cliente",
       "total": "Total",
       "status": "Status",
@@ -237,7 +237,7 @@
     "profile": "Perfil",
     "account": "Conta",
     "billing": "Faturamento",
-    "team": "Equipe",
+    "team": "Équipe",
     "integrations": "Integracoes",
     "notifications": "Notificacoes",
     "security": "Seguranca",

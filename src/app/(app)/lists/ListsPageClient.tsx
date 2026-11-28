@@ -63,7 +63,7 @@ export function ListsPageClient({ initialLists, organizationId, userId }: ListsP
               <line x1="12" y1="5" x2="12" y2="19" />
               <line x1="5" y1="12" x2="19" y2="12" />
             </svg>
-            Creer une liste
+            Créer une liste
           </span>
         </FillButton>
       </div>
@@ -153,12 +153,12 @@ export function ListsPageClient({ initialLists, organizationId, userId }: ListsP
               </svg>
             </div>
             <h3 className="text-lg font-semibold text-foreground mb-2">
-              {searchQuery ? 'Aucune liste trouvee' : 'Aucune liste'}
+              {searchQuery ? 'Aucune liste trouvée' : 'Aucune liste'}
             </h3>
             <p className="text-sm text-muted-foreground mb-6 max-w-md mx-auto">
               {searchQuery
                 ? 'Essayez avec dautres mots-cles'
-                : 'Creez votre premiere liste pour organiser vos leads'}
+                : 'Creez votre première liste pour organiser vos leads'}
             </p>
             {!searchQuery && (
               <FillButton onClick={() => setIsCreateModalOpen(true)}>
@@ -167,7 +167,7 @@ export function ListsPageClient({ initialLists, organizationId, userId }: ListsP
                     <line x1="12" y1="5" x2="12" y2="19" />
                     <line x1="5" y1="12" x2="19" y2="12" />
                   </svg>
-                  Creer une liste
+                  Créer une liste
                 </span>
               </FillButton>
             )}
@@ -188,10 +188,10 @@ export function ListsPageClient({ initialLists, organizationId, userId }: ListsP
                   Membres
                 </th>
                 <th className="text-left px-5 py-3.5 text-xs font-semibold text-muted-foreground uppercase tracking-wide">
-                  Cree le
+                  Créé le
                 </th>
                 <th className="text-left px-5 py-3.5 text-xs font-semibold text-muted-foreground uppercase tracking-wide">
-                  Mis a jour
+                  Mis à jour
                 </th>
                 <th className="w-12 px-5 py-3.5"></th>
               </tr>

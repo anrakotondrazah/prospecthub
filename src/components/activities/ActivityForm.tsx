@@ -22,10 +22,10 @@ interface ActivityFormProps {
 
 const CALL_OUTCOMES = [
   { value: 'connected', label: 'Connecte' },
-  { value: 'no_answer', label: 'Pas de reponse' },
+  { value: 'no_answer', label: 'Pas de réponse' },
   { value: 'left_voicemail', label: 'Message vocal' },
   { value: 'busy', label: 'Occupe' },
-  { value: 'wrong_number', label: 'Mauvais numero' },
+  { value: 'wrong_number', label: 'Mauvais numéro' },
   { value: 'callback_scheduled', label: 'Rappel planifie' },
 ]
 
@@ -99,7 +99,7 @@ export function ActivityForm({
           id="activity-body"
           value={body}
           onChange={(e) => setBody(e.target.value)}
-          placeholder={isCallType ? 'Resumez la conversation...' : 'Ecrivez votre note...'}
+          placeholder={isCallType ? 'Résuméz la conversation...' : 'Ecrivez votre note...'}
           rows={4}
           className="w-full px-4 py-2.5 bg-white/80 dark:bg-[#161B22]/80 backdrop-blur-sm border border-black/[0.08] dark:border-[#30363D] rounded-xl text-sm text-[#0D0F14] dark:text-[#E6EDF3] focus:outline-none focus:border-[#0066FF] focus:ring-3 focus:ring-[#0066FF]/10 transition-all duration-200 shadow-sm hover:border-black/[0.12] dark:hover:border-[#30363D] resize-none"
           disabled={isLoading}
@@ -112,7 +112,7 @@ export function ActivityForm({
           {/* Outcome */}
           <div>
             <label htmlFor="activity-outcome" className="block text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3] mb-2">
-              Resultat de l'appel
+              Résultat de l'appel
             </label>
             <select
               id="activity-outcome"
@@ -121,7 +121,7 @@ export function ActivityForm({
               className="w-full px-4 py-2.5 bg-white/80 dark:bg-[#161B22]/80 backdrop-blur-sm border border-black/[0.08] dark:border-[#30363D] rounded-xl text-sm text-[#0D0F14] dark:text-[#E6EDF3] focus:outline-none focus:border-[#0066FF] focus:ring-3 focus:ring-[#0066FF]/10 transition-all duration-200 shadow-sm hover:border-black/[0.12] dark:hover:border-[#30363D]"
               disabled={isLoading}
             >
-              <option value="">Selectionnez un resultat</option>
+              <option value="">Sélectionnez un résultat</option>
               {CALL_OUTCOMES.map((o) => (
                 <option key={o.value} value={o.value}>
                   {o.label}
@@ -158,7 +158,7 @@ export function ActivityForm({
           disabled={isLoading}
           className="flex-1 px-4 py-2.5 bg-transparent border border-black/[0.08] dark:border-[#30363D] text-[#4E525A] dark:text-[#8B949E] rounded-xl font-medium hover:bg-black/[0.03] dark:hover:bg-white/[0.03] transition-all duration-200 disabled:opacity-50 active:scale-[0.98]"
         >
-          Annuler
+          Annulér
         </button>
         <button
           type="submit"

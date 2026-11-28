@@ -28,7 +28,7 @@ type AddToListModalProps = {
   leads: Lead[]
   organizationId: number
   userId: string
-  onSuccess?: (addedCount: number) => void
+  onSuccèss?: (addedCount: number) => void
 }
 
 export function AddToListModal({
@@ -37,7 +37,7 @@ export function AddToListModal({
   leads,
   organizationId,
   userId,
-  onSuccess,
+  onSuccèss,
 }: AddToListModalProps) {
   const [lists, setLists] = useState<List[]>([])
   const [selectedListId, setSelectedListId] = useState<number | null>(null)
@@ -115,7 +115,7 @@ export function AddToListModal({
 
       if (insertError) throw insertError
 
-      onSuccess?.(leadsToAdd.length)
+      onSuccèss?.(leadsToAdd.length)
       onClose()
     } catch (err: unknown) {
       console.error('Error adding to list:', err)
@@ -123,7 +123,7 @@ export function AddToListModal({
     } finally {
       setIsAdding(false)
     }
-  }, [selectedListId, leads, userId, onSuccess, onClose])
+  }, [selectedListId, leads, userId, onSuccèss, onClose])
 
   const filteredLists = lists.filter(list =>
     list.name.toLowerCase().includes(searchQuery.toLowerCase())
@@ -215,7 +215,7 @@ export function AddToListModal({
                 </svg>
               </div>
               <p className="text-[#4E525A]">
-                {searchQuery ? 'Aucune liste trouvee' : 'Aucune liste statique disponible'}
+                {searchQuery ? 'Aucune liste trouvée' : 'Aucune liste statique disponible'}
               </p>
             </div>
           ) : (
@@ -276,7 +276,7 @@ export function AddToListModal({
             onClick={onClose}
             className="flex-1 px-4 py-2.5 bg-white border border-[#E2E4E6] text-[#0D0F14] rounded-[10px] font-medium hover:bg-[#F5F7F9] transition-colors"
           >
-            Annuler
+            Annulér
           </button>
           <FillButton
             onClick={handleAddToList}

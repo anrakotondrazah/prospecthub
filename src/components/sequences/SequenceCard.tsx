@@ -125,7 +125,7 @@ export function SequenceCard({
           <p className="text-lg font-semibold text-[#0D0F14] dark:text-[#E6EDF3]">
             {sequence.steps_count || 0}
           </p>
-          <p className="text-[10px] text-[#9BA0A6] dark:text-[#8B949E] uppercase">Etapes</p>
+          <p className="text-[10px] text-[#9BA0A6] dark:text-[#8B949E] uppercase">Étapes</p>
         </div>
         <div className="text-center p-2 rounded-lg bg-[#F5F7F9] dark:bg-[#0D1117]">
           <p className="text-lg font-semibold text-[#0D0F14] dark:text-[#E6EDF3]">
@@ -170,7 +170,7 @@ export function SequenceCard({
             <path d="M22 2L11 13" />
             <path d="M22 2l-7 20-4-9-9-4 20-7z" />
           </svg>
-          <span>{sequence.stats.sent} envoyes</span>
+          <span>{sequence.stats.sent} envoyés</span>
         </div>
       </div>
 

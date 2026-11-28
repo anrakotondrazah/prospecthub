@@ -26,8 +26,8 @@ const DEFAULT_STAGES: PipelineStageRow[] = [
   { id: 1, name: 'Prospection', color: '#6B7280' },
   { id: 2, name: 'Qualification', color: '#3B82F6' },
   { id: 3, name: 'Proposition', color: '#8B5CF6' },
-  { id: 4, name: 'Negociation', color: '#F59E0B' },
-  { id: 5, name: 'Gagne', color: '#10B981', is_won: true },
+  { id: 4, name: 'Négociation', color: '#F59E0B' },
+  { id: 5, name: 'Gagné', color: '#10B981', is_won: true },
 ]
 
 export default async function ReportsPage() {
@@ -166,7 +166,7 @@ export default async function ReportsPage() {
       {hasError && (
         <div className="p-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-xl">
           <p className="text-sm text-amber-800 dark:text-amber-200">
-            Certaines donnees n&apos;ont pas pu etre chargees. Les metriques affichees peuvent etre partielles.
+            Certaines données n&apos;ont pas pu etre chargees. Les metriques affichées peuvent etre partielles.
           </p>
         </div>
       )}

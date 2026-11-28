@@ -15,7 +15,7 @@ interface LogCallModalProps {
 
 const CALL_OUTCOMES = [
   { value: 'connected', label: 'Connecte', icon: 'M5 13l4 4L19 7', color: '#147A3A' },
-  { value: 'no_answer', label: 'Pas de reponse', icon: 'M18.364 5.636l-12.728 12.728M5.636 5.636l12.728 12.728', color: '#B42318' },
+  { value: 'no_answer', label: 'Pas de réponse', icon: 'M18.364 5.636l-12.728 12.728M5.636 5.636l12.728 12.728', color: '#B42318' },
   { value: 'left_voicemail', label: 'Message vocal', icon: 'M3 5a2 2 0 012-2h14a2 2 0 012 2v14a2 2 0 01-2 2H5a2 2 0 01-2-2V5zM7 10h10M7 14h6', color: '#E65100' },
   { value: 'busy', label: 'Occupe', icon: 'M12 8v4M12 16h.01', color: '#F59E0B' },
   { value: 'callback_scheduled', label: 'Rappel planifie', icon: 'M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z', color: '#3949AB' },
@@ -41,7 +41,7 @@ export function LogCallModal({
     e.preventDefault()
 
     if (!outcome) {
-      setError('Selectionnez un resultat d\'appel')
+      setError('Sélectionnez un résultat d\'appel')
       return
     }
 
@@ -149,7 +149,7 @@ export function LogCallModal({
           {/* Outcome Selection */}
           <div>
             <label className="block text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3] mb-3">
-              Resultat de l'appel <span className="text-[#B42318]">*</span>
+              Résultat de l'appel <span className="text-[#B42318]">*</span>
             </label>
             <div className="grid grid-cols-2 gap-2">
               {CALL_OUTCOMES.map((o) => (
@@ -217,7 +217,7 @@ export function LogCallModal({
               id="call-notes"
               value={notes}
               onChange={(e) => setNotes(e.target.value)}
-              placeholder="Resumez la conversation..."
+              placeholder="Résuméz la conversation..."
               rows={3}
               className="w-full px-4 py-2.5 bg-white/80 dark:bg-[#161B22]/80 backdrop-blur-sm border border-black/[0.08] dark:border-[#30363D] rounded-xl text-sm text-[#0D0F14] dark:text-[#E6EDF3] focus:outline-none focus:border-[#0066FF] focus:ring-3 focus:ring-[#0066FF]/10 transition-all duration-200 shadow-sm hover:border-black/[0.12] dark:hover:border-[#30363D] resize-none"
               disabled={isLoading}
@@ -232,7 +232,7 @@ export function LogCallModal({
               disabled={isLoading}
               className="flex-1 px-4 py-2.5 bg-transparent border border-black/[0.08] dark:border-[#30363D] text-[#4E525A] dark:text-[#8B949E] rounded-xl font-medium hover:bg-black/[0.03] dark:hover:bg-white/[0.03] transition-all duration-200 disabled:opacity-50 active:scale-[0.98]"
             >
-              Annuler
+              Annulér
             </button>
             <FillButton
               disabled={isLoading || !outcome}

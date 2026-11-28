@@ -36,7 +36,7 @@ export default async function LeadsPage() {
             Impossible de charger votre profil.
           </p>
           <Link href="/leads" className="text-foreground font-medium hover:underline">
-            Reessayer
+            Réessayer
           </Link>
         </div>
       </div>
@@ -49,10 +49,10 @@ export default async function LeadsPage() {
       <div className="flex items-center justify-center h-[60vh]">
         <div className="text-center">
           <h2 className="text-xl font-semibold text-foreground mb-2">
-            Organisation non configuree
+            Organisation non configurée
           </h2>
           <p className="text-muted-foreground">
-            Completez votre onboarding pour acceder aux leads.
+            Complétez votre onboarding pour accéder aux leads.
           </p>
         </div>
       </div>
@@ -74,7 +74,7 @@ export default async function LeadsPage() {
         <div className="flex items-center justify-between mb-6">
           <div>
             <h1 className="text-[23.5px] font-semibold text-foreground mb-1">Leads</h1>
-            <p className="text-sm text-muted-foreground">Gerez et suivez vos prospects</p>
+            <p className="text-sm text-muted-foreground">Gérez et suivez vos prospects</p>
           </div>
         </div>
         <div className="bg-card rounded-[14px] border border-border p-12">
@@ -89,7 +89,7 @@ export default async function LeadsPage() {
             <p className="font-medium text-foreground mb-2">Erreur de chargement</p>
             <p className="text-sm text-muted-foreground mb-4">Impossible de charger les leads.</p>
             <Link href="/leads" className="text-foreground font-medium hover:underline">
-              Reessayer
+              Réessayer
             </Link>
           </div>
         </div>

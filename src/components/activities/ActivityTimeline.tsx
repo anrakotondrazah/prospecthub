@@ -11,7 +11,7 @@ interface ActivityTimelineProps {
 export function ActivityTimeline({
   activities,
   loading = false,
-  emptyMessage = 'Aucune activite',
+  emptyMessage = 'Aucune activité',
 }: ActivityTimelineProps) {
   if (loading) {
     return (

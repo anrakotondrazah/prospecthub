@@ -50,7 +50,7 @@ export function TicketsPageClient({
               Tickets
             </h1>
             <p className="text-sm text-muted-foreground">
-              Gerez les demandes de support client
+              Gérez les demandes de support client
             </p>
           </div>
           <FillButton onClick={() => setIsModalOpen(true)}>
@@ -98,7 +98,7 @@ export function TicketsPageClient({
             Tickets
           </h1>
           <p className="text-sm text-muted-foreground">
-            Gerez les demandes de support client
+            Gérez les demandes de support client
           </p>
         </div>
         <FillButton onClick={() => setIsModalOpen(true)}>
@@ -153,7 +153,7 @@ export function TicketsPageClient({
             </div>
             <div>
               <p className="text-2xl font-bold text-foreground">{resolvedCount}</p>
-              <p className="text-sm text-muted-foreground">Resolus</p>
+              <p className="text-sm text-muted-foreground">Résolus</p>
             </div>
           </div>
         </div>
@@ -165,7 +165,7 @@ export function TicketsPageClient({
           { value: 'all', label: 'Tous', count: tickets.length },
           { value: 'active', label: 'Actifs', count: openCount + inProgressCount },
           { value: 'open', label: 'Ouverts', count: openCount },
-          { value: 'resolved', label: 'Resolus', count: resolvedCount },
+          { value: 'resolved', label: 'Résolus', count: resolvedCount },
         ].map((tab) => (
           <button
             key={tab.value}
@@ -200,11 +200,11 @@ export function TicketsPageClient({
               </svg>
             </div>
             <h3 className="text-lg font-semibold text-foreground mb-2">
-              {filterStatus === 'all' ? 'Aucun ticket' : 'Aucun ticket dans cette categorie'}
+              {filterStatus === 'all' ? 'Aucun ticket' : 'Aucun ticket dans cette catégorie'}
             </h3>
             <p className="text-sm text-muted-foreground mb-6 max-w-sm mx-auto">
               {filterStatus === 'all'
-                ? 'Creez votre premier ticket pour commencer a gerer vos demandes de support.'
+                ? 'Créez votre premier ticket pour commencer à gérer vos demandes de support.'
                 : 'Essayez de modifier les filtres pour voir plus de tickets.'}
             </p>
             {filterStatus === 'all' && (
@@ -214,7 +214,7 @@ export function TicketsPageClient({
                     <line x1="12" y1="5" x2="12" y2="19" />
                     <line x1="5" y1="12" x2="19" y2="12" />
                   </svg>
-                  Creer un ticket
+                  Créer un ticket
                 </span>
               </FillButton>
             )}

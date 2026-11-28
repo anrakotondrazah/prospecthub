@@ -63,7 +63,7 @@ interface ActivityItemProps {
 
 export function ActivityItem({ activity }: ActivityItemProps) {
   const config = ACTIVITY_ICONS[activity.activity_type] || ACTIVITY_ICONS.other
-  const label = ACTIVITY_LABELS[activity.activity_type] || 'Activite'
+  const label = ACTIVITY_LABELS[activity.activity_type] || 'Activité'
 
   const time = new Date(activity.activity_date).toLocaleTimeString('fr-FR', {
     hour: '2-digit',
@@ -101,7 +101,7 @@ export function ActivityItem({ activity }: ActivityItemProps) {
         )}
         {activity.outcome && (
           <p className="text-xs text-[#9BA0A6] mt-1">
-            Resultat: {activity.outcome}
+            Résultat: {activity.outcome}
           </p>
         )}
         {activity.duration_minutes && (

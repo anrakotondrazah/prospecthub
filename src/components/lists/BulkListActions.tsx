@@ -227,7 +227,7 @@ export function BulkListActions({
                 disabled={isRemoving}
                 className="flex-1 px-4 py-2.5 bg-white border border-[#E2E4E6] text-[#0D0F14] rounded-[10px] font-medium hover:bg-[#F5F7F9] transition-colors disabled:opacity-50"
               >
-                Annuler
+                Annulér
               </button>
               <button
                 onClick={handleRemove}
@@ -267,7 +267,7 @@ export function downloadAsFile(data: string, filename: string, type: string) {
 }
 
 export function exportMembersToCSV(members: Member[]): string {
-  const headers = ['Prenom', 'Nom', 'Email', 'Telephone', 'Entreprise', 'Poste', 'Statut', 'Ajoute le']
+  const headers = ['Prenom', 'Nom', 'Email', 'Téléphone', 'Entreprise', 'Poste', 'Statut', 'Ajoute le']
   const rows = members.map(m => [
     m.leads.first_name || '',
     m.leads.last_name || '',

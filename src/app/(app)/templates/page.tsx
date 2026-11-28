@@ -37,21 +37,21 @@ export default async function TemplatesPage() {
     console.error('Error fetching templates:', templatesError)
   }
 
-  // Fetch categories
-  const { data: categories, error: categoriesError } = await supabase
-    .from('template_categories')
+  // Fetch catégories
+  const { data: catégories, error: catégoriesError } = await supabase
+    .from('template_catégories')
     .select('id, name, color')
     .eq('organization_id', profile.organization_id)
     .order('display_order', { ascending: true })
 
-  if (categoriesError) {
-    console.error('Error fetching categories:', categoriesError)
+  if (catégoriesError) {
+    console.error('Error fetching catégories:', catégoriesError)
   }
 
   return (
     <TemplatesPageClient
       initialTemplates={templates || []}
-      initialCategories={categories || []}
+      initialCatégories={catégories || []}
       organizationId={profile.organization_id}
       userId={user.id}
     />

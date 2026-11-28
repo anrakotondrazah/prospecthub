@@ -109,15 +109,33 @@ export async function PATCH(request: NextRequest) {
       ...currentSettings,
     }
 
-    // Update notifications if provided (validate boolean types)
+    // Update notifications if provided (validate boolean types strictly)
     if (body.notifications && typeof body.notifications === 'object') {
       const validNotificationKeys = ['email_new_lead', 'email_weekly_report', 'email_task_reminder', 'browser'] as const
       const validatedNotifications: Partial<NotificationSettings> = {}
 
       for (const key of validNotificationKeys) {
-        if (key in body.notifications && typeof body.notifications[key] === 'boolean') {
+        if (key in body.notifications) {
+          // Strict boolean validation - reject non-boolean values
+          if (typeof body.notifications[key] !== 'boolean') {
+            return NextResponse.json(
+              { success: false, message: `Valeur invalide pour ${key}: doit etre un booleen` },
+              { status: 400 }
+            )
+          }
           validatedNotifications[key] = body.notifications[key]
         }
+      }
+
+      // Check for unknown keys
+      const unknownKeys = Object.keys(body.notifications).filter(
+        k => !validNotificationKeys.includes(k as typeof validNotificationKeys[number])
+      )
+      if (unknownKeys.length > 0) {
+        return NextResponse.json(
+          { success: false, message: `Cles de notification inconnues: ${unknownKeys.join(', ')}` },
+          { status: 400 }
+        )
       }
 
       updatedSettings.notifications = {

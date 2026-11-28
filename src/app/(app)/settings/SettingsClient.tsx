@@ -49,6 +49,8 @@ export function SettingsClient({
     emailTaskReminder: true,
     browserNotifications: false,
   })
+  const [isLoadingPreferences, setIsLoadingPreferences] = useState(true)
+  const [preferencesError, setPreferencesError] = useState<string | null>(null)
 
   // Team members state
   interface Member {
@@ -76,6 +78,8 @@ export function SettingsClient({
   // Load preferences on mount
   useEffect(() => {
     async function loadPreferences() {
+      setIsLoadingPreferences(true)
+      setPreferencesError(null)
       try {
         const response = await fetch('/api/settings/preferences')
         if (response.ok) {
@@ -88,13 +92,37 @@ export function SettingsClient({
               browserNotifications: data.settings.notifications.browser ?? false,
             })
           }
+        } else {
+          setPreferencesError('Erreur lors du chargement des preferences')
         }
       } catch (error) {
         console.error('Failed to load preferences:', error)
+        setPreferencesError('Erreur de connexion')
+      } finally {
+        setIsLoadingPreferences(false)
       }
     }
     loadPreferences()
   }, [])
+
+  const retryLoadPreferences = () => {
+    setIsLoadingPreferences(true)
+    setPreferencesError(null)
+    fetch('/api/settings/preferences')
+      .then(res => res.json())
+      .then(data => {
+        if (data.success && data.settings?.notifications) {
+          setNotifications({
+            emailNewLead: data.settings.notifications.email_new_lead ?? true,
+            emailWeeklyReport: data.settings.notifications.email_weekly_report ?? false,
+            emailTaskReminder: data.settings.notifications.email_task_reminder ?? true,
+            browserNotifications: data.settings.notifications.browser ?? false,
+          })
+        }
+      })
+      .catch(() => setPreferencesError('Erreur de connexion'))
+      .finally(() => setIsLoadingPreferences(false))
+  }
 
   // Load team data when switching to team tab
   useEffect(() => {
@@ -375,7 +403,7 @@ export function SettingsClient({
                         {saveMessage.text}
                       </span>
                     )}
-                    <SaveButton onClick={handleSaveNotifications} disabled={isSaving}>
+                    <SaveButton onClick={handleSaveNotifications} disabled={isSaving || isLoadingPreferences || !!preferencesError}>
                       {isSaving ? 'Enregistrement...' : 'Enregistrer'}
                     </SaveButton>
                   </div>
@@ -384,55 +412,71 @@ export function SettingsClient({
                   Configurez vos preferences de notification
                 </p>
 
-                <div className="space-y-5">
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3]">Nouveaux leads</p>
-                      <p className="text-xs text-[#4E525A] dark:text-[#8B949E]">Recevez un email pour chaque nouveau lead</p>
-                    </div>
-                    <AnimatedCheckbox
-                      id="notif-new-lead"
-                      checked={notifications.emailNewLead}
-                      onChange={(checked) => setNotifications(prev => ({ ...prev, emailNewLead: checked }))}
-                    />
+                {isLoadingPreferences ? (
+                  <div className="flex items-center justify-center py-8">
+                    <div className="animate-spin w-6 h-6 border-2 border-[#0066FF] border-t-transparent rounded-full" />
                   </div>
+                ) : preferencesError ? (
+                  <div className="text-center py-6">
+                    <p className="text-sm text-[#B42318] dark:text-red-400 mb-3">{preferencesError}</p>
+                    <button
+                      onClick={retryLoadPreferences}
+                      className="h-9 px-4 text-sm font-medium text-[#0066FF] border border-[#0066FF] rounded-lg hover:bg-[#0066FF]/10 transition-colors"
+                    >
+                      Reessayer
+                    </button>
+                  </div>
+                ) : (
+                  <div className="space-y-5">
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3]">Nouveaux leads</p>
+                        <p className="text-xs text-[#4E525A] dark:text-[#8B949E]">Recevez un email pour chaque nouveau lead</p>
+                      </div>
+                      <AnimatedCheckbox
+                        id="notif-new-lead"
+                        checked={notifications.emailNewLead}
+                        onChange={(checked) => setNotifications(prev => ({ ...prev, emailNewLead: checked }))}
+                      />
+                    </div>
 
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3]">Rapport hebdomadaire</p>
-                      <p className="text-xs text-[#4E525A] dark:text-[#8B949E]">Résumé de votre activité chaque lundi</p>
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3]">Rapport hebdomadaire</p>
+                        <p className="text-xs text-[#4E525A] dark:text-[#8B949E]">Resume de votre activite chaque lundi</p>
+                      </div>
+                      <AnimatedCheckbox
+                        id="notif-weekly"
+                        checked={notifications.emailWeeklyReport}
+                        onChange={(checked) => setNotifications(prev => ({ ...prev, emailWeeklyReport: checked }))}
+                      />
                     </div>
-                    <AnimatedCheckbox
-                      id="notif-weekly"
-                      checked={notifications.emailWeeklyReport}
-                      onChange={(checked) => setNotifications(prev => ({ ...prev, emailWeeklyReport: checked }))}
-                    />
-                  </div>
 
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3]">Rappels de taches</p>
-                      <p className="text-xs text-[#4E525A] dark:text-[#8B949E]">Notifications pour les taches a venir</p>
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3]">Rappels de taches</p>
+                        <p className="text-xs text-[#4E525A] dark:text-[#8B949E]">Notifications pour les taches a venir</p>
+                      </div>
+                      <AnimatedCheckbox
+                        id="notif-tasks"
+                        checked={notifications.emailTaskReminder}
+                        onChange={(checked) => setNotifications(prev => ({ ...prev, emailTaskReminder: checked }))}
+                      />
                     </div>
-                    <AnimatedCheckbox
-                      id="notif-tasks"
-                      checked={notifications.emailTaskReminder}
-                      onChange={(checked) => setNotifications(prev => ({ ...prev, emailTaskReminder: checked }))}
-                    />
-                  </div>
 
-                  <div className="flex items-center justify-between">
-                    <div>
-                      <p className="text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3]">Notifications navigateur</p>
-                      <p className="text-xs text-[#4E525A] dark:text-[#8B949E]">Alertes en temps réel dans votre navigateur</p>
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3]">Notifications navigateur</p>
+                        <p className="text-xs text-[#4E525A] dark:text-[#8B949E]">Alertes en temps reel dans votre navigateur</p>
+                      </div>
+                      <AnimatedCheckbox
+                        id="notif-browser"
+                        checked={notifications.browserNotifications}
+                        onChange={(checked) => setNotifications(prev => ({ ...prev, browserNotifications: checked }))}
+                      />
                     </div>
-                    <AnimatedCheckbox
-                      id="notif-browser"
-                      checked={notifications.browserNotifications}
-                      onChange={(checked) => setNotifications(prev => ({ ...prev, browserNotifications: checked }))}
-                    />
                   </div>
-                </div>
+                )}
               </div>
             </>
           )}

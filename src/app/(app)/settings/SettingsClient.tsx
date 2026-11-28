@@ -50,6 +50,29 @@ export function SettingsClient({
     browserNotifications: false,
   })
 
+  // Team members state
+  interface Member {
+    id: string
+    first_name: string | null
+    last_name: string | null
+    avatar_url: string | null
+    job_title: string | null
+    is_owner: boolean
+    is_active: boolean
+    role: { id: number; code: string; name: string } | null
+  }
+  interface Team {
+    id: number
+    name: string
+    description: string | null
+    members_count: number
+    manager: { id: string; first_name: string | null; last_name: string | null } | null
+  }
+  const [members, setMembers] = useState<Member[]>([])
+  const [teams, setTeams] = useState<Team[]>([])
+  const [isLoadingTeam, setIsLoadingTeam] = useState(false)
+  const [isOwner, setIsOwner] = useState(false)
+
   // Load preferences on mount
   useEffect(() => {
     async function loadPreferences() {
@@ -72,6 +95,41 @@ export function SettingsClient({
     }
     loadPreferences()
   }, [])
+
+  // Load team data when switching to team tab
+  useEffect(() => {
+    if (activeTab !== 'team') return
+
+    async function loadTeamData() {
+      setIsLoadingTeam(true)
+      try {
+        const [membersRes, teamsRes] = await Promise.all([
+          fetch('/api/members'),
+          fetch('/api/teams'),
+        ])
+
+        if (membersRes.ok) {
+          const membersData = await membersRes.json()
+          if (membersData.success) {
+            setMembers(membersData.members || [])
+            setIsOwner(membersData.currentUserIsOwner || false)
+          }
+        }
+
+        if (teamsRes.ok) {
+          const teamsData = await teamsRes.json()
+          if (teamsData.success) {
+            setTeams(teamsData.teams || [])
+          }
+        }
+      } catch (error) {
+        console.error('Failed to load team data:', error)
+      } finally {
+        setIsLoadingTeam(false)
+      }
+    }
+    loadTeamData()
+  }, [activeTab])
 
   const tabs = [
     {
@@ -100,6 +158,18 @@ export function SettingsClient({
       icon: (
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
           <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
+        </svg>
+      ),
+    },
+    {
+      id: 'team',
+      label: 'Equipe',
+      icon: (
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+          <circle cx="9" cy="7" r="4" />
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+          <path d="M16 3.13a4 4 0 0 1 0 7.75" />
         </svg>
       ),
     },
@@ -486,6 +556,120 @@ export function SettingsClient({
                   </div>
                 </div>
               </div>
+            </>
+          )}
+
+          {/* Team Tab */}
+          {activeTab === 'team' && (
+            <>
+              {isLoadingTeam ? (
+                <div className="bg-white dark:bg-[#161B22] rounded-[14px] border border-[#E2E4E6] dark:border-[#30363D] p-8 flex items-center justify-center">
+                  <div className="animate-spin w-6 h-6 border-2 border-[#0066FF] border-t-transparent rounded-full" />
+                </div>
+              ) : (
+                <>
+                  {/* Members */}
+                  <div className="bg-white dark:bg-[#161B22] rounded-[14px] border border-[#E2E4E6] dark:border-[#30363D] p-4 lg:p-6 transition-colors duration-200">
+                    <div className="flex items-center justify-between mb-4">
+                      <h2 className="text-lg font-semibold text-[#0D0F14] dark:text-[#E6EDF3]">Membres ({members.length})</h2>
+                      {isOwner && (
+                        <button
+                          className="h-9 px-4 text-sm font-medium text-[#9BA0A6] border border-[#E2E4E6] dark:border-[#30363D] rounded-lg cursor-not-allowed"
+                          disabled
+                          title="Bientot disponible"
+                        >
+                          Inviter
+                        </button>
+                      )}
+                    </div>
+                    {members.length === 0 ? (
+                      <p className="text-sm text-[#9BA0A6] dark:text-[#8B949E]">Aucun membre dans l'organisation.</p>
+                    ) : (
+                      <div className="space-y-3">
+                        {members.map((member) => (
+                          <div
+                            key={member.id}
+                            className="flex items-center gap-3 p-3 bg-[#F5F7F9] dark:bg-[#0D1117] rounded-xl"
+                          >
+                            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-[#0066FF] to-[#0052CC] flex items-center justify-center text-white text-sm font-medium">
+                              {member.first_name?.[0] || member.last_name?.[0] || '?'}
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <p className="text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3] truncate">
+                                {member.first_name || ''} {member.last_name || ''}
+                                {member.is_owner && (
+                                  <span className="ml-2 px-1.5 py-0.5 text-[10px] font-semibold bg-[#E8F5E9] dark:bg-[#147A3A]/20 text-[#147A3A] dark:text-[#4ADE80] rounded">
+                                    Proprietaire
+                                  </span>
+                                )}
+                              </p>
+                              <p className="text-xs text-[#9BA0A6] dark:text-[#8B949E] truncate">
+                                {member.job_title || member.role?.name || 'Membre'}
+                              </p>
+                            </div>
+                            {!member.is_active && (
+                              <span className="px-2 py-1 text-xs font-medium bg-red-50 dark:bg-red-900/20 text-[#B42318] dark:text-red-400 rounded">
+                                Inactif
+                              </span>
+                            )}
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Teams */}
+                  <div className="bg-white dark:bg-[#161B22] rounded-[14px] border border-[#E2E4E6] dark:border-[#30363D] p-4 lg:p-6 transition-colors duration-200">
+                    <div className="flex items-center justify-between mb-4">
+                      <h2 className="text-lg font-semibold text-[#0D0F14] dark:text-[#E6EDF3]">Equipes ({teams.length})</h2>
+                      <button
+                        className="h-9 px-4 text-sm font-medium text-[#9BA0A6] border border-[#E2E4E6] dark:border-[#30363D] rounded-lg cursor-not-allowed"
+                        disabled
+                        title="Bientot disponible"
+                      >
+                        Creer une equipe
+                      </button>
+                    </div>
+                    {teams.length === 0 ? (
+                      <div className="text-center py-8">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="mx-auto mb-3 text-[#9BA0A6] dark:text-[#8B949E]">
+                          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                          <circle cx="9" cy="7" r="4" />
+                          <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                          <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                        </svg>
+                        <p className="text-sm text-[#9BA0A6] dark:text-[#8B949E]">Aucune equipe creee.</p>
+                        <p className="text-xs text-[#9BA0A6] dark:text-[#8B949E] mt-1">Les equipes permettent d'organiser vos membres.</p>
+                      </div>
+                    ) : (
+                      <div className="space-y-3">
+                        {teams.map((team) => (
+                          <div
+                            key={team.id}
+                            className="flex items-center gap-3 p-3 bg-[#F5F7F9] dark:bg-[#0D1117] rounded-xl"
+                          >
+                            <div className="w-10 h-10 rounded-lg bg-[#0066FF]/10 dark:bg-[#58A6FF]/10 flex items-center justify-center">
+                              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0066FF" strokeWidth="2" className="dark:stroke-[#58A6FF]">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                                <circle cx="9" cy="7" r="4" />
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87" />
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                              </svg>
+                            </div>
+                            <div className="flex-1 min-w-0">
+                              <p className="text-sm font-medium text-[#0D0F14] dark:text-[#E6EDF3] truncate">{team.name}</p>
+                              <p className="text-xs text-[#9BA0A6] dark:text-[#8B949E] truncate">
+                                {team.members_count} membre{team.members_count !== 1 ? 's' : ''}
+                                {team.manager && ` - Manager: ${team.manager.first_name || ''} ${team.manager.last_name || ''}`}
+                              </p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </>
+              )}
             </>
           )}
 

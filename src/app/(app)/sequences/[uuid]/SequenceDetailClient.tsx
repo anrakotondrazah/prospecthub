@@ -60,6 +60,7 @@ interface SequenceDetailClientProps {
     steps: SequenceStep[]
   }
   enrollments: Enrollment[]
+  completedCount: number
   organizationId: number
   userId: string
 }
@@ -94,6 +95,7 @@ const STATUS_CONFIG: Record<string, { label: string; bg: string; text: string; d
 export function SequenceDetailClient({
   sequence,
   enrollments,
+  completedCount,
   organizationId,
   userId,
 }: SequenceDetailClientProps) {
@@ -111,8 +113,6 @@ export function SequenceDetailClient({
   const replyRate = sequence.stats.sent > 0
     ? Math.round((sequence.stats.replied / sequence.stats.sent) * 100)
     : 0
-
-  const completedCount = enrollments.filter(e => e.status === 'completed').length
 
   const handleToggleStatus = async () => {
     setIsUpdating(true)

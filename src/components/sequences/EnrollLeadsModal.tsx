@@ -97,10 +97,17 @@ export function EnrollLeadsModal({
   }
 
   const handleSelectAll = () => {
-    if (selectedLeadIds.size === filteredLeads.length) {
-      setSelectedLeadIds(new Set())
+    const allSelected = filteredLeads.length > 0 && filteredLeads.every(lead => selectedLeadIds.has(lead.id))
+    if (allSelected) {
+      // Deselect all filtered leads
+      const newSet = new Set(selectedLeadIds)
+      filteredLeads.forEach(lead => newSet.delete(lead.id))
+      setSelectedLeadIds(newSet)
     } else {
-      setSelectedLeadIds(new Set(filteredLeads.map(l => l.id)))
+      // Select all filtered leads
+      const newSet = new Set(selectedLeadIds)
+      filteredLeads.forEach(lead => newSet.add(lead.id))
+      setSelectedLeadIds(newSet)
     }
   }
 
@@ -225,7 +232,7 @@ export function EnrollLeadsModal({
                 <input
                   type="checkbox"
                   id="select-all"
-                  checked={selectedLeadIds.size === filteredLeads.length && filteredLeads.length > 0}
+                  checked={filteredLeads.length > 0 && filteredLeads.every(lead => selectedLeadIds.has(lead.id))}
                   onChange={handleSelectAll}
                   className="w-4 h-4 text-[#0066FF] border-black/[0.16] dark:border-[#30363D] rounded focus:ring-[#0066FF]/30"
                 />

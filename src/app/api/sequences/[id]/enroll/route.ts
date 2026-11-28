@@ -57,7 +57,14 @@ export async function POST(
     }
 
     // Parse request body
-    const body = await request.json()
+    const body = await request.json().catch(() => null)
+    if (!body || typeof body !== 'object') {
+      return NextResponse.json(
+        { success: false, message: 'Corps de requete invalide' },
+        { status: 400 }
+      )
+    }
+
     const { lead_ids } = body
 
     // Validation
@@ -71,10 +78,11 @@ export async function POST(
     // Get first step to calculate next_step_at
     const { data: firstStep } = await supabase
       .from('sequence_steps')
-      .select('delay_days, delay_hours')
+      .select('step_order, delay_days, delay_hours')
       .eq('sequence_id', id)
-      .eq('step_order', 1)
-      .single()
+      .order('step_order', { ascending: true })
+      .limit(1)
+      .maybeSingle()
 
     // Calculate next_step_at
     const now = new Date()
@@ -84,12 +92,15 @@ export async function POST(
       nextStepAt.setHours(nextStepAt.getHours() + (firstStep.delay_hours || 0))
     }
 
+    // Deduplicate and validate lead_ids
+    const uniqueLeadIds = [...new Set(lead_ids.filter((id: unknown) => typeof id === 'number' && id > 0))]
+
     // Prepare enrollments
-    const enrollments = lead_ids.map(lead_id => ({
+    const enrollments = uniqueLeadIds.map(lead_id => ({
       sequence_id: parseInt(id),
       lead_id,
       status: 'active',
-      current_step: 1,
+      current_step: firstStep?.step_order ?? 1,
       next_step_at: nextStepAt.toISOString(),
     }))
 

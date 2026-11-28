@@ -106,6 +106,17 @@ export function SequenceTimeline({ steps }: SequenceTimelineProps) {
 
               {/* Content */}
               <div className="flex-1 min-w-0 pt-1">
+                {/* Delay indicator before step */}
+                {(step.delay_days > 0 || step.delay_hours > 0) && (
+                  <div className="mb-2 flex items-center gap-2 text-xs text-[#9BA0A6] dark:text-[#8B949E]">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+                      <circle cx="12" cy="12" r="10" />
+                      <polyline points="12 6 12 12 16 14" />
+                    </svg>
+                    <span>Attendre {formatDelay(step.delay_days, step.delay_hours)}, puis</span>
+                  </div>
+                )}
+
                 <div className="flex items-start justify-between gap-2">
                   <div className="min-w-0">
                     <div className="flex items-center gap-2">
@@ -157,17 +168,6 @@ export function SequenceTimeline({ steps }: SequenceTimelineProps) {
                     )}
                   </div>
                 </div>
-
-                {/* Delay indicator before next step */}
-                {!isLast && (step.delay_days > 0 || step.delay_hours > 0) && (
-                  <div className="mt-2 flex items-center gap-2 text-xs text-[#9BA0A6] dark:text-[#8B949E]">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <circle cx="12" cy="12" r="10" />
-                      <polyline points="12 6 12 12 16 14" />
-                    </svg>
-                    <span>Puis attendre {formatDelay(step.delay_days, step.delay_hours)}</span>
-                  </div>
-                )}
               </div>
             </div>
           </div>

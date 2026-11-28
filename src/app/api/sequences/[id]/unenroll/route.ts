@@ -50,7 +50,14 @@ export async function POST(
     }
 
     // Parse request body
-    const body = await request.json()
+    const body = await request.json().catch(() => null)
+    if (!body || typeof body !== 'object') {
+      return NextResponse.json(
+        { success: false, message: 'Corps de requete invalide' },
+        { status: 400 }
+      )
+    }
+
     const { lead_ids, reason } = body
 
     // Validation

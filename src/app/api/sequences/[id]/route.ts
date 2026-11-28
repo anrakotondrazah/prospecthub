@@ -47,9 +47,11 @@ export async function GET(
 
     if (fetchError) {
       console.error('Error fetching sequence:', fetchError)
+      // Distinguish between not found (PGRST116) and DB errors
+      const isNotFound = fetchError.code === 'PGRST116' || fetchError.message?.includes('no rows')
       return NextResponse.json(
-        { success: false, message: 'Sequence non trouvee' },
-        { status: 404 }
+        { success: false, message: isNotFound ? 'Sequence non trouvee' : 'Erreur base de donnees' },
+        { status: isNotFound ? 404 : 500 }
       )
     }
 
@@ -97,7 +99,14 @@ export async function PATCH(
     }
 
     // Parse request body
-    const body = await request.json()
+    const body = await request.json().catch(() => null)
+    if (!body || typeof body !== 'object') {
+      return NextResponse.json(
+        { success: false, message: 'Corps de requete invalide' },
+        { status: 400 }
+      )
+    }
+
     const { name, description, trigger_type, status, settings } = body
 
     // Build update object

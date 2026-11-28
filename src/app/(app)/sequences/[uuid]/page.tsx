@@ -65,6 +65,13 @@ export default async function SequenceDetailPage({ params }: SequencePageProps) 
   const enrollmentsCountData = sequence.enrollments_count as unknown as { count: number }[]
   const enrollmentsCount = enrollmentsCountData?.[0]?.count || 0
 
+  // Fetch completed enrollments count (separate query to avoid limit issue)
+  const { count: completedCount } = await supabase
+    .from('sequence_enrollments')
+    .select('*', { count: 'exact', head: true })
+    .eq('sequence_id', sequence.id)
+    .eq('status', 'completed')
+
   // Fetch enrollments with lead details
   const { data: rawEnrollments } = await supabase
     .from('sequence_enrollments')
@@ -101,6 +108,7 @@ export default async function SequenceDetailPage({ params }: SequencePageProps) 
         enrollments_count: enrollmentsCount,
       }}
       enrollments={enrollments}
+      completedCount={completedCount || 0}
       organizationId={profile.organization_id}
       userId={user.id}
     />

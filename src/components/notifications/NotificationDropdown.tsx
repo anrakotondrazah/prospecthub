@@ -82,7 +82,7 @@ export function NotificationDropdown({
       </div>
 
       {/* List */}
-      <div className="max-h-[min(400px,calc(100vh-12rem))] overflow-y-auto flex-1">
+      <div className="max-h-[400px] min-h-0 overflow-y-auto flex-1">
         {notifications.length === 0 ? (
           <div className="flex flex-col items-center justify-center py-12 px-4">
             <div className="w-12 h-12 bg-black/[0.03] dark:bg-white/[0.05] rounded-full flex items-center justify-center mb-3">
